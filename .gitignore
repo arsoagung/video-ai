@@ -1,0 +1,6 @@
+node_modules/
+out/
+build/
+public/vo*.mp3
+public/bed.mp3
+*.log
