@@ -60,7 +60,8 @@ Dipakai sebagai default. Referensi implementasi: `src/ep2/` (episode "Apa bedany
 
 **Aturan tampilan**
 - Fade-in pelan seperti elemen penutup lain; subtitle disembunyikan (sudah aturan penutup di atas).
-- Panel referensi: kartu soft filled tanpa garis tepi, Plus Jakarta Sans, teks kecil tapi terbaca di layar HP (target tinggi huruf ≥ 24 px di 1080x1920). Logo di area terpisah dari panel (di atas atau di bawah), tidak bertumpuk dengan teks.
+- **Susunan baku (seragam di semua episode): logo Makna Positif di ATAS, kotak referensi di BAWAH.** Logo di bagian atas layar (pusat logo sekitar y=420, lebar ±600 px), kotak referensi di bawahnya (mulai sekitar y=800 sampai sebelum zona aman bawah). Jangan dibalik.
+- Panel referensi: kartu soft filled tanpa garis tepi, Plus Jakarta Sans, teks kecil tapi terbaca di layar HP (target tinggi huruf ≥ 24 px di 1080x1920). Logo dan panel di area terpisah, tidak bertumpuk dengan teks. Kalau daftar referensi panjang, kecilkan ukuran teks (tidak di bawah 24 px) atau naikkan sedikit posisi logo, tapi urutan tetap logo di atas, panel di bawah.
 - Logo berwarna putih, jadi latar scene penutup harus cukup gelap agar kontras terjaga. Tetap gradien polos dingin seperti aturan latar, tinggal pilih nada yang lebih dalam di scene ini.
 - Kalau kalimat penutup terlalu pendek untuk membaca referensi, tambahkan ekor diam beberapa detik di akhir video; suara tidak diubah.
 
