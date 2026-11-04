@@ -55,7 +55,7 @@ Dipakai sebagai default. Referensi implementasi: `src/ep2/` (episode "Apa bedany
 **Sumber data per baris sheet "Antrean"**: kolom `narasi` (teks + subtitle), `referensi` (daftar referensi ilmiah), `link_dubbing` (suara). Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi`, sudah final dari Arso, jangan diubah.
 
 **Saat kalimat penutup terakhir** (kalimat paling akhir di `narasi`) mulai diucapkan, tampilkan dua hal bersamaan, bertahan sampai video selesai:
-1. **Referensi jurnal**: isi kolom `referensi` apa adanya (judul "SCIENTIFIC REFERENCES", entri bernomor, DOI/URL sebagai teks kecil). Jangan dipotong, diringkas, atau diganti. Kalau kolom kosong, panel referensi tidak ditampilkan, logo tetap muncul.
+1. **Referensi jurnal**: isi kolom `referensi` apa adanya (judul sesuai baris pertama kolom, saat ini "Referensi"; entri bernomor, DOI/URL sebagai teks kecil). Jangan dipotong, diringkas, atau diganti. Kalau kolom kosong, panel referensi tidak ditampilkan, logo tetap muncul.
 2. **Logo Makna Positif**: pakai file asli `public/logo-makna-positif.png` (1254x1254, PNG putih berlatar transparan, area isi sekitar x105-1172, y328-929). Jangan digenerate ulang atau digambar ulang.
 
 **Aturan tampilan**
@@ -63,3 +63,5 @@ Dipakai sebagai default. Referensi implementasi: `src/ep2/` (episode "Apa bedany
 - Panel referensi: kartu soft filled tanpa garis tepi, Plus Jakarta Sans, teks kecil tapi terbaca di layar HP (target tinggi huruf ≥ 24 px di 1080x1920). Logo di area terpisah dari panel (di atas atau di bawah), tidak bertumpuk dengan teks.
 - Logo berwarna putih, jadi latar scene penutup harus cukup gelap agar kontras terjaga. Tetap gradien polos dingin seperti aturan latar, tinggal pilih nada yang lebih dalam di scene ini.
 - Kalau kalimat penutup terlalu pendek untuk membaca referensi, tambahkan ekor diam beberapa detik di akhir video; suara tidak diubah.
+
+**Implementasi 2D flat penuh (acuan episode baru)**: `src/ep3/` (composition `Ep3Full`; `timeline.ts` = segmen suara hasil deteksi jeda, `shapes.tsx` = bentuk flat sel/virus/DNA/kapsul, `Ep3.tsx` = adegan + subtitle + penutup referensi/logo). Render: `scripts/render_ep3.sh` (8 potongan, bisa dilanjut; set `BROWSER=` ke path Chromium bila perlu). Di mesin 2 CPU sekitar 6 menit per potongan, total ±50 menit untuk 3.591 frame. Durasi = suara + ekor diam 4 dtk.

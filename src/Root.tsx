@@ -8,6 +8,7 @@ import { Main3D, Plate3D } from './Main3D';
 import { Overlay } from './Overlay';
 import { Plate2 } from './ep2/World2';
 import { Overlay2, Ep2Full } from './ep2/Overlay2';
+import { Ep3Full } from './ep3/Ep3';
 
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fonts'));
@@ -83,5 +84,6 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Plate2" component={Plate2} durationInFrames={2460} fps={FPS} width={1080} height={1920} />
     <Composition id="Overlay2" component={Overlay2} durationInFrames={2460} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep2Full" component={Ep2Full} durationInFrames={2460} fps={FPS} width={1080} height={1920} />
+    <Composition id="Ep3Full" component={Ep3Full} durationInFrames={3591} fps={FPS} width={1080} height={1920} />
   </>
 );
