@@ -60,55 +60,34 @@ const PILLS: P[] = [
   // S4-S5 grafik
   { a: 16.3, b: 20.2, text: 'Jumlah CD4', k: 'cell', x: 360, y: 455, size: 38 },
   { a: 16.6, b: 20.2, text: 'HIV tidak diobati', k: 'virus', x: 720, y: 455, size: 36 },
-  { a: 16.6, b: 29.7, text: 'Waktu', k: 'gray', x: 880, y: 1285, size: 30 },
   { a: 21.0, b: 29.7, text: '200', k: 'recep', x: 262, y: 950, size: 34 },
   { a: 23.5, b: 29.7, text: 'CD4 < 200 sel/mm³', k: 'bad', x: 540, y: 1330, size: 40 },
-  { a: 25.9, b: 29.7, text: 'Salah satu kriteria AIDS', k: 'neutral', x: 540, y: 1405, size: 36 },
   // S6-S7 dua jalur
   { a: 31.5, b: 41.1, text: 'CD4 < 200', k: 'cell', x: 285, y: 868, size: 34 },
   { a: 34.0, b: 41.1, text: 'ATAU', k: 'recep', x: 540, y: 1010, size: 34 },
   { a: 38.6, b: 41.1, text: 'Kondisi penentu AIDS', k: 'neutral', x: 795, y: 868, size: 34 },
   { a: 32.0, b: 41.1, text: 'AIDS', k: 'bad', x: 540, y: 1225, size: 72 },
   // S8
-  { a: 41.2, b: 44.9, text: 'AIDS bukan sekadar “virus HIV-nya banyak”', k: 'neutral', x: 540, y: 430, size: 34 },
   { a: 45.1, b: 47.95, text: 'Viral load', k: 'virus', x: 285, y: 590, size: 42 },
   { a: 45.5, b: 47.95, text: 'CD4', k: 'cell', x: 795, y: 590, size: 42 },
   // S9
   { a: 48.3, b: 52.9, text: 'Viral load', k: 'virus', x: 540, y: 430, size: 56 },
-  { a: 49.4, b: 52.9, text: 'Jumlah HIV yang terdeteksi di darah', k: 'neutral', x: 540, y: 1300, size: 33 },
   // S10
   { a: 53.1, b: 57.7, text: 'Sel CD4', k: 'cell', x: 540, y: 430, size: 56 },
-  { a: 54.4, b: 57.7, text: 'Gambaran kondisi sistem kekebalan', k: 'neutral', x: 540, y: 1300, size: 33 },
   // S11
   { a: 57.8, b: 69.4, text: 'HIV', k: 'virus', x: 540, y: 520, size: 60 },
   { a: 58.4, b: 69.4, text: '= virus', k: 'neutral', x: 790, y: 520, size: 34 },
   { a: 61.8, b: 69.4, text: 'Infeksi HIV', k: 'virus', x: 540, y: 730, size: 46 },
   { a: 64.4, b: 69.4, text: 'Kerusakan sistem imun', k: 'gray', x: 540, y: 920, size: 46 },
   { a: 66.0, b: 69.4, text: 'AIDS', k: 'bad', x: 540, y: 1110, size: 64 },
-  { a: 60.8, b: 69.4, text: 'AIDS = kondisi tahap lanjut', k: 'neutral', x: 540, y: 1345, size: 36 },
   { a: 67.7, b: 69.4, text: 'CD4 < 200', k: 'cell', x: 270, y: 1235, size: 32 },
   { a: 67.9, b: 69.4, text: 'Kondisi penentu AIDS', k: 'neutral', x: 790, y: 1235, size: 32 },
   // S12
   { a: 69.9, b: 74.7, text: 'ARV', k: 'rt', x: 540, y: 450, size: 52 },
-  { a: 70.8, b: 74.7, text: 'ARV mulai', k: 'rt', x: 470, y: 715, size: 28 },
   { a: 71.6, b: 74.7, text: 'CD4 terjaga', k: 'cell', x: 760, y: 925, size: 34 },
   { a: 72.0, b: 74.7, text: 'Viral load ditekan', k: 'virus', x: 760, y: 1215, size: 34 },
-  { a: 73.0, b: 74.7, text: 'Perkembangan menuju AIDS dapat dicegah', k: 'neutral', x: 540, y: 1345, size: 32 },
   // S13
   { a: 74.95, b: 76.5, text: 'Jadi jangan tertukar:', k: 'neutral', x: 540, y: 470, size: 40 },
-];
-
-const STEPS: { a: number; b: number; n: number; text: string }[] = [
-  { a: 4.4, b: 10.5, n: 1, text: 'Ada satu angka penting: CD4' },
-  { a: 10.5, b: 15.9, n: 2, text: 'HIV menyerang sel CD4' },
-  { a: 16.0, b: 20.3, n: 3, text: 'Tanpa pengobatan, CD4 menurun' },
-  { a: 20.3, b: 29.7, n: 4, text: 'CD4 turun di bawah 200' },
-  { a: 29.8, b: 41.0, n: 5, text: 'Dua cara menentukan AIDS' },
-  { a: 41.1, b: 48.0, n: 6, text: 'Viral load dan CD4 itu berbeda' },
-  { a: 48.1, b: 52.95, n: 7, text: 'Viral load: jumlah HIV di darah' },
-  { a: 53.0, b: 57.7, n: 8, text: 'CD4: kondisi sistem kekebalan' },
-  { a: 57.8, b: 69.4, n: 9, text: 'HIV adalah virus, AIDS adalah tahap lanjut' },
-  { a: 69.5, b: 74.8, n: 10, text: 'ARV mencegah perkembangan ke AIDS' },
 ];
 
 // ---------------- komponen datar ----------------
@@ -264,6 +243,13 @@ const Flat: React.FC<{ t: number }> = ({ t }) => {
   return (
     <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
       <defs>
+        <filter id="cardsh" x="-20%" y="-20%" width="140%" height="150%">
+          <feDropShadow dx="0" dy="14" stdDeviation="18" floodColor="#031327" floodOpacity="0.35" />
+        </filter>
+        <linearGradient id="cardfill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.13" />
+          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.06" />
+        </linearGradient>
         <radialGradient id="glow">
           <stop offset="0" stopColor="#9FDCFF" stopOpacity="0.42" />
           <stop offset="1" stopColor="#9FDCFF" stopOpacity="0" />
@@ -280,7 +266,7 @@ const Flat: React.FC<{ t: number }> = ({ t }) => {
       {/* S4-S7: grafik CD4 yang mengecil jadi kartu */}
       {gVis > 0.01 && (
         <g opacity={gVis}>
-          {card > 0.01 && <rect x={65} y={430} width={440} height={430} rx={46} fill="#FFFFFF" opacity={0.08 * card} />}
+          {card > 0.01 && <rect x={65} y={430} width={440} height={430} rx={46} fill="url(#cardfill)" opacity={card} filter="url(#cardsh)" />}
           <g transform={`translate(${tx} ${ty}) scale(${sc})`}>
             <Cd4Graph t={t} />
           </g>
@@ -291,7 +277,7 @@ const Flat: React.FC<{ t: number }> = ({ t }) => {
       {jVis > 0.01 && (
         <g opacity={jVis}>
           <g opacity={nodeB}>
-            <rect x={575} y={430} width={440} height={430} rx={46} fill="#FFFFFF" opacity={0.08} />
+            <rect x={575} y={430} width={440} height={430} rx={46} fill="url(#cardfill)" filter="url(#cardsh)" />
             <MedSymbol cx={795} cy={625} s={1.15 * nodeB} />
             {[0, 1, 2].map((i) => (
               <circle key={i} cx={725 + i * 70} cy={785} r={14} fill="#F4D77E" opacity={0.9} />
@@ -306,8 +292,8 @@ const Flat: React.FC<{ t: number }> = ({ t }) => {
       {s8 > 0.01 && (
         <g opacity={s8}>
           <g opacity={cardIn}>
-            <rect x={65} y={620} width={440} height={620} rx={46} fill="#FFFFFF" opacity={0.08} />
-            <rect x={575} y={620} width={440} height={620} rx={46} fill="#FFFFFF" opacity={0.08} />
+            <rect x={65} y={620} width={440} height={620} rx={46} fill="url(#cardfill)" filter="url(#cardsh)" />
+            <rect x={575} y={620} width={440} height={620} rx={46} fill="url(#cardfill)" filter="url(#cardsh)" />
             {virPos.map(([x, y], i) => (
               <FlatVirus key={i} cx={285 + x * 0.95} cy={930 + y + Math.sin(t * 1.2 + i) * 6} r={26} dim={ez(t, 42.0 + i * 0.07, 42.5 + i * 0.07)} />
             ))}
@@ -361,10 +347,10 @@ const Flat: React.FC<{ t: number }> = ({ t }) => {
       {/* S13: manusia */}
       {s13 > 0.01 && (
         <g opacity={s13}>
-          <circle cx={540} cy={760} r={470} fill="url(#glow)" />
-          <Person cx={235} cy={790} k={ez(t, 75.2, 76.0, out3)} c="#FF9C85" s={0.95} />
-          <Person cx={540} cy={760} k={ez(t, 75.4, 76.2, out3)} c="#8FBDF7" s={1.12} />
-          <Person cx={845} cy={790} k={ez(t, 75.6, 76.4, out3)} c="#72E3D3" s={0.95} />
+          <circle cx={540} cy={760} r={470 + Math.sin(t * 0.9) * 14} fill="url(#glow)" />
+          <Person cx={235} cy={790 + Math.sin(t * 1.1) * 6} k={ez(t, 75.2, 76.0, out3)} c="#FF9C85" s={0.95} />
+          <Person cx={540} cy={760 + Math.sin(t * 1.1 + 1.2) * 6} k={ez(t, 75.4, 76.2, out3)} c="#8FBDF7" s={1.12} />
+          <Person cx={845} cy={790 + Math.sin(t * 1.1 + 2.4) * 6} k={ez(t, 75.6, 76.4, out3)} c="#72E3D3" s={0.95} />
         </g>
       )}
     </svg>
@@ -391,21 +377,80 @@ const useFonts2 = () => {
   }, [handle]);
 };
 
+// ---------------- kontinuitas, legenda, subtitle beraksen ----------------
+const SHOW_LEGEND = true;
+const flatOn = (t: number) => Math.max(ez(t, 15.9, 16.8) * (1 - ez(t, 46.8, 47.6)), ez(t, 57.8, 58.6));
+const BOKEH: [number, number, number, number][] = [
+  [140, 380, 90, 0.2], [930, 520, 120, 1.4], [260, 900, 70, 2.1], [860, 1020, 100, 0.7], [120, 1330, 110, 3.0],
+  [940, 1450, 80, 2.6], [520, 300, 60, 4.1], [700, 1650, 90, 1.9], [330, 1700, 70, 3.6],
+];
+const Backdrop: React.FC<{ t: number }> = ({ t }) => {
+  const k = flatOn(t);
+  if (k < 0.01) return null;
+  return (
+    <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0, opacity: k }}>
+      {BOKEH.map(([x, y, r, ph], i) => (
+        <circle key={i} cx={x + 34 * Math.sin(t * 0.22 + ph)} cy={y - ((t * 9 + ph * 80) % 160) + 80 + 26 * Math.cos(t * 0.18 + ph)} r={r} fill="#9FDCFF" opacity={0.05 + 0.04 * Math.sin(t * 0.5 + ph)} />
+      ))}
+    </svg>
+  );
+};
+// zoom-out halus tiap kali layer datar baru masuk
+const settle = (t: number) => {
+  let z = 0;
+  for (const T of [15.9, 57.8, 69.7, 74.9]) if (t >= T) z += 0.035 * (1 - ez(t, T, T + 1.0, out3));
+  return 1 + z;
+};
+const Legend: React.FC<{ t: number }> = ({ t }) => {
+  const k = Math.min(ez(t, 8.7, 9.4), 1 - ez(t, 74.3, 74.9));
+  if (!SHOW_LEGEND || k < 0.01) return null;
+  const item = (c: string, label: string) => (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <span style={{ width: 18, height: 18, borderRadius: 9, background: c }} />
+      {label}
+    </span>
+  );
+  return (
+    <div style={{ position: 'absolute', top: 250, width: '100%', display: 'flex', justifyContent: 'center', opacity: 0.9 * k }}>
+      <div style={{ display: 'flex', gap: 34, background: 'rgba(8,24,46,0.38)', borderRadius: 999, padding: '12px 30px', fontFamily: FONT, fontWeight: 600, fontSize: 28, color: '#EAF2FB' }}>
+        {item('#8FBDF7', 'CD4')}
+        {item('#FF9C85', 'Virus HIV')}
+      </div>
+    </div>
+  );
+};
+const ACC: Record<string, string> = { cd4: '#8FBDF7', aids: '#FF8A7A', hiv: '#FFB7A5', virus: '#FFB7A5', viral: '#FFB7A5', load: '#FFB7A5', arv: '#72E3D3', '200': '#F4D77E' };
+const Sub: React.FC<{ text: string }> = ({ text }) => (
+  <>
+    {text.split(' ').map((w, i) => {
+      const c = ACC[w.toLowerCase().replace(/[^a-z0-9]/g, '')];
+      return (
+        <React.Fragment key={i}>
+          {i > 0 ? ' ' : ''}
+          {c ? <span style={{ color: c, fontWeight: 800 }}>{w}</span> : w}
+        </React.Fragment>
+      );
+    })}
+  </>
+);
+
 export const Overlay2: React.FC = () => {
   useFonts2();
   const f = useCurrentFrame();
   const t = f / FPS;
   const cue = CUES2.find((c) => t >= c.a - 0.05 && t < c.b);
   const ck = cue ? Math.min(1, (t - cue.a + 0.05) / 0.18) : 0;
-  const step = STEPS.find((s) => t >= s.a && t < s.b);
-  const sk = step ? fade(t, step.a, step.b) : 0;
-  const e1 = ez(t, 76.6, 77.3, out3);
-  const e2 = ez(t, 78.78, 79.4, out3);
-  const e3 = ez(t, 80.17, 80.8, out3);
+  const e1 = ez(t, 76.6, 77.6, out3);
+  const e2 = ez(t, 78.78, 79.7, out3);
+  const e3 = ez(t, 80.17, 81.1, out3);
 
   return (
     <AbsoluteFill>
-      <Flat t={t} />
+      <Backdrop t={t} />
+      <div style={{ position: 'absolute', inset: 0, transform: `scale(${settle(t)})`, transformOrigin: '540px 960px' }}>
+        <Flat t={t} />
+      </div>
+      <Legend t={t} />
 
       {/* garis penunjuk label 3D */}
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
@@ -433,14 +478,6 @@ export const Overlay2: React.FC = () => {
         return <PillBox key={i} x={x} y={y} text={p.text} k={p.k} size={p.size ?? 38} op={k} sc={k} />;
       })}
 
-      {step && (
-        <div style={{ position: 'absolute', top: 250, width: '100%', display: 'flex', justifyContent: 'center', opacity: sk, transform: `translateY(${(1 - sk) * -14}px)` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, background: '#F7FAFD', borderRadius: 999, padding: '20px 44px', fontFamily: FONT, fontWeight: 800, fontSize: step.text.length > 33 ? 33 : 42, color: '#12304F', boxShadow: '0 10px 30px rgba(0,0,0,0.28)', whiteSpace: 'nowrap' }}>
-            <span style={{ color: '#17A294' }}>{step.n}</span>
-            <span>{step.text}</span>
-          </div>
-        </div>
-      )}
 
       {t >= 76.5 && (
         <>
@@ -458,7 +495,7 @@ export const Overlay2: React.FC = () => {
 
       {cue && t < 76.5 && (
         <div style={{ position: 'absolute', left: 70, width: 940, top: 1462, height: 110, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 42, lineHeight: 1.2, color: '#FFFFFF', textShadow: '0 3px 16px #000000AA', opacity: ck, transform: `translateY(${(1 - ck) * 10}px)` }}>
-          {cue.text}
+          <span><Sub text={cue.text} /></span>
         </div>
       )}
     </AbsoluteFill>
