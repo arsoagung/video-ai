@@ -379,22 +379,6 @@ const useFonts2 = () => {
 
 // ---------------- kontinuitas, legenda, subtitle beraksen ----------------
 const SHOW_LEGEND = true;
-const flatOn = (t: number) => Math.max(ez(t, 15.9, 16.8) * (1 - ez(t, 46.8, 47.6)), ez(t, 57.8, 58.6));
-const BOKEH: [number, number, number, number][] = [
-  [140, 380, 90, 0.2], [930, 520, 120, 1.4], [260, 900, 70, 2.1], [860, 1020, 100, 0.7], [120, 1330, 110, 3.0],
-  [940, 1450, 80, 2.6], [520, 300, 60, 4.1], [700, 1650, 90, 1.9], [330, 1700, 70, 3.6],
-];
-const Backdrop: React.FC<{ t: number }> = ({ t }) => {
-  const k = flatOn(t);
-  if (k < 0.01) return null;
-  return (
-    <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0, opacity: k }}>
-      {BOKEH.map(([x, y, r, ph], i) => (
-        <circle key={i} cx={x + 34 * Math.sin(t * 0.22 + ph)} cy={y - ((t * 9 + ph * 80) % 160) + 80 + 26 * Math.cos(t * 0.18 + ph)} r={r} fill="#9FDCFF" opacity={0.05 + 0.04 * Math.sin(t * 0.5 + ph)} />
-      ))}
-    </svg>
-  );
-};
 // zoom-out halus tiap kali layer datar baru masuk
 const settle = (t: number) => {
   let z = 0;
@@ -446,7 +430,6 @@ export const Overlay2: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Backdrop t={t} />
       <div style={{ position: 'absolute', inset: 0, transform: `scale(${settle(t)})`, transformOrigin: '540px 960px' }}>
         <Flat t={t} />
       </div>

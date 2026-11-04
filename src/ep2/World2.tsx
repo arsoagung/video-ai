@@ -95,10 +95,6 @@ const rnd = (seed: number) => {
   let s = seed;
   return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
 };
-const BOKEH = (() => {
-  const r = rnd(7);
-  return Array.from({ length: 46 }, () => ({ x: (r() - 0.5) * 22, y: (r() - 0.5) * 30, z: -3 - r() * 9, s: 0.08 + r() * 0.22, p: r() * 6, c: r() > 0.6 ? '#FFD7A8' : '#BFE3FF' }));
-})();
 
 const DISTRACT = [
   { p: [-9.5, 6.0, -9], r: 3.0, c: '#E7A1A1', ph: 0.4 },
@@ -173,13 +169,6 @@ export const World2: React.FC<{ t: number }> = ({ t }) => {
       <pointLight position={[-3, 2, 3]} intensity={30} color="#FFB48A" />
       <pointLight position={[3, -2, 2]} intensity={20} color="#7FD6FF" />
 
-      {BOKEH.map((b, i) => (
-        <mesh key={i} position={[b.x + Math.sin(t * 0.4 + b.p) * 0.3, b.y + Math.cos(t * 0.35 + b.p) * 0.3, b.z]}>
-          <sphereGeometry args={[b.s, 8, 8]} />
-          <meshBasicMaterial color={b.c} transparent opacity={0.35} />
-        </mesh>
-      ))}
-
       {/* S1: satu partikel HIV */}
       <Pop s={s1} pos={virus1Pos(t)}>
         <Virus t={t} scale={2.1} />
@@ -247,14 +236,39 @@ export const World2: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-const BG = 'linear-gradient(180deg,#0A1F3D 0%,#123A60 55%,#17506F 100%)';
+// ---------------- latar gradien: warna bergeser halus per scene ----------------
+type Grad = [string, string, string];
+const GRADS: { t: number; c: Grad }[] = [
+  { t: 0, c: ['#0A1F3D', '#123A60', '#17506F'] }, // pembuka + sel CD4 (biru laut)
+  { t: 16.2, c: ['#0D1B45', '#1E2F6B', '#2B4A85'] }, // grafik CD4 (indigo)
+  { t: 29.8, c: ['#14183F', '#2A2A6B', '#3B4A8A'] }, // dua jalur menuju AIDS (ungu kebiruan)
+  { t: 41.2, c: ['#08283A', '#0F4A5C', '#167A80'] }, // viral load vs CD4 (teal)
+  { t: 57.8, c: ['#0A1F3D', '#123A60', '#17506F'] }, // rantai HIV -> AIDS (biru laut)
+  { t: 69.7, c: ['#082C3A', '#0E5A63', '#1C8A85'] }, // ARV (hijau teal)
+  { t: 74.9, c: ['#14264A', '#2A4F7E', '#3F7C9A'] }, // penutup (biru lembut)
+];
+const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const mix = (a: string, b: string, k: number) => {
+  const A = hex(a), B = hex(b);
+  return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * k)).join(',')})`;
+};
+const gradAt = (t: number): [string, string, string] => {
+  let i = 0;
+  for (let j = 1; j < GRADS.length; j++) if (t >= GRADS[j].t) i = j;
+  const prev = GRADS[Math.max(0, i - 1)].c;
+  const cur = GRADS[i].c;
+  const k = i === 0 ? 1 : Math.min(1, (t - GRADS[i].t) / 1.4);
+  const e = k * k * (3 - 2 * k);
+  return [mix(prev[0], cur[0], e), mix(prev[1], cur[1], e), mix(prev[2], cur[2], e)];
+};
 export const Plate2: React.FC = () => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const on = t < 16.4 || (t > 47.6 && t < 58.0);
+  const g = gradAt(t);
   return (
-    <AbsoluteFill style={{ background: BG }}>
-      <AbsoluteFill style={{ background: 'radial-gradient(760px 760px at 50% 40%, #3C86C455, transparent 70%)' }} />
+    <AbsoluteFill style={{ background: `linear-gradient(180deg,${g[0]} 0%,${g[1]} 55%,${g[2]} 100%)` }}>
+      <AbsoluteFill style={{ background: 'radial-gradient(760px 760px at 50% 40%, rgba(120,190,255,0.22), transparent 70%)' }} />
       {on && (
         <ThreeCanvas width={1080} height={1920} camera={{ fov: FOV, position: [0, 1, 16], near: 0.1, far: 120 }} gl={{ alpha: true, antialias: true }}>
           <World2 t={t} />
