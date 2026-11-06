@@ -78,20 +78,20 @@ Arso suka desain CD4 dan virus HIV dari video "Kenapa HIV menyerang CD4?" dan in
 
 ---
 
-## Thumbnail YouTube (19:6, 1900x600)
+## Thumbnail YouTube (9:16, 1080x1920, seukuran video)
 
 Kode: `src/thumb/Thumb.tsx` (composition `ThumbA`, `ThumbB`, `ThumbC`). Tokoh dari `src/shared/shapes.tsx`, logo asli `public/logo-makna-positif.png`, gradien dingin, pill terisi tanpa garis tepi, Plus Jakarta Sans. Render: `npx remotion still src/index.ts ThumbA docs/thumbnail/<nama>.png`.
 
 ### Apa bedanya HIV dan AIDS? (3 alternatif, tinggal pilih)
 
-**A. Judul besar + virus menuju sel CD4 yang meredup**
+**A. Judul bertingkat besar + virus menuju sel CD4 yang meredup**
 
-![Alternatif A](docs/thumbnail/hiv-vs-aids-A.png)
+<img src="docs/thumbnail/hiv-vs-aids-A.png" width="270" alt="Alternatif A">
 
-**B. Simetris: "Satu rangkaian, bukan dua penyakit"**
+**B. Alur vertikal: "Satu rangkaian, bukan dua penyakit"**
 
-![Alternatif B](docs/thumbnail/hiv-vs-aids-B.png)
+<img src="docs/thumbnail/hiv-vs-aids-B.png" width="270" alt="Alternatif B">
 
 **C. Hook "HIV ≠ AIDS" + virus mendekati komandan (CD4)**
 
-![Alternatif C](docs/thumbnail/hiv-vs-aids-C.png)
+<img src="docs/thumbnail/hiv-vs-aids-C.png" width="270" alt="Alternatif C">
