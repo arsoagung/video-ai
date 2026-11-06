@@ -121,3 +121,24 @@ export const ThumbHivAids: React.FC = () => (
     <Pill cx={540} cy={1790} text="AIDS" bg="#FF6B5E" fg="#4A0F0C" size={56} />
   </ThumbFrame>
 );
+
+// Judul: "Kenapa HIV menyerang CD4?" (tema biru = pembuka video). Virus mendekati sel CD4 berreseptor kuning.
+export const ThumbCd4: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Kenapa <span style={{ color: CORAL }}>HIV</span>
+        <br />
+        menyerang <span style={{ color: SHAPE_COL.cd4 }}>CD4</span>?
+      </>
+    }
+  >
+    <Svg>
+      <FlatCell cx={600} cy={1350} r={210} color={SHAPE_COL.cd4} nuc={SHAPE_COL.cd4Dark} rec={1} />
+      <FlatVirus cx={350} cy={980} r={105} rot={20} />
+    </Svg>
+    <Pill cx={230} cy={1235} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
+    <Pill cx={600} cy={1735} text="CD4" bg={SHAPE_COL.cd4} fg="#0B2A55" size={56} />
+  </ThumbFrame>
+);
