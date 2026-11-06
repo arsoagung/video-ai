@@ -7,6 +7,14 @@ import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 export const THUMB_W = 1080;
 export const THUMB_H = 1920;
 
+// Tema latar = gradien dari video (pilih yang sama dengan warna dominan videonya).
+export const THEMES = {
+  biru: ['#0A1F3D', '#123A60', '#17506F'] as [string, string, string], // biru laut (pembuka/sel)
+  indigo: ['#13194A', '#25306E', '#35487F'] as [string, string, string], // indigo (grafik/tanpa pengobatan)
+  teal: ['#082C3A', '#0E5A63', '#1C8A85'] as [string, string, string], // hijau teal (ARV/pemulihan)
+  biruLembut: ['#14264A', '#2A4F7E', '#3F7C9A'] as [string, string, string], // biru lembut (penutup)
+};
+
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fonts'));
   React.useEffect(() => {
@@ -64,84 +72,52 @@ const Svg: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <svg width={THUMB_W} height={THUMB_H} style={{ position: 'absolute', inset: 0 }}>{children}</svg>
 );
 
-const T: React.CSSProperties = { position: 'absolute', left: 0, width: THUMB_W, textAlign: 'center', fontFamily: FONT, color: WHITE, whiteSpace: 'nowrap' };
-const Cell: React.FC<{ cx: number; cy: number; r: number; op: number }> = ({ cx, cy, r, op }) => (
-  <FlatCell cx={cx} cy={cy} r={r} color={SHAPE_COL.cd4} nuc={SHAPE_COL.cd4Dark} rec={1} op={op} />
-);
 const VArrow: React.FC<{ x: number; y1: number; y2: number }> = ({ x, y1, y2 }) => (
   <g>
     <line x1={x} y1={y1} x2={x} y2={y2 - 30} stroke="#EAF2FB" strokeWidth={16} strokeLinecap="round" />
     <polygon points={`${x},${y2} ${x - 32},${y2 - 46} ${x + 32},${y2 - 46}`} fill="#EAF2FB" />
   </g>
 );
+const Cell: React.FC<{ cx: number; cy: number; r: number; op: number }> = ({ cx, cy, r, op }) => (
+  <FlatCell cx={cx} cy={cy} r={r} color={SHAPE_COL.cd4} nuc={SHAPE_COL.cd4Dark} rec={1} op={op} />
+);
 
-// A: judul bertingkat besar, virus -> sel CD4 yang meredup
-export const ThumbA: React.FC = () => {
+// ===== TEMPLATE THUMBNAIL (9:16) =====
+// Susunan baku: logo Makna Positif di atas -> judul (HANYA judul episode, persis seperti di sheet) -> ilustrasi di bawah.
+// Episode baru: buat komposisi baru yang membungkus <ThumbFrame theme=... title=...> dengan ilustrasi sesuai judul.
+export const ThumbFrame: React.FC<{ theme: keyof typeof THEMES; title: React.ReactNode; children: React.ReactNode; glowY?: number }> = ({ theme, title, children, glowY = 1150 }) => {
   useFonts();
   return (
     <AbsoluteFill>
-      <Bg g={['#0A1F3D', '#123A60', '#17506F']} />
-      <div style={{ ...T, top: 150, fontWeight: 600, fontSize: 84 }}>Apa bedanya</div>
-      <div style={{ ...T, top: 240, fontWeight: 800, fontSize: 270, lineHeight: 1, color: CORAL }}>HIV</div>
-      <div style={{ ...T, top: 520, fontWeight: 600, fontSize: 96, lineHeight: 1 }}>dan</div>
-      <div style={{ ...T, top: 630, fontWeight: 800, fontSize: 270, lineHeight: 1, color: RED }}>AIDS?</div>
-      <Svg>
-        <FlatVirus cx={230} cy={1250} r={100} />
-        <Arrow x1={370} x2={560} y={1250} />
-        <Cell cx={660} cy={1250} r={52} op={1} />
-        <Cell cx={780} cy={1250} r={52} op={0.5} />
-        <Cell cx={900} cy={1250} r={52} op={0.2} />
-      </Svg>
-      <Pill cx={230} cy={1475} text="HIV" bg="#FFA48E" fg="#4A1A10" />
-      <Pill cx={780} cy={1475} text="AIDS" bg="#FF6B5E" fg="#4A0F0C" />
-      <Logo x={370} y={1650} w={340} />
-    </AbsoluteFill>
-  );
-};
-
-// B: alur vertikal HIV -> AIDS, "satu rangkaian"
-export const ThumbB: React.FC = () => {
-  useFonts();
-  return (
-    <AbsoluteFill>
-      <Bg g={['#13194A', '#25306E', '#35487F']} glowY={950} />
+      <Bg g={THEMES[theme]} glowY={glowY} />
       <Logo x={390} y={90} w={300} />
-      <div style={{ ...T, top: 330, fontWeight: 800, fontSize: 78, lineHeight: 1.1 }}>
-        Satu rangkaian,
-        <br />
-        <span style={{ color: TEAL }}>bukan dua penyakit</span>
-      </div>
-      <Svg>
-        <FlatVirus cx={540} cy={790} r={115} />
-        <VArrow x={540} y1={1090} y2={1300} />
-        <Cell cx={430} cy={1470} r={62} op={0.4} />
-        <Cell cx={570} cy={1420} r={50} op={0.25} />
-        <Cell cx={640} cy={1530} r={54} op={0.3} />
-        <Cell cx={760} cy={1450} r={42} op={0.18} />
-      </Svg>
-      <Pill cx={540} cy={1025} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
-      <div style={{ position: 'absolute', left: 600, top: 1160, fontFamily: FONT, fontWeight: 600, fontSize: 40, color: '#EAF2FB', lineHeight: 1.2 }}>stadium lanjut<br />dari infeksi</div>
-      <Pill cx={540} cy={1700} text="AIDS" bg="#FF6B5E" fg="#4A0F0C" size={56} />
+      <div style={{ position: 'absolute', left: 0, width: THUMB_W, top: 320, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 116, lineHeight: 1.12, color: WHITE, whiteSpace: 'nowrap' }}>{title}</div>
+      {children}
     </AbsoluteFill>
   );
 };
 
-// C: hook "HIV ≠ AIDS", virus mendekati komandan (CD4)
-export const ThumbC: React.FC = () => {
-  useFonts();
-  return (
-    <AbsoluteFill>
-      <Bg g={['#082C3A', '#0E5A63', '#1C8A85']} />
-      <div style={{ ...T, top: 130, fontWeight: 800, fontSize: 290, lineHeight: 1, color: CORAL }}>HIV</div>
-      <div style={{ ...T, top: 420, fontWeight: 800, fontSize: 230, lineHeight: 1, color: TEAL }}>≠</div>
-      <div style={{ ...T, top: 650, fontWeight: 800, fontSize: 290, lineHeight: 1, color: RED }}>AIDS</div>
-      <div style={{ ...T, top: 960, fontWeight: 600, fontSize: 74 }}>Apa bedanya?</div>
-      <Svg>
-        <FlatVirus cx={250} cy={1330} r={92} rot={20} />
-        <Figure cx={780} cy={1370} s={1.05} c={SHAPE_COL.cd4} cap={SHAPE_COL.cd4Dark} cmd />
-      </Svg>
-      <Pill cx={780} cy={1640} text="CD4" bg="#8FBDF7" fg="#0E2A4F" size={38} />
-      <Logo x={390} y={1710} w={300} />
-    </AbsoluteFill>
-  );
-};
+// Judul: "Apa bedanya HIV dan AIDS?" (kata kunci diberi warna aksen, sama seperti subtitle video)
+export const ThumbHivAids: React.FC = () => (
+  <ThumbFrame
+    theme="indigo"
+    title={
+      <>
+        Apa bedanya
+        <br />
+        <span style={{ color: CORAL }}>HIV</span> dan <span style={{ color: RED }}>AIDS</span>?
+      </>
+    }
+  >
+    <Svg>
+      <FlatVirus cx={540} cy={850} r={120} />
+      <VArrow x={540} y1={1215} y2={1410} />
+      <Cell cx={430} cy={1570} r={62} op={0.4} />
+      <Cell cx={570} cy={1520} r={50} op={0.25} />
+      <Cell cx={640} cy={1630} r={54} op={0.3} />
+      <Cell cx={760} cy={1550} r={42} op={0.18} />
+    </Svg>
+    <Pill cx={540} cy={1125} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
+    <Pill cx={540} cy={1790} text="AIDS" bg="#FF6B5E" fg="#4A0F0C" size={56} />
+  </ThumbFrame>
+);

@@ -78,20 +78,20 @@ Arso suka desain CD4 dan virus HIV dari video "Kenapa HIV menyerang CD4?" dan in
 
 ---
 
-## Thumbnail YouTube (9:16, 1080x1920, seukuran video)
+## Thumbnail YouTube: template baku (9:16, 1080x1920, seukuran video)
 
-Kode: `src/thumb/Thumb.tsx` (composition `ThumbA`, `ThumbB`, `ThumbC`). Tokoh dari `src/shared/shapes.tsx`, logo asli `public/logo-makna-positif.png`, gradien dingin, pill terisi tanpa garis tepi, Plus Jakarta Sans. Render: `npx remotion still src/index.ts ThumbA docs/thumbnail/<nama>.png`.
+Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buatkan thumbnail dengan judul ...", langsung bikin dengan template ini, tanpa tanya gaya lagi.
 
-### Apa bedanya HIV dan AIDS? (3 alternatif, tinggal pilih)
+![Contoh: Apa bedanya HIV dan AIDS?](docs/thumbnail/apa-bedanya-hiv-dan-aids.png)
 
-**A. Judul bertingkat besar + virus menuju sel CD4 yang meredup**
+**Susunan (atas ke bawah, tetap)**
+1. **Logo Makna Positif** di tengah atas (x=390, y=90, lebar 300), file asli `public/logo-makna-positif.png`, jangan digambar ulang.
+2. **Teks = hanya judul episode**, persis seperti kolom `judul` di sheet. Tidak ada tagline, subjudul, atau kalimat tambahan karangan. Plus Jakarta Sans 800, ukuran 116, tengah, putih; kata kunci boleh diberi warna aksen seperti subtitle video (HIV koral muda `#FFB7A5`, AIDS `#FF8A7A`, CD4 biru `#8FBDF7`, ARV teal `#72E3D3`).
+3. **Ilustrasi di bawahnya** sesuai isi judul, memakai tokoh baku dari `src/shared/shapes.tsx` (virus, sel CD4, komandan), bersih dan lega. Boleh ada pill label kunci (terisi, tanpa garis tepi) yang kata-katanya diambil dari judul. Tanpa teks lain.
 
-<img src="docs/thumbnail/hiv-vs-aids-A.png" width="270" alt="Alternatif A">
+**Latar berganti per episode**: gradien vertikal 3 warna, dipilih sesuai warna tema video episode itu (`THEMES` di `src/thumb/Thumb.tsx`: `biru`, `indigo`, `teal`, `biruLembut`; tambah tema baru kalau videonya memakai gradien lain). Tanpa bokeh, tanpa garis tepi, ada glow radial lembut.
 
-**B. Alur vertikal: "Satu rangkaian, bukan dua penyakit"**
+**Cara membuat thumbnail episode baru**: di `src/thumb/Thumb.tsx` buat komponen baru yang membungkus `<ThumbFrame theme="..." title={...}>` dengan ilustrasi di dalamnya (contoh: `ThumbHivAids`), daftarkan di `src/Root.tsx` (`<Composition id="Thumb..." width={THUMB_W} height={THUMB_H} durationInFrames={1} />`), lalu render: `npx remotion still src/index.ts <IdKomposisi> docs/thumbnail/<judul-slug>.png`. Simpan hasil final per episode di `docs/thumbnail/` dan tambahkan ke daftar di bawah. Jangan menyimpan alternatif yang tidak terpilih.
 
-<img src="docs/thumbnail/hiv-vs-aids-B.png" width="270" alt="Alternatif B">
-
-**C. Hook "HIV ≠ AIDS" + virus mendekati komandan (CD4)**
-
-<img src="docs/thumbnail/hiv-vs-aids-C.png" width="270" alt="Alternatif C">
+**Daftar thumbnail jadi**
+- "Apa bedanya HIV dan AIDS?": tema `indigo`, `docs/thumbnail/apa-bedanya-hiv-dan-aids.png` (komposisi `ThumbHivAids`).
