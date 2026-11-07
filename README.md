@@ -71,6 +71,22 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Analogi | `Train(wagons, wagonColor)`, `Station(label, state: open/blocked/virus)`, `Dam(level)`, `Battery(level)`, `City(lit)`, `Shield` |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
 
+### Scene-spec JSON (storyboard → video)
+
+Storyboard bukan gambar mati: tiap scene disimpan sebagai data yang dipakai langsung untuk membangun video. Halaman artifact storyboard memuat satu blok `<script type="application/json" id="scene-spec">` dengan format:
+
+```json
+{ "episode": 3, "w": 1080, "h": 1920, "scenes": [
+  { "n": 1, "start": 0.0, "end": 8.5, "bg": ["#0A1F3D", "#123A60", "#17506F"],
+    "caption": "satu kalimat ringkas",
+    "objects": [ { "c": "Train", "cx": 540, "cy": 900, "s": 1.2, "props": { "wagons": 2 } } ] }
+] }
+```
+
+Aturan: `c` = nama komponen persis seperti di katalog (library.tsx atau shapes.tsx); `cx, cy, s, rot, op` = posisi dan skala; `props` = parameter khusus komponen. Hanya komponen dari katalog yang boleh dipakai; objek baru ditambahkan ke library dulu. `start/end` dalam detik (dari timeline narasi). Penutup (logo, referensi, dukung dan follow kami) bukan objek JSON; ditandai `{ "n": N, "closing": true }` dan dirender dari template baku.
+
+Proses video: baca link di kolom `storyboard`, ambil JSON itu, petakan `c` ke komponen lewat registry (`import * as L from src/shared/library`), render tiap scene pada `start–end` dengan animasi masuk standar (fade/slide halus), pakai `narasi_final` + `link_dubbing` untuk audio dan subtitle. Bila JSON tidak ada, bilang ke Arso, jangan menebak adegan.
+
 Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru laut `#0A1F3D→#123A60→#17506F`, indigo/ungu `#14183F→#2A2A6B→#3B4A8A`, teal-hijau `#08283A→#0F4A5C→#167A80`, biru tua `#0D1B45→#1E2F6B→#2B4A85`.
 
 - Catatan: `src/ep3/shapes.tsx` dan `src/ep5/shapes5.tsx` punya versi lama (bergradasi). Episode baru memakai `src/shared/shapes.tsx`; episode lama boleh diselaraskan kalau dirender ulang.
