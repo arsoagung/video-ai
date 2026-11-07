@@ -13,6 +13,7 @@ export const THEMES = {
   indigo: ['#13194A', '#25306E', '#35487F'] as [string, string, string], // indigo (grafik/tanpa pengobatan)
   teal: ['#082C3A', '#0E5A63', '#1C8A85'] as [string, string, string], // hijau teal (ARV/pemulihan)
   biruLembut: ['#14264A', '#2A4F7E', '#3F7C9A'] as [string, string, string], // biru lembut (penutup)
+  ungu: ['#14183F', '#2A2A6B', '#3B4A8A'] as [string, string, string], // ungu-indigo (di dalam sel)
 };
 
 const useFonts = () => {
@@ -140,5 +141,32 @@ export const ThumbCd4: React.FC = () => (
     </Svg>
     <Pill cx={230} cy={1235} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
     <Pill cx={600} cy={1735} text="CD4" bg={SHAPE_COL.cd4} fg="#0B2A55" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Bagaimana HIV memperbanyak diri?" (tema ungu = adegan dalam sel). Satu virus menjadi banyak salinan.
+export const ThumbReplikasi: React.FC = () => (
+  <ThumbFrame
+    theme="ungu"
+    title={
+      <>
+        Bagaimana <span style={{ color: CORAL }}>HIV</span>
+        <br />
+        memperbanyak
+        <br />
+        diri?
+      </>
+    }
+  >
+    <Svg>
+      <FlatVirus cx={540} cy={985} r={115} />
+      <VArrow x={540} y1={1200} y2={1340} />
+      <FlatVirus cx={345} cy={1520} r={62} rot={15} />
+      <FlatVirus cx={540} cy={1520} r={62} rot={-10} />
+      <FlatVirus cx={735} cy={1520} r={62} rot={25} />
+      <FlatVirus cx={440} cy={1700} r={55} rot={5} />
+      <FlatVirus cx={640} cy={1700} r={55} rot={-20} />
+    </Svg>
+    <Pill cx={225} cy={985} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
   </ThumbFrame>
 );
