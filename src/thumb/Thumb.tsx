@@ -2,6 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remotion';
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
+import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -168,5 +169,42 @@ export const ThumbReplikasi: React.FC = () => (
       <FlatVirus cx={640} cy={1700} r={55} rot={-20} />
     </Svg>
     <Pill cx={225} cy={985} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Apa itu viral load? Bagaimana diukurnya?" (tema teal = danau/grafik di video). Satu gelas air berisi virus = sampel yang diukur.
+const GLASS_VIRUS = [
+  { x: -34, y: 38, r: 13, rot: 10 },
+  { x: 30, y: 8, r: 12, rot: -20 },
+  { x: 4, y: 78, r: 11, rot: 30 },
+];
+const GLASS_DOTS = [[-52, 18], [-8, -6], [52, 52], [-40, 84], [36, 88], [-14, 50], [58, 18], [14, 36]];
+export const ThumbViralLoad: React.FC = () => (
+  <ThumbFrame
+    theme="teal"
+    title={
+      <>
+        Apa itu
+        <br />
+        <span style={{ color: CORAL }}>viral load</span>?
+        <br />
+        Bagaimana
+        <br />
+        diukurnya?
+      </>
+    }
+    glowY={1330}
+  >
+    <Svg>
+      <Glass x={540} y={1330} s={3} level={0.82} water={WATER_CLEAR}>
+        {GLASS_DOTS.map(([x, y], i) => (
+          <VDot key={i} x={x} y={y} r={5} />
+        ))}
+        {GLASS_VIRUS.map((v, i) => (
+          <FlatVirus key={i} cx={v.x} cy={v.y} r={v.r} rot={v.rot} />
+        ))}
+      </Glass>
+    </Svg>
+    <Pill cx={540} cy={1815} text="viral load" bg="#FFA48E" fg="#4A1A10" size={56} />
   </ThumbFrame>
 );
