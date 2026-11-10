@@ -10,6 +10,7 @@ import { Plate2 } from './ep2/World2';
 import { Overlay2, Ep2Full } from './ep2/Overlay2';
 import { Ep3Full } from './ep3/Ep3';
 import { Ep5Full } from './ep5/Ep5';
+import { Ep3ArvFull } from './ep3arv/Ep3Arv';
 import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, THUMB_W, THUMB_H } from './thumb/Thumb';
 
 const useFonts = () => {
@@ -87,6 +88,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Overlay2" component={Overlay2} durationInFrames={2460} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep2Full" component={Ep2Full} durationInFrames={2460} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep3Full" component={Ep3Full} durationInFrames={3591} fps={FPS} width={1080} height={1920} />
+    <Composition id="Ep3ArvFull" component={Ep3ArvFull} durationInFrames={3339} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbHivAids" component={ThumbHivAids} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbCd4" component={ThumbCd4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
