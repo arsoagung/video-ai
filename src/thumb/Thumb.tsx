@@ -3,6 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
+import { Capsule } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -206,5 +207,31 @@ export const ThumbViralLoad: React.FC = () => (
       </Glass>
     </Svg>
     <Pill cx={540} cy={1815} text="viral load" bg="#FFA48E" fg="#4A1A10" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Bagaimana ARV menghentikan replikasi HIV?" (tema teal = ARV). Kapsul ARV -> satu virus; salinan virus hanya bayangan pucat (replikasi terhenti, virus tidak digambarkan lenyap).
+export const ThumbArv: React.FC = () => (
+  <ThumbFrame
+    theme="teal"
+    title={
+      <>
+        Bagaimana <span style={{ color: TEAL }}>ARV</span>
+        <br />
+        menghentikan
+        <br />
+        replikasi <span style={{ color: CORAL }}>HIV</span>?
+      </>
+    }
+    glowY={1250}
+  >
+    <Svg>
+      <Capsule cx={540} cy={1000} s={2.3} rot={-12} />
+      <VArrow x={540} y1={1150} y2={1310} />
+      <FlatVirus cx={540} cy={1520} r={105} />
+      <FlatVirus cx={235} cy={1520} r={70} dim={0.2} rot={20} />
+      <FlatVirus cx={845} cy={1520} r={70} dim={0.2} rot={-15} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
   </ThumbFrame>
 );
