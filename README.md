@@ -11,7 +11,14 @@ Alur: baris GSheet "Antrean Konten AI (HIV)" -> mp3 dari Drive -> segmentasi jed
 - Lapisan label: `npx remotion render out/bundle Overlay out/overlay.webm --codec=vp8 --pixel-format=yuva420p --image-format=png`
 - Gabung: lihat `scripts/hybrid.sh`
 
-Catatan: `public/vo.mp3` (suara) tidak disimpan di repo; ambil dari Drive per baris.
+Catatan: episode lama (ep2, ep3, ep3arv, ep5) memakai `public/vo.mp3` yang tidak disimpan di repo. Episode baru memakai konvensi kode episode di bawah.
+
+## Konvensi episode baru (kode episode dari kolom `episode`, mis. S1E3)
+- **Kode episode** = isi kolom `episode` di sheet, persis (S1E3). Dipakai untuk semua nama berkas.
+- **Suara**: `public/vo/<KODE>.mp3` (mis. `public/vo/S1E3.mp3`), di-commit dan di-push oleh Arso ke repo. Kolom `link_dubbing` tidak dipakai lagi. Kalau berkas belum ada di repo, proses episode itu batal dan bilang mp3 mana yang kurang; jangan mengunduh dari Drive.
+- **Kode**: folder `src/<kode huruf kecil>/` (mis. `src/s1e3/`), composition `<KODE>Full` (mis. `S1E3Full`), audio dibaca dengan `staticFile('vo/<KODE>.mp3')`. Jangan memakai `vo.mp3`.
+- **Render**: `scripts/render_<kode huruf kecil>.sh` (potongan berurutan di `out/<KODE>/`, bisa dilanjut, gabung + loudnorm), hasil akhir `out/<KODE>.mp4`. Pola mengikuti `scripts/render_ep3arv.sh`.
+- Folder dan skrip episode lama tidak diubah.
 
 ---
 
@@ -95,7 +102,7 @@ Field opsional per scene untuk legenda (lihat aturan "Legenda" di atas): `"legen
 
 Aturan: `c` = nama komponen persis seperti di katalog (library.tsx atau shapes.tsx); `cx, cy, s, rot, op` = posisi dan skala; `props` = parameter khusus komponen. Hanya komponen dari katalog yang boleh dipakai; objek baru ditambahkan ke library dulu. `start/end` dalam detik (dari timeline narasi). Penutup (logo, referensi, dukung dan follow kami) bukan objek JSON; ditandai `{ "n": N, "closing": true }` dan dirender dari template baku.
 
-Proses video: baca teks di sel `storyboard` (bukan link/artifact), ambil JSON yang ada setelah baris `=== SCENE-SPEC JSON ===`, petakan `c` ke komponen lewat registry (`import * as L from src/shared/library`), render tiap scene pada `start–end` dengan animasi masuk standar (fade/slide halus), pakai `narasi_final` + `link_dubbing` untuk audio dan subtitle. Bila penanda atau JSON-nya tidak ada/tidak valid, bilang ke Arso, jangan menebak adegan.
+Proses video: baca teks di sel `storyboard` (bukan link/artifact), ambil JSON yang ada setelah baris `=== SCENE-SPEC JSON ===`, petakan `c` ke komponen lewat registry (`import * as L from src/shared/library`), render tiap scene pada `start–end` dengan animasi masuk standar (fade/slide halus), pakai `narasi_final` + `public/vo/<KODE>.mp3` untuk audio dan subtitle. Bila penanda atau JSON-nya tidak ada/tidak valid, bilang ke Arso, jangan menebak adegan.
 
 Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru laut `#0A1F3D→#123A60→#17506F`, indigo/ungu `#14183F→#2A2A6B→#3B4A8A`, teal-hijau `#08283A→#0F4A5C→#167A80`, biru tua `#0D1B45→#1E2F6B→#2B4A85`.
 
@@ -103,7 +110,7 @@ Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru
 
 ## Penutup: referensi jurnal + logo (wajib, berlaku untuk SEMUA episode baru)
 
-**Sumber data per baris sheet "Antrean"**: kolom `status` (hanya baris `diproses` yang dikerjakan), `episode`, `judul`, `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (suara), `storyboard` (teks scene-spec). Tidak ada kolom lain yang dibaca. Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
+**Sumber data per baris sheet "Antrean"**: kolom `status` (hanya baris `diproses` yang dikerjakan), `episode`, `judul`, `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (tidak dipakai untuk episode baru; suara dari `public/vo/<episode>.mp3`), `storyboard` (teks scene-spec). Tidak ada kolom lain yang dibaca. Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
 
 **Saat kalimat penutup terakhir** (kalimat paling akhir di `narasi_final`) mulai diucapkan, tampilkan tiga hal bersamaan, bertahan sampai video selesai:
 1. **Referensi jurnal**: isi kolom `referensi` apa adanya (judul sesuai baris pertama kolom, saat ini "Referensi"; entri bernomor, DOI/URL sebagai teks kecil). Jangan dipotong, diringkas, atau diganti. Kalau kolom kosong, panel referensi tidak ditampilkan, logo tetap muncul.
