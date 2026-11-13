@@ -668,3 +668,28 @@ export const CompareBars: React.FC<P & { w?: number; labelA?: string; labelB?: s
     </G>
   );
 };
+
+// Gawang bola (tampak depan) dengan jaring. net 0..1 = kembungnya jaring saat bola masuk. Lebar nominal 360.
+export const Goal: React.FC<P & { net?: number }> = ({ net = 0, ...p }) => (
+  <G {...p}>
+    <rect x={-170} y={-100} width={340} height={200} rx={14} fill={LIB_COL.light} fillOpacity={0.14} />
+    {Array.from({ length: 7 }, (_, i) => (
+      <line key={`v${i}`} x1={-140 + i * 46.7} y1={-90} x2={-140 + i * 46.7} y2={92} stroke={LIB_COL.light} strokeOpacity={0.28} strokeWidth={4} />
+    ))}
+    {Array.from({ length: 5 }, (_, i) => (
+      <line key={`h${i}`} x1={-160} y1={-70 + i * 40} x2={160} y2={-70 + i * 40 + net * 16} stroke={LIB_COL.light} strokeOpacity={0.28} strokeWidth={4} />
+    ))}
+    <path d="M -170 100 V -100 H 170 V 100" fill="none" stroke={LIB_COL.light} strokeWidth={14} strokeLinecap="round" strokeLinejoin="round" />
+  </G>
+);
+
+// Bola sepak sederhana (bulat putih dengan bercak segi lima gelap).
+export const Ball: React.FC<P> = (p) => (
+  <G {...p}>
+    <circle r={40} fill="#fff" />
+    <polygon points="0,-16 15,-5 9,13 -9,13 -15,-5" fill={LIB_COL.ink} />
+    <circle cx={-30} cy={-14} r={8} fill={LIB_COL.ink} />
+    <circle cx={30} cy={-14} r={8} fill={LIB_COL.ink} />
+    <circle cx={0} cy={34} r={8} fill={LIB_COL.ink} />
+  </G>
+);
