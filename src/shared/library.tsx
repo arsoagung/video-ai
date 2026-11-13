@@ -646,3 +646,25 @@ export const Gear: React.FC<P & { rust?: number }> = ({ rust = 0, ...p }) => (
       ))}
   </G>
 );
+
+// Perbandingan dua bar tanpa angka: bar B = 2,35x panjang bar A; garis putus-putus penanda "2x" panjang A.
+// pa, pb = kemajuan isi bar (0..1); mark = 0..1 opacity penanda 2x.
+export const CompareBars: React.FC<P & { w?: number; labelA?: string; labelB?: string; pa?: number; pb?: number; mark?: number }> = ({ w = 760, labelA = 'A', labelB = 'B', pa = 1, pb = 1, mark = 0, ...p }) => {
+  const LA = 190;
+  const LB = LA * 2.35;
+  const x0 = -w / 2;
+  return (
+    <G {...p}>
+      <text x={x0} y={-84} fontFamily={FONT} fontSize={32} fontWeight={600} fill={LIB_COL.light}>{labelA}</text>
+      <rect x={x0} y={-62} width={w} height={44} rx={22} fill="#fff" fillOpacity={0.12} />
+      <rect x={x0} y={-62} width={Math.max(44, LA * pa)} height={44} rx={22} fill={LIB_COL.good} />
+      <text x={x0} y={46} fontFamily={FONT} fontSize={32} fontWeight={600} fill={LIB_COL.light}>{labelB}</text>
+      <rect x={x0} y={68} width={w} height={44} rx={22} fill="#fff" fillOpacity={0.12} />
+      <rect x={x0} y={68} width={Math.max(44, LB * pb)} height={44} rx={22} fill={LIB_COL.bad} />
+      <g opacity={mark}>
+        <line x1={x0 + LA * 2} y1={-70} x2={x0 + LA * 2} y2={124} stroke={LIB_COL.dnaA} strokeWidth={5} strokeDasharray="12 10" strokeLinecap="round" />
+        <text x={x0 + LA * 2} y={158} textAnchor="middle" fontFamily={FONT} fontSize={32} fontWeight={800} fill={LIB_COL.dnaA}>2x</text>
+      </g>
+    </G>
+  );
+};
