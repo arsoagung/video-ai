@@ -5,7 +5,7 @@ import { ez, lerp, win, out3, sine, back, in3 } from '../motion';
 import * as L from '../shared/library';
 import { LIB_COL } from '../shared/library';
 import { FlatVirus, FlatCell, SHAPE_COL } from '../shared/shapes';
-import { CUES, CLOSE, SCENE_T, T, EP_DUR } from './timeline';
+import { CUES, CLOSE, SCENE_T, T, CL, EP_DUR } from './timeline';
 
 export const S1E7_FRAMES = Math.ceil(EP_DUR * FPS);
 
@@ -282,7 +282,7 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 5 (kalimat 8-10): dalam hitungan minggu viral load naik, CD4 turun, risiko penularan naik
 const Scene5: React.FC<{ t: number }> = ({ t }) => {
-  const s8 = T(8), s9 = T(9), s10 = T(10);
+  const s8 = T(8), s9 = CL(8, 2), s10 = CL(8, 3); // s8: viral load (klausa 1 mulai s8+1,4), s9: CD4, s10: risiko penularan
   const enter = pr(t, s8 - 0.1, s8 + 0.7, back);
   const days = Math.floor(pr(t, s8 + 0.3, s8 + 3.4, sine) * 28.99);
   const prog = pr(t, s8 + 0.7, s8 + 4.6, sine);
@@ -308,7 +308,7 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 6 (kalimat 11): bertahun-tahun tak terdeteksi (kalender penuh, garis rendah) lalu ARV dihentikan -> naik
 const Scene6: React.FC<{ t: number }> = ({ t }) => {
-  const s11 = T(11);
+  const s11 = T(9);
   const enter = pr(t, s11 - 0.1, s11 + 0.7, back);
   const days = Math.floor(pr(t, s11 + 0.4, s11 + 3.2, sine) * 35.99);
   const prog = keyed(t, [[s11 + 0.5, 0], [s11 + 3.4, 0.8], [s11 + 4.0, 0.8], [s11 + 5.4, 1]]);
@@ -325,7 +325,7 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 7 (kalimat 12): studi SMART; bar henti obat > 2x bar lanjut
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
-  const s12 = T(12);
+  const s12 = T(10);
   const enter = pr(t, s12 - 0.1, s12 + 0.8, back);
   const stamp = pr(t, s12 + 1.2, s12 + 1.8, back);
   const pa = pr(t, s12 + 2.0, s12 + 3.2, sine);
@@ -340,16 +340,20 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 8 (kalimat 13-15): sehat != HIV hilang; ARV rutin (kalender + kapsul); jangan berhenti sendiri
+// ---- Adegan 8 (kalimat 11-13): sehat != HIV hilang; ARV rutin (kapsul terbang dari strip ke kalender, tiap kapsul menandai satu hari); jangan berhenti sendiri
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
-  const s13 = T(13), s14 = T(14), s15 = T(15);
+  const s13 = T(11), s14 = T(12), s15 = T(13);
   const enter = pr(t, s13 - 0.1, s13 + 0.8, back);
   const beat = 1 + 0.12 * Math.max(0, Math.sin(t * 6)) ** 2;
   const vi = pr(t, s13 + 1.2, s13 + 2.0, back);
   const swap = pr(t, s14 - 0.1, s14 + 0.7, sine);
-  const days = Math.floor(pr(t, s14 + 0.3, s14 + 1.9, sine) * 7.99);
-  const drops = [0, 1, 2].map((i) => pr(t, s14 + 0.3 + i * 0.5, s14 + 1.0 + i * 0.5, in3));
-  const taken = drops.filter((d) => d >= 1).length;
+  const NC = 7;
+  const CAL = { x: 420, y: 760, s: 1.5 };
+  const cell = (i: number) => ({ x: CAL.x + CAL.s * (-96 + (i % 7) * 32), y: CAL.y + CAL.s * -34 });
+  const launch = (i: number) => s14 + 0.3 + i * 0.3;
+  const fly = Array.from({ length: NC }, (_, i) => pr(t, launch(i), launch(i) + 0.7, sine));
+  const arrived = fly.filter((f) => f >= 1).length;
+  const launched = fly.filter((f) => f > 0).length;
   const x = pr(t, s15 + 0.2, s15 + 0.9, back);
   const personOp = enter * (1 - swap);
   return (
@@ -357,22 +361,26 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
       <L.Person cx={420} cy={820} s={1.7 * enter} op={personOp} />
       <L.Heart cx={620} cy={690} s={0.55 * beat * enter} op={personOp} />
       <Virus x={760} y={1020} r={40 * vi} dim={0.5 * vi * (1 - swap)} t={t} />
-      <L.Calendar cx={420} cy={760} s={1.5 * swap} op={swap} marks={Array.from({ length: days }, (_, i) => i)} markColor={LIB_COL.good} />
-      <L.Blister cx={700} cy={1180} s={1.2 * swap} op={swap} taken={taken + 3} />
-      {drops.map((d, i) => (d > 0 && d < 1 ? <L.Capsule key={i} cx={lerp(560 + i * 70, 640 + i * 84, d)} cy={lerp(780, 1160, d)} s={0.6} rot={d * 140} op={1 - d * 0.3} /> : null))}
+      <L.Calendar cx={CAL.x} cy={CAL.y} s={CAL.s * swap} op={swap} marks={Array.from({ length: arrived }, (_, i) => i)} markColor={LIB_COL.good} />
+      <L.Blister cx={700} cy={1180} s={1.2 * swap} op={swap} taken={Math.min(6, launched)} />
+      {fly.map((f, i) => {
+        if (f <= 0 || f >= 1) return null;
+        const c = cell(i);
+        return <L.Capsule key={i} cx={lerp(700, c.x, f)} cy={lerp(1150, c.y, f) - Math.sin(f * Math.PI) * 120} s={lerp(0.6, 0.2, f)} rot={lerp(-30, 90, f)} op={1 - 0.4 * f} />;
+      })}
       <L.CrossBadge cx={760} cy={1130} s={0.8 * x} op={x} />
     </>
   );
 };
 
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
-  { a: 12.9, b: 14.5, text: 'ARV = rem', k: 'arv', x: 540, y: 760, size: 42 },
-  { a: 19.8, b: 21.6, text: 'virus tetap ada', k: 'virus', x: 540, y: 1090, size: 38 },
-  { a: 22.4, b: 25.8, text: 'kadar obat', k: 'arv', x: 640, y: 480, size: 38 },
-  { a: 40.0, b: 42.3, text: 'risiko penularan', k: 'neutral', x: 540, y: 1395, size: 34 },
-  { a: 46.2, b: 48.2, text: 'ARV dihentikan', k: 'arv', x: 540, y: 1290, size: 40 },
-  { a: 49.0, b: 52.5, text: 'Studi SMART', k: 'neutral', x: 540, y: 760, size: 40 },
-  { a: 60.2, b: 62.8, text: 'HIV belum hilang', k: 'virus', x: 760, y: 1110, size: 36 },
+  { a: T(4) + 0.1, b: T(5) - 0.2, text: 'ARV = rem', k: 'arv', x: 540, y: 760, size: 42 },
+  { a: CL(5, 1) + 1.0, b: T(6) - 0.2, text: 'virus tetap ada', k: 'virus', x: 540, y: 1090, size: 38 },
+  { a: T(6) + 0.3, b: T(7) - 0.2, text: 'kadar obat', k: 'arv', x: 640, y: 480, size: 38 },
+  { a: CL(8, 3) + 0.4, b: T(9) - 0.2, text: 'risiko penularan', k: 'neutral', x: 540, y: 1395, size: 34 },
+  { a: T(9) + 3.9, b: T(10) - 0.2, text: 'ARV dihentikan', k: 'arv', x: 540, y: 1290, size: 40 },
+  { a: T(10) + 0.6, b: T(10) + 4.2, text: 'Studi SMART', k: 'neutral', x: 540, y: 760, size: 40 },
+  { a: T(11) + 1.3, b: T(12) - 0.2, text: 'HIV belum hilang', k: 'virus', x: 760, y: 1110, size: 36 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -542,9 +550,9 @@ export const S1E7Full: React.FC = () => {
           <Pills t={t} />
           <LegendBox t={t} a={T(5) + 0.1} b={T(5) + 4.6} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.1} b={T(8) - 0.3} items={[['#B9C3D0', 'Sel laten'], ['#FF9C85', 'Virus HIV']]} />
-          <LegendBox t={t} a={T(8) + 0.1} b={T(9) - 0.3} items={[[LIB_COL.bad, 'Viral load']]} />
-          <LegendBox t={t} a={T(9) + 0.1} b={T(11) - 0.3} items={[[LIB_COL.bad, 'Viral load'], ['#8FBDF7', 'Sel CD4']]} />
-          <LegendBox t={t} a={T(11) + 0.3} b={T(12) - 0.3} items={[[LIB_COL.good, 'Viral load'], [LIB_COL.bad, 'Batas terdeteksi']]} />
+          <LegendBox t={t} a={T(8) + 0.1} b={CL(8, 2) + 0.2} items={[[LIB_COL.bad, 'Viral load']]} />
+          <LegendBox t={t} a={CL(8, 2) + 0.1} b={T(9) - 0.3} items={[[LIB_COL.bad, 'Viral load'], ['#8FBDF7', 'Sel CD4']]} />
+          <LegendBox t={t} a={T(9) + 0.3} b={T(10) - 0.3} items={[[LIB_COL.good, 'Viral load'], [LIB_COL.bad, 'Batas terdeteksi']]} />
         </AbsoluteFill>
       )}
       {subOn && cue && (

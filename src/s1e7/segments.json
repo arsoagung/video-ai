@@ -1,0 +1,290 @@
+{
+ "code": "S1E7",
+ "duration": 71.71,
+ "speech": [
+  0,
+  71.55
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Kalau sudah merasa sehat, mengapa ARV tidak boleh dihentikan?",
+   "a": 0,
+   "b": 3.91,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Kalau sudah merasa sehat,",
+     "a": 0,
+     "b": 1.37,
+     "anchored": true
+    },
+    {
+     "text": "mengapa ARV tidak boleh dihentikan?",
+     "a": 1.75,
+     "b": 3.91,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Bayangkan mobil yang melaju di jalan menurun.",
+   "a": 4.36,
+   "b": 7.34,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Bayangkan mobil yang melaju di jalan menurun.",
+     "a": 4.36,
+     "b": 7.34,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Rem membuatnya tetap terkendali, tetapi tidak menghilangkan jalan menurunnya.",
+   "a": 7.76,
+   "b": 12.48,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Rem membuatnya tetap terkendali,",
+     "a": 7.76,
+     "b": 9.65,
+     "anchored": true
+    },
+    {
+     "text": "tetapi tidak menghilangkan jalan menurunnya.",
+     "a": 9.87,
+     "b": 12.48,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Begitu juga ARV.",
+   "a": 12.9,
+   "b": 14.21,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Begitu juga ARV.",
+     "a": 12.9,
+     "b": 14.21,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Obat ini menekan HIV agar tidak bereplikasi, tetapi tidak menghilangkan seluruh virus dari tubuh.",
+   "a": 14.61,
+   "b": 21.45,
+   "pauseAfter": 0.47,
+   "clauses": [
+    {
+     "text": "Obat ini menekan HIV agar tidak bereplikasi,",
+     "a": 14.61,
+     "b": 17.82,
+     "anchored": true
+    },
+    {
+     "text": "tetapi tidak menghilangkan seluruh virus dari tubuh.",
+     "a": 18.12,
+     "b": 21.45,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Saat ARV dihentikan, kadar obat dalam darah menurun.",
+   "a": 21.91,
+   "b": 25.69,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Saat ARV dihentikan,",
+     "a": 21.91,
+     "b": 23.45,
+     "anchored": true
+    },
+    {
+     "text": "kadar obat dalam darah menurun.",
+     "a": 23.81,
+     "b": 25.69,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "HIV yang bersembunyi di dalam sel laten bisa kembali aktif dan memperbanyak diri.",
+   "a": 26.05,
+   "b": 30.71,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "HIV yang bersembunyi di dalam sel laten bisa kembali aktif dan memperbanyak diri.",
+     "a": 26.05,
+     "b": 30.71,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Dalam hitungan minggu, viral load atau jumlah virus dalam darah dapat meningkat, CD4 yang membantu pertahanan tubuh bisa menurun, dan risiko penularan dapat kembali meningkat.",
+   "a": 31.1,
+   "b": 42.17,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Dalam hitungan minggu,",
+     "a": 31.1,
+     "b": 32.24,
+     "anchored": true
+    },
+    {
+     "text": "viral load atau jumlah virus dalam darah dapat meningkat,",
+     "a": 32.55,
+     "b": 35.84,
+     "anchored": true
+    },
+    {
+     "text": "CD4 yang membantu pertahanan tubuh bisa menurun,",
+     "a": 36.23,
+     "b": 39.29,
+     "anchored": true
+    },
+    {
+     "text": "dan risiko penularan dapat kembali meningkat.",
+     "a": 39.66,
+     "b": 42.17,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Ini juga bisa terjadi pada orang yang bertahun-tahun memiliki viral load tidak terdeteksi.",
+   "a": 42.61,
+   "b": 48.07,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Ini juga bisa terjadi pada orang yang bertahun-tahun memiliki viral load tidak terdeteksi.",
+     "a": 42.61,
+     "b": 48.07,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Penelitian SMART menemukan bahwa penghentian terapi meningkatkan risiko penyakit serius atau kematian lebih dari dua kali lipat dibandingkan pengobatan berkelanjutan.",
+   "a": 48.5,
+   "b": 58.65,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Penelitian SMART menemukan bahwa penghentian terapi meningkatkan risiko penyakit serius atau kematian lebih dari dua kali lipat dibandingkan pengobatan berkelanjutan.",
+     "a": 48.5,
+     "b": 58.65,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Jadi, merasa sehat bukan berarti HIV sudah hilang.",
+   "a": 59.09,
+   "b": 62.75,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Jadi,",
+     "a": 59.09,
+     "b": 59.77,
+     "anchored": false
+    },
+    {
+     "text": "merasa sehat bukan berarti HIV sudah hilang.",
+     "a": 59.77,
+     "b": 62.75,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "ARV perlu diminum rutin.",
+   "a": 63.08,
+   "b": 64.95,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "ARV perlu diminum rutin.",
+     "a": 63.08,
+     "b": 64.95,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Jangan menghentikannya sendiri.",
+   "a": 65.27,
+   "b": 66.95,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Jangan menghentikannya sendiri.",
+     "a": 65.27,
+     "b": 66.95,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Jika ada efek samping atau kendala, konsultasikan dengan tenaga kesehatan.",
+   "a": 67.31,
+   "b": 71.55,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Jika ada efek samping atau kendala,",
+     "a": 67.31,
+     "b": 69.29,
+     "anchored": true
+    },
+    {
+     "text": "konsultasikan dengan tenaga kesehatan.",
+     "a": 69.52,
+     "b": 71.55,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
