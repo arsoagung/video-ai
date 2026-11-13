@@ -40,7 +40,7 @@ Dipakai sebagai default. Referensi implementasi: `src/ep2/` (episode "Apa bedany
 - Tidak dipakai untuk objek yang sudah jelas dari bentuknya (orang, rumah, jam, kalender, hati, klinik). Tidak ada legenda "orang" untuk gambar orang. Tidak dobel dengan label pill untuk hal yang sama.
 - Tampilan: pill kecil soft filled tanpa garis tepi di atas (y=250), titik warna + label, maksimal 3 item, fade halus.
 - Waktu tampil: pertama kali objek abstrak muncul, tampil penuh sekitar 4-5 detik lalu fade. Muncul lagi hanya kalau objeknya kembali setelah jeda panjang (adegan lain tanpa objek itu), atau ada beberapa warna abstrak sekaligus yang rawan tertukar. Untuk grafik/bar, legenda tetap selama grafiknya ada di layar.
-- Sumber: ditulis eksplisit per adegan lewat field `legend` di scene-spec. Adegan tanpa field `legend` = tanpa legenda. Renderer hanya menampilkan isi field itu, tidak menurunkannya sendiri dari objek.
+- Sumber: ditentukan pembuat video per adegan di kode episode (tidak ada scene-spec lagi). Adegan tanpa kebutuhan = tanpa legenda.
 - Episode lama (ep2, ep3arv) masih memakai legenda statis versi lama (`SHOW_LEGEND` / `Legend`); episode baru ikut aturan ini.
 
 **Label (pill)**
@@ -75,7 +75,7 @@ Arso suka desain CD4 dan virus HIV dari video "Kenapa HIV menyerang CD4?" dan in
 
 ### Katalog library objek (`src/shared/library.tsx`)
 
-Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/library.tsx` (storyboard dan video). Jangan menggambar ulang; kalau butuh objek baru, tambahkan dulu ke library, lalu catat di sini. Semua komponen: `cx, cy` (posisi), `s` (skala, default 1), `rot` (derajat), `op` (opacity). Warna dari `LIB_COL` (+ `SHAPE_COL`). Flat, tanpa outline, tanpa wajah.
+Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/library.tsx` (video). Jangan menggambar ulang; kalau butuh objek baru, tambahkan dulu ke library, lalu catat di sini. Semua komponen: `cx, cy` (posisi), `s` (skala, default 1), `rot` (derajat), `op` (opacity). Warna dari `LIB_COL` (+ `SHAPE_COL`). Flat, tanpa outline, tanpa wajah.
 
 | Kelompok | Komponen (parameter khusus) |
 |---|---|
@@ -86,23 +86,16 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Analogi | `Train(wagons, wagonColor)`, `Station(label, state: open/blocked/virus)`, `Dam(level)`, `Battery(level)`, `City(lit)`, `Shield`, `Car(color)`, `Scoreboard(home, away, pending)`, `Gear(rust: 0..1)` |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
 
-### Scene-spec JSON (storyboard → video)
+### Alur pembuatan video (tanpa storyboard)
 
-Storyboard bukan gambar mati: tiap scene disimpan sebagai data yang dipakai langsung untuk membangun video. Sel `storyboard` di sheet berisi teks polos: ringkasan scene, lalu baris pemisah `=== SCENE-SPEC JSON ===`, lalu satu objek JSON dengan format:
+Video dibuat langsung dari `narasi_final` + `public/vo/<KODE>.mp3`. Kolom `storyboard` di sheet TIDAK dibaca dan tidak ada scene-spec JSON. Pembuat video merancang adegan sendiri lalu menuliskannya sebagai kode per episode di `src/<kode huruf kecil>/`.
 
-```json
-{ "episode": 3, "w": 1080, "h": 1920, "scenes": [
-  { "n": 1, "start": 0.0, "end": 8.5, "bg": ["#0A1F3D", "#123A60", "#17506F"],
-    "caption": "satu kalimat ringkas",
-    "objects": [ { "c": "Train", "cx": 540, "cy": 900, "s": 1.2, "props": { "wagons": 2 } } ] }
-] }
-```
-
-Field opsional per scene untuk legenda (lihat aturan "Legenda" di atas): `"legend": [ { "color": "#8FBDF7", "label": "CD4" } ]` (maksimal 3 item) dan `"legend_mode": "intro"` (default: tampil sekitar 4-5 dtk dari awal adegan lalu fade) atau `"hold"` (tetap selama adegan, untuk grafik/bar). Tanpa `legend` = tanpa legenda.
-
-Aturan: `c` = nama komponen persis seperti di katalog (library.tsx atau shapes.tsx); `cx, cy, s, rot, op` = posisi dan skala; `props` = parameter khusus komponen. Hanya komponen dari katalog yang boleh dipakai; objek baru ditambahkan ke library dulu. `start/end` dalam detik (dari timeline narasi). Penutup (logo, referensi, dukung dan follow kami) bukan objek JSON; ditandai `{ "n": N, "closing": true }` dan dirender dari template baku.
-
-Proses video: baca teks di sel `storyboard` (bukan link/artifact), ambil JSON yang ada setelah baris `=== SCENE-SPEC JSON ===`, petakan `c` ke komponen lewat registry (`import * as L from src/shared/library`), render tiap scene pada `start–end` dengan animasi masuk standar (fade/slide halus), pakai `narasi_final` + `public/vo/<KODE>.mp3` untuk audio dan subtitle. Bila penanda atau JSON-nya tidak ada/tidak valid, bilang ke Arso, jangan menebak adegan.
+1. **Timing dari suara.** Ambil durasi D dengan `ffprobe -v error -show_entries format=duration -of csv=p=0 public/vo/<KODE>.mp3`. Deteksi jeda dengan `ffmpeg -hide_banner -nostats -i public/vo/<KODE>.mp3 -af silencedetect=noise=-40dB:d=0.25 -f null - 2>&1 | grep silence_`, ambil titik tengah tiap jeda. Kelompokkan kalimat narasi ke adegan (sekitar 6 sampai 9 adegan + penutup, satu ide per adegan). Batas adegan = posisi proporsional (karakter narasi sampai akhir kalimat / total karakter x D), lalu digeser ke titik tengah jeda terdekat kalau jaraknya <= 1,5 dtk. Jangan memetakan jeda ke-N ke kalimat ke-N: koma juga menghasilkan jeda, jadi jumlah jeda lebih banyak dari jumlah kalimat. Hasilnya disimpan di `timeline.ts` dan dipakai untuk adegan dan subtitle.
+2. **Cek library dulu, baru menggambar.** Untuk tiap objek yang dibutuhkan, cocokkan dengan katalog di atas dan export di `src/shared/shapes.tsx` / `src/shared/library.tsx` (termasuk variasi lewat props). Kalau ADA: impor dan pakai, jangan menggambar ulang SVG-nya. Kalau TIDAK ADA: buat komponen baru di `src/shared/library.tsx` (flat, tanpa outline, tanpa wajah, parameter `cx, cy, s, rot, op`, warna dari `LIB_COL`/`SHAPE_COL`, gaya mengikuti komponen sejenis), tambahkan barisnya ke tabel katalog di atas, jalankan `npx tsc --noEmit`, commit terpisah (`library: tambah <Nama>`), `git pull --rebase origin main`, lalu push, supaya bisa dipakai episode lain. Jangan membuat varian baru dari virus HIV, sel CD4, atau komandan, dan jangan mengubah komponen lain.
+3. **Animasi harus bercerita.** Tiap kalimat/ide di narasi punya aksi visual yang menjelaskan isi kalimat itu (benda bergerak ke tujuan, menempel, terhalang, berubah, bertambah atau berkurang, menyatu, terbelah), disinkronkan ke saat kalimat diucapkan dan diprogram per objek dengan `interpolate`/`spring` (posisi, skala, rotasi, opacity). Gerak hias saja (goyang, melayang, fade masuk) bukan penjelasan dan tidak dihitung. Pola tiap adegan: setup (objek masuk), aksi inti (proses yang diceritakan), hasil (keadaan akhir yang jelas). Contoh untuk "obat menghalangi virus masuk sel": virus mendekat ke sel, perisai/kapsul bergeser menutup titik masuk, virus terpental lalu berhenti. Satu objek memegang satu peran yang sama sepanjang episode. Pagar konten tetap: tanpa perang/ledakan/kehancuran, orang dengan HIV tidak digambarkan sakit atau berbeda, klaim medis selaras dengan `narasi_final`, tanpa karakter berhak cipta.
+4. **Legenda.** Ikuti aturan "Legenda" di atas. Pembuat video memutuskan sendiri adegan mana yang butuh (hanya visual abstrak) dan menuliskannya di kode adegan.
+5. **Cek sebelum push.** Render still frame minimal tiga per adegan (awal, tengah, akhir) plus penutup. Ketiganya harus menunjukkan perubahan keadaan yang berarti, bukan objek yang hanya bergeser sedikit, dan tiap kalimat narasi harus punya aksi yang bisa ditunjuk di frame. Perbaiki dulu kalau belum.
+6. **Struktur kode.** Folder `src/<kode huruf kecil>/` dengan `timeline.ts` dan komponen adegan yang ditulis per episode (acuan struktur: `src/ep3/` dan `src/ep5/`). Jangan memakai renderer generik yang memetakan daftar objek statis seperti `src/ep3arv/` (hasilnya objek diam dengan fade). Penutup (logo, referensi, Dukung dan follow kami) mengikuti bagian "Penutup" di bawah; komponen penutupnya boleh disalin dari `src/ep3arv/Ep3Arv.tsx`.
 
 Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru laut `#0A1F3D→#123A60→#17506F`, indigo/ungu `#14183F→#2A2A6B→#3B4A8A`, teal-hijau `#08283A→#0F4A5C→#167A80`, biru tua `#0D1B45→#1E2F6B→#2B4A85`.
 
@@ -110,7 +103,7 @@ Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru
 
 ## Penutup: referensi jurnal + logo (wajib, berlaku untuk SEMUA episode baru)
 
-**Sumber data per baris sheet "Antrean"**: kolom `status` (hanya baris `diproses` yang dikerjakan), `episode`, `judul`, `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (tidak dipakai untuk episode baru; suara dari `public/vo/<episode>.mp3`), `storyboard` (teks scene-spec). Tidak ada kolom lain yang dibaca. Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
+**Sumber data per baris sheet "Antrean"**: kolom `status` (task video hanya mengerjakan baris `siap`), `episode`, `judul`, `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (tidak dipakai untuk episode baru; suara dari `public/vo/<episode>.mp3`), `storyboard` (tidak dibaca; alur tanpa storyboard). Tidak ada kolom lain yang dibaca. Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
 
 **Saat kalimat penutup terakhir** (kalimat paling akhir di `narasi_final`) mulai diucapkan, tampilkan tiga hal bersamaan, bertahan sampai video selesai:
 1. **Referensi jurnal**: isi kolom `referensi` apa adanya (judul sesuai baris pertama kolom, saat ini "Referensi"; entri bernomor, DOI/URL sebagai teks kecil). Jangan dipotong, diringkas, atau diganti. Kalau kolom kosong, panel referensi tidak ditampilkan, logo tetap muncul.
