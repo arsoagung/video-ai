@@ -8,8 +8,6 @@ import { Helix, wavePath, COL } from '../ep3/shapes';
 // Animasi penjelasan S1E3, disusun dari narasi_final (bukan dari objek/gerak storyboard).
 // Tiap scene = fungsi waktu lokal u (detik sejak scene mulai). Zona aman: y 300-1400 (subtitle di y=1462).
 
-export const SCENE_T = [0, 5.37, 16.65, 19.52, 24.12, 28.31, 35.11, 41.82, 45.72, 50.35, 55.31, 63.84, 71.0, 72.51];
-
 export const SCENE_GRAD: [string, string, string][] = [
   ['#0A1F3D', '#123A60', '#17506F'],
   ['#14183F', '#2A2A6B', '#3B4A8A'],
@@ -38,6 +36,18 @@ export const LEGENDS: Record<number, { items: { color: string; label: string }[]
 
 const TEAL = '#72E3D3';
 const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+// pemetaan waktu piecewise-linear [waktu baru, waktu rancangan]; setelah titik terakhir kecepatan 1.
+// Dipakai di adegan multi-kalimat supaya aksi tetap menempel ke saat kalimatnya diucapkan setelah jeda disusun ulang.
+const warp = (u: number, pts: [number, number][]) => {
+  for (let i = 1; i < pts.length; i++) {
+    if (u <= pts[i][0]) {
+      const [a0, b0] = pts[i - 1], [a1, b1] = pts[i];
+      return b0 + ((u - a0) / (a1 - a0)) * (b1 - b0);
+    }
+  }
+  const [a, b] = pts[pts.length - 1];
+  return b + (u - a);
+};
 
 // ---------------- komponen kecil ----------------
 export const Pill: React.FC<{ x: number; y: number; text: string; bg?: string; fg?: string; size?: number; op?: number }> = ({ x, y, text, bg = '#EAF2FB', fg = '#12304F', size = 32, op = 1 }) => {
@@ -178,7 +188,8 @@ const Rail: React.FC<{ u: number; blocked: number[]; inK?: number; dim?: number[
   </g>
 );
 
-const S1: React.FC<{ u: number }> = ({ u }) => {
+const S1: React.FC<{ u: number }> = ({ u: uu }) => {
+  const u = warp(uu, [[0, 0], [4.4, 4.4], [4.91, 4.65]]);
   const A = [1.2, 2.1, 3.0, 3.9];
   // token virus bergerak antar stasiun
   let x = -80;
@@ -350,8 +361,9 @@ const S5: React.FC<{ u: number }> = ({ u }) => {
 // ================= S6: TLD = tiga obat (35.11 - 41.82) =================
 const S6: React.FC<{ u: number }> = ({ u }) => {
   const tabK = ez(u, 0.2, 0.9, back);
-  const split = ez(u, 1.1, 2.0, out3);
-  const tgt: [number, number, number, string, number][] = [[230, 1010, -10, 'tenofovir', 1.8], [540, 1090, 0, 'lamivudin', 3.1], [850, 1010, 10, 'dolutegravir', 4.2]];
+  const split = ez(u, 1.6, 2.5, out3);
+  // nama obat muncul tepat saat diucapkan (klausa: tenofovir 3,1 dtk, lamivudin 4,2 dtk, dolutegravir 5,1 dtk sejak awal kalimat)
+  const tgt: [number, number, number, string, number][] = [[230, 1010, -10, 'tenofovir', 3.1], [540, 1090, 0, 'lamivudin', 4.2], [850, 1010, 10, 'dolutegravir', 5.1]];
   return (
     <g>
       <g opacity={1 - split}>
@@ -360,9 +372,9 @@ const S6: React.FC<{ u: number }> = ({ u }) => {
           TLD
         </text>
       </g>
-      <Pill x={540} y={560} text="TLD" bg={TEAL} fg="#063F38" size={44} op={ez(u, 1.5, 2.1)} />
+      <Pill x={540} y={560} text="TLD" bg={TEAL} fg="#063F38" size={44} op={ez(u, 1.9, 2.5)} />
       {tgt.map(([x, y, r, n, tt], i) => {
-        const k = ez(u, 1.2 + i * 0.1, 2.2 + i * 0.1, out3);
+        const k = ez(u, 1.7 + i * 0.1, 2.7 + i * 0.1, out3);
         const hi = 1 + 0.12 * win(u, tt - 0.1, tt + 0.9, 0.2);
         return (
           <g key={i}>
@@ -404,7 +416,8 @@ const Gate: React.FC<{ x: number; y: number; op?: number; flick?: number }> = ({
   </g>
 );
 
-const S10: React.FC<{ u: number }> = ({ u }) => {
+const S10: React.FC<{ u: number }> = ({ u: uu }) => {
+  const u = warp(uu, [[0, 0], [5.06, 4.4]]);
   const p1 = win(u, 0, 4.4, 0.45);
   const p2 = win(u, 4.4, 8.6, 0.5);
   // bagian 1: banyak virus tertahan gerbang kombinasi
@@ -452,7 +465,8 @@ const S10: React.FC<{ u: number }> = ({ u }) => {
 };
 
 // ================= S11: viral load turun, virus tetap ada (63.84 - 71.0) =================
-const S11: React.FC<{ u: number }> = ({ u }) => {
+const S11: React.FC<{ u: number }> = ({ u: uu }) => {
+  const u = warp(uu, [[0, 0], [5.2, 5.2], [5.67, 5.45]]);
   const pr = ez(u, 0.8, 4.8, sine);
   const dots = Array.from({ length: 24 }, (_, i) => i);
   return (
