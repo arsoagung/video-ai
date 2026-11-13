@@ -339,9 +339,9 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
 };
 
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
-  { a: 36.8, b: 39.2, text: 'dosis terlewat', k: 'neutral', x: 540, y: 1190, size: 38 },
-  { a: 45.4, b: 47.2, text: 'tahan obat', k: 'virus', x: 800, y: 1170, size: 40 },
-  { a: 55.6, b: 56.1, text: 'pengobatan', k: 'neutral', x: 760, y: 1320, size: 38 },
+  { a: T(8) + 1.5, b: T(9), text: 'dosis terlewat', k: 'neutral', x: 540, y: 1190, size: 38 },
+  { a: T(10) + 3.4, b: T(11) - 0.05, text: 'tahan obat', k: 'virus', x: 800, y: 1170, size: 40 },
+  { a: T(12) + 4.8, b: T(13), text: 'pengobatan', k: 'neutral', x: 760, y: 1320, size: 38 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>

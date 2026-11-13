@@ -1,0 +1,294 @@
+{
+ "code": "S1E5",
+ "duration": 73.09,
+ "speech": [
+  0,
+  72.92
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Bagaimana kalau virus yang sudah berhasil ditekan, kembali memperbanyak diri hanya karena obat tidak diminum teratur?",
+   "a": 0,
+   "b": 7.05,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Bagaimana kalau virus yang sudah berhasil ditekan,",
+     "a": 0,
+     "b": 2.9,
+     "anchored": true
+    },
+    {
+     "text": "kembali memperbanyak diri hanya karena obat tidak diminum teratur?",
+     "a": 3.08,
+     "b": 7.05,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Itulah salah satu alasan mengapa ARV harus diminum rutin.",
+   "a": 7.49,
+   "b": 11.66,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Itulah salah satu alasan mengapa ARV harus diminum rutin.",
+     "a": 7.49,
+     "b": 11.66,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Bayangkan ARV seperti persediaan yang menjaga pertahanan tubuh tetap bekerja.",
+   "a": 12.09,
+   "b": 17.13,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Bayangkan ARV seperti persediaan yang menjaga pertahanan tubuh tetap bekerja.",
+     "a": 12.09,
+     "b": 17.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Obat ini menghambat proses yang digunakan HIV untuk membuat salinan dirinya.",
+   "a": 17.5,
+   "b": 22.26,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Obat ini menghambat proses yang digunakan HIV untuk membuat salinan dirinya.",
+     "a": 17.5,
+     "b": 22.26,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Setelah diminum, obat diserap tubuh dan mulai bekerja.",
+   "a": 22.64,
+   "b": 26.32,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Setelah diminum,",
+     "a": 22.64,
+     "b": 23.61,
+     "anchored": true
+    },
+    {
+     "text": "obat diserap tubuh dan mulai bekerja.",
+     "a": 23.8,
+     "b": 26.32,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Tubuh perlahan membuang obat sehingga kadarnya menurun.",
+   "a": 26.67,
+   "b": 29.89,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Tubuh perlahan membuang obat sehingga kadarnya menurun.",
+     "a": 26.67,
+     "b": 29.89,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Lalu dosis berikutnya menjaga kadar obat tetap cukup untuk menghambat virus.",
+   "a": 30.24,
+   "b": 35.15,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Lalu dosis berikutnya menjaga kadar obat tetap cukup untuk menghambat virus.",
+     "a": 30.24,
+     "b": 35.15,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Kalau dosis sering terlewat, perlindungan obat bisa melemah.",
+   "a": 35.47,
+   "b": 39.03,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Kalau dosis sering terlewat,",
+     "a": 35.47,
+     "b": 36.89,
+     "anchored": true
+    },
+    {
+     "text": "perlindungan obat bisa melemah.",
+     "a": 37.3,
+     "b": 39.03,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "HIV berpeluang memperbanyak diri kembali.",
+   "a": 39.36,
+   "b": 41.85,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "HIV berpeluang memperbanyak diri kembali.",
+     "a": 39.36,
+     "b": 41.85,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Dalam kondisi tertentu, virus yang lebih tahan terhadap obat juga bisa berkembang.",
+   "a": 42.17,
+   "b": 47.11,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Dalam kondisi tertentu,",
+     "a": 42.17,
+     "b": 43.5,
+     "anchored": true
+    },
+    {
+     "text": "virus yang lebih tahan terhadap obat juga bisa berkembang.",
+     "a": 43.83,
+     "b": 47.11,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Bukan berarti sekali lupa langsung membuat virus kebal.",
+   "a": 47.42,
+   "b": 50.65,
+   "pauseAfter": 0.26,
+   "clauses": [
+    {
+     "text": "Bukan berarti sekali lupa langsung membuat virus kebal.",
+     "a": 47.42,
+     "b": 50.65,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Tetapi kebiasaan melewatkan obat dapat meningkatkan risiko kegagalan pengobatan.",
+   "a": 50.91,
+   "b": 56.01,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Tetapi kebiasaan melewatkan obat dapat meningkatkan risiko kegagalan pengobatan.",
+     "a": 50.91,
+     "b": 56.01,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Karena itu, ARV harus diminum sesuai jadwal.",
+   "a": 56.34,
+   "b": 59.94,
+   "pauseAfter": 0.27,
+   "clauses": [
+    {
+     "text": "Karena itu,",
+     "a": 56.34,
+     "b": 57.3,
+     "anchored": true
+    },
+    {
+     "text": "ARV harus diminum sesuai jadwal.",
+     "a": 57.45,
+     "b": 59.94,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Bukan karena obat harus selalu ada setiap detik, tetapi karena kadar obat perlu dijaga agar HIV tetap terkendali.",
+   "a": 60.21,
+   "b": 68,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Bukan karena obat harus selalu ada setiap detik,",
+     "a": 60.21,
+     "b": 62.74,
+     "anchored": true
+    },
+    {
+     "text": "tetapi karena kadar obat perlu dijaga agar HIV tetap terkendali.",
+     "a": 63.04,
+     "b": 68,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Konsistensi menjaga obat tetap bekerja, dan virus tetap tertekan.",
+   "a": 68.31,
+   "b": 72.92,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Konsistensi menjaga obat tetap bekerja,",
+     "a": 68.31,
+     "b": 70.82,
+     "anchored": true
+    },
+    {
+     "text": "dan virus tetap tertekan.",
+     "a": 71.17,
+     "b": 72.92,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
