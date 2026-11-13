@@ -1,4 +1,5 @@
 import { S1E5Full, S1E5_FRAMES } from './s1e5/S1E5';
+import { S1E7Full, S1E7_FRAMES } from './s1e7/S1E7';
 import React from 'react';
 import { AbsoluteFill, Audio, Composition, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import { Board, FONT, FPS, INK, PAPER } from './Board';
@@ -91,6 +92,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Ep3Full" component={Ep3Full} durationInFrames={3591} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep3ArvFull" component={Ep3ArvFull} durationInFrames={3339} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E5Full" component={S1E5Full} durationInFrames={S1E5_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="S1E7Full" component={S1E7Full} durationInFrames={S1E7_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbHivAids" component={ThumbHivAids} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbCd4" component={ThumbCd4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
