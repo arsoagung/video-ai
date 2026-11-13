@@ -4,8 +4,8 @@ export const EP_AUDIO = 77.64; // durasi suara
 export const EP_DUR = 83.64; // + ekor diam 6 dtk agar referensi terbaca
 export const CLOSE = 72.51; // mulai kalimat penutup terakhir: tampil logo + referensi + Dukung dan follow kami
 
-// batas adegan sesuai scene-spec (adegan 1..8), disesuaikan dengan timeline suara asli
-export const SCENE_T = [0, 5.37, 16.65, 19.52, 24.12, 35.11, 63.84, 71.0, CLOSE];
+// batas adegan (13 adegan, disusun dari kalimat narasi_final; lihat Scenes.tsx)
+export const SCENE_T = [0, 5.37, 16.65, 19.52, 24.12, 28.31, 35.11, 41.82, 45.72, 50.35, 55.31, 63.84, 71.0, CLOSE];
 
 export const SEGS: { a: number; b: number; text: string }[] = [
   { a: 0.00, b: 4.78, text: "Bagaimana tiga obat dalam satu tablet bisa menghentikan HIV memperbanyak diri?" },

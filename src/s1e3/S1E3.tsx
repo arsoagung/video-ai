@@ -2,10 +2,8 @@ import React from 'react';
 import { AbsoluteFill, Audio, Img, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import { FONT, FPS } from '../Board';
 import { ez, lerp, win, out3, sine, back } from '../motion';
-import * as L from '../shared/library';
-import { FlatVirus } from '../shared/shapes';
 import { CUES, CLOSE, SCENE_T } from './timeline';
-import { SCENES, Obj } from './spec';
+import { renderScene, SCENE_GRAD, LEGENDS } from './Scenes';
 
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fontsS1E3'));
@@ -54,7 +52,7 @@ const parseRefs = (raw: string) => {
 type Grad = [string, string, string];
 const CLOSE_GRAD: Grad = ['#0A2540', '#0F3B66', '#0B4F63'];
 const GRADS: { t: number; c: Grad }[] = [
-  ...SCENES.map((s, i) => ({ t: SCENE_T[i], c: s.bg as Grad })),
+  ...SCENE_GRAD.map((g, i) => ({ t: SCENE_T[i], c: g })),
   { t: CLOSE, c: CLOSE_GRAD },
 ];
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
@@ -79,21 +77,20 @@ const settle = (t: number) => {
   return 1 + z;
 };
 
-// legenda: hanya dari field `legend` pada scene-spec (pill kecil soft filled, y=250, fade halus)
+// legenda: hanya dari LEGENDS per scene (pill kecil soft filled, y=250, fade halus)
 const LegendBar: React.FC<{ t: number }> = ({ t }) => (
   <>
-    {SCENES.map((sc, i) => {
-      if (!sc.legend || sc.legend.length === 0) return null;
+    {Object.entries(LEGENDS).map(([key, lg]) => {
+      const i = Number(key);
       const t0 = SCENE_T[i], t1 = SCENE_T[i + 1];
-      const hold = sc.legend_mode === 'hold';
-      const a = t0 + 0.45;
-      const b = hold ? t1 - 0.1 : Math.min(t1 - 0.1, t0 + 5.0);
-      const k = Math.min(ez(t, a, a + 0.6), 1 - ez(t, b - 0.6, b));
+      const a = t0 + 0.3;
+      const b = lg.mode === 'hold' ? t1 - 0.1 : Math.min(t1 - 0.1, t0 + 5.0);
+      const k = Math.min(ez(t, a, a + 0.5), 1 - ez(t, b - 0.5, b));
       if (k < 0.01) return null;
       return (
         <div key={i} style={{ position: 'absolute', top: 250, width: '100%', display: 'flex', justifyContent: 'center', opacity: 0.92 * k }}>
           <div style={{ display: 'flex', gap: 30, background: 'rgba(8,24,46,0.38)', borderRadius: 999, padding: '12px 30px', fontFamily: FONT, fontWeight: 600, fontSize: 26, color: '#EAF2FB', whiteSpace: 'nowrap' }}>
-            {sc.legend.map((it, j) => (
+            {lg.items.map((it, j) => (
               <span key={j} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ width: 18, height: 18, borderRadius: 9, background: it.color }} />
                 {it.label}
@@ -126,54 +123,12 @@ const Sub: React.FC<{ text: string }> = ({ text }) => (
   </>
 );
 
-// ---------------- render scene dari scene-spec ----------------
-const REG: Record<string, React.FC<any>> = L as any;
-
-const NUDGE: Record<string, number> = { FlatVirus: 1340, Clock: 1360, Calendar: 1340 };
-
-const ObjView: React.FC<{ o: Obj; idx: number; sceneN: number; t: number; t0: number; t1: number }> = ({ o, idx, sceneN, t, t0, t1 }) => {
-  const st = t0 + 0.35 + idx * 0.32;
-  const k = ez(t, st, st + 0.7, back);
-  if (k < 0.005) return null;
-  const fade = Math.min(1, k * 1.6);
-  const baseOp = o.op ?? 1;
-  const rise = (1 - k) * 36;
-  const bob = Math.sin(t * 1.6 + idx * 1.7) * 6;
-  // penyesuaian kecil: objek yang jatuh ke zona subtitle (y>1462) digeser naik agar subtitle tidak menutupi animasi
-  const baseY = NUDGE[o.c] !== undefined && o.cy > 1380 ? NUDGE[o.c] : o.cy;
-  const cy = baseY + rise + bob;
-  const s = o.s ?? 1;
-  const props: Record<string, any> = { ...(o.props || {}) };
-  let cx = o.cx;
-
-  if (o.c === 'FlatVirus') {
-    return <FlatVirus cx={cx} cy={cy} r={(props.r ?? 80) * s * (0.6 + 0.4 * k)} dim={baseOp * fade} rot={t * 6 + idx * 40} />;
-  }
-  const Comp = REG[o.c];
-  if (!Comp) return null;
-  let sc = s * (0.8 + 0.2 * k);
-  if (o.c === 'Train') cx = lerp(o.cx - 380, o.cx, ez(t, st, st + 2.0, out3));
-  if (o.c === 'Enzyme') sc *= 1 + 0.03 * Math.sin(t * 3.2);
-  if (o.c === 'LineChart') props.progress = ez(t, t0 + 1.0, t0 + Math.min(5.5, t1 - t0 - 1.0), sine);
-  if (o.c === 'Calendar') {
-    const marks: number[] = props.marks || [];
-    const n = Math.floor(ez(t, t0 + 2.2, t0 + 5.2) * (marks.length + 0.999));
-    props.marks = marks.slice(0, n);
-  }
-  return <Comp cx={cx} cy={cy} s={sc} rot={o.rot ?? 0} op={baseOp * fade} {...props} />;
-};
-
+// ---------------- render scene ----------------
 const SceneView: React.FC<{ i: number; t: number }> = ({ i, t }) => {
   const t0 = SCENE_T[i], t1 = SCENE_T[i + 1];
-  const o = win(t, t0 - 0.0, t1 + 0.25, 0.45);
+  const o = win(t, t0, t1 + 0.25, 0.45);
   if (o < 0.005) return null;
-  return (
-    <g opacity={o}>
-      {SCENES[i].objects.map((ob, j) => (
-        <ObjView key={j} o={ob} idx={j} sceneN={SCENES[i].n} t={t} t0={t0} t1={t1} />
-      ))}
-    </g>
-  );
+  return <g opacity={o}>{renderScene(i, Math.max(0, t - t0))}</g>;
 };
 
 // ================= penutup: logo, referensi, Dukung dan follow kami =================
@@ -324,7 +279,7 @@ export const S1E3Full: React.FC = () => {
       {t < CLOSE + 0.3 && (
         <AbsoluteFill style={{ transform: `scale(${settle(t)})`, transformOrigin: '50% 45%', opacity: 1 - ez(t, CLOSE - 0.1, CLOSE + 0.4) }}>
           <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', left: 0, top: 0 }}>
-            {SCENES.map((_, i) => (
+            {SCENE_GRAD.map((_, i) => (
               <SceneView key={i} i={i} t={t} />
             ))}
           </svg>
