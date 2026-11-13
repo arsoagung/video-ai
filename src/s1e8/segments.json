@@ -1,0 +1,392 @@
+{
+ "code": "S1E8",
+ "duration": 76.51,
+ "speech": [
+  0,
+  76.3
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Hasil tes HIV negatif, apakah berarti pasti bebas HIV?",
+   "a": 0,
+   "b": 4.23,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Hasil tes HIV negatif,",
+     "a": 0,
+     "b": 1.85,
+     "anchored": true
+    },
+    {
+     "text": "apakah berarti pasti bebas HIV?",
+     "a": 2.09,
+     "b": 4.23,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Belum tentu.",
+   "a": 4.68,
+   "b": 5.53,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Belum tentu.",
+     "a": 4.68,
+     "b": 5.53,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Kok bisa?",
+   "a": 5.97,
+   "b": 6.55,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Kok bisa?",
+     "a": 5.97,
+     "b": 6.55,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Bayangkan papan skor yang terlambat diperbarui.",
+   "a": 6.97,
+   "b": 9.54,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Bayangkan papan skor yang terlambat diperbarui.",
+     "a": 6.97,
+     "b": 9.54,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Gol sudah terjadi, tapi angkanya belum muncul.",
+   "a": 9.85,
+   "b": 13.14,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Gol sudah terjadi,",
+     "a": 9.85,
+     "b": 11.1,
+     "anchored": true
+    },
+    {
+     "text": "tapi angkanya belum muncul.",
+     "a": 11.37,
+     "b": 13.14,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Begitu juga dengan tes HIV.",
+   "a": 13.46,
+   "b": 15.24,
+   "pauseAfter": 0.28,
+   "clauses": [
+    {
+     "text": "Begitu juga dengan tes HIV.",
+     "a": 13.46,
+     "b": 15.24,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Setelah virus masuk, tubuh membutuhkan waktu agar jejak infeksi bisa terdeteksi.",
+   "a": 15.53,
+   "b": 20.71,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Setelah virus masuk,",
+     "a": 15.53,
+     "b": 16.65,
+     "anchored": true
+    },
+    {
+     "text": "tubuh membutuhkan waktu agar jejak infeksi bisa terdeteksi.",
+     "a": 16.96,
+     "b": 20.71,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Ada tes yang mencari materi genetik virus, antigen, dan antibodi, yaitu zat yang diproduksi sistem imun untuk melawan virus.",
+   "a": 21.02,
+   "b": 29.18,
+   "pauseAfter": 0.25,
+   "clauses": [
+    {
+     "text": "Ada tes yang mencari materi genetik virus,",
+     "a": 21.02,
+     "b": 23.43,
+     "anchored": true
+    },
+    {
+     "text": "antigen,",
+     "a": 23.65,
+     "b": 24.35,
+     "anchored": false
+    },
+    {
+     "text": "dan antibodi,",
+     "a": 24.35,
+     "b": 25.28,
+     "anchored": false
+    },
+    {
+     "text": "yaitu zat yang diproduksi sistem imun untuk melawan virus.",
+     "a": 25.55,
+     "b": 29.18,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Jeda inilah yang disebut window period atau masa jendela.",
+   "a": 29.43,
+   "b": 33.37,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Jeda inilah yang disebut window period atau masa jendela.",
+     "a": 29.43,
+     "b": 33.37,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Lamanya bergantung pada jenis tes.",
+   "a": 33.66,
+   "b": 35.8,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "Lamanya bergantung pada jenis tes.",
+     "a": 33.66,
+     "b": 35.8,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Tes asam nukleat: 10–33 hari.",
+   "a": 36.2,
+   "b": 39.7,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Tes asam nukleat:",
+     "a": 36.2,
+     "b": 37.17,
+     "anchored": true
+    },
+    {
+     "text": "10–33 hari.",
+     "a": 37.51,
+     "b": 39.7,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Tes antigen dan antibodi di laboratorium: 18–45 hari.",
+   "a": 40,
+   "b": 45.13,
+   "pauseAfter": 0.28,
+   "clauses": [
+    {
+     "text": "Tes antigen dan antibodi di laboratorium:",
+     "a": 40,
+     "b": 42.53,
+     "anchored": true
+    },
+    {
+     "text": "18–45 hari.",
+     "a": 42.77,
+     "b": 45.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Tes antibodi, termasuk banyak tes cepat dan mandiri: 23–90 hari.",
+   "a": 45.41,
+   "b": 51.36,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Tes antibodi,",
+     "a": 45.41,
+     "b": 46.31,
+     "anchored": true
+    },
+    {
+     "text": "termasuk banyak tes cepat dan mandiri:",
+     "a": 46.51,
+     "b": 48.62,
+     "anchored": true
+    },
+    {
+     "text": "23–90 hari.",
+     "a": 48.89,
+     "b": 51.36,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Artinya, hasil negatif yang terlalu dini belum memastikan seseorang tidak terinfeksi.",
+   "a": 51.71,
+   "b": 57.3,
+   "pauseAfter": 0.28,
+   "clauses": [
+    {
+     "text": "Artinya,",
+     "a": 51.71,
+     "b": 50.94,
+     "anchored": false
+    },
+    {
+     "text": "hasil negatif yang terlalu dini belum memastikan seseorang tidak terinfeksi.",
+     "a": 50.94,
+     "b": 57.3,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Jika pernah melakukan aktivitas yang berisiko tertular HIV, ulangi tes setelah masa jendela berakhir.",
+   "a": 57.58,
+   "b": 63.61,
+   "pauseAfter": 0.25,
+   "clauses": [
+    {
+     "text": "Jika pernah melakukan aktivitas yang berisiko tertular HIV,",
+     "a": 57.58,
+     "b": 61.06,
+     "anchored": true
+    },
+    {
+     "text": "ulangi tes setelah masa jendela berakhir.",
+     "a": 61.27,
+     "b": 63.61,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 16,
+   "text": "Jika kejadian tersebut baru berlangsung dalam 72 jam terakhir, segera konsultasikan PEP, obat pencegahan darurat.",
+   "a": 63.87,
+   "b": 71.37,
+   "pauseAfter": 0.27,
+   "clauses": [
+    {
+     "text": "Jika kejadian tersebut baru berlangsung dalam 72 jam terakhir,",
+     "a": 63.87,
+     "b": 67.81,
+     "anchored": true
+    },
+    {
+     "text": "segera konsultasikan PEP,",
+     "a": 67.99,
+     "b": 69.79,
+     "anchored": true
+    },
+    {
+     "text": "obat pencegahan darurat.",
+     "a": 70.05,
+     "b": 71.37,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 17,
+   "text": "Virusnya mungkin sudah ada.",
+   "a": 71.64,
+   "b": 73.36,
+   "pauseAfter": 0.25,
+   "clauses": [
+    {
+     "text": "Virusnya mungkin sudah ada.",
+     "a": 71.64,
+     "b": 73.36,
+     "anchored": true
+    }
+   ],
+   "flags": [
+    "jeda pendek"
+   ]
+  },
+  {
+   "n": 18,
+   "text": "Hanya saja, tes belum mampu mendeteksinya.",
+   "a": 73.61,
+   "b": 76.3,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Hanya saja,",
+     "a": 73.61,
+     "b": 74.45,
+     "anchored": true
+    },
+    {
+     "text": "tes belum mampu mendeteksinya.",
+     "a": 74.64,
+     "b": 76.3,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

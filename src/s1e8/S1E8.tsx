@@ -330,8 +330,8 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
   const s14 = T(14);
   const enter = pr(t, s14, s14 + 0.7, back);
   const clockOn = pr(t, s14 + 0.1, s14 + 0.8, back);
-  const check = pr(t, s14 + 0.8, s14 + 1.4, back) * (1 - 0.65 * pr(t, s14 + 2.0, s14 + 2.6));
-  const reveal = pr(t, s14 + 2.0, s14 + 2.8, back);
+  const check = pr(t, s14 + 1.0, s14 + 1.6, back) * (1 - 0.65 * pr(t, s14 + 3.3, s14 + 3.9));
+  const reveal = pr(t, s14 + 3.3, s14 + 4.1, back);
   return (
     <>
       <L.Person cx={330} cy={930} s={2.0 * enter} op={enter} />
@@ -348,12 +348,12 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   const s15 = T(15);
   const enter = pr(t, s15 - 0.1, s15 + 0.7, back);
   const mark0 = pr(t, s15 + 1.0, s15 + 1.6, back);
-  const days = Math.floor(pr(t, s15 + 3.4, s15 + 7.4, sine) * 34.99);
-  const done = pr(t, s15 + 7.4, s15 + 8.0, back);
+  const days = Math.floor(pr(t, s15 + 3.3, s15 + 5.6, sine) * 34.99);
+  const done = pr(t, s15 + 5.7, s15 + 6.3, back);
   const kit = pr(t, s15 + 3.0, s15 + 3.9, back);
   const kitX = lerp(1100, 790, pr(t, s15 + 3.0, s15 + 4.0));
   const kitOp = 0.45 + 0.55 * done;
-  const spin = pr(t, s15 + 3.2, s15 + 8.0, sine) * 360;
+  const spin = pr(t, s15 + 3.2, s15 + 6.3, sine) * 360;
   const color = done > 0.5 ? LIB_COL.good : SHAPE_COL.receptor;
   const marks = days > 0 ? Array.from({ length: days }, (_, i) => i + 1) : [];
   if (mark0 > 0.3) marks.unshift(0);
@@ -377,11 +377,11 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const laps = pr(t, s16 + 0.3, s16 + 3.7, sine) * 3;
   const frac = laps >= 3 ? 0.999 : laps % 1 || 0.001;
   const hrs = Math.round(pr(t, s16 + 0.3, s16 + 3.7, sine) * 72);
-  const clinic = pr(t, s16 + 3.8, s16 + 4.6, back);
-  const person = pr(t, s16 + 4.0, s16 + 4.8, back);
-  const mv = pr(t, s16 + 6.4, s16 + 8.2, sine);
-  const shield = pr(t, s16 + 8.4, s16 + 9.3, back);
-  const pulse = 1 + 0.04 * Math.sin(Math.max(0, t - (s16 + 9.3)) * 4);
+  const clinic = pr(t, s16 + 4.0, s16 + 4.8, back);
+  const person = pr(t, s16 + 4.2, s16 + 5.0, back);
+  const mv = pr(t, s16 + 5.4, s16 + 7.0, sine);
+  const shield = pr(t, s16 + 7.2, s16 + 8.0, back);
+  const pulse = 1 + 0.04 * Math.sin(Math.max(0, t - (s16 + 8.0)) * 4);
   return (
     <>
       <L.Clock cx={300} cy={680} s={1.4 * enter} op={enter} frac={frac} hour={3} />
@@ -417,13 +417,13 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: T(8) + 3.1, b: T(9) - 0.3, text: 'antigen', k: 'virus', x: 540, y: 1105, size: 32 },
   { a: T(8) + 3.9, b: T(9) - 0.3, text: 'antibodi', k: 'neutral', x: 860, y: 1105, size: 32 },
   { a: T(8) + 5.0, b: T(9) - 0.3, text: 'sistem imun', k: 'neutral', x: 250, y: 1380, size: 32 },
-  { a: T(9) + 0.9, b: T(10) - 0.2, text: 'window period', k: 'recep', x: 540, y: 1180, size: 46 },
-  { a: T(9) + 2.7, b: T(10) - 0.2, text: 'masa jendela', k: 'neutral', x: 540, y: 1290, size: 42 },
+  { a: T(9) + 1.5, b: T(10) - 0.2, text: 'window period', k: 'recep', x: 540, y: 1180, size: 46 },
+  { a: T(9) + 2.8, b: T(10) - 0.2, text: 'masa jendela', k: 'neutral', x: 540, y: 1290, size: 42 },
   { a: T(14) + 0.3, b: T(15) - 0.2, text: 'terlalu dini', k: 'neutral', x: 790, y: 1240, size: 36 },
-  { a: T(15) + 3.4, b: T(15) + 7.0, text: 'ulangi tes', k: 'neutral', x: 790, y: 1240, size: 40 },
+  { a: T(15) + 3.2, b: T(15) + 6.4, text: 'ulangi tes', k: 'neutral', x: 790, y: 1240, size: 40 },
   { a: T(15) + 3.6, b: T(16) - 0.2, text: 'masa jendela', k: 'recep', x: 330, y: 1290, size: 36 },
-  { a: T(16) + 6.2, b: T(17) - 0.2, text: 'PEP', k: 'arv', x: 540, y: 1340, size: 44 },
-  { a: T(16) + 3.9, b: T(16) + 6.0, text: 'konsultasi', k: 'neutral', x: 250, y: 1340, size: 36 },
+  { a: T(16) + 5.4, b: T(17) - 0.2, text: 'PEP', k: 'arv', x: 540, y: 1340, size: 44 },
+  { a: T(16) + 4.3, b: T(16) + 5.3, text: 'konsultasi', k: 'neutral', x: 250, y: 1340, size: 36 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -602,7 +602,7 @@ export const S1E8Full: React.FC = () => {
         </div>
       )}
       <Closing t={t} />
-      <Audio src={staticFile('vo/S1E8.mp3')} />
+      <Audio src={staticFile("vo/S1E8.mp3")} />
     </AbsoluteFill>
   );
 };
