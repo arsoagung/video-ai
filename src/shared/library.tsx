@@ -607,3 +607,42 @@ export const Document: React.FC<P & { kind?: 'paper' | 'card'; stamp?: boolean }
     {stamp && <CheckBadge cx={kind === 'paper' ? 56 : 100} cy={kind === 'paper' ? 84 : 62} s={0.4} />}
   </G>
 );
+
+// ---- Tambahan (analogi kendaraan, papan skor, mesin) ----
+export const Car: React.FC<P & { color?: string }> = ({ color = LIB_COL.glass, ...p }) => (
+  <G {...p}>
+    <path d="M -120 22 V -8 Q -120 -22 -104 -24 L -62 -30 L -38 -66 Q -32 -74 -20 -74 H 40 Q 52 -74 58 -66 L 84 -30 L 106 -24 Q 120 -20 120 -6 V 22 Z" fill={color} />
+    <path d="M -28 -62 L -50 -32 H 6 V -62 Z" fill={LIB_COL.ink} fillOpacity={0.35} />
+    <path d="M 18 -62 V -32 H 72 L 50 -60 Z" fill={LIB_COL.ink} fillOpacity={0.35} />
+    <circle cx={-66} cy={24} r={26} fill={LIB_COL.ink} />
+    <circle cx={-66} cy={24} r={11} fill={LIB_COL.light} />
+    <circle cx={66} cy={24} r={26} fill={LIB_COL.ink} />
+    <circle cx={66} cy={24} r={11} fill={LIB_COL.light} />
+  </G>
+);
+
+export const Scoreboard: React.FC<P & { home?: number; away?: number; pending?: boolean }> = ({ home = 1, away = 0, pending = false, ...p }) => (
+  <G {...p}>
+    <rect x={-8} y={96} width={16} height={64} fill={LIB_COL.track} />
+    <rect x={-72} y={154} width={144} height={16} rx={8} fill={LIB_COL.track} />
+    <rect x={-190} y={-100} width={380} height={200} rx={28} fill={LIB_COL.ink} />
+    <rect x={-170} y={-80} width={340} height={160} rx={18} fill="#0B2A47" />
+    <text x={-84} y={36} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={104} fill={LIB_COL.dnaA}>{pending ? '-' : home}</text>
+    <text x={0} y={30} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={84} fill={LIB_COL.light}>:</text>
+    <text x={84} y={36} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={104} fill={LIB_COL.dnaA}>{pending ? '-' : away}</text>
+  </G>
+);
+
+export const Gear: React.FC<P & { rust?: number }> = ({ rust = 0, ...p }) => (
+  <G {...p}>
+    {Array.from({ length: 10 }, (_, i) => (
+      <rect key={i} x={-16} y={-106} width={32} height={36} rx={8} fill={LIB_COL.track} transform={`rotate(${i * 36})`} />
+    ))}
+    <circle r={86} fill={LIB_COL.track} />
+    <circle r={30} fill="#0F3B66" />
+    {rust > 0 &&
+      [[-44, -30, 26], [38, -48, 18], [50, 28, 24], [-30, 54, 20]].map(([x, y, r], i) => (
+        <circle key={i} cx={x} cy={y} r={r * rust} fill="#E39A5B" opacity={0.5 + 0.5 * rust} />
+      ))}
+  </G>
+);
