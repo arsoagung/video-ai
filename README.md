@@ -26,7 +26,15 @@ Dipakai sebagai default. Referensi implementasi: `src/ep2/` (episode "Apa bedany
 - Warna gradien bergeser halus (±1,4 dtk) tiap pergantian scene, lihat `GRADS` di `World2.tsx`: biru laut (pembuka/sel), indigo (grafik CD4), ungu kebiruan (dua jalur), teal (viral load vs CD4), biru laut (rantai), hijau teal (ARV), biru lembut (penutup). Palet tetap dingin dan tenang, jangan merah/gelap mengancam.
 - Di atas gradien ada glow radial lembut di tengah.
 
-**Tidak ada indikator tahap/step pill bernomor.** Alur dibuat mengalir. Hanya ada legenda kecil statis di atas (y=250): titik biru = CD4, titik koral = Virus HIV (`SHOW_LEGEND` di `Overlay2.tsx`, matikan dengan `false`). Muncul saat CD4 pertama disebut, hilang menjelang penutup.
+**Tidak ada indikator tahap/step pill bernomor.** Alur dibuat mengalir. Legenda hanya dipakai untuk visual abstrak (aturan di bawah).
+
+**Legenda (kontekstual, hanya untuk hal abstrak)**
+- Fungsi: menerjemahkan visual yang artinya tidak bisa ditebak dari bentuknya, misalnya DNA, enzim (mis. protease), virus, sel CD4, partikel/titik berwarna, grafik atau bar dengan 2 garis/warna atau lebih, dan analogi yang tidak langsung ketebak. Isinya mengikuti konteks adegan, bukan selalu HIV dan CD4.
+- Tidak dipakai untuk objek yang sudah jelas dari bentuknya (orang, rumah, jam, kalender, hati, klinik). Tidak ada legenda "orang" untuk gambar orang. Tidak dobel dengan label pill untuk hal yang sama.
+- Tampilan: pill kecil soft filled tanpa garis tepi di atas (y=250), titik warna + label, maksimal 3 item, fade halus.
+- Waktu tampil: pertama kali objek abstrak muncul, tampil penuh sekitar 4-5 detik lalu fade. Muncul lagi hanya kalau objeknya kembali setelah jeda panjang (adegan lain tanpa objek itu), atau ada beberapa warna abstrak sekaligus yang rawan tertukar. Untuk grafik/bar, legenda tetap selama grafiknya ada di layar.
+- Sumber: ditulis eksplisit per adegan lewat field `legend` di scene-spec. Adegan tanpa field `legend` = tanpa legenda. Renderer hanya menampilkan isi field itu, tidak menurunkannya sendiri dari objek.
+- Episode lama (ep2, ep3arv) masih memakai legenda statis versi lama (`SHOW_LEGEND` / `Legend`); episode baru ikut aturan ini.
 
 **Label (pill)**
 - Pill bulat terisi (tanpa garis tepi), bayangan lembut, teks tebal 800. Tidak harus tersambung garis ke objek.
@@ -83,6 +91,8 @@ Storyboard bukan gambar mati: tiap scene disimpan sebagai data yang dipakai lang
 ] }
 ```
 
+Field opsional per scene untuk legenda (lihat aturan "Legenda" di atas): `"legend": [ { "color": "#8FBDF7", "label": "CD4" } ]` (maksimal 3 item) dan `"legend_mode": "intro"` (default: tampil sekitar 4-5 dtk dari awal adegan lalu fade) atau `"hold"` (tetap selama adegan, untuk grafik/bar). Tanpa `legend` = tanpa legenda.
+
 Aturan: `c` = nama komponen persis seperti di katalog (library.tsx atau shapes.tsx); `cx, cy, s, rot, op` = posisi dan skala; `props` = parameter khusus komponen. Hanya komponen dari katalog yang boleh dipakai; objek baru ditambahkan ke library dulu. `start/end` dalam detik (dari timeline narasi). Penutup (logo, referensi, dukung dan follow kami) bukan objek JSON; ditandai `{ "n": N, "closing": true }` dan dirender dari template baku.
 
 Proses video: baca teks di sel `storyboard` (bukan link/artifact), ambil JSON yang ada setelah baris `=== SCENE-SPEC JSON ===`, petakan `c` ke komponen lewat registry (`import * as L from src/shared/library`), render tiap scene pada `start–end` dengan animasi masuk standar (fade/slide halus), pakai `narasi_final` + `link_dubbing` untuk audio dan subtitle. Bila penanda atau JSON-nya tidak ada/tidak valid, bilang ke Arso, jangan menebak adegan.
@@ -93,7 +103,7 @@ Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru
 
 ## Penutup: referensi jurnal + logo (wajib, berlaku untuk SEMUA episode baru)
 
-**Sumber data per baris sheet "Antrean"**: kolom `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (suara). Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
+**Sumber data per baris sheet "Antrean"**: kolom `status` (hanya baris `diproses` yang dikerjakan), `episode`, `judul`, `narasi_final` (teks + subtitle, sinkron dengan audio), `referensi` (daftar referensi ilmiah), `link_dubbing` (suara), `storyboard` (teks scene-spec). Tidak ada kolom lain yang dibaca. Kolom dicari berdasarkan NAMA header di baris 1, bukan huruf kolom, jadi aman kalau kolom bergeser. Kolom `narasi` (header panjang berisi pola Hook → ... → callback) sudah tidak dipakai; jangan dibaca. Kolom `crosscheck` dan `narasi_revisi` sudah dihapus; jangan dicari. Narasi dibaca langsung dari `narasi_final`, sudah final dari Arso, jangan diubah.
 
 **Saat kalimat penutup terakhir** (kalimat paling akhir di `narasi_final`) mulai diucapkan, tampilkan tiga hal bersamaan, bertahan sampai video selesai:
 1. **Referensi jurnal**: isi kolom `referensi` apa adanya (judul sesuai baris pertama kolom, saat ini "Referensi"; entri bernomor, DOI/URL sebagai teks kecil). Jangan dipotong, diringkas, atau diganti. Kalau kolom kosong, panel referensi tidak ditampilkan, logo tetap muncul.
