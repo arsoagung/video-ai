@@ -276,13 +276,16 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
   const enter = pr(t, s9, s9 + 0.7, back);
   const grow = pr(t, s9 + 0.6, s9 + 2.9, sine);
   const clockOn = pr(t, s9 + 0.4, s9 + 1.1, back);
+  const after = pr(t, s9 + 2.8, s9 + 3.6, sine);
   return (
     <>
-      <line x1={130} y1={1000} x2={950} y2={1000} stroke={LIB_COL.light} strokeOpacity={0.3 * enter} strokeWidth={14} strokeLinecap="round" />
-      <rect x={190} y={972} width={700 * grow} height={56} rx={28} fill={SHAPE_COL.receptor} opacity={0.95} />
-      <Virus x={130} y={1000} r={46 * enter} t={t} />
-      <L.TestKit cx={950} cy={1000} s={0.62 * enter} op={enter} lines={1} />
-      <L.Clock cx={lerp(190, 890, grow)} cy={730} s={1.25 * clockOn} op={clockOn} frac={grow * 0.95} hour={3} />
+      <line x1={100} y1={1000} x2={1030} y2={1000} stroke={LIB_COL.light} strokeOpacity={0.3 * enter} strokeWidth={14} strokeLinecap="round" />
+      <rect x={170} y={972} width={520 * grow} height={56} rx={28} fill={SHAPE_COL.receptor} opacity={0.95} />
+      <rect x={830} y={972} width={190 * after} height={56} rx={28} fill={LIB_COL.good} opacity={0.9} />
+      <polygon points="1000,946 1056,1000 1000,1054" fill={LIB_COL.good} opacity={after} />
+      <Virus x={110} y={1000} r={46 * enter} t={t} />
+      <L.TestKit cx={760} cy={1000} s={0.62 * enter} op={enter} lines={1} />
+      <L.Clock cx={lerp(170, 690, grow)} cy={730} s={1.25 * clockOn} op={clockOn} frac={grow * 0.95} hour={3} />
     </>
   );
 };
@@ -299,12 +302,23 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const axis = pr(t, s10, s10 + 0.8);
   return (
     <>
+      <g opacity={axis}>
+        <line x1={DX(0)} y1={1300} x2={1010} y2={1300} stroke={LIB_COL.light} strokeOpacity={0.5} strokeWidth={5} strokeLinecap="round" />
+        <polygon points="1004,1286 1034,1300 1004,1314" fill={LIB_COL.light} opacity={0.6} />
+        <text x={1034} y={1262} textAnchor="end" fontFamily={FONT} fontWeight={600} fontSize={30} fill={LIB_COL.good}>dan seterusnya</text>
+      </g>
       {[0, 30, 60, 90].map((d) => (
         <g key={d} opacity={axis}>
-          <line x1={DX(d)} y1={560} x2={DX(d)} y2={1290} stroke={LIB_COL.light} strokeOpacity={0.18} strokeWidth={3} strokeDasharray="4 12" />
-          <text x={DX(d)} y={1340} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={32} fill={LIB_COL.light} opacity={0.85}>{d === 90 ? '90 hari' : d}</text>
+          <line x1={DX(d)} y1={560} x2={DX(d)} y2={1296} stroke={LIB_COL.light} strokeOpacity={0.18} strokeWidth={3} strokeDasharray="4 12" />
+          <text x={DX(d)} y={1340} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={32} fill={LIB_COL.light} opacity={0.85}>{d === 90 ? '90' : d}</text>
         </g>
       ))}
+      <defs>
+        <linearGradient id="tail" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#72E3D3" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#72E3D3" stopOpacity="0.25" />
+        </linearGradient>
+      </defs>
       {ROWS.map((r, i) => {
         const on = pr(t, s10 + 0.4 + i * 0.6, s10 + 1.1 + i * 0.6, back);
         const gt = T(r.t0 as number);
@@ -315,7 +329,8 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
         return (
           <g key={i} opacity={on}>
             <text x={DX(0)} y={r.y - 52} fontFamily={FONT} fontWeight={800} fontSize={34} fill="#EAF2FB">{r.label}</text>
-            <rect x={DX(0)} y={r.y - 28} width={DX(90) - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
+            <rect x={DX(0)} y={r.y - 28} width={1020 - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
+            <rect x={DX(r.to) - 28} y={r.y - 28} width={1020 - DX(r.to) + 28} height={56} rx={28} fill="url(#tail)" opacity={tx} />
             <rect x={DX(r.from)} y={r.y - 28} width={Math.max(0, w)} height={56} rx={28} fill={r.color} />
             <text x={i === 2 ? DX(r.from) + 40 : endX + 20} y={r.y + 12} fontFamily={FONT} fontWeight={800} fontSize={36} fill={i === 2 ? '#3A2A00' : '#fff'} opacity={tx} transform={`translate(0 ${(1 - tx) * 10})`}>{r.text}</text>
           </g>
@@ -419,6 +434,7 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: T(8) + 5.0, b: T(9) - 0.3, text: 'sistem imun', k: 'neutral', x: 250, y: 1380, size: 32 },
   { a: T(9) + 1.5, b: T(10) - 0.2, text: 'window period', k: 'recep', x: 540, y: 1180, size: 46 },
   { a: T(9) + 2.8, b: T(10) - 0.2, text: 'masa jendela', k: 'neutral', x: 540, y: 1290, size: 42 },
+  { a: T(9) + 3.2, b: T(10) - 0.2, text: 'hasil lebih andal', k: 'arv', x: 880, y: 1130, size: 34 },
   { a: T(14) + 0.3, b: T(15) - 0.2, text: 'terlalu dini', k: 'neutral', x: 790, y: 1240, size: 36 },
   { a: T(15) + 3.2, b: T(15) + 6.4, text: 'ulangi tes', k: 'neutral', x: 790, y: 1240, size: 40 },
   { a: T(15) + 3.6, b: T(16) - 0.2, text: 'masa jendela', k: 'recep', x: 330, y: 1290, size: 36 },
