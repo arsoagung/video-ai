@@ -75,11 +75,11 @@ export const Antibody: React.FC<P & { color?: string }> = ({ color = LIB_COL.ant
 );
 
 // RNA: untai tunggal bergelombang bermanik. len = panjang.
-export const RNAStrand: React.FC<P & { len?: number; color?: string; amp?: number }> = ({ len = 300, color = LIB_COL.rna, amp = 22, ...p }) => {
+export const RNAStrand: React.FC<P & { len?: number; color?: string; amp?: number; phase?: number }> = ({ len = 300, color = LIB_COL.rna, amp = 22, phase = 0, ...p }) => {
   const n = 48;
   const pts = Array.from({ length: n + 1 }, (_, i) => {
     const x = -len / 2 + (i / n) * len;
-    const y = Math.sin((i / n) * Math.PI * 6) * amp;
+    const y = Math.sin((i / n) * Math.PI * 6 + phase) * amp;
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(' ');
   return (
@@ -87,7 +87,7 @@ export const RNAStrand: React.FC<P & { len?: number; color?: string; amp?: numbe
       <polyline points={pts} fill="none" stroke={color} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
       {Array.from({ length: 9 }, (_, i) => {
         const t = (i + 0.5) / 9;
-        return <circle key={i} cx={-len / 2 + t * len} cy={Math.sin(t * Math.PI * 6) * amp} r={9} fill="#FFE3DA" />;
+        return <circle key={i} cx={-len / 2 + t * len} cy={Math.sin(t * Math.PI * 6 + phase) * amp} r={9} fill="#FFE3DA" />;
       })}
     </G>
   );
@@ -560,10 +560,10 @@ export const Clinic: React.FC<P> = (p) => (
 );
 
 // Gelembung ucap. dots = titik "..." bila tanpa teks; text opsional (pendek). tail 'l' | 'r'.
-export const SpeechBubble: React.FC<P & { text?: string; tail?: 'l' | 'r'; color?: string }> = ({ text, tail = 'l', color = '#fff', ...p }) => (
+export const SpeechBubble: React.FC<P & { text?: string; tail?: 'l' | 'r'; color?: string; w?: number }> = ({ text, tail = 'l', color = '#fff', w = 260, ...p }) => (
   <G {...p}>
-    <rect x={-130} y={-64} width={260} height={128} rx={44} fill={color} />
-    <polygon points={tail === 'l' ? '-70,56 -90,112 -20,60' : '70,56 90,112 20,60'} fill={color} />
+    <rect x={-w / 2} y={-64} width={w} height={128} rx={44} fill={color} />
+    <polygon points={tail === 'l' ? `${-w / 2 + 60},56 ${-w / 2 + 40},112 ${-w / 2 + 110},60` : `${w / 2 - 60},56 ${w / 2 - 40},112 ${w / 2 - 110},60`} fill={color} />
     {text ? (
       <text textAnchor="middle" y={12} fontFamily={FONT} fontSize={40} fontWeight={800} fill={LIB_COL.ink}>
         {text}
