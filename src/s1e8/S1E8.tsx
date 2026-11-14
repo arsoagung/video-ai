@@ -343,12 +343,13 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
         return (
           <g key={i} opacity={on}>
             <text x={DX(0)} y={r.y - 52} fontFamily={FONT} fontWeight={800} fontSize={34} fill="#EAF2FB">{r.label}</text>
-            <text x={XR} y={r.y - 52} textAnchor="end" fontFamily={FONT} fontWeight={800} fontSize={34} fill={C3.yellow} opacity={tx}>{r.text}</text>
             <g mask="url(#fadeR)">
               <rect x={DX(0)} y={r.y - 28} width={1100 - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
               <rect x={DX(r.to) - 28} y={r.y - 28} width={1100 - DX(r.to) + 28} height={56} rx={28} fill={C3.green} opacity={0.9 * tx} />
             </g>
             <rect x={DX(0)} y={r.y - 28} width={redW + (yelW > 0 ? 28 : 0)} height={56} rx={28} fill={C3.red} />
+            <line x1={DX(r.to)} y1={r.y + 30} x2={DX(r.to)} y2={r.y + 50} stroke={C3.yellow} strokeWidth={5} strokeLinecap="round" opacity={tx} />
+            <text x={DX(r.to)} y={r.y + 92} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={36} fill={C3.yellow} opacity={tx}>{r.text}</text>
             {yelW > 0 && <rect x={DX(r.from)} y={r.y - 28} width={yelW + (tx > 0 ? 28 : 0)} height={56} rx={yelW > 0 ? 28 : 0} fill={C3.yellow} />}
           </g>
         );
