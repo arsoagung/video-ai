@@ -203,3 +203,9 @@ Tanpa storyboard. Kode: `src/s1e7/` (`timeline.ts` = kalimat narasi_final + bata
 ## Episode S1E8: "Apa itu window period HIV?"
 
 Tanpa storyboard. Kode: `src/s1e8/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 17/17 batas di jeda (6 digeser manual ke jeda yang cocok); `S1E8.tsx` = 10 adegan animasi + subtitle + penutup). Composition `S1E8Full` (2475 frame, 30 fps; suara 76,51 dtk + ekor 6 dtk). Render: `bash scripts/render_s1e8.sh` -> `out/S1E8.mp4`. Objek library baru: `Goal`, `Ball`. Legenda: adegan 3, 7, 10 (virus). Kolom `referensi` tanpa nomor: nomor tidak ditampilkan.
+
+---
+
+## Episode S1E9: "Apa arti viral load tidak terdeteksi?"
+
+Tanpa storyboard. Kode: `src/s1e9/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E9.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E9Full` (2624 frame, 30 fps; suara 72,83 dtk + jeda, total 87,45 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e9.sh` -> `out/S1E9.mp4`. Objek library baru: `Road`. Legenda: adegan 1, 2, 3, 4 (mobil = virus, grafik), 6, 7, 8, 9, 10, 12. Kalimat 14-15 ditandai ragu oleh retime (jeda 0,18 dtk), batas diterima setelah dicek silencedetect.
