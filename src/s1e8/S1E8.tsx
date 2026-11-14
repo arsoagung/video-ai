@@ -100,6 +100,7 @@ const PK = {
   arv: { bg: '#72E3D3', fg: '#063F38' },
   neutral: { bg: '#EAF2FB', fg: '#12304F' },
   gray: { bg: '#B9C3D0', fg: '#1D2A3A' },
+  imun: { bg: '#B9A2F5', fg: '#26104F' },
 } as const;
 type KK = keyof typeof PK;
 const pillW = (text: string, size: number) => text.length * size * 0.56 + size * 1.5;
@@ -176,7 +177,7 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const enter = pr(t, 0.2, 1.0, back);
   const kitX = lerp(1000, 760, pr(t, 0.3, 1.2));
   const check = pr(t, 1.8, 2.5, back) * (1 - pr(t, s2 + 0.1, s2 + 0.6));
-  const q = pr(t, s2 + 0.4, s2 + 1.1, back);
+  const q = pr(t, s2, s2 + 0.6, back);
   const q2 = pr(t, s3, s3 + 0.6, back);
   const sway = Math.sin(pr(t, s2 + 0.2, s3 + 0.8, sine) * Math.PI * 4) * 4 * (1 - pr(t, s3 + 0.5, s3 + 0.9));
   return (
@@ -184,8 +185,8 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
       <L.Person cx={330} cy={880} s={2.1 * enter} op={enter} rot={sway} />
       <L.TestKit cx={kitX} cy={900} s={1.15} op={pr(t, 0.3, 0.9)} lines={1} />
       <L.CheckBadge cx={760} cy={650} s={0.85 * check} op={check} />
-      <L.SpeechBubble cx={340} cy={560} s={1.0 * q} op={q} text="?" />
-      <L.SpeechBubble cx={720} cy={650} s={(0.85 + 0.12 * Math.sin(t * 7)) * q2} op={q2} text="?" tail="r" />
+      <L.SpeechBubble cx={330} cy={560} s={1.0 * q} op={q} text="Belum tentu." w={400} />
+      <L.SpeechBubble cx={770} cy={600} s={1.0 * q2} op={q2} text="Kok bisa?" w={320} tail="r" />
     </>
   );
 };
@@ -198,9 +199,24 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   const frac = pr(t, s4 + 1.2, s6 - 0.9, sine) * 0.95;
   const goalOn = pr(t, s5 - 0.1, s5 + 0.6, back);
   const k = pr(t, s5 + 0.3, s5 + 1.5, sine);
-  const bx = lerp(840, 310, k), by = lerp(1330, 1150, k) - Math.sin(k * Math.PI) * 160;
-  const inGoal = pr(t, s5 + 1.3, s5 + 1.8);
-  const net = Math.sin(pr(t, s5 + 1.3, s5 + 2.4) * Math.PI);
+  const tHit = s5 + 1.5;
+  const GY = 1197, HY = 1085, G = 1829;
+  const dt = Math.max(0, t - tHit);
+  const t0 = Math.sqrt((2 * (GY - HY)) / G);
+  const fall = (d: number) => {
+    if (d < t0) return HY + 0.5 * G * d * d;
+    let v = G * t0 * 0.35, x = d - t0;
+    for (let i = 0; i < 3; i++) {
+      const T2 = (2 * v) / G;
+      if (x < T2) return GY - (v * x - 0.5 * G * x * x);
+      x -= T2;
+      v *= 0.35;
+    }
+    return GY;
+  };
+  const bx = k < 1 ? lerp(840, 310, k) : lerp(310, 296, pr(t, tHit, tHit + 0.5));
+  const by = k < 1 ? lerp(1330, HY, k) - Math.sin(k * Math.PI) * 160 : fall(dt);
+  const net = 0.9 * Math.sin(pr(t, tHit, tHit + 0.45) * Math.PI) + 0.35 * Math.sin(pr(t, tHit + t0, tHit + t0 + 0.4) * Math.PI);
   const upd = pr(t, s6 - 0.8, s6 - 0.3, back);
   const flash = 1 + 0.08 * Math.sin(upd * Math.PI);
   return (
@@ -208,7 +224,7 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
       <L.Scoreboard cx={540} cy={640} s={1.4 * enter * flash} op={enter} home={upd > 0.5 ? 1 : 0} away={0} />
       <L.Clock cx={850} cy={1130} s={0.85 * clockOn} op={clockOn} frac={frac} hour={3} />
       <L.Goal cx={300} cy={1130} s={1.0 * goalOn} op={goalOn} net={net} />
-      {k > 0 && <L.Ball cx={bx} cy={by} s={0.9 * (1 - 0.35 * inGoal)} rot={k * 480} op={1 - 0.0 * inGoal} />}
+      {k > 0 && <L.Ball cx={bx} cy={by} s={0.9} rot={k < 1 ? k * 480 : 480 + 60 * pr(t, tHit, tHit + 1.2)} />}
     </>
   );
 };
@@ -245,26 +261,27 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
   const vir = pr(t, s8 + 5.3, s8 + 6.1, back);
   const att = (i: number) => pr(t, s8 + 6.9 + i * 0.25, s8 + 7.6 + i * 0.25, sine);
   const pos = (u: number, x0: number, y0: number, x1: number, y1: number) => [lerp(x0, x1, u), lerp(y0, y1, u)] as const;
-  const [rx, ry] = pos(rna, 540, 760, 200, 960);
-  const [ax, ay] = pos(ag, 540, 760, 540, 960);
-  const [bx, by] = pos(ab, 540, 760, 860, 960);
+  const [rx, ry] = pos(rna, 540, 700, 200, 900);
+  const [ax, ay] = pos(ag, 540, 700, 540, 900);
+  const [bx, by] = pos(ab, 540, 700, 860, 900);
   const angs = [-150, -90, -30, 30];
+  const AB = '#B9A2F5';
   return (
     <>
-      <L.BloodTube cx={540} cy={560} s={1.0 * enter} op={enter} level={0.7} />
-      <L.RNAStrand cx={rx} cy={ry} s={0.9 * rna} op={rna} len={210} />
+      <L.BloodTube cx={540} cy={540} s={1.0 * enter} op={enter} level={0.7} />
+      <L.RNAStrand cx={rx + Math.sin(t * 3) * 10 * rna} cy={ry} s={0.9 * rna} op={rna} len={210} phase={-t * 9} />
       <Virus x={ax} y={ay} r={52 * ag} t={t} />
-      <L.Antibody cx={bx} cy={by} s={1.4 * ab} op={ab} rot={20 * (1 - ab)} />
-      <L.BCell cx={250} cy={1240} s={0.95 * b} op={b} />
-      <Virus x={800} y={1240} r={56 * vir} t={t} seed={2} />
+      <L.Antibody cx={bx} cy={by} s={1.4 * ab} op={ab} rot={20 * (1 - ab)} color={AB} />
+      <L.BCell cx={250} cy={1260} s={0.95 * b} op={b} />
+      <Virus x={800} y={1260} r={56 * vir} t={t} seed={2} />
       {[0, 1, 2, 3].map((i) => {
         const e = emit(i), a = att(i);
         if (e <= 0) return null;
         const ang = (angs[i] * Math.PI) / 180;
-        const tx = 800 + Math.cos(ang) * 92, ty = 1240 + Math.sin(ang) * 92;
-        const x0 = 250 + 60 + i * 16, y0 = 1240 - 40 + i * 10;
-        const x = lerp(lerp(x0, 560, e), tx, a), y = lerp(lerp(y0, 1180 + i * 40, e), ty, a);
-        return <L.Antibody key={i} cx={x} cy={y} s={0.8} rot={lerp(lerp(0, 90, e), (angs[i] * 180) / Math.PI / 1 + 90, a)} op={Math.min(1, e * 3)} />;
+        const tx = 800 + Math.cos(ang) * 92, ty = 1260 + Math.sin(ang) * 92;
+        const x0 = 250 + 60 + i * 16, y0 = 1260 - 40 + i * 10;
+        const x = lerp(lerp(x0, 560, e), tx, a), y = lerp(lerp(y0, 1230 + i * 20, e), ty, a);
+        return <L.Antibody key={i} cx={x} cy={y} s={0.8} rot={lerp(lerp(0, 90, e), (angs[i] * 180) / Math.PI / 1 + 90, a)} op={Math.min(1, e * 3)} color={AB} />;
       })}
     </>
   );
@@ -446,10 +463,10 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
 
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
   { a: 1.9, b: 4.3, text: 'negatif', k: 'neutral', x: 760, y: 1160, size: 40 },
-  { a: T(8) + 1.5, b: T(9) - 0.3, text: 'materi genetik', k: 'virus', x: 200, y: 1105, size: 32 },
-  { a: T(8) + 3.1, b: T(9) - 0.3, text: 'antigen', k: 'virus', x: 540, y: 1105, size: 32 },
-  { a: T(8) + 3.9, b: T(9) - 0.3, text: 'antibodi', k: 'neutral', x: 860, y: 1105, size: 32 },
-  { a: T(8) + 5.0, b: T(9) - 0.3, text: 'sistem imun', k: 'neutral', x: 250, y: 1380, size: 32 },
+  { a: T(8) + 1.5, b: T(9) - 0.3, text: 'materi genetik', k: 'virus', x: 200, y: 1010, size: 32 },
+  { a: T(8) + 3.1, b: T(9) - 0.3, text: 'antigen', k: 'virus', x: 540, y: 1010, size: 32 },
+  { a: T(8) + 3.9, b: T(9) - 0.3, text: 'antibodi', k: 'imun', x: 860, y: 1010, size: 32 },
+  { a: T(8) + 5.0, b: T(9) - 0.3, text: 'sistem imun', k: 'imun', x: 250, y: 1405, size: 32 },
   { a: T(9) + 1.5, b: T(10) - 0.2, text: 'window period', k: 'recep', x: 540, y: 1180, size: 46 },
   { a: T(9) + 2.8, b: T(10) - 0.2, text: 'masa jendela', k: 'neutral', x: 540, y: 1290, size: 42 },
   { a: T(14) + 0.3, b: T(15) - 0.2, text: 'terlalu dini', k: 'neutral', x: 790, y: 1240, size: 36 },
