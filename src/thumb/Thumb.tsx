@@ -9,6 +9,13 @@ import { Capsule } from '../shared/library';
 export const THUMB_W = 1080;
 export const THUMB_H = 1920;
 
+// Zona aman profil: grid IG/YT memotong 9:16 jadi 3:4 di tengah (1080x1440 => y 240..1680). Semua konten (logo, judul,
+// ilustrasi, pill) diskalakan masuk ke y 300..1640 dengan margin >= 40 px dari tepi potong. Tata letak di bawah tetap
+// ditulis dalam koordinat kanvas penuh 1080x1920 (susunan sama), lalu ThumbFrame mengecilkannya ke zona aman.
+export const SAFE_S = 0.76;
+export const SAFE_DX = (THUMB_W * (1 - SAFE_S)) / 2; // tetap di tengah horizontal
+export const SAFE_DY = 300 - 90 * SAFE_S; // logo (y=90) jatuh di y=300; dasar ilustrasi (~1850) di ~1638
+
 // Tema latar = gradien dari video (pilih yang sama dengan warna dominan videonya).
 export const THEMES = {
   biru: ['#0A1F3D', '#123A60', '#17506F'] as [string, string, string], // biru laut (pembuka/sel)
@@ -93,9 +100,11 @@ export const ThumbFrame: React.FC<{ theme: keyof typeof THEMES; title: React.Rea
   return (
     <AbsoluteFill>
       <Bg g={THEMES[theme]} glowY={glowY} />
-      <Logo x={390} y={90} w={300} />
-      <div style={{ position: 'absolute', left: 0, width: THUMB_W, top: 320, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 116, lineHeight: 1.12, color: WHITE, whiteSpace: 'nowrap' }}>{title}</div>
-      {children}
+      <AbsoluteFill style={{ transformOrigin: '0 0', transform: `translate(${SAFE_DX}px, ${SAFE_DY}px) scale(${SAFE_S})` }}>
+        <Logo x={390} y={90} w={300} />
+        <div style={{ position: 'absolute', left: 0, width: THUMB_W, top: 320, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 116, lineHeight: 1.12, color: WHITE, whiteSpace: 'nowrap' }}>{title}</div>
+        {children}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
