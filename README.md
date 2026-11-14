@@ -141,16 +141,16 @@ Tema latar video (semuanya gelap, bergradasi, berganti halus antar adegan): biru
 
 ### Kotak Dukung dan follow kami (wajib, di bawah kotak referensi)
 
-Kartu seragam dengan kotak referensi: x=60, lebar 960, radius 40, isi gradien putih transparan (0.14 → 0.08), bayangan lembut, tanpa garis tepi, padding 34/46 px. Judul "Dukung dan follow kami" (800, 38 px, putih). Isi: daftar horizontal 4 baris (tinggi baris 82 px), tiap baris dari kiri ke kanan: **ikon** (kotak membulat 58 px, radius 16, warna khas platform), **nama platform** (600, 30 px, lebar kolom tetap 190 px), **handle/alamat** (800, 28 px, putih, rata kiri tepat setelah kolom nama), dan **tombol aksi** (pill 196x52 px, teks 800 25 px putih, tanpa garis tepi) rata kanan sehingga tepi kanan semua tombol lurus. Handle Instagram, YouTube, dan TikTok: `@maknapositif`. Saweria bukan sistem @, jadi ditulis `saweria.co/maknapositif`.
+Kartu seragam dengan kotak referensi: x=60, lebar 960, radius 40, isi gradien putih transparan (0.14 → 0.08), bayangan lembut, tanpa garis tepi, padding 34/46 px. Judul "Dukung dan follow kami" (800, 38 px, putih). Isi: daftar horizontal 4 baris (tinggi baris 82 px), tiap baris dari kiri ke kanan: **ikon** (kotak membulat 58 px, radius 16, warna khas platform), **nama platform** (600, 30 px, lebar kolom tetap 190 px), **handle/alamat** (800, 28 px, putih, rata kiri tepat setelah kolom nama), dan **tombol aksi** (pill 196x52 px, teks 800 25 px putih, tanpa garis tepi) rata kanan sehingga tepi kanan semua tombol lurus. Handle Instagram, YouTube, dan Threads: `@maknapositif`. Saweria bukan sistem @, jadi ditulis `saweria.co/maknapositif`.
 
 | Baris | Ikon | Tombol |
 |---|---|---|
 | Instagram | gradien khas (#FEDA75 → #FA7E1E → #D62976 → #962FBF → #4F5BD5), glyph kamera putih | "+ Follow", biru #2F80ED |
 | YouTube | merah #FF0000, glyph play putih | "+ Subscribe", biru #2F80ED |
-| TikTok | hitam #0B0B0F, nada musik putih dengan bayangan cyan #25F4EE dan pink #FE2C55 | "+ Follow", biru #2F80ED |
+| Threads | hitam #0B0B0F, glyph "@" putih | "+ Follow", biru #2F80ED |
 | Saweria | oranye #F97316, glyph hati putih | "Donate" dengan ikon hati, oranye #F97316 |
 
-Aturan: Threads TIDAK ditampilkan. Ikon digambar sendiri sebagai glyph sederhana berwarna khas (bukan logo resmi platform). Urutan baris tetap: Instagram, YouTube, TikTok, Saweria. Tidak ada outline/border di elemen mana pun.
+Aturan: TikTok TIDAK ditampilkan lagi (sejak 14 Nov 2026 posting pindah ke Threads). Ikon digambar sendiri sebagai glyph sederhana berwarna khas (bukan logo resmi platform). Urutan baris tetap: Instagram, YouTube, Threads, Saweria. Tidak ada outline/border di elemen mana pun.
 
 Animasi (mengikuti gaya fade-in penutup lain): logo fade-in, lalu kotak referensi, lalu kotak Dukung dan follow kami; baris-baris masuk bergantian dari bawah sambil fade (jeda ±0,15 dtk antar baris). Setelah semua baris tampil: tombol Follow dan Subscribe "ditekan" (mengecil sebentar lalu kembali), lalu teksnya berubah jadi **"Following"** dan **"Subscribed"** dalam warna teal #14B8A6 dengan centang (bukan "Mengikuti"/"Berlangganan"). Tombol Donate berdenyut pelan dan ikon hatinya berdetak, tanpa berubah teks.
 

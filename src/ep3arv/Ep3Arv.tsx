@@ -252,16 +252,13 @@ const Glyph: React.FC<{ name: string }> = ({ name }) => {
         <polygon points="14,12 14,22 23,17" fill="#FF0000" />
       </svg>
     );
-  if (name === 'tt') {
-    const d = 'M19 6 V21 A5 5 0 1 1 14 16 M19 6 C19 10 22 12 26 12';
+  if (name === 'th')
     return (
-      <svg width={34} height={34} viewBox="0 0 34 34" fill="none" strokeWidth={3.4} strokeLinecap="round" strokeLinejoin="round">
-        <path d={d} stroke="#25F4EE" transform="translate(-1.6 -1)" />
-        <path d={d} stroke="#FE2C55" transform="translate(1.6 1)" />
-        <path d={d} stroke="#fff" />
+      <svg width={34} height={34} viewBox="0 0 34 34" fill="none" stroke="#fff" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx={17} cy={17} r={4.6} />
+        <path d="M21.6 17 V19.2 A3 3 0 0 0 27.5 19.2 V17 A10.5 10.5 0 1 0 22 26" />
       </svg>
     );
-  }
   return (
     <svg width={34} height={34} viewBox="0 0 34 34">
       <path d="M17 28 C6 20 4 13 8.5 9.5 C12 7 15.5 8.5 17 11.5 C18.5 8.5 22 7 25.5 9.5 C30 13 28 20 17 28 Z" fill="#fff" />
@@ -278,7 +275,7 @@ const HeartIcon: React.FC<{ s?: number; c?: string }> = ({ s = 1, c = '#fff' }) 
 const PLATFORMS = [
   { key: 'ig', name: 'Instagram', handle: '@maknapositif', icon: 'linear-gradient(135deg,#FEDA75 0%,#FA7E1E 28%,#D62976 55%,#962FBF 78%,#4F5BD5 100%)', btn: '+ Follow', done: 'Following' },
   { key: 'yt', name: 'YouTube', handle: '@maknapositif', icon: '#FF0000', btn: '+ Subscribe', done: 'Subscribed' },
-  { key: 'tt', name: 'TikTok', handle: '@maknapositif', icon: '#0B0B0F', btn: '+ Follow', done: 'Following' },
+  { key: 'th', name: 'Threads', handle: '@maknapositif', icon: '#0B0B0F', btn: '+ Follow', done: 'Following' },
   { key: 'sw', name: 'Saweria', handle: 'saweria.co/maknapositif', icon: '#F97316', btn: 'Donate', done: 'Donate' },
 ];
 
