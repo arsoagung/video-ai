@@ -18,6 +18,7 @@ Catatan: episode lama (ep2, ep3, ep3arv, ep5) memakai `public/vo.mp3` yang tidak
 - **Suara**: `public/vo/<KODE>.mp3` (mis. `public/vo/S1E3.mp3`), di-commit dan di-push oleh Arso ke repo. Kolom `link_dubbing` tidak dipakai lagi. Kalau berkas belum ada di repo, proses episode itu batal dan bilang mp3 mana yang kurang; jangan mengunduh dari Drive.
 - **Kode**: folder `src/<kode huruf kecil>/` (mis. `src/s1e3/`), composition `<KODE>Full` (mis. `S1E3Full`), audio dibaca dengan `staticFile('vo/<KODE>.mp3')`. Jangan memakai `vo.mp3`.
 - **Render**: `scripts/render_<kode huruf kecil>.sh` (potongan berurutan di `out/<KODE>/`, bisa dilanjut, gabung + loudnorm), hasil akhir `out/<KODE>.mp4`. Pola mengikuti `scripts/render_ep3arv.sh`.
+- **Hasil akhir untuk PWA**: setelah render, salin `out/<KODE>.mp4` ke `media/video/<KODE>.mp4` (mis. `media/video/S1E5.mp4`) dan commit. Cover di `media/cover/<KODE>.png`. Nama berkas selalu kode episode persis seperti kolom `episode` di sheet. PWA `app/maknapositif.html` membaca path ini; tidak ada kolom `link_video` di sheet. Jangan push ulang mp4 yang sama kecuali memang direvisi (riwayat git menyimpan semua versi).
 - Folder dan skrip episode lama tidak diubah.
 
 ---
@@ -162,7 +163,7 @@ Animasi (mengikuti gaya fade-in penutup lain): logo fade-in, lalu kotak referens
 
 Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buatkan thumbnail dengan judul ...", langsung bikin dengan template ini, tanpa tanya gaya lagi.
 
-![Contoh: Apa bedanya HIV dan AIDS?](docs/thumbnail/apa-bedanya-hiv-dan-aids.png)
+![Contoh: Apa bedanya HIV dan AIDS?](media/cover/S1E1.png)
 
 **Susunan (atas ke bawah, tetap)**
 1. **Logo Makna Positif** di tengah atas (x=390, y=90, lebar 300), file asli `public/logo-makna-positif.png`, jangan digambar ulang.
@@ -173,21 +174,21 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 
 **Latar berganti per episode**: gradien vertikal 3 warna, dipilih sesuai warna tema video episode itu (`THEMES` di `src/thumb/Thumb.tsx`: `biru`, `indigo`, `teal`, `biruLembut`; tambah tema baru kalau videonya memakai gradien lain). Tanpa bokeh, tanpa garis tepi, ada glow radial lembut.
 
-**Cara membuat thumbnail episode baru**: di `src/thumb/Thumb.tsx` buat komponen baru yang membungkus `<ThumbFrame theme="..." title={...}>` dengan ilustrasi di dalamnya (contoh: `ThumbHivAids`), daftarkan di `src/Root.tsx` (`<Composition id="Thumb..." width={THUMB_W} height={THUMB_H} durationInFrames={1} />`), lalu render: `npx remotion still src/index.ts <IdKomposisi> docs/thumbnail/<judul-slug>.png`. Simpan hasil final per episode di `docs/thumbnail/` dan tambahkan ke daftar di bawah. Jangan menyimpan alternatif yang tidak terpilih.
+**Cara membuat thumbnail episode baru**: di `src/thumb/Thumb.tsx` buat komponen baru yang membungkus `<ThumbFrame theme="..." title={...}>` dengan ilustrasi di dalamnya (contoh: `ThumbHivAids`), daftarkan di `src/Root.tsx` (`<Composition id="Thumb..." width={THUMB_W} height={THUMB_H} durationInFrames={1} />`), lalu render: `npx remotion still src/index.ts <IdKomposisi> media/cover/<KODE>.png`. Simpan hasil final per episode di `media/cover/` dengan nama kode episode (kolom `episode`, mis. `S1E5.png`) dan tambahkan ke daftar di bawah. Jangan menyimpan alternatif yang tidak terpilih.
 
 **Daftar thumbnail jadi**
-- "Apa bedanya HIV dan AIDS?": tema `indigo`, `docs/thumbnail/apa-bedanya-hiv-dan-aids.png` (komposisi `ThumbHivAids`).
-- "Kenapa HIV menyerang CD4?": tema `biru`, `docs/thumbnail/kenapa-hiv-menyerang-cd4.png` (komposisi `ThumbCd4`).
-- "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `docs/thumbnail/bagaimana-hiv-memperbanyak-diri.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
-- "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `docs/thumbnail/apa-itu-viral-load-bagaimana-diukurnya.png` (komposisi `ThumbViralLoad`).
+- "Apa bedanya HIV dan AIDS?": tema `indigo`, `media/cover/S1E1.png` (komposisi `ThumbHivAids`).
+- "Kenapa HIV menyerang CD4?": tema `biru`, `media/cover/S1E2.png` (komposisi `ThumbCd4`).
+- "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `media/cover/S2E9.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
+- "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `media/cover/S1E6.png` (komposisi `ThumbViralLoad`).
 
 ---
 
 ## Episode ARV (sheet episode 3): "Bagaimana ARV menghentikan replikasi HIV?"
 
 Dibuat otomatis dari scene-spec storyboard (artifact di kolom `storyboard`). Kode: `src/ep3arv/` (`timeline.ts` = segmen suara hasil deteksi jeda + batas adegan, `spec.ts` = scene-spec disalin dari storyboard, `Ep3Arv.tsx` = renderer generik spec -> komponen `src/shared/library.tsx` + subtitle `narasi_final` + penutup logo/referensi/Dukung dan follow kami). Composition `Ep3ArvFull` (3.339 frame, 30 fps). Render: `bash scripts/render_ep3arv.sh` (butuh `public/vo.mp3` dari `link_dubbing`; tidak di-commit). Tidak ada objek library baru. Catatan: waktu adegan di storyboard hanyalah estimasi (±87 dtk); timeline memakai durasi suara asli (105,25 dtk) + ekor diam 6 dtk. `FlatVirus`/`Clock`/`Calendar` yang cy-nya jatuh di zona subtitle (>1380) digeser naik (1340/1360/1340) lewat `NUDGE`.
-- "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `docs/thumbnail/bagaimana-arv-menghentikan-replikasi-hiv.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
-- "Apa itu CD4 dan kenapa penting?": tema `indigo`, `docs/thumbnail/apa-itu-cd4-dan-kenapa-penting.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
+- "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `media/cover/S1E3.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
+- "Apa itu CD4 dan kenapa penting?": tema `indigo`, `media/cover/S1E4.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
 
 ---
 
