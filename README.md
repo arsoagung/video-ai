@@ -218,3 +218,9 @@ Tanpa storyboard. Kode: `src/s1e9/` (`timeline.ts` = kalimat narasi_final + bata
 ## Episode S1E10: "HIV bisa ada tanpa gejala. kok bisa?"
 
 Tanpa storyboard. Kode: `src/s1e10/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E10.tsx` = 8 adegan animasi + subtitle + penutup). Composition `S1E10Full` (2765 frame, 30 fps; suara 74,03 dtk + jeda, total 92,14 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e10.sh` -> `out/S1E10.mp4`. Tidak ada objek library baru. Legenda: adegan 1 (virus), 2 (karat = virus, mesin = tubuh), 3 (virus), 4 (sel CD4, virus, grafik CD4), 5 (grafik CD4 + batas), 6 (virus, tabung darah). Kalimat 15 ditandai ragu oleh retime (jeda 0,24 dtk), batas diterima.
+
+---
+
+## Episode S1E11: "Kapan waktu terbaik untuk tes HIV?"
+
+Tanpa storyboard. Kode: `src/s1e11/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E11.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E11Full` (2980 frame, 30 fps; suara 82,76 dtk + jeda, total 99,33 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e11.sh` -> `out/S1E11.mp4`. Tidak ada objek library baru. Legenda: adegan 3 (virus), 4 (grafik kadar virus + batas deteksi), 5 (virus), 8 (titik tahu/belum tahu status), 9 (virus belum terbaca tes). Kalimat 11 ditandai ragu oleh retime (jeda 0,16 dtk), batas diterima.

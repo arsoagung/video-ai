@@ -1,0 +1,414 @@
+{
+ "code": "S1E11",
+ "duration": 82.76,
+ "speech": [
+  0,
+  82.6
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Kapan waktu tepat untuk tes HIV?",
+   "a": 0,
+   "b": 2.2,
+   "pauseAfter": 0.56,
+   "clauses": [
+    {
+     "text": "Kapan waktu tepat untuk tes HIV?",
+     "a": 0,
+     "b": 2.2,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Bayangkan seperti pemeriksaan kendaraan.",
+   "a": 2.76,
+   "b": 5.04,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Bayangkan seperti pemeriksaan kendaraan.",
+     "a": 2.76,
+     "b": 5.04,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Ada pemeriksaan rutin dan pemeriksaan setelah kejadian tertentu.",
+   "a": 5.35,
+   "b": 9.49,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Ada pemeriksaan rutin dan pemeriksaan setelah kejadian tertentu.",
+     "a": 5.35,
+     "b": 9.49,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Tes HIV pun begitu.",
+   "a": 9.83,
+   "b": 11.34,
+   "pauseAfter": 0.47,
+   "clauses": [
+    {
+     "text": "Tes HIV pun begitu.",
+     "a": 9.83,
+     "b": 11.34,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Pertama, setelah kontak berisiko.",
+   "a": 11.8,
+   "b": 14.13,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Pertama,",
+     "a": 11.8,
+     "b": 12.41,
+     "anchored": true
+    },
+    {
+     "text": "setelah kontak berisiko.",
+     "a": 12.59,
+     "b": 14.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Jika belum lewat 72 jam, segera konsultasikan PEP, obat pencegahan darurat.",
+   "a": 14.45,
+   "b": 20.08,
+   "pauseAfter": 0.46,
+   "clauses": [
+    {
+     "text": "Jika belum lewat 72 jam,",
+     "a": 14.45,
+     "b": 16.5,
+     "anchored": true
+    },
+    {
+     "text": "segera konsultasikan PEP,",
+     "a": 16.67,
+     "b": 18.45,
+     "anchored": true
+    },
+    {
+     "text": "obat pencegahan darurat.",
+     "a": 18.76,
+     "b": 20.08,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Tes dilakukan sesuai masa jendela, yaitu waktu hingga tes mampu mendeteksi virus.",
+   "a": 20.54,
+   "b": 26.21,
+   "pauseAfter": 0.4,
+   "clauses": [
+    {
+     "text": "Tes dilakukan sesuai masa jendela,",
+     "a": 20.54,
+     "b": 22.52,
+     "anchored": true
+    },
+    {
+     "text": "yaitu waktu hingga tes mampu mendeteksi virus.",
+     "a": 22.77,
+     "b": 26.21,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Kedua, secara berkala jika risiko berlanjut.",
+   "a": 26.61,
+   "b": 29.82,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Kedua,",
+     "a": 26.61,
+     "b": 27.12,
+     "anchored": true
+    },
+    {
+     "text": "secara berkala jika risiko berlanjut.",
+     "a": 27.46,
+     "b": 29.82,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Pengguna PrEP biasanya perlu tes setiap tiga bulan.",
+   "a": 30.2,
+   "b": 33.51,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Pengguna PrEP biasanya perlu tes setiap tiga bulan.",
+     "a": 30.2,
+     "b": 33.51,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Ketiga, saat hamil, mengalami gejala yang mengarah ke HIV, atau didiagnosis TBC.",
+   "a": 33.9,
+   "b": 40.19,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Ketiga,",
+     "a": 33.9,
+     "b": 34.48,
+     "anchored": true
+    },
+    {
+     "text": "saat hamil,",
+     "a": 34.72,
+     "b": 35.52,
+     "anchored": true
+    },
+    {
+     "text": "mengalami gejala yang mengarah ke HIV,",
+     "a": 35.85,
+     "b": 37.8,
+     "anchored": false
+    },
+    {
+     "text": "atau didiagnosis TBC.",
+     "a": 37.8,
+     "b": 40.19,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "CDC juga menganjurkan setiap orang berusia 13–64 tahun tes setidaknya sekali.",
+   "a": 40.57,
+   "b": 45.57,
+   "pauseAfter": 0.16,
+   "clauses": [
+    {
+     "text": "CDC juga menganjurkan setiap orang berusia 13–64 tahun tes setidaknya sekali.",
+     "a": 40.57,
+     "b": 45.57,
+     "anchored": true
+    }
+   ],
+   "flags": [
+    "jeda pendek"
+   ]
+  },
+  {
+   "n": 12,
+   "text": "Mengapa penting?",
+   "a": 45.74,
+   "b": 46.97,
+   "pauseAfter": 0.52,
+   "clauses": [
+    {
+     "text": "Mengapa penting?",
+     "a": 45.74,
+     "b": 46.97,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Pada 2025, menurut perkiraan Kemenkes, baru sekitar 68 persen orang dengan HIV di Indonesia mengetahui statusnya.",
+   "a": 47.49,
+   "b": 57.76,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "Pada 2025,",
+     "a": 47.49,
+     "b": 48.31,
+     "anchored": true
+    },
+    {
+     "text": "menurut perkiraan Kemenkes,",
+     "a": 48.76,
+     "b": 50.24,
+     "anchored": true
+    },
+    {
+     "text": "baru sekitar 68 persen orang dengan HIV di Indonesia mengetahui statusnya.",
+     "a": 50.41,
+     "b": 57.76,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Hasil negatif yang terlalu dini belum tentu memastikan seseorang bebas HIV.",
+   "a": 58.16,
+   "b": 62.97,
+   "pauseAfter": 0.56,
+   "clauses": [
+    {
+     "text": "Hasil negatif yang terlalu dini belum tentu memastikan seseorang bebas HIV.",
+     "a": 58.16,
+     "b": 62.97,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Tes perlu diulang setelah masa jendela berakhir.",
+   "a": 63.53,
+   "b": 66.23,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Tes perlu diulang setelah masa jendela berakhir.",
+     "a": 63.53,
+     "b": 66.23,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 16,
+   "text": "Tes tersedia di puskesmas, rumah sakit, klinik, dan layanan komunitas.",
+   "a": 66.68,
+   "b": 71.47,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Tes tersedia di puskesmas,",
+     "a": 66.68,
+     "b": 68.37,
+     "anchored": true
+    },
+    {
+     "text": "rumah sakit,",
+     "a": 68.54,
+     "b": 69.2,
+     "anchored": true
+    },
+    {
+     "text": "klinik,",
+     "a": 69.59,
+     "b": 69.91,
+     "anchored": true
+    },
+    {
+     "text": "dan layanan komunitas.",
+     "a": 70.07,
+     "b": 71.47,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 17,
+   "text": "Semakin cepat mengetahui status, semakin cepat ARV dimulai.",
+   "a": 71.84,
+   "b": 75.87,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Semakin cepat mengetahui status,",
+     "a": 71.84,
+     "b": 73.77,
+     "anchored": true
+    },
+    {
+     "text": "semakin cepat ARV dimulai.",
+     "a": 73.93,
+     "b": 75.87,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 18,
+   "text": "Jadi, jangan tunggu sakit untuk tes HIV.",
+   "a": 76.25,
+   "b": 79.05,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Jadi,",
+     "a": 76.25,
+     "b": 76.37,
+     "anchored": false
+    },
+    {
+     "text": "jangan tunggu sakit untuk tes HIV.",
+     "a": 76.37,
+     "b": 79.05,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 19,
+   "text": "Seperti kendaraan, jangan tunggu rusak untuk diperiksa.",
+   "a": 79.47,
+   "b": 82.6,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Seperti kendaraan,",
+     "a": 79.47,
+     "b": 80.55,
+     "anchored": true
+    },
+    {
+     "text": "jangan tunggu rusak untuk diperiksa.",
+     "a": 80.73,
+     "b": 82.6,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

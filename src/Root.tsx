@@ -3,6 +3,7 @@ import { S1E7Full, S1E7_FRAMES } from './s1e7/S1E7';
 import { S1E8Full, S1E8_FRAMES } from './s1e8/S1E8';
 import { S1E9Full, S1E9_FRAMES } from './s1e9/S1E9';
 import { S1E10Full, S1E10_FRAMES } from './s1e10/S1E10';
+import { S1E11Full, S1E11_FRAMES } from './s1e11/S1E11';
 import { S1E4Full } from './s1e4/S1E4';
 import { EP_DUR as S1E4_DUR } from './s1e4/timeline';
 import React from 'react';
@@ -102,6 +103,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S1E9Full" component={S1E9Full} durationInFrames={S1E9_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E4Full" component={S1E4Full} durationInFrames={Math.ceil(S1E4_DUR * FPS)} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E10Full" component={S1E10Full} durationInFrames={S1E10_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="S1E11Full" component={S1E11Full} durationInFrames={S1E11_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbHivAids" component={ThumbHivAids} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbCd4" component={ThumbCd4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
