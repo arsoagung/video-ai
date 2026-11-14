@@ -285,8 +285,13 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
       <line x1={100} y1={1000} x2={1030} y2={1000} stroke={LIB_COL.light} strokeOpacity={0.3 * enter} strokeWidth={14} strokeLinecap="round" />
       <rect x={X0} y={972} width={Math.max(0, Math.min(xe, XS) - X0)} height={56} rx={28} fill={C3.red} opacity={0.95} />
       <rect x={XS} y={972} width={Math.max(0, xe - XS)} height={56} rx={28} fill={C3.yellow} opacity={0.95} />
-      <rect x={830} y={972} width={190 * after} height={56} rx={28} fill={C3.green} opacity={0.95} />
-      <polygon points="1000,946 1056,1000 1000,1054" fill={C3.green} opacity={after} />
+      <defs>
+        <linearGradient id="fade5" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor={C3.green} stopOpacity="0.95" />
+          <stop offset="1" stopColor={C3.green} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <rect x={830} y={972} width={250 * after} height={56} rx={28} fill="url(#fade5)" />
       <Virus x={110} y={1000} r={46 * enter} t={t} />
       <L.TestKit cx={760} cy={1000} s={0.62 * enter} op={enter} lines={1} />
       <L.Clock cx={lerp(170, 690, grow)} cy={730} s={1.25 * clockOn} op={clockOn} frac={grow * 0.95} hour={3} />
@@ -295,7 +300,7 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ---- Adegan 6 (kalimat 10-13): tiga jenis tes; tiap baris dari hari 0 (terpapar): merah = belum terdeteksi, kuning = mulai terdeteksi (kurang akurat), hijau = akurat
-const DX = (d: number) => 150 + d * 8.4;
+const DX = (d: number) => 150 + d * 6.4;
 const ROWS = [
   { y: 640, label: 'Tes asam nukleat', from: 10, to: 33, t0: 11, text: '10–33 hari' },
   { y: 900, label: 'Tes antigen dan antibodi (laboratorium)', from: 18, to: 45, t0: 12, text: '18–45 hari' },
@@ -308,8 +313,7 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <g opacity={axis}>
-        <line x1={DX(0)} y1={1300} x2={1010} y2={1300} stroke={LIB_COL.light} strokeOpacity={0.5} strokeWidth={5} strokeLinecap="round" />
-        <polygon points="1004,1286 1034,1300 1004,1314" fill={LIB_COL.light} opacity={0.6} />
+        <line x1={DX(0)} y1={1300} x2={1080} y2={1300} stroke={LIB_COL.light} strokeOpacity={0.5} strokeWidth={5} mask="url(#fadeR)" />
         <FlatVirus cx={DX(0)} cy={1300} r={20} rot={t * 5} />
       </g>
       {[0, 30, 60, 90].map((d) => (
@@ -318,6 +322,15 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
           <text x={d === 0 ? DX(0) + 24 : DX(d)} y={1352} textAnchor={d === 0 ? 'start' : 'middle'} fontFamily={FONT} fontWeight={600} fontSize={30} fill={LIB_COL.light} opacity={0.85}>{d === 0 ? 'terpapar' : d}</text>
         </g>
       ))}
+      <defs>
+        <linearGradient id="fadeG" gradientUnits="userSpaceOnUse" x1={800} y1={0} x2={1078} y2={0}>
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="1" stopColor="#000" />
+        </linearGradient>
+        <mask id="fadeR" maskUnits="userSpaceOnUse" x={0} y={0} width={1080} height={1920}>
+          <rect x={0} y={0} width={1080} height={1920} fill="url(#fadeG)" />
+        </mask>
+      </defs>
       {ROWS.map((r, i) => {
         const on = pr(t, s10 + 0.4 + i * 0.6, s10 + 1.1 + i * 0.6, back);
         const gt = T(r.t0);
@@ -331,8 +344,10 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
           <g key={i} opacity={on}>
             <text x={DX(0)} y={r.y - 52} fontFamily={FONT} fontWeight={800} fontSize={34} fill="#EAF2FB">{r.label}</text>
             <text x={XR} y={r.y - 52} textAnchor="end" fontFamily={FONT} fontWeight={800} fontSize={34} fill={C3.yellow} opacity={tx}>{r.text}</text>
-            <rect x={DX(0)} y={r.y - 28} width={XR - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
-            <rect x={DX(r.to) - 28} y={r.y - 28} width={XR - DX(r.to) + 28} height={56} rx={28} fill={C3.green} opacity={0.9 * tx} />
+            <g mask="url(#fadeR)">
+              <rect x={DX(0)} y={r.y - 28} width={1100 - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
+              <rect x={DX(r.to) - 28} y={r.y - 28} width={1100 - DX(r.to) + 28} height={56} rx={28} fill={C3.green} opacity={0.9 * tx} />
+            </g>
             <rect x={DX(0)} y={r.y - 28} width={redW + (yelW > 0 ? 28 : 0)} height={56} rx={28} fill={C3.red} />
             {yelW > 0 && <rect x={DX(r.from)} y={r.y - 28} width={yelW + (tx > 0 ? 28 : 0)} height={56} rx={yelW > 0 ? 28 : 0} fill={C3.yellow} />}
           </g>
