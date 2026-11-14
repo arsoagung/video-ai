@@ -1,0 +1,390 @@
+{
+ "code": "S1E10",
+ "duration": 74.03,
+ "speech": [
+  0,
+  73.84
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Merasa sehat bukan berarti bebas HIV.",
+   "a": 0,
+   "b": 2.9,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Merasa sehat bukan berarti bebas HIV.",
+     "a": 0,
+     "b": 2.9,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Banyak orang dengan HIV tidak merasakan gejala selama bertahun-tahun.",
+   "a": 3.28,
+   "b": 7.48,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Banyak orang dengan HIV tidak merasakan gejala selama bertahun-tahun.",
+     "a": 3.28,
+     "b": 7.48,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Bayangkan mesin yang masih bekerja normal.",
+   "a": 7.86,
+   "b": 10.36,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Bayangkan mesin yang masih bekerja normal.",
+     "a": 7.86,
+     "b": 10.36,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Dari luar terlihat baik-baik saja, padahal karat perlahan menggerogoti komponen di dalamnya.",
+   "a": 10.72,
+   "b": 16.6,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Dari luar terlihat baik-baik saja,",
+     "a": 10.72,
+     "b": 12.71,
+     "anchored": true
+    },
+    {
+     "text": "padahal karat perlahan menggerogoti komponen di dalamnya.",
+     "a": 13.02,
+     "b": 16.6,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Begitulah HIV tanpa pengobatan.",
+   "a": 16.97,
+   "b": 19.15,
+   "pauseAfter": 0.4,
+   "clauses": [
+    {
+     "text": "Begitulah HIV tanpa pengobatan.",
+     "a": 16.97,
+     "b": 19.15,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Beberapa minggu setelah infeksi, sebagian orang mengalami gejala seperti flu, ruam, atau sakit tenggorokan.",
+   "a": 19.55,
+   "b": 26.42,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Beberapa minggu setelah infeksi,",
+     "a": 19.55,
+     "b": 21.37,
+     "anchored": true
+    },
+    {
+     "text": "sebagian orang mengalami gejala seperti flu,",
+     "a": 21.56,
+     "b": 24.16,
+     "anchored": true
+    },
+    {
+     "text": "ruam,",
+     "a": 24.45,
+     "b": 25.45,
+     "anchored": false
+    },
+    {
+     "text": "atau sakit tenggorokan.",
+     "a": 25.45,
+     "b": 26.42,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Sebagian lainnya tidak merasakan apa pun.",
+   "a": 26.71,
+   "b": 29.01,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Sebagian lainnya tidak merasakan apa pun.",
+     "a": 26.71,
+     "b": 29.01,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "HIV kemudian memasuki fase kronis.",
+   "a": 29.36,
+   "b": 31.94,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "HIV kemudian memasuki fase kronis.",
+     "a": 29.36,
+     "b": 31.94,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Virus tetap memperbanyak diri, sementara CD4, sel yang membantu mengatur pertahanan tubuh, perlahan menurun.",
+   "a": 32.24,
+   "b": 39.39,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Virus tetap memperbanyak diri,",
+     "a": 32.24,
+     "b": 34.03,
+     "anchored": true
+    },
+    {
+     "text": "sementara CD4,",
+     "a": 34.29,
+     "b": 35.59,
+     "anchored": true
+    },
+    {
+     "text": "sel yang membantu mengatur pertahanan tubuh,",
+     "a": 35.82,
+     "b": 38.16,
+     "anchored": true
+    },
+    {
+     "text": "perlahan menurun.",
+     "a": 38.38,
+     "b": 39.39,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Fase ini bisa berlangsung sepuluh tahun atau lebih tanpa gejala.",
+   "a": 39.69,
+   "b": 43.57,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Fase ini bisa berlangsung sepuluh tahun atau lebih tanpa gejala.",
+     "a": 39.69,
+     "b": 43.57,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Seseorang bisa baru sakit ketika kekebalan tubuh sangat melemah dan mencapai tahap AIDS.",
+   "a": 43.9,
+   "b": 49.33,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Seseorang bisa baru sakit ketika kekebalan tubuh sangat melemah dan mencapai tahap AIDS.",
+     "a": 43.9,
+     "b": 49.33,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Namun, tanpa gejala bukan berarti aman.",
+   "a": 49.62,
+   "b": 52.41,
+   "pauseAfter": 0.28,
+   "clauses": [
+    {
+     "text": "Namun,",
+     "a": 49.62,
+     "b": 50.16,
+     "anchored": true
+    },
+    {
+     "text": "tanpa gejala bukan berarti aman.",
+     "a": 50.37,
+     "b": 52.41,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "HIV tetap bisa menular.",
+   "a": 52.68,
+   "b": 54.41,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "HIV tetap bisa menular.",
+     "a": 52.68,
+     "b": 54.41,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Bahkan, pada awal infeksi, jumlah virus dalam darah bisa sangat tinggi.",
+   "a": 54.72,
+   "b": 59.5,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Bahkan,",
+     "a": 54.72,
+     "b": 56.61,
+     "anchored": true
+    },
+    {
+     "text": "pada awal infeksi,",
+     "a": 56.82,
+     "b": 57.44,
+     "anchored": false
+    },
+    {
+     "text": "jumlah virus dalam darah bisa sangat tinggi.",
+     "a": 57.44,
+     "b": 59.5,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Karena itu, gejala bukan patokan.",
+   "a": 59.8,
+   "b": 62.16,
+   "pauseAfter": 0.24,
+   "clauses": [
+    {
+     "text": "Karena itu,",
+     "a": 59.8,
+     "b": 61.25,
+     "anchored": false
+    },
+    {
+     "text": "gejala bukan patokan.",
+     "a": 61.25,
+     "b": 62.16,
+     "anchored": false
+    }
+   ],
+   "flags": [
+    "jeda pendek"
+   ]
+  },
+  {
+   "n": 16,
+   "text": "Hanya tes HIV yang bisa mengetahui status HIV.",
+   "a": 62.4,
+   "b": 65.64,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Hanya tes HIV yang bisa mengetahui status HIV.",
+     "a": 62.4,
+     "b": 65.64,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 17,
+   "text": "Semakin cepat diketahui, semakin cepat ARV dimulai.",
+   "a": 65.94,
+   "b": 69.28,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Semakin cepat diketahui,",
+     "a": 65.94,
+     "b": 67.33,
+     "anchored": true
+    },
+    {
+     "text": "semakin cepat ARV dimulai.",
+     "a": 67.51,
+     "b": 69.28,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 18,
+   "text": "Merasa sehat bukan bukti.",
+   "a": 69.62,
+   "b": 71.34,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Merasa sehat bukan bukti.",
+     "a": 69.62,
+     "b": 71.34,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 19,
+   "text": "Tes adalah cara untuk mengetahui.",
+   "a": 71.73,
+   "b": 73.84,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Tes adalah cara untuk mengetahui.",
+     "a": 71.73,
+     "b": 73.84,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

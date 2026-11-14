@@ -209,3 +209,9 @@ Tanpa storyboard. Kode: `src/s1e8/` (`timeline.ts` = kalimat narasi_final + bata
 ## Episode S1E9: "Apa arti viral load tidak terdeteksi?"
 
 Tanpa storyboard. Kode: `src/s1e9/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E9.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E9Full` (2624 frame, 30 fps; suara 72,83 dtk + jeda, total 87,45 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e9.sh` -> `out/S1E9.mp4`. Objek library baru: `Road`. Legenda: adegan 1, 2, 3, 4 (mobil = virus, grafik), 6, 7, 8, 9, 10, 12. Kalimat 14-15 ditandai ragu oleh retime (jeda 0,18 dtk), batas diterima setelah dicek silencedetect.
+
+---
+
+## Episode S1E10: "HIV bisa ada tanpa gejala. kok bisa?"
+
+Tanpa storyboard. Kode: `src/s1e10/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E10.tsx` = 8 adegan animasi + subtitle + penutup). Composition `S1E10Full` (2765 frame, 30 fps; suara 74,03 dtk + jeda, total 92,14 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e10.sh` -> `out/S1E10.mp4`. Tidak ada objek library baru. Legenda: adegan 1 (virus), 2 (karat = virus, mesin = tubuh), 3 (virus), 4 (sel CD4, virus, grafik CD4), 5 (grafik CD4 + batas), 6 (virus, tabung darah). Kalimat 15 ditandai ragu oleh retime (jeda 0,24 dtk), batas diterima.
