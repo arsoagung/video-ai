@@ -270,19 +270,23 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 5 (kalimat 9): garis waktu virus -> hasil tes; jeda di antaranya menyala (window period) sambil jam berputar
+// ---- Adegan 5 (kalimat 9): garis waktu dari virus (hari 0) ke hasil tes; merah = belum terdeteksi, kuning = jendela (kurang akurat), hijau = akurat
+const C3 = { red: LIB_COL.bad, yellow: '#F4D77E', green: LIB_COL.tcell };
 const Scene5: React.FC<{ t: number }> = ({ t }) => {
   const s9 = T(9);
   const enter = pr(t, s9, s9 + 0.7, back);
   const grow = pr(t, s9 + 0.6, s9 + 2.9, sine);
   const clockOn = pr(t, s9 + 0.4, s9 + 1.1, back);
   const after = pr(t, s9 + 2.8, s9 + 3.6, sine);
+  const X0 = 170, XR = 690, XS = X0 + 0.3 * (XR - X0);
+  const xe = X0 + grow * (XR - X0);
   return (
     <>
       <line x1={100} y1={1000} x2={1030} y2={1000} stroke={LIB_COL.light} strokeOpacity={0.3 * enter} strokeWidth={14} strokeLinecap="round" />
-      <rect x={170} y={972} width={520 * grow} height={56} rx={28} fill={SHAPE_COL.receptor} opacity={0.95} />
-      <rect x={830} y={972} width={190 * after} height={56} rx={28} fill={LIB_COL.good} opacity={0.9} />
-      <polygon points="1000,946 1056,1000 1000,1054" fill={LIB_COL.good} opacity={after} />
+      <rect x={X0} y={972} width={Math.max(0, Math.min(xe, XS) - X0)} height={56} rx={28} fill={C3.red} opacity={0.95} />
+      <rect x={XS} y={972} width={Math.max(0, xe - XS)} height={56} rx={28} fill={C3.yellow} opacity={0.95} />
+      <rect x={830} y={972} width={190 * after} height={56} rx={28} fill={C3.green} opacity={0.95} />
+      <polygon points="1000,946 1056,1000 1000,1054" fill={C3.green} opacity={after} />
       <Virus x={110} y={1000} r={46 * enter} t={t} />
       <L.TestKit cx={760} cy={1000} s={0.62 * enter} op={enter} lines={1} />
       <L.Clock cx={lerp(170, 690, grow)} cy={730} s={1.25 * clockOn} op={clockOn} frac={grow * 0.95} hour={3} />
@@ -290,49 +294,47 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 6 (kalimat 10-13): tiga jenis tes, tiap bar menunjukkan rentang hari (mulai terdeteksi sampai kisaran akhir)
+// ---- Adegan 6 (kalimat 10-13): tiga jenis tes; tiap baris dari hari 0 (terpapar): merah = belum terdeteksi, kuning = mulai terdeteksi (kurang akurat), hijau = akurat
 const DX = (d: number) => 150 + d * 8.4;
 const ROWS = [
-  { y: 640, label: 'Tes asam nukleat', from: 10, to: 33, color: '#72E3D3', t0: 11, text: '10–33 hari' },
-  { y: 900, label: 'Tes antigen dan antibodi (laboratorium)', from: 18, to: 45, color: '#8FBDF7', t0: 12, text: '18–45 hari' },
-  { y: 1160, label: 'Tes antibodi (termasuk tes cepat dan mandiri)', from: 23, to: 90, color: '#F4D77E', t0: 13, text: '23–90 hari' },
+  { y: 640, label: 'Tes asam nukleat', from: 10, to: 33, t0: 11, text: '10–33 hari' },
+  { y: 900, label: 'Tes antigen dan antibodi (laboratorium)', from: 18, to: 45, t0: 12, text: '18–45 hari' },
+  { y: 1160, label: 'Tes antibodi (cepat dan mandiri)', from: 23, to: 90, t0: 13, text: '23–90 hari' },
 ];
 const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const s10 = T(10);
   const axis = pr(t, s10, s10 + 0.8);
+  const XR = 1020;
   return (
     <>
       <g opacity={axis}>
         <line x1={DX(0)} y1={1300} x2={1010} y2={1300} stroke={LIB_COL.light} strokeOpacity={0.5} strokeWidth={5} strokeLinecap="round" />
         <polygon points="1004,1286 1034,1300 1004,1314" fill={LIB_COL.light} opacity={0.6} />
-        <text x={1034} y={1262} textAnchor="end" fontFamily={FONT} fontWeight={600} fontSize={30} fill={LIB_COL.good}>dan seterusnya</text>
+        <FlatVirus cx={DX(0)} cy={1300} r={20} rot={t * 5} />
       </g>
       {[0, 30, 60, 90].map((d) => (
         <g key={d} opacity={axis}>
           <line x1={DX(d)} y1={560} x2={DX(d)} y2={1296} stroke={LIB_COL.light} strokeOpacity={0.18} strokeWidth={3} strokeDasharray="4 12" />
-          <text x={DX(d)} y={1340} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={32} fill={LIB_COL.light} opacity={0.85}>{d === 90 ? '90' : d}</text>
+          <text x={d === 0 ? DX(0) + 24 : DX(d)} y={1352} textAnchor={d === 0 ? 'start' : 'middle'} fontFamily={FONT} fontWeight={600} fontSize={30} fill={LIB_COL.light} opacity={0.85}>{d === 0 ? 'terpapar' : d}</text>
         </g>
       ))}
-      <defs>
-        <linearGradient id="tail" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#72E3D3" stopOpacity="0.85" />
-          <stop offset="1" stopColor="#72E3D3" stopOpacity="0.25" />
-        </linearGradient>
-      </defs>
       {ROWS.map((r, i) => {
         const on = pr(t, s10 + 0.4 + i * 0.6, s10 + 1.1 + i * 0.6, back);
-        const gt = T(r.t0 as number);
-        const g = pr(t, gt + 0.1, gt + (i === 2 ? 3.0 : 1.2), sine);
-        const w = (DX(r.to) - DX(r.from)) * g;
-        const tx = pr(t, gt + (i === 2 ? 3.0 : 1.2), gt + (i === 2 ? 3.6 : 1.8), back);
-        const endX = DX(r.from) + w;
+        const gt = T(r.t0);
+        const dur = i === 2 ? 3.2 : 1.6;
+        const g = pr(t, gt + 0.1, gt + dur, sine);
+        const xe = DX(0) + g * (DX(r.to) - DX(0));
+        const redW = Math.max(0, Math.min(xe, DX(r.from)) - DX(0));
+        const yelW = Math.max(0, xe - DX(r.from));
+        const tx = pr(t, gt + dur, gt + dur + 0.7, back);
         return (
           <g key={i} opacity={on}>
             <text x={DX(0)} y={r.y - 52} fontFamily={FONT} fontWeight={800} fontSize={34} fill="#EAF2FB">{r.label}</text>
-            <rect x={DX(0)} y={r.y - 28} width={1020 - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
-            <rect x={DX(r.to) - 28} y={r.y - 28} width={1020 - DX(r.to) + 28} height={56} rx={28} fill="url(#tail)" opacity={tx} />
-            <rect x={DX(r.from)} y={r.y - 28} width={Math.max(0, w)} height={56} rx={28} fill={r.color} />
-            <text x={i === 2 ? DX(r.from) + 40 : endX + 20} y={r.y + 12} fontFamily={FONT} fontWeight={800} fontSize={36} fill={i === 2 ? '#3A2A00' : '#fff'} opacity={tx} transform={`translate(0 ${(1 - tx) * 10})`}>{r.text}</text>
+            <text x={XR} y={r.y - 52} textAnchor="end" fontFamily={FONT} fontWeight={800} fontSize={34} fill={C3.yellow} opacity={tx}>{r.text}</text>
+            <rect x={DX(0)} y={r.y - 28} width={XR - DX(0)} height={56} rx={28} fill="#fff" fillOpacity={0.12} />
+            <rect x={DX(r.to) - 28} y={r.y - 28} width={XR - DX(r.to) + 28} height={56} rx={28} fill={C3.green} opacity={0.9 * tx} />
+            <rect x={DX(0)} y={r.y - 28} width={redW + (yelW > 0 ? 28 : 0)} height={56} rx={28} fill={C3.red} />
+            {yelW > 0 && <rect x={DX(r.from)} y={r.y - 28} width={yelW + (tx > 0 ? 28 : 0)} height={56} rx={yelW > 0 ? 28 : 0} fill={C3.yellow} />}
           </g>
         );
       })}
@@ -434,7 +436,6 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: T(8) + 5.0, b: T(9) - 0.3, text: 'sistem imun', k: 'neutral', x: 250, y: 1380, size: 32 },
   { a: T(9) + 1.5, b: T(10) - 0.2, text: 'window period', k: 'recep', x: 540, y: 1180, size: 46 },
   { a: T(9) + 2.8, b: T(10) - 0.2, text: 'masa jendela', k: 'neutral', x: 540, y: 1290, size: 42 },
-  { a: T(9) + 3.2, b: T(10) - 0.2, text: 'hasil lebih andal', k: 'arv', x: 880, y: 1130, size: 34 },
   { a: T(14) + 0.3, b: T(15) - 0.2, text: 'terlalu dini', k: 'neutral', x: 790, y: 1240, size: 36 },
   { a: T(15) + 3.2, b: T(15) + 6.4, text: 'ulangi tes', k: 'neutral', x: 790, y: 1240, size: 40 },
   { a: T(15) + 3.6, b: T(16) - 0.2, text: 'masa jendela', k: 'recep', x: 330, y: 1290, size: 36 },
@@ -607,6 +608,8 @@ export const S1E8Full: React.FC = () => {
             ))}
           </svg>
           <Pills t={t} />
+          <LegendBox t={t} a={T(9) + 0.9} b={T(10) - 0.3} items={[[C3.red, 'belum terdeteksi'], [C3.yellow, 'kurang akurat'], [C3.green, 'akurat']]} />
+          <LegendBox t={t} a={T(10) + 0.3} b={T(14) - 0.3} items={[[C3.red, 'belum terdeteksi'], [C3.yellow, 'kurang akurat'], [C3.green, 'akurat']]} />
           <LegendBox t={t} a={T(6) + 0.2} b={T(6) + 4.8} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(14) + 0.1} b={T(14) + 3.2} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(17) + 0.05} b={T(18) - 0.1} items={[['#FF9C85', 'Virus HIV']]} />
