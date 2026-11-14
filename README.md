@@ -163,7 +163,7 @@ Animasi (mengikuti gaya fade-in penutup lain): logo fade-in, lalu kotak referens
 
 Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buatkan thumbnail dengan judul ...", langsung bikin dengan template ini, tanpa tanya gaya lagi.
 
-![Contoh: Apa bedanya HIV dan AIDS?](docs/thumbnail/apa-bedanya-hiv-dan-aids.png)
+![Contoh: Apa bedanya HIV dan AIDS?](docs/thumbnail/S1E1.png)
 
 **Susunan (atas ke bawah, tetap)**
 1. **Logo Makna Positif** di tengah atas (x=390, y=90, lebar 300), file asli `public/logo-makna-positif.png`, jangan digambar ulang.
@@ -174,20 +174,20 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 
 **Latar berganti per episode**: gradien vertikal 3 warna, dipilih sesuai warna tema video episode itu (`THEMES` di `src/thumb/Thumb.tsx`: `biru`, `indigo`, `teal`, `biruLembut`; tambah tema baru kalau videonya memakai gradien lain). Tanpa bokeh, tanpa garis tepi, ada glow radial lembut.
 
-**Cara membuat thumbnail episode baru**: di `src/thumb/Thumb.tsx` buat komponen baru yang membungkus `<ThumbFrame theme="..." title={...}>` dengan ilustrasi di dalamnya (contoh: `ThumbHivAids`), daftarkan di `src/Root.tsx` (`<Composition id="Thumb..." width={THUMB_W} height={THUMB_H} durationInFrames={1} />`), lalu render: `npx remotion still src/index.ts <IdKomposisi> docs/thumbnail/<judul-slug>.png`. Simpan hasil final per episode di `docs/thumbnail/` dan tambahkan ke daftar di bawah. Jangan menyimpan alternatif yang tidak terpilih.
+**Cara membuat thumbnail episode baru**: di `src/thumb/Thumb.tsx` buat komponen baru yang membungkus `<ThumbFrame theme="..." title={...}>` dengan ilustrasi di dalamnya (contoh: `ThumbHivAids`), daftarkan di `src/Root.tsx` (`<Composition id="Thumb..." width={THUMB_W} height={THUMB_H} durationInFrames={1} />`), lalu render: `npx remotion still src/index.ts <IdKomposisi> docs/thumbnail/<KODE>.png`. Simpan hasil final per episode di `docs/thumbnail/` dengan nama kode episode dari kolom `episode` di sheet (mis. `S1E4.png`), semua thumbnail dalam satu folder itu dan tambahkan ke daftar di bawah. Jangan menyimpan alternatif yang tidak terpilih.
 
 **Daftar thumbnail jadi**
-- "Apa bedanya HIV dan AIDS?": tema `indigo`, `docs/thumbnail/apa-bedanya-hiv-dan-aids.png` (komposisi `ThumbHivAids`).
-- "Kenapa HIV menyerang CD4?": tema `biru`, `docs/thumbnail/kenapa-hiv-menyerang-cd4.png` (komposisi `ThumbCd4`).
-- "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `docs/thumbnail/bagaimana-hiv-memperbanyak-diri.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
-- "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `docs/thumbnail/apa-itu-viral-load-bagaimana-diukurnya.png` (komposisi `ThumbViralLoad`).
+- S1E1 "Apa bedanya HIV dan AIDS?": tema `indigo`, `docs/thumbnail/S1E1.png` (komposisi `ThumbHivAids`).
+- S1E2 "Kenapa HIV menyerang CD4?": tema `biru`, `docs/thumbnail/S1E2.png` (komposisi `ThumbCd4`).
+- S2E9 "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `docs/thumbnail/S2E9.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
+- S1E6 "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `docs/thumbnail/S1E6.png` (komposisi `ThumbViralLoad`).
 
 ---
 
 ## Episode ARV (sheet episode 3): "Bagaimana ARV menghentikan replikasi HIV?"
 
 Dibuat otomatis dari scene-spec storyboard (artifact di kolom `storyboard`). Kode: `src/s1e3/` (`timeline.ts` = segmen suara hasil deteksi jeda + batas adegan, `spec.ts` = scene-spec disalin dari storyboard, `S1E3.tsx` = renderer generik spec -> komponen `src/shared/library.tsx` + subtitle `narasi_final` + penutup logo/referensi/Dukung dan follow kami). Composition `S1E3Full` (3.339 frame, 30 fps). Render: `bash scripts/render_s1e3.sh` (butuh `public/vo.mp3` dari `link_dubbing`; tidak di-commit). Tidak ada objek library baru. Catatan: waktu adegan di storyboard hanyalah estimasi (±87 dtk); timeline memakai durasi suara asli (105,25 dtk) + ekor diam 6 dtk. `FlatVirus`/`Clock`/`Calendar` yang cy-nya jatuh di zona subtitle (>1380) digeser naik (1340/1360/1340) lewat `NUDGE`.
-- "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `docs/thumbnail/bagaimana-arv-menghentikan-replikasi-hiv.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
+- S1E3 "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `docs/thumbnail/S1E3.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
 
 ---
 
