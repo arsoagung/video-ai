@@ -693,3 +693,11 @@ export const Ball: React.FC<P> = (p) => (
     <circle cx={0} cy={34} r={8} fill={LIB_COL.ink} />
   </G>
 );
+
+// Jalan datar untuk analogi lalu lintas (mobil = virus). w = lebar, h = tinggi, garis marka putus-putus di tengah.
+export const Road: React.FC<P & { w?: number; h?: number }> = ({ w = 1000, h = 300, ...p }) => (
+  <G {...p}>
+    <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={40} fill={LIB_COL.ink} fillOpacity={0.5} />
+    <line x1={-w / 2 + 40} y1={0} x2={w / 2 - 40} y2={0} stroke={LIB_COL.light} strokeOpacity={0.55} strokeWidth={8} strokeDasharray="44 34" strokeLinecap="round" />
+  </G>
+);
