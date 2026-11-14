@@ -244,3 +244,29 @@ export const ThumbArv: React.FC = () => (
     <Pill cx={540} cy={1790} text="HIV" bg="#FFA48E" fg="#4A1A10" size={56} />
   </ThumbFrame>
 );
+
+// Judul: "Apa itu CD4 dan kenapa penting?" (tema indigo = bagian tengah video). Sel CD4 + indikator baterai (analogi video).
+export const ThumbApaCd4: React.FC = () => (
+  <ThumbFrame
+    theme="indigo"
+    title={
+      <>
+        Apa itu <span style={{ color: SHAPE_COL.cd4 }}>CD4</span>
+        <br />
+        dan kenapa
+        <br />
+        penting?
+      </>
+    }
+  >
+    <Svg>
+      <FlatCell cx={540} cy={1130} r={220} color={SHAPE_COL.cd4} nuc={SHAPE_COL.cd4Dark} rec={1} />
+      <g transform="translate(540 1675)">
+        <rect x={-210} y={-80} width={420} height={160} rx={36} fill="#EAF2FB" opacity={0.18} />
+        <rect x={214} y={-28} width={26} height={56} rx={11} fill="#EAF2FB" opacity={0.3} />
+        <rect x={-192} y={-62} width={300} height={124} rx={24} fill={TEAL} />
+      </g>
+    </Svg>
+    <Pill cx={540} cy={1500} text="CD4" bg={SHAPE_COL.cd4} fg="#0B2A55" size={56} />
+  </ThumbFrame>
+);

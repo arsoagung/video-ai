@@ -3,6 +3,8 @@ import { S1E7Full, S1E7_FRAMES } from './s1e7/S1E7';
 import { S1E8Full, S1E8_FRAMES } from './s1e8/S1E8';
 import { S1E9Full, S1E9_FRAMES } from './s1e9/S1E9';
 import { S1E10Full, S1E10_FRAMES } from './s1e10/S1E10';
+import { S1E4Full } from './s1e4/S1E4';
+import { EP_DUR as S1E4_DUR } from './s1e4/timeline';
 import React from 'react';
 import { AbsoluteFill, Audio, Composition, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import { Board, FONT, FPS, INK, PAPER } from './Board';
@@ -16,7 +18,7 @@ import { Overlay2, Ep2Full } from './ep2/Overlay2';
 import { Ep3Full } from './ep3/Ep3';
 import { Ep5Full } from './ep5/Ep5';
 import { Ep3ArvFull } from './ep3arv/Ep3Arv';
-import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, THUMB_W, THUMB_H } from './thumb/Thumb';
+import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, ThumbApaCd4, THUMB_W, THUMB_H } from './thumb/Thumb';
 
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fonts'));
@@ -98,12 +100,14 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S1E7Full" component={S1E7Full} durationInFrames={S1E7_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E8Full" component={S1E8Full} durationInFrames={S1E8_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E9Full" component={S1E9Full} durationInFrames={S1E9_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="S1E4Full" component={S1E4Full} durationInFrames={Math.ceil(S1E4_DUR * FPS)} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E10Full" component={S1E10Full} durationInFrames={S1E10_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbHivAids" component={ThumbHivAids} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbCd4" component={ThumbCd4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbReplikasi" component={ThumbReplikasi} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbArv" component={ThumbArv} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
+    <Composition id="ThumbApaCd4" component={ThumbApaCd4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbViralLoad" component={ThumbViralLoad} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
   </>
 );
