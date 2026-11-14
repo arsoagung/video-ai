@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remotion';
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
-import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
+import { Glass, VDot, WATER_CLEAR } from '../s1e6/shapes5';
 import { Capsule } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.

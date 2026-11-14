@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, Img, continueRender, delayRender, staticFile, useC
 import { FONT, FPS } from '../Board';
 import { ez, lerp, win, out3, in3, sine, back } from '../motion';
 import { CUES5, CLOSE } from './timeline';
-import { COL, Defs, Helix, CellBody, Virus, Check, Cross } from '../ep3/shapes';
+import { COL, Defs, Helix, CellBody, Virus, Check, Cross } from '../s2e9/shapes';
 import { Tube, Glass, Lake, VDot, Person, rnd, WATER_CLEAR, WATER_MURKY } from './shapes5';
 
 const useFonts5 = () => {
@@ -461,7 +461,7 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ================= komposisi =================
-export const Ep5Full: React.FC = () => {
+export const S1E6Full: React.FC = () => {
   useFonts5();
   const f = useCurrentFrame();
   const t = f / FPS;

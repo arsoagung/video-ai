@@ -486,7 +486,7 @@ export const Overlay2: React.FC = () => {
 };
 
 // pratinjau: lapisan 3D + lapisan datar + audio (untuk cek still)
-export const Ep2Full: React.FC = () => (
+export const S1E1Full: React.FC = () => (
   <AbsoluteFill>
     <Plate2 />
     <Overlay2 />

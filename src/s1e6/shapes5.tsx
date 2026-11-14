@@ -1,5 +1,5 @@
 import React from 'react';
-import { COL } from '../ep3/shapes';
+import { COL } from '../s2e9/shapes';
 
 // pseudo-acak deterministik (sama di setiap frame)
 export const rnd = (i: number, s = 0) => {

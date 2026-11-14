@@ -530,7 +530,7 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ================= komposisi =================
-export const Ep3Full: React.FC = () => {
+export const S2E9Full: React.FC = () => {
   useFonts3();
   const f = useCurrentFrame();
   const t = f / FPS;
