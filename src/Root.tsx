@@ -4,8 +4,9 @@ import { S1E8Full, S1E8_FRAMES } from './s1e8/S1E8';
 import { S1E9Full, S1E9_FRAMES } from './s1e9/S1E9';
 import { S1E10Full, S1E10_FRAMES } from './s1e10/S1E10';
 import { S1E11Full, S1E11_FRAMES } from './s1e11/S1E11';
-import { S1E4Full } from './s1e4/S1E4';
-import { EP_DUR as S1E4_DUR } from './s1e4/timeline';
+import { S1E4Full, S1E4_FRAMES } from './s1e4/S1E4';
+import { S2E9Full } from './s2e9/S2E9';
+import { EP_DUR as S2E9_DUR } from './s2e9/timeline';
 import React from 'react';
 import { AbsoluteFill, Audio, Composition, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import { Board, FONT, FPS, INK, PAPER } from './Board';
@@ -101,7 +102,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S1E7Full" component={S1E7Full} durationInFrames={S1E7_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E8Full" component={S1E8Full} durationInFrames={S1E8_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E9Full" component={S1E9Full} durationInFrames={S1E9_FRAMES} fps={FPS} width={1080} height={1920} />
-    <Composition id="S1E4Full" component={S1E4Full} durationInFrames={Math.ceil(S1E4_DUR * FPS)} fps={FPS} width={1080} height={1920} />
+    <Composition id="S1E4Full" component={S1E4Full} durationInFrames={S1E4_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="S2E9Full" component={S2E9Full} durationInFrames={Math.ceil(S2E9_DUR * FPS)} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E10Full" component={S1E10Full} durationInFrames={S1E10_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E11Full" component={S1E11Full} durationInFrames={S1E11_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />

@@ -2,12 +2,11 @@ import React from 'react';
 import { AbsoluteFill, Audio, Img, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import { FONT, FPS } from '../Board';
 import { ez, lerp, win, out3, in3, sine, back } from '../motion';
-import { CUES, CLOSE } from './timeline';
-import { SYNC_SEGS } from './sync';
-import { COL, Defs, CellBody, Virus, Check, Capsule, Shield } from '../ep3/shapes';
+import { CUES, CLOSE, WARP, EP_DUR } from './timeline';
+import { COL, Defs, wavePath, Helix, CellBody, Virus, Check, Cross, Capsule, Shield, Scissors, Factory } from './shapes';
 
-const useFonts4 = () => {
-  const [handle] = React.useState(() => delayRender('fonts4'));
+const useFonts3 = () => {
+  const [handle] = React.useState(() => delayRender('fonts3'));
   React.useEffect(() => {
     const defs: [number, string][] = [
       [400, 'plus-jakarta-sans-latin-400-normal.woff2'],
@@ -26,20 +25,22 @@ const useFonts4 = () => {
   }, [handle]);
 };
 
+export const S1E4_FRAMES = Math.ceil(EP_DUR * FPS);
+const OLD_CLOSE = 106.46; // waktu mp3 asli saat kalimat penutup mulai (animasi adegan memakai waktu mp3 asli lewat WARP)
+
 // ---------------- latar gradien (bergeser halus tiap scene) ----------------
-// Semua waktu adegan di bawah ini = waktu di mp3 ASLI (detik). Komponen akhir memetakan waktu video -> waktu mp3 (toAudio).
-const A_CLOSE = 69.76;
 type Grad = [string, string, string];
 const GRADS: { t: number; c: Grad }[] = [
   { t: 0, c: ['#0A1F3D', '#123A60', '#17506F'] },
-  { t: 8.59, c: ['#0D1B45', '#1E2F6B', '#2B4A85'] },
-  { t: 16.46, c: ['#0A1F3D', '#123A60', '#17506F'] },
-  { t: 26.82, c: ['#14183F', '#2A2A6B', '#3B4A8A'] },
-  { t: 41.69, c: ['#0D1B45', '#1E2F6B', '#2B4A85'] },
-  { t: 48.09, c: ['#08283A', '#0F4A5C', '#167A80'] },
-  { t: 56.93, c: ['#0A1F3D', '#123A60', '#17506F'] },
-  { t: 64.15, c: ['#14183F', '#2A2A6B', '#3B4A8A'] },
-  { t: A_CLOSE, c: ['#0A1830', '#12294F', '#1B3E63'] },
+  { t: 2.7, c: ['#0D1B45', '#1E2F6B', '#2B4A85'] },
+  { t: 12.0, c: ['#0A1F3D', '#123A60', '#17506F'] },
+  { t: 23.7, c: ['#14183F', '#2A2A6B', '#3B4A8A'] },
+  { t: 45.7, c: ['#08283A', '#0F4A5C', '#167A80'] },
+  { t: 54.3, c: ['#0A1F3D', '#123A60', '#17506F'] },
+  { t: 64.5, c: ['#14183F', '#2A2A6B', '#3B4A8A'] },
+  { t: 75.9, c: ['#0D1B45', '#1E2F6B', '#2B4A85'] },
+  { t: 91.4, c: ['#082C3A', '#0E5A63', '#1C8A85'] },
+  { t: 106.3, c: ['#0A2540', '#0F3B66', '#0B4F63'] },
 ];
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 const mix = (a: string, b: string, k: number) => {
@@ -57,7 +58,7 @@ const gradAt = (t: number): Grad => {
 };
 
 // zoom-out halus tiap layer baru masuk
-const SETTLE = [8.59, 16.46, 26.82, 41.69, 48.09, 56.93, 64.15, A_CLOSE];
+const SETTLE = [12.04, 23.8, 45.76, 54.35, 64.64, 76.0, 91.51, OLD_CLOSE];
 const settle = (t: number) => {
   let z = 0;
   for (const T of SETTLE) if (t >= T) z += 0.03 * (1 - ez(t, T, T + 1.0, out3));
@@ -94,31 +95,12 @@ const PillBox: React.FC<{ x: number; y: number; text: string; k: KK; size?: numb
   );
 };
 type P = { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number };
+// label (pill): hanya istilah kunci benda abstrak (enzim, konsep); kalimat yang sudah jelas di narasi tidak diulang. Waktu = mp3 asli.
 const PILLS: P[] = [
-  { a: 0.5, b: 2.9, text: 'Sel CD4', k: 'cell', x: 330, y: 560, size: 46 },
-  { a: 1.0, b: 2.9, text: 'Virus HIV', k: 'virus', x: 790, y: 700, size: 42 },
-  { a: 8.8, b: 11.4, text: 'indikator baterai', k: 'recep', x: 540, y: 470, size: 48 },
-  { a: 12.1, b: 14.2, text: 'bukan nasib', k: 'gray', x: 540, y: 470, size: 48 },
-  { a: 14.5, b: 16.0, text: 'hanya sisa daya', k: 'rt', x: 540, y: 470, size: 48 },
-  { a: 16.7, b: 19.9, text: 'Sel CD4 = penjaga tubuh', k: 'cell', x: 540, y: 470, size: 44 },
-  { a: 20.4, b: 22.3, text: 'diserang HIV', k: 'virus', x: 540, y: 1290, size: 44 },
-  { a: 22.9, b: 26.3, text: 'jumlah CD4', k: 'cell', x: 540, y: 430, size: 48 },
-  { a: 24.4, b: 26.3, text: 'kekuatan penjagaan', k: 'neutral', x: 540, y: 1330, size: 42 },
-  { a: 27.0, b: 29.7, text: 'tabung darah', k: 'virus', x: 540, y: 470, size: 52 },
-  { a: 30.3, b: 33.7, text: 'hitung sel CD4', k: 'cell', x: 540, y: 470, size: 50 },
-  { a: 34.3, b: 37.8, text: 'hasil sebelumnya', k: 'neutral', x: 540, y: 470, size: 46 },
-  { a: 38.4, b: 41.2, text: 'arah', k: 'rt', x: 540, y: 1250, size: 56 },
-  { a: 39.8, b: 41.2, text: 'bukan satu titik', k: 'gray', x: 540, y: 1340, size: 40 },
-  { a: 41.9, b: 43.7, text: 'satu angka', k: 'neutral', x: 540, y: 620, size: 52 },
-  { a: 44.3, b: 47.7, text: 'sedang sakit', k: 'gray', x: 300, y: 1130, size: 40 },
-  { a: 45.8, b: 47.7, text: 'beda alat lab', k: 'gray', x: 780, y: 1130, size: 40 },
-  { a: 48.3, b: 51.2, text: 'bisa diisi ulang', k: 'recep', x: 540, y: 470, size: 52 },
-  { a: 51.8, b: 56.5, text: 'ARV', k: 'rt', x: 700, y: 560, size: 60 },
-  { a: 54.8, b: 56.5, text: 'berhenti memperbanyak diri', k: 'gray', x: 540, y: 1240, size: 38 },
-  { a: 57.2, b: 59.6, text: 'satu studi', k: 'neutral', x: 540, y: 410, size: 50 },
-  { a: 61.6, b: 64.0, text: 'CD4 naik', k: 'cell', x: 540, y: 410, size: 52 },
-  { a: 64.5, b: 67.0, text: 'video lain di seri ini', k: 'neutral', x: 540, y: 420, size: 46 },
-  { a: 67.6, b: 70.0, text: 'CD4 bukan angka mati', k: 'cell', x: 540, y: 470, size: 46 },
+  { a: 28.6, b: 36.2, text: 'reverse transcriptase', k: 'rt', x: 540, y: 820, size: 40 },
+  { a: 37.0, b: 41.0, text: 'integrase', k: 'rt', x: 540, y: 560, size: 46 },
+  { a: 56.8, b: 62.4, text: 'protease', k: 'rt', x: 540, y: 520, size: 52 },
+  { a: 88.5, b: 91.2, text: 'seleksi alam', k: 'neutral', x: 540, y: 340, size: 56 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -129,7 +111,7 @@ const Pills: React.FC<{ t: number }> = ({ t }) => (
   </>
 );
 
-// legenda kontekstual (hanya visual abstrak): pill kecil di y=250, titik warna + label, maks 3 item. Waktu = waktu mp3 asli.
+// legenda kontekstual (hanya visual abstrak): pill kecil di y=250, titik warna + label, maks 3 item, tampil penuh ±4-5 dtk lalu fade
 const LegendBox: React.FC<{ t: number; a: number; b: number; items: [string, string][] }> = ({ t, a, b, items }) => {
   const k = win(t, a, b, 0.5);
   if (k < 0.01) return null;
@@ -146,22 +128,23 @@ const LegendBox: React.FC<{ t: number; a: number; b: number; items: [string, str
     </div>
   );
 };
-const Legend: React.FC<{ t: number }> = ({ t }) => (
-  <>
-    <LegendBox t={t} a={0.4} b={5.6} items={[['#8FBDF7', 'Sel CD4'], ['#FF9C85', 'Virus HIV']]} />
-    <LegendBox t={t} a={17.0} b={22.2} items={[['#8FBDF7', 'Sel CD4'], ['#FF9C85', 'Virus HIV']]} />
-    <LegendBox t={t} a={31.2} b={34.3} items={[['#8FBDF7', 'Titik = sel CD4']]} />
-    <LegendBox t={t} a={34.5} b={41.4} items={[['#8FBDF7', 'Jumlah CD4']]} />
-    <LegendBox t={t} a={42.0} b={46.6} items={[['#8FBDF7', 'Hasil CD4'], ['#F4D77E', 'Kisaran naik turun']]} />
-    <LegendBox t={t} a={51.7} b={56.4} items={[['#72E3D3', 'Kapsul = obat ARV'], ['#FF9C85', 'Virus HIV']]} />
-    <LegendBox t={t} a={57.3} b={62.0} items={[['#8FBDF7', 'Menyala = CD4 naik'], ['#B9C3D0', 'Abu = belum']]} />
-  </>
-);
+const LEGENDS: { a: number; b: number; items: [string, string][] }[] = [
+  { a: 3.2, b: 7.7, items: [[COL.virus, 'Virus HIV']] },
+  { a: 12.3, b: 16.0, items: [[COL.cell, 'Sel CD4']] },
+  { a: 16.3, b: 20.8, items: [[COL.virus, 'Virus HIV']] },
+  { a: 24.0, b: 28.5, items: [[COL.virusD, 'RNA virus'], [COL.cell, 'DNA sel']] },
+  { a: 36.8, b: 41.4, items: [[COL.cell, 'DNA sel'], [COL.virus, 'DNA virus']] },
+  { a: 46.8, b: 51.4, items: [[COL.virus, 'Bahan virus']] },
+  { a: 68.9, b: 73.4, items: [[COL.bad, 'Kesalahan salin']] },
+  { a: 76.6, b: 80.4, items: [['#8E9AAB', 'Virus cacat']] },
+  { a: 81.7, b: 86.2, items: [[COL.yel, 'Virus tahan obat']] },
+  { a: 92.2, b: 96.7, items: [[COL.rt, 'Perisai = obat ARV']] },
+];
 
 // ---------------- subtitle ----------------
 const ACC: Record<string, string> = {
-  cd4: '#8FBDF7', hiv: '#FFB7A5', virus: '#FFB7A5', arv: '#72E3D3', obat: '#72E3D3',
-  baterai: '#F4D77E', sembilan: '#F4D77E', puluh: '#F4D77E', dua: '#F4D77E', persen: '#F4D77E',
+  cd4: '#8FBDF7', hiv: '#FFB7A5', virus: '#FFB7A5', rna: '#FFB7A5', arv: '#72E3D3', obat: '#72E3D3',
+  reverse: '#72E3D3', transcriptase: '#72E3D3', integrase: '#72E3D3', protease: '#72E3D3', miliar: '#F4D77E',
 };
 const Sub: React.FC<{ text: string }> = ({ text }) => (
   <>
@@ -177,321 +160,345 @@ const Sub: React.FC<{ text: string }> = ({ text }) => (
   </>
 );
 
-// ---------------- util & bentuk baru ----------------
+// ---------------- util ----------------
+const fmt = (n: number) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const CX = 540, CY = 820, CR = 400; // sel di scene "dalam sel"
+const NY = 860, NR = 170; // inti sel
 const pt = (cx: number, cy: number, r: number, a: number) => ({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
 
-const Battery: React.FC<{ x: number; y: number; w?: number; h?: number; level: number; op?: number; bolt?: number }> = ({ x, y, w = 440, h = 210, level, op = 1, bolt = 0 }) => {
-  const lv = clamp(level);
-  const col = lv < 0.35 ? COL.yel : COL.rt;
+// ================= SCENE A: pembuka (0 - 13.6) =================
+const SceneA: React.FC<{ t: number }> = ({ t }) => {
+  const o1 = win(t, 0, 2.7, 0.4);
+  const o2 = win(t, 2.7, 12.0, 0.5);
+  const kNum = ez(t, 2.9, 8.7, out3);
+  const virK = ez(t, 0.8, 2.0, sine);
+  const dots = Array.from({ length: 56 }, (_, i) => {
+    const a = (i * 137.5 * Math.PI) / 180;
+    const rr = 250 + (i % 7) * 34;
+    return { x: 540 + rr * Math.cos(a) * 1.15, y: 820 + rr * Math.sin(a) * 0.92, i };
+  });
+  const sweep = ez(t, 9.2, 10.2, sine);
+  const q = win(t, 10.75, 12.0, 0.4);
   return (
-    <g transform={`translate(${x} ${y})`} opacity={op}>
-      <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={38} fill="#EAF2FB" opacity={0.18} />
-      <rect x={w / 2 + 4} y={-h * 0.17} width={28} height={h * 0.34} rx={12} fill="#EAF2FB" opacity={0.3} />
-      <rect x={-w / 2 + 18} y={-h / 2 + 18} width={Math.max(0, (w - 36) * lv)} height={h - 36} rx={24} fill={col} />
-      {bolt > 0.01 && (
-        <g opacity={bolt} transform="scale(1.5)">
-          <path d="M6 -46 L-22 6 L-2 6 L-10 46 L22 -10 L2 -10 Z" fill="#FFFFFF" opacity={0.95} />
+    <g>
+      <g opacity={o1}>
+        <Factory x={540} y={880} lit={ez(t, 1.6, 2.5)} />
+        <Virus x={lerp(220, 540, virK)} y={lerp(560, 970, virK)} r={46} s={1 - 0.7 * ez(t, 1.7, 2.2)} />
+      </g>
+      <g opacity={o2}>
+        {dots.map((d) => {
+          const on = ez(t, 3.0 + (d.i / 56) * 5.6, 3.35 + (d.i / 56) * 5.6);
+          return on > 0.01 ? <circle key={d.i} cx={d.x} cy={d.y} r={9 + (d.i % 3) * 3} fill={COL.virus} opacity={0.75 * on} /> : null;
+        })}
+        <text x={540} y={868} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={112} fill="#FFFFFF">
+          {fmt(kNum * 10000000000)}
+        </text>
+        <g opacity={win(t, 9.15, 10.45, 0.3)}>
+          <circle cx={540} cy={1180} r={120} fill="#EAF2FB" opacity={0.14} />
+          <path
+            d={`M540 1180 L540 1060 A120 120 0 ${sweep > 0.5 ? 1 : 0} 1 ${540 + 120 * Math.sin(sweep * Math.PI * 2)} ${1180 - 120 * Math.cos(sweep * Math.PI * 2)} Z`}
+            fill={COL.virus}
+            opacity={0.9}
+          />
+          <text x={540} y={1190} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={44} fill="#FFFFFF" opacity={ez(t, 9.6, 10.1)}>
+            24 jam
+          </text>
+        </g>
+        <g opacity={q}>
+          <circle cx={540} cy={1180} r={110} fill={COL.yel} />
+          <text x={540} y={1232} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={150} fill="#4A3606">?</text>
+        </g>
+      </g>
+    </g>
+  );
+};
+
+// ================= SCENE B: HIV masuk sel CD4 (13.98 - 23.4) =================
+const SceneB: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 12.04, 23.5, 0.45);
+  const cx = 540, cy = 860, r = 250;
+  const appear = ez(t, 12.1, 13.1, back);
+  const touchAng = -2.3;
+  const tp = pt(cx, cy, r + 40, touchAng);
+  const k1 = ez(t, 16.0, 17.8, sine);
+  const vx = lerp(150, tp.x, k1), vy = lerp(470, tp.y, k1) + Math.sin(t * 3) * 6 * (1 - k1);
+  const fuse = ez(t, 17.9, 19.0, sine);
+  const rnaK = ez(t, 18.6, 19.9, sine);
+  const glow = win(t, 17.6, 19.0, 0.3);
+  return (
+    <g opacity={o} transform={`translate(540 860) scale(${appear * 0.4 + 0.6}) translate(-540 -860)`}>
+      <CellBody cx={cx} cy={cy} r={r} glow={glow} />
+      {t > 15.9 && <Virus x={vx} y={vy} r={52} s={1 - 0.55 * fuse} op={1 - 0.2 * fuse} rot={t * 8} />}
+      {rnaK > 0.01 && (
+        <g opacity={clamp(rnaK * 1.5)}>
+          <path d={wavePath(cx - 150, cy + 10, 300 * rnaK, 22, 0.5, t * 4)} stroke={COL.virusD} strokeWidth={11} fill="none" strokeLinecap="round" />
         </g>
       )}
     </g>
   );
 };
 
-const Tube: React.FC<{ x: number; y: number; fill: number; op?: number; rot?: number; s?: number }> = ({ x, y, fill, op = 1, rot = 0, s = 1 }) => (
-  <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`} opacity={op}>
-    <rect x={-60} y={-210} width={120} height={420} rx={60} fill="#EAF2FB" opacity={0.2} />
-    <rect x={-60} y={-250} width={120} height={64} rx={20} fill={COL.rt} />
-    <clipPath id="tubeClip"><rect x={-48} y={-186} width={96} height={384} rx={48} /></clipPath>
-    <g clipPath="url(#tubeClip)">
-      <rect x={-48} y={198 - 384 * clamp(fill)} width={96} height={384 * clamp(fill) + 2} fill="#F27A72" />
-    </g>
+// ================= scene dalam sel (23.8 - 54.0) =================
+const InsideCell: React.FC<{ t: number; o: number }> = ({ t, o }) => (
+  <g opacity={o}>
+    <circle cx={CX} cy={CY} r={CR + 36} fill="#8FBDF7" opacity={0.1} />
+    <circle cx={CX} cy={CY} r={CR} fill="#8FBDF7" opacity={0.3} />
+    <circle cx={CX} cy={NY} r={NR} fill="#5C93E0" opacity={0.55} />
   </g>
 );
 
-// ================= SCENE A: pembuka (0 - 8.4) =================
-const SceneA: React.FC<{ t: number }> = ({ t }) => {
-  const o1 = win(t, 0, 3.45, 0.4);
-  const o2 = win(t, 3.38, 6.65, 0.4);
-  const o3 = win(t, 6.44, 9.05, 0.45);
-  const appear = ez(t, 0.1, 1.0, back);
-  const vk = ez(t, 0.8, 2.6, sine);
-  // grafik naik turun
-  const prog = ez(t, 6.6, 8.1, sine);
-  const N = 40;
-  let d = '';
-  for (let i = 0; i <= Math.round(N * prog); i++) {
-    const x = 170 + (740 * i) / N;
-    const y = 900 - 120 * Math.sin(i * 0.55) - 60 * Math.sin(i * 1.3 + 1);
-    d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
-  }
+// 23.8 - 28.1: sel hanya membaca DNA
+const SceneC1: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 23.8, 28.5, 0.4);
+  const rx = ez(t, 24.0, 25.2, sine);
   return (
-    <g>
-      <g opacity={o1}>
-        <g transform={`translate(330 860) scale(${0.6 + 0.4 * appear}) translate(-330 -860)`}>
-          <CellBody cx={330} cy={860} r={170} />
+    <g opacity={o}>
+      <path d={wavePath(180, 1000, 300, 22, 0.5, t * 3)} stroke={COL.virusD} strokeWidth={11} fill="none" strokeLinecap="round" opacity={0.95} />
+      <Cross x={lerp(150, 520, 0) + 340} y={1000} s={ez(t, 25.2, 25.8, back)} />
+      <Helix x0={420} y0={NY} len={240} amp={28} turns={3} a={COL.cell} b="#D6E8FC" k={ez(t, 24.6, 25.6)} />
+      <Check x={540} y={NY - 130} s={ez(t, 26.4, 27.0, back)} />
+    </g>
+  );
+};
+
+// 28.4 - 36.4: reverse transcriptase
+const SceneC2: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 28.4, 36.5, 0.4);
+  const k = ez(t, 29.6, 35.6, sine);
+  const x0 = lerp(-240, 550, k);
+  const L = 380;
+  return (
+    <g opacity={o}>
+      <rect x={140} y={1000} width={800} height={260} rx={36} fill="#EAF2FB" opacity={0.15} />
+      <rect x={140} y={968} width={800} height={46} rx={23} fill="#EAF2FB" opacity={0.22} />
+      <rect x={520} y={1000} width={40} height={260} fill="#0A1F3D" opacity={0.28} />
+      <defs>
+        <clipPath id="cL"><rect x={140} y={1000} width={400} height={260} /></clipPath>
+        <clipPath id="cR"><rect x={540} y={1000} width={400} height={260} /></clipPath>
+      </defs>
+      <g clipPath="url(#cL)">
+        <path d={wavePath(x0, 1130, L, 26, 0.5, t * 2)} stroke={COL.virusD} strokeWidth={13} fill="none" strokeLinecap="round" />
+      </g>
+      <g clipPath="url(#cR)">
+        <Helix x0={x0} y0={1130} len={L} amp={30} turns={5} />
+      </g>
+    </g>
+  );
+};
+
+// 36.6 - 45.4: integrase
+const SceneC3: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 36.6, 45.5, 0.4);
+  const kIn = ez(t, 37.8, 40.0, sine);
+  const glow = win(t, 41.5, 45.2, 0.3) * (0.6 + 0.4 * Math.sin(t * 5));
+  const vy = lerp(1190, NY, kIn);
+  return (
+    <g opacity={o}>
+      <Helix x0={380} y0={NY} len={140} amp={26} turns={2} a={COL.cell} b="#D6E8FC" />
+      <Helix x0={660} y0={NY} len={140} amp={26} turns={2} a={COL.cell} b="#D6E8FC" />
+      {kIn < 0.98 && <Helix x0={520} y0={vy} len={140} amp={26} turns={2} a={COL.virus} b="#FFD9CF" />}
+      {kIn >= 0.98 && (
+        <>
+          <circle cx={590} cy={NY} r={90} fill={COL.virus} opacity={0.35 * glow} />
+          <Helix x0={520} y0={NY} len={140} amp={26} turns={2} a={COL.virusD} b="#FFB7A5" />
+        </>
+      )}
+    </g>
+  );
+};
+
+// 45.76 - 54.0: produksi virus baru
+const SceneD: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 45.76, 54.3, 0.4);
+  const buds = [{ x: 380, d: 0 }, { x: 540, d: 0.5 }, { x: 700, d: 1.0 }];
+  const parts = Array.from({ length: 18 }, (_, i) => i);
+  return (
+    <g opacity={o}>
+      <Helix x0={380} y0={NY} len={140} amp={26} turns={2} a={COL.cell} b="#D6E8FC" />
+      <Helix x0={520} y0={NY} len={140} amp={26} turns={2} a={COL.virusD} b="#FFB7A5" />
+      <Helix x0={660} y0={NY} len={140} amp={26} turns={2} a={COL.cell} b="#D6E8FC" />
+      {parts.map((i) => {
+        const tg = buds[i % 3];
+        const st = 46.6 + i * 0.22;
+        const k = ez(t, st, st + 2.2, sine);
+        if (k <= 0.01 || k >= 0.995) return null;
+        const sx = 540 + ((i * 37) % 160) - 80;
+        const x = lerp(sx, tg.x, k), y = lerp(NY + 30, CY + CR - 30, k);
+        return <circle key={i} cx={x} cy={y} r={11 + (i % 3) * 3} fill={COL.virus} opacity={0.9} />;
+      })}
+      {buds.map((b, i) => {
+        const g = ez(t, 49.4 + b.d, 51.8 + b.d, sine);
+        const det = ez(t, 52.0 + b.d * 0.5, 53.4 + b.d * 0.5, sine);
+        const y = lerp(CY + CR - 14, 1345, det);
+        return g > 0.01 ? <Virus key={i} x={b.x} y={y} r={54} s={g} m={lerp(0.2, 0.3, det)} /> : null;
+      })}
+    </g>
+  );
+};
+
+// ================= SCENE E: protease (54.35 - 64.4) =================
+const SceneE: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, 54.35, 64.5, 0.4);
+  const m = ez(t, 58.6, 61.8, sine);
+  const sc = ez(t, 56.7, 57.7, out3) * (1 - ez(t, 60.0, 61.2));
+  const snip = Math.abs(Math.sin(t * 7)) * 22;
+  const move = ez(t, 62.6, 64.2, sine);
+  return (
+    <g opacity={o}>
+      <Virus x={lerp(540, 450, move)} y={lerp(900, 1010, move)} r={lerp(220, 120, move)} m={m} />
+      {sc > 0.01 && (
+        <g opacity={sc}>
+          <Scissors x={lerp(960, 650, ez(t, 56.7, 57.9, out3))} y={lerp(1240, 860, ez(t, 56.7, 57.9, out3))} rot={-55} open={snip} s={1.1} />
         </g>
-        <Virus x={lerp(980, 790, vk)} y={860 + Math.sin(t * 2.4) * 10} r={56} rot={t * 6} />
-      </g>
-      <g opacity={o2}>
-        <CellBody cx={540} cy={1040} r={120} />
-        <circle cx={540} cy={640} r={110} fill={COL.yel} />
-        <text x={540} y={692} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={150} fill="#4A3606">?</text>
-      </g>
-      <g opacity={o3}>
-        <rect x={110} y={640} width={860} height={420} rx={44} fill="#EAF2FB" opacity={0.12} />
-        <line x1={150} y1={1020} x2={930} y2={1020} stroke="#E8F0FA" strokeOpacity={0.5} strokeWidth={5} strokeLinecap="round" />
-        <path d={d} fill="none" stroke={COL.cell} strokeWidth={11} strokeLinecap="round" strokeLinejoin="round" />
+      )}
+      <g opacity={ez(t, 62.4, 63.0)}>
+        <CellBody cx={880} cy={1180} r={120} rec={true} />
       </g>
     </g>
   );
 };
 
-// ================= SCENE B: indikator baterai (8.59 - 16.2) =================
-const SceneB: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 8.59, 16.75, 0.45);
-  const appear = ez(t, 8.7, 9.7, back);
-  const level = 0.62 + 0.26 * Math.sin(t * 1.5) + 0.08 * Math.sin(t * 3.7);
-  return (
-    <g opacity={o} transform={`translate(540 860) scale(${0.7 + 0.3 * appear}) translate(-540 -860)`}>
-      <rect x={300} y={430} width={480} height={860} rx={72} fill="#EAF2FB" opacity={0.12} />
-      <rect x={470} y={470} width={140} height={22} rx={11} fill="#EAF2FB" opacity={0.25} />
-      <Battery x={540} y={860} w={420} h={200} level={level} />
-    </g>
-  );
-};
-
-// ================= SCENE C: CD4 sel penjaga (16.46 - 26.4) =================
-const RING = 8;
-const SceneC: React.FC<{ t: number }> = ({ t }) => {
-  const oC1 = win(t, 16.46, 22.95, 0.45);
-  const oC2 = win(t, 22.67, 26.9, 0.45);
-  const cx = 540, cy = 800, R = 270;
-  const vk = ez(t, 20.1, 21.5, sine);
-  const touch = pt(cx, cy, R, -Math.PI * 0.75);
-  const vx = lerp(130, touch.x - 60, vk), vy = lerp(430, touch.y - 40, vk);
-  const lit = Math.floor(ez(t, 22.9, 25.5, sine) * RING + 0.01);
+// ================= SCENE F: salinan ceroboh (64.64 - 75.9) =================
+const COPIES: { y: number; x: number; mark?: [number, number] }[] = [
+  { x: 150, y: 780 }, { x: 570, y: 780, mark: [0.38, 0.5] },
+  { x: 150, y: 920, mark: [0.62, 0.74] }, { x: 570, y: 920 },
+  { x: 150, y: 1060 }, { x: 570, y: 1060, mark: [0.22, 0.34] },
+];
+const SceneF: React.FC<{ t: number }> = ({ t }) => {
+  const oEx = win(t, 64.64, 66.4, 0.35);
+  const o = win(t, 66.5, 75.9, 0.4);
   return (
     <g>
-      <g opacity={oC1}>
-        <circle cx={cx} cy={cy} r={150} fill="#EAF2FB" opacity={0.12} />
-        {Array.from({ length: RING }, (_, i) => {
-          const a = (i / RING) * Math.PI * 2 - Math.PI * 0.75;
-          const p = pt(cx, cy, R, a);
-          const k = ez(t, 16.6 + i * 0.18, 17.4 + i * 0.18, back);
+      <g opacity={oEx}>
+        <circle cx={540} cy={860} r={130} fill={COL.yel} />
+        <text x={540} y={918} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={170} fill="#4A3606">!</text>
+      </g>
+      <g opacity={o}>
+        <rect x={140} y={560} width={800} height={150} rx={30} fill="#EAF2FB" opacity={0.15} />
+        <rect x={140} y={540} width={800} height={34} rx={17} fill="#EAF2FB" opacity={0.22} />
+        <Helix x0={200} y0={635} len={680} amp={26} turns={9} sw={7} k={ez(t, 66.8, 68.2)} />
+        {COPIES.map((c, i) => {
+          const st = 68.7 + i * 0.55;
+          const k = ez(t, st, st + 0.7, back);
+          if (k < 0.01) return null;
           return (
             <g key={i} opacity={k}>
-              <CellBody cx={p.x} cy={p.y} r={62} rec={false} glow={i === 0 ? ez(t, 21.4, 22.0) : 0} />
-              <Shield x={p.x} y={p.y} s={0.45} />
+              <rect x={c.x - 10} y={c.y - 52} width={380} height={104} rx={26} fill="#EAF2FB" opacity={0.13} />
+              <Helix x0={c.x + 20} y0={c.y} len={320} amp={24} turns={4} sw={7} mark={c.mark ? [c.mark] : []} />
             </g>
           );
         })}
-        {t > 20.0 && <Virus x={vx} y={vy} r={48} rot={t * 8} s={1 - 0.4 * ez(t, 21.4, 22.2)} />}
-      </g>
-      <g opacity={oC2}>
-        {Array.from({ length: RING }, (_, i) => {
-          const a = (i / RING) * Math.PI * 2 - Math.PI * 0.75;
-          const p = pt(cx, cy - 60, 230, a);
-          return <CellBody key={i} cx={p.x} cy={p.y} r={54} rec={false} op={i < lit ? 1 : 0.28} />;
-        })}
-        <Battery x={540} y={1130} w={520} h={170} level={lit / RING} />
       </g>
     </g>
   );
 };
 
-// ================= SCENE D: tiga langkah baca CD4 (26.82 - 41.5) =================
-const VALS = [0.42, 0.55, 0.48, 0.66, 0.74];
-const CHX = (i: number) => 200 + i * 170;
-const CHY = (v: number) => 1120 - v * 520;
-const SceneD: React.FC<{ t: number }> = ({ t }) => {
-  const o1 = win(t, 26.82, 30.35, 0.4);
-  const o2 = win(t, 30.09, 34.35, 0.4);
-  const o3 = win(t, 34.11, 41.95, 0.45);
-  const fillK = ez(t, 27.3, 29.4, sine);
-  const slide = ez(t, 30.2, 31.2, out3);
-  const nDots = Math.floor(ez(t, 31.4, 33.4, sine) * 12 + 0.01);
-  const line = ez(t, 34.5, 37.4, sine);
-  const arrow = ez(t, 38.4, 40.4, sine);
-  const ax0 = 200, ay0 = CHY(0.38), ax1 = 880, ay1 = CHY(0.8);
-  return (
-    <g>
-      <g opacity={o1}>
-        <Tube x={540} y={860} fill={fillK} />
-      </g>
-      <g opacity={o2}>
-        <rect x={160} y={700} width={760} height={420} rx={48} fill="#EAF2FB" opacity={0.15} />
-        <rect x={230} y={760} width={500} height={300} rx={30} fill="#0A1F3D" opacity={0.4} />
-        {Array.from({ length: 12 }, (_, i) => {
-          const c = i % 4, r = Math.floor(i / 4);
-          const k = i < nDots ? 1 : 0;
-          return <circle key={i} cx={300 + c * 120} cy={830 + r * 90} r={30} fill={COL.cell} opacity={0.15 + 0.85 * k} />;
-        })}
-        <Tube x={lerp(1010, 820, slide)} y={910} fill={1} rot={90} s={0.5} />
-      </g>
-      <g opacity={o3}>
-        <rect x={110} y={560} width={860} height={640} rx={44} fill="#EAF2FB" opacity={0.12} />
-        <line x1={150} y1={1130} x2={930} y2={1130} stroke="#E8F0FA" strokeOpacity={0.5} strokeWidth={5} strokeLinecap="round" />
-        {VALS.slice(1).map((v, i) => {
-          const k = clamp(line * 4 - i);
-          if (k <= 0) return null;
-          const x0 = CHX(i), y0 = CHY(VALS[i]);
-          const x1 = lerp(x0, CHX(i + 1), k), y1 = lerp(y0, CHY(v), k);
-          return <line key={i} x1={x0} y1={y0} x2={x1} y2={y1} stroke={COL.cell} strokeWidth={9} strokeLinecap="round" />;
-        })}
-        {VALS.map((v, i) => {
-          const k = ez(t, 34.4 + i * 0.5, 34.9 + i * 0.5, back);
-          return <circle key={i} cx={CHX(i)} cy={CHY(v)} r={19 * k} fill={COL.cell} />;
-        })}
-        {arrow > 0.01 && (
-          <g opacity={0.95}>
-            <line x1={ax0} y1={ay0} x2={lerp(ax0, ax1, arrow)} y2={lerp(ay0, ay1, arrow)} stroke={COL.rt} strokeWidth={14} strokeLinecap="round" strokeDasharray="2 26" />
-            <g transform={`translate(${lerp(ax0, ax1, arrow)} ${lerp(ay0, ay1, arrow)}) rotate(${(Math.atan2(ay1 - ay0, ax1 - ax0) * 180) / Math.PI})`}>
-              <path d="M0 0 L-40 -26 L-40 26 Z" fill={COL.rt} />
-            </g>
-          </g>
-        )}
-      </g>
-    </g>
-  );
-};
-
-// ================= SCENE E: satu angka bisa menipu (41.69 - 47.9) =================
-const SceneE: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 41.69, 48.35, 0.45);
-  const wob = t < 44.2 ? 26 * Math.sin(t * 5) * ez(t, 42.0, 42.8) : 0;
-  const sick = ez(t, 44.3, 45.2, sine);
-  const lab = ez(t, 45.8, 46.8, sine);
-  const y = 860 + wob - 90 * sick + 150 * lab;
-  return (
-    <g opacity={o}>
-      <rect x={110} y={740} width={860} height={240} rx={44} fill={COL.yel} opacity={0.14} />
-      <line x1={150} y1={860} x2={930} y2={860} stroke="#E8F0FA" strokeOpacity={0.4} strokeWidth={4} strokeDasharray="4 18" strokeLinecap="round" />
-      <circle cx={540} cy={y} r={48} fill={COL.cell} />
-      <circle cx={540} cy={y} r={78} fill={COL.cell} opacity={0.2} />
-    </g>
-  );
-};
-
-// ================= SCENE F: diisi ulang + ARV (48.09 - 56.9) =================
-const SceneF: React.FC<{ t: number }> = ({ t }) => {
-  const o1 = win(t, 48.09, 51.95, 0.45);
-  const o2 = win(t, 51.6, 57.35, 0.45);
-  const charge = ez(t, 48.4, 51.0, sine);
-  const level = lerp(0.18, 0.92, charge);
-  const bolt = 0.6 + 0.4 * Math.sin(t * 6);
-  const cap = ez(t, 53.0, 54.3, out3);
-  const stop = ez(t, 54.4, 55.0);
-  const copies = [0, 1, 2, 3, 4];
-  return (
-    <g>
-      <g opacity={o1}>
-        <Battery x={540} y={860} w={460} h={220} level={level} bolt={bolt * ez(t, 48.4, 48.9)} />
-      </g>
-      <g opacity={o2}>
-        <Virus x={250} y={860} r={78} rot={t * 5} />
-        {copies.map((i) => {
-          const st = 52.0 + i * 0.28;
-          const k = ez(t, st, st + 1.6, sine);
-          if (k <= 0.01) return null;
-          return <Virus key={i} x={lerp(300, 520, k)} y={860 + (i - 2) * 70 * k} r={26} op={(1 - 0.85 * stop) * (1 - ez(t, st + 1.2, st + 1.6))} spikes={false} />;
-        })}
-        <g opacity={cap}>
-          <Capsule x={lerp(1080, 800, cap)} y={760} s={1.1} rot={-20} />
-        </g>
-        <g opacity={ez(t, 54.2, 54.8)}>
-          <Shield x={560} y={860} s={1.5 * ez(t, 54.2, 54.9, back)} />
-        </g>
-        <Check x={820} y={1010} s={ez(t, 55.0, 55.7, back)} />
-      </g>
-    </g>
-  );
-};
-
-// ================= SCENE G: 92 dari 100 (56.93 - 64.1) =================
+// ================= SCENE G: seleksi (76.0 - 91.2) =================
+const COLS = 6, ROWS = 8;
+const GX = (c: number) => 170 + c * 148;
+const GY = (r: number) => 470 + r * 112;
+const dead = (i: number) => [0, 2, 3, 5, 6, 7, 9, 10, 11, 13, 14, 16, 17, 19, 20, 21, 23, 24, 26, 27, 28, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45, 47].includes(i);
+const resist = (i: number) => [1, 8, 15, 22, 29, 4, 40, 34].includes(i);
 const SceneG: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 56.93, 64.75, 0.45);
-  const prog = ez(t, 57.6, 62.6, sine);
-  const nLit = Math.round(prog * 92);
-  const gray = ez(t, 62.6, 63.4);
+  const o = win(t, 76.0, 91.3, 0.4);
+  const cells = Array.from({ length: COLS * ROWS }, (_, i) => i);
+  const sweep = ez(t, 84.8, 87.4, sine);
+  const mult = ez(t, 88.4, 90.6, sine);
   return (
     <g opacity={o}>
-      {Array.from({ length: 100 }, (_, i) => {
-        const c = i % 10, r = Math.floor(i / 10);
-        const on = i < nLit;
-        const isGrayTail = i >= 92;
-        const fill = on ? COL.cell : '#B9C3D0';
-        const op = on ? 1 : isGrayTail ? 0.25 + 0.2 * gray : 0.18;
-        return <circle key={i} cx={225 + c * 70} cy={500 + r * 70} r={24} fill={fill} opacity={op} />;
+      {cells.map((i) => {
+        const c = i % COLS, r = Math.floor(i / COLS);
+        const appear = ez(t, 76.1 + (i / 48) * 1.8, 76.5 + (i / 48) * 1.8, back);
+        const isDead = dead(i);
+        const isRes = resist(i);
+        const deadK = isDead ? ez(t, 77.3 + (i % 6) * 0.2, 77.8 + (i % 6) * 0.2) : 0;
+        const resK = isRes ? ez(t, 81.8 + (i % 5) * 0.25, 82.4 + (i % 5) * 0.25) : 0;
+        // sapuan obat: virus biasa (bukan cacat, bukan tahan obat) memudar saat sapuan lewat barisnya
+        const swept = !isDead && !isRes ? ez(sweep * ROWS, r, r + 0.8) : 0;
+        // setelah obat: yang tahan obat berlipat ganda mengisi petak yang kosong
+        const reborn = (swept > 0.9 || isDead) && (i % 3 !== 0) ? mult * ez(mult * 10, (i % 7), (i % 7) + 2) : 0;
+        const x = GX(c), y = GY(r);
+        return (
+          <g key={i}>
+            {isDead && deadK > 0 && <Virus x={x} y={y} r={30} s={appear} dead spikes op={deadK > 0.5 ? 0.65 * (1 - 0.8 * ez(sweep, 0.2, 0.6)) : 1} />}
+            {isDead && deadK < 0.5 && <Virus x={x} y={y} r={30} s={appear} op={1 - deadK * 2} />}
+            {!isDead && <Virus x={x} y={y} r={30} s={appear} halo={resK > 0.5} op={(1 - swept * 0.9)} />}
+            {reborn > 0.02 && <Virus x={x} y={y} r={30} s={reborn} halo />}
+          </g>
+        );
       })}
-      <text x={540} y={1330} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={190} fill="#FFFFFF">
-        {nLit}%
-      </text>
+      {sweep > 0.01 && sweep < 0.99 && <Capsule x={lerp(-160, 1240, sweep)} y={lerp(460, 1320, sweep)} rot={55} s={1.5} />}
     </g>
   );
 };
 
-// ================= SCENE H: video lain di seri (64.15 - 67.2) =================
+// ================= SCENE H: ARV (91.5 - 106.3) =================
+const STAGES = [
+  { y: 570, name: 'reverse transcriptase', sub: 'RNA menjadi DNA' },
+  { y: 790, name: 'integrase', sub: 'DNA virus masuk ke DNA sel' },
+  { y: 1010, name: 'protease', sub: 'virus menjadi matang' },
+];
 const SceneH: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 64.15, 67.9, 0.35);
-  const k = ez(t, 64.4, 65.3, back);
-  const cards = [
-    { y: 650, a: 0.2 },
-    { y: 900, a: 1 },
-    { y: 1150, a: 0.2 },
-  ];
+  const o1 = win(t, 91.5, 101.0, 0.45);
+  const o2 = win(t, 100.9, 106.5, 0.45);
+  const vx1 = lerp(150, 790, ez(t, 102.0, 104.4, sine));
+  const vx2 = lerp(150, 475, ez(t, 102.4, 104.4, sine));
+  const blocked = ez(t, 104.5, 105.0);
   return (
-    <g opacity={o}>
-      {cards.map((c, i) => (
-        <g key={i} opacity={c.a} transform={`translate(0 ${(1 - k) * (i - 1) * 60})`}>
-          <rect x={150} y={c.y - 100} width={780} height={200} rx={44} fill="#EAF2FB" opacity={c.a === 1 ? 0.26 : 0.14} />
-          <circle cx={260} cy={c.y} r={52} fill={c.a === 1 ? COL.rt : '#B9C3D0'} />
-          <path d={`M248 ${c.y - 26} L248 ${c.y + 26} L288 ${c.y} Z`} fill={c.a === 1 ? '#063F38' : '#1D2A3A'} />
-          {c.a === 1 ? (
-            <text x={350} y={c.y + 16} fontFamily={FONT} fontWeight={800} fontSize={48} fill="#FFFFFF">Cara kerja ARV</text>
-          ) : (
-            <rect x={350} y={c.y - 14} width={380} height={28} rx={14} fill="#EAF2FB" opacity={0.35} />
-          )}
-        </g>
-      ))}
+    <g>
+      <g opacity={o1}>
+        {STAGES.map((s, i) => {
+          const k = ez(t, 92.4 + i * 0.5, 93.2 + i * 0.5, out3);
+          const sh = ez(t, 95.2 + i * 1.4, 96.0 + i * 1.4, back);
+          return (
+            <g key={i} opacity={k} transform={`translate(0 ${(1 - k) * 24})`}>
+              <rect x={90} y={s.y - 88} width={900} height={176} rx={36} fill="#EAF2FB" opacity={0.15} />
+              <text x={150} y={s.y - 8} fontFamily={FONT} fontWeight={800} fontSize={44} fill="#FFFFFF">{s.name}</text>
+              <text x={150} y={s.y + 44} fontFamily={FONT} fontWeight={600} fontSize={32} fill="#CFE0F2">{s.sub}</text>
+              <Shield x={870} y={s.y - 4} s={sh * 0.85} />
+            </g>
+          );
+        })}
+      </g>
+      <g opacity={o2}>
+        {/* 1 obat: virus tahan obat lolos */}
+        <rect x={90} y={500} width={900} height={250} rx={36} fill="#EAF2FB" opacity={0.13} />
+        <Shield x={540} y={625} s={0.8} broken={ez(t, 103.6, 104.0) > 0.5} />
+        <Virus x={vx1} y={625} r={44} halo spikes />
+        <CellBody cx={895} cy={625} r={46} rec={false} />
+        {/* beberapa obat: virus tertahan */}
+        <rect x={90} y={820} width={900} height={250} rx={36} fill="#EAF2FB" opacity={0.13} />
+        <Shield x={400} y={945} s={0.75} />
+        <Shield x={540} y={945} s={0.75} />
+        <Shield x={680} y={945} s={0.75} />
+        <Virus x={vx2} y={945} r={44} halo spikes op={1 - blocked * 0.6} />
+        <Cross x={vx2 + 70} y={1010} s={blocked * 0.8} />
+        <CellBody cx={895} cy={945} r={46} rec={false} />
+      </g>
     </g>
   );
 };
 
-// ================= SCENE I: callback hook, baterai naik turun (67.46 - 70) =================
-const SceneI: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 67.46, 70.4, 0.4);
-  const level = 0.5 + 0.28 * Math.sin((t - 67.46) * 3.2) * (1 - ez(t, 68.6, 69.6)) + 0.2 * ez(t, 68.8, 69.9);
-  return (
-    <g opacity={o}>
-      <Battery x={540} y={860} w={460} h={220} level={level} bolt={0.85 * ez(t, 68.9, 69.5)} />
-    </g>
-  );
-};
-
-// ================= peta waktu video -> waktu mp3 asli =================
-// Dalam kalimat: kecepatan 1x. Dalam jeda: animasi berjalan secepat jeda lama lalu menahan hasilnya sampai kalimat berikutnya mulai.
-const toAudio = (t: number) => {
-  const S = SYNC_SEGS;
-  if (t <= S[0].a) return S[0].sa - (S[0].a - t);
-  let n = 0;
-  for (let i = 0; i < S.length; i++) if (t >= S[i].a) n = i;
-  const c = S[n];
-  if (t <= c.b) return c.sa + (t - c.a);
-  const nx = S[n + 1];
-  if (!nx) return c.sb + (t - c.b);
-  return c.sb + Math.min(t - c.b, nx.sa - c.sb);
-};
-
+// ---------------- sumber data baris sheet ----------------
+// referensi: isi kolom `referensi` apa adanya (baris pertama = judul panel)
 const REFERENSI = `Referensi
 
-1. Moore RD, Keruly JC (2007). CD4+ cell count 6 years after commencement of highly active antiretroviral therapy in persons with sustained virologic suppression. Clin Infect Dis. 44(3), 441-446.
-https://doi.org/10.1086/510746
+1. Perelson, A. S., et al. (1996). HIV-1 Dynamics in Vivo: Virion Clearance Rate, Infected Cell Life-Span, and Viral Generation Time. Science, 271(5255), 1582–1586.
+https://doi.org/10.1126/science.271.5255.1582
 
-2. Panel on Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV (NIH, CDC, HIVMA/IDSA). Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV.
-https://clinicalinfo.hiv.gov/en/guidelines/adult-and-adolescent-opportunistic-infection
+2. Jang, S., & Engelman, A. N. (2023). Capsid-host interactions for HIV-1 ingress. Microbiology and Molecular Biology Reviews.
+https://doi.org/10.1128/mmbr.00048-22
 
-3. Kementerian Kesehatan RI (2019). Keputusan Menteri Kesehatan RI Nomor HK.01.07/MENKES/90/2019 tentang Pedoman Nasional Pelayanan Kedokteran Tata Laksana HIV.`;
+3. HIV-1 assembly, budding, and maturation. (2012). Cold Spring Harbor Perspectives in Medicine.
+https://doi.org/10.1101/cshperspect.a006924
+
+4. Yeo, Y., et al. (2020). The Determination of HIV-1 RT Mutation Rate, Its Possible Allosteric Effects, and Its Implications on Drug Resistance. Viruses, 12(3), 297.
+https://doi.org/10.3390/v12030297
+
+5. NIH HIVinfo. The HIV Life Cycle.
+https://hivinfo.nih.gov/understanding-hiv/fact-sheets/hiv-life-cycle`;
+
 const parseRefs = (raw: string) => {
   const blocks = raw.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
   const title = blocks[0];
@@ -503,6 +510,9 @@ const parseRefs = (raw: string) => {
   return { title, items };
 };
 
+
+
+// ---------------- latar gradien (bergeser halus tiap adegan) ----------------
 // ================= penutup: logo, referensi, Dukung dan follow kami =================
 const Glyph: React.FC<{ name: string }> = ({ name }) => {
   if (name === 'ig')
@@ -547,7 +557,7 @@ const PLATFORMS = [
   { key: 'sw', name: 'Saweria', handle: 'saweria.co/maknapositif', icon: '#F97316', btn: 'Donate', done: 'Donate' },
 ];
 
-const CheckMk: React.FC = () => (
+const CheckMark: React.FC = () => (
   <svg width={26} height={26} viewBox="0 0 26 26" style={{ marginRight: 6 }}>
     <path d="M5 13.5 L10.5 19 L21 7.5" fill="none" stroke="#14B8A6" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
   </svg>
@@ -620,7 +630,7 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
                     transform: `scale(${isDonate ? pulse : press})`,
                   }}
                 >
-                  {done && <CheckMk />}
+                  {done && <CheckMark />}
                   {isDonate && <span style={{ marginRight: 8, display: 'flex' }}><HeartIcon s={0.9} /></span>}
                   {done ? p.done : p.btn}
                 </div>
@@ -634,37 +644,39 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ================= komposisi =================
-const CLOSE_GRAD = ['#0A2540', '#0F3B66', '#0B4F63'];
 export const S1E4Full: React.FC = () => {
-  useFonts4();
+  useFonts3();
   const f = useCurrentFrame();
-  const tv = f / FPS; // waktu video
-  const t = toAudio(tv); // waktu mp3 asli untuk adegan
+  const tn = f / FPS; // waktu video
+  const t = WARP(tn); // waktu mp3 asli untuk animasi adegan
   const g = gradAt(t);
-  const kc = ez(tv, CLOSE - 0.3, CLOSE + 0.7);
-  const cue = CUES.find((c) => tv >= c.a - 0.05 && tv < c.b);
-  const ck = cue ? Math.min(1, (tv - cue.a + 0.05) / 0.18) : 0;
-  const subOn = tv < CLOSE - 0.05;
+  const cue = CUES.find((c) => tn >= c.a - 0.05 && tn < c.b);
+  const ck = cue ? Math.min(1, (tn - cue.a + 0.05) / 0.18) : 0;
+  const subOn = tn < CLOSE - 0.05;
+  const inside = win(t, 23.8, 54.4, 0.4);
   return (
     <AbsoluteFill style={{ background: `linear-gradient(180deg,${g[0]} 0%,${g[1]} 55%,${g[2]} 100%)` }}>
-      <AbsoluteFill style={{ background: `linear-gradient(180deg,${CLOSE_GRAD[0]} 0%,${CLOSE_GRAD[1]} 55%,${CLOSE_GRAD[2]} 100%)`, opacity: kc }} />
       <AbsoluteFill style={{ background: 'radial-gradient(760px 760px at 50% 40%, rgba(120,190,255,0.22), transparent 70%)' }} />
-      {tv < CLOSE + 0.5 && (
-        <AbsoluteFill style={{ transform: `scale(${settle(t)})`, transformOrigin: '50% 45%', opacity: 1 - ez(tv, CLOSE - 0.1, CLOSE + 0.4) }}>
+      {tn < CLOSE + 0.3 && (
+        <AbsoluteFill style={{ transform: `scale(${settle(t)})`, transformOrigin: '50% 45%', opacity: 1 - ez(tn, CLOSE - 0.1, CLOSE + 0.4) }}>
           <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', left: 0, top: 0 }}>
             <Defs />
+            <InsideCell t={t} o={inside} />
             <SceneA t={t} />
             <SceneB t={t} />
-            <SceneC t={t} />
+            <SceneC1 t={t} />
+            <SceneC2 t={t} />
+            <SceneC3 t={t} />
             <SceneD t={t} />
             <SceneE t={t} />
             <SceneF t={t} />
             <SceneG t={t} />
             <SceneH t={t} />
-            <SceneI t={t} />
           </svg>
           <Pills t={t} />
-          <Legend t={t} />
+          {LEGENDS.map((l, i) => (
+            <LegendBox key={i} t={t} a={l.a} b={l.b} items={l.items} />
+          ))}
         </AbsoluteFill>
       )}
       {subOn && cue && (
@@ -672,7 +684,7 @@ export const S1E4Full: React.FC = () => {
           <div><Sub text={cue.text} /></div>
         </div>
       )}
-      <Closing t={tv} />
+      <Closing t={tn} />
       <Audio src={staticFile('vo/S1E4.mp3')} />
     </AbsoluteFill>
   );

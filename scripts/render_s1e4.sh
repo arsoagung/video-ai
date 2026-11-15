@@ -1,5 +1,5 @@
 #!/bin/bash
-# Render S1E4Full (episode "Apa itu CD4 dan kenapa penting?", 2D flat penuh, 1080x1920, 30 fps, 2692 frame)
+# Render S1E4Full (episode "Bagaimana HIV memperbanyak diri?", 2D flat penuh, 1080x1920, 30 fps, 3945 frame)
 # dalam potongan berurutan, bisa dilanjut (potongan yang sudah ada dilewati), lalu gabung + audio loudnorm.
 # usage: bash scripts/render_s1e4.sh   (dari root repo; public/vo/S1E4.mp3 harus ada; suara disusun ulang ke out/S1E4/vo_synced.wav; BROWSER=path chrome jika perlu)
 cd "$(dirname "$0")/.."
@@ -11,7 +11,7 @@ node scripts/retime.mjs build S1E4 >> $LOG 2>&1 || { echo "retime build gagal"; 
 echo "start $(date)" >> $LOG
 [ -d out/bundle ] || npx remotion bundle src/index.ts --out-dir=out/bundle >> $LOG 2>&1
 i=0
-for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2691"; do
+for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2699" "2700 3149" "3150 3599" "3600 3944"; do
   set -- $rng
   f=out/S1E4/c$i.mp4
   if [ ! -s "$f" ]; then
@@ -21,7 +21,7 @@ for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2691"; do
   i=$((i+1))
 done
 rm -f out/S1E4/list.txt
-for j in 0 1 2 3 4 5; do echo "file 'c$j.mp4'" >> out/S1E4/list.txt; done
+for j in 0 1 2 3 4 5 6 7 8; do echo "file 'c$j.mp4'" >> out/S1E4/list.txt; done
 ffmpeg -y -loglevel error -f concat -safe 0 -i out/S1E4/list.txt -c copy out/S1E4/all.mp4 >> $LOG 2>&1
 ffmpeg -y -loglevel error -i out/S1E4/all.mp4 -i out/S1E4/vo_synced.wav -filter_complex "[1:a]loudnorm=I=-14:TP=-1.5:LRA=7,apad[a]" -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k -shortest out/S1E4.mp4 >> $LOG 2>&1
 echo "ALL DONE $(date)" >> $LOG

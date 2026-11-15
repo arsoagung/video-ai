@@ -179,7 +179,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 **Daftar thumbnail jadi**
 - "Apa bedanya HIV dan AIDS?": tema `indigo`, `media/cover/S1E1.png` (komposisi `ThumbHivAids`).
 - "Kenapa HIV menyerang CD4?": tema `biru`, `media/cover/S1E2.png` (komposisi `ThumbCd4`).
-- "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `media/cover/S2E9.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
+- "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `media/cover/S1E4.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
 - "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `media/cover/S1E6.png` (komposisi `ThumbViralLoad`).
 
 ---
@@ -188,7 +188,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 
 Dibuat otomatis dari scene-spec storyboard (artifact di kolom `storyboard`). Kode: `src/ep3arv/` (`timeline.ts` = segmen suara hasil deteksi jeda + batas adegan, `spec.ts` = scene-spec disalin dari storyboard, `Ep3Arv.tsx` = renderer generik spec -> komponen `src/shared/library.tsx` + subtitle `narasi_final` + penutup logo/referensi/Dukung dan follow kami). Composition `Ep3ArvFull` (3.339 frame, 30 fps). Render: `bash scripts/render_ep3arv.sh` (butuh `public/vo.mp3` dari `link_dubbing`; tidak di-commit). Tidak ada objek library baru. Catatan: waktu adegan di storyboard hanyalah estimasi (±87 dtk); timeline memakai durasi suara asli (105,25 dtk) + ekor diam 6 dtk. `FlatVirus`/`Clock`/`Calendar` yang cy-nya jatuh di zona subtitle (>1380) digeser naik (1340/1360/1340) lewat `NUDGE`.
 - "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `media/cover/S1E3.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
-- "Apa itu CD4 dan kenapa penting?": tema `indigo`, `media/cover/S1E4.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
+- "Apa itu CD4 dan kenapa penting?" (kode S2E9 sejak penomoran ulang): tema `indigo`, `media/cover/S2E9.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
 
 ---
 
@@ -225,3 +225,10 @@ Tanpa storyboard. Kode: `src/s1e10/` (`timeline.ts` = kalimat narasi_final + bat
 ## Episode S1E11: "Kapan waktu terbaik untuk tes HIV?"
 
 Tanpa storyboard. Kode: `src/s1e11/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E11.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E11Full` (2980 frame, 30 fps; suara 82,76 dtk + jeda, total 99,33 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e11.sh` -> `out/S1E11.mp4`. Tidak ada objek library baru. Legenda: adegan 3 (virus), 4 (grafik kadar virus + batas deteksi), 5 (virus), 8 (titik tahu/belum tahu status), 9 (virus belum terbaca tes). Kalimat 11 ditandai ragu oleh retime (jeda 0,16 dtk), batas diterima.
+
+---
+
+## Episode S1E4: "Bagaimana HIV memperbanyak diri?"
+
+Tanpa storyboard. Sebelumnya episode ini bernama "ep3" (`src/ep3/`, tidak diubah) dan bergeser jadi S1E4 di sheet; video CD4 yang dulu S1E4 sekarang S2E9 (`src/s2e9/`, `S2E9Full`, `public/vo/S2E9.mp3`, `scripts/render_s2e9.sh`, `media/cover/S2E9.png`). Kode: `src/s1e4/` (`S1E4.tsx` = adegan 2D flat dari ep3 + subtitle + penutup baku, `shapes.tsx` = salinan bentuk ep3, `timeline.ts` = kalimat hasil `retime.mjs` + fungsi `WARP`, `holds.json`, `sync.ts`, `segments.json`, `narasi.txt`). Composition `S1E4Full` (3945 frame, 30 fps; suara 115,64 dtk + jeda, total 131,5 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e4.sh` -> `out/S1E4.mp4`. Tidak ada objek library baru. Animasi adegan ditulis dalam waktu mp3 asli dan dipetakan ke waktu video lewat `WARP` (jeda menahan hasil aksi). Batas kalimat 1-6 ikut hasil `retime` (jeda 9,11 dan 12,04 dst.), jadi adegan A dan B (pembuka, HIV masuk sel CD4) disesuaikan ke batas itu. Penutup dimulai di kalimat 23 ("HIV memang licik dan cepat berubah."), pasangan dua kalimat penutup. Legenda: adegan 1 (virus), 2 (sel CD4, lalu virus), 3 (RNA virus dan DNA sel), 4 (DNA sel dan DNA virus), 5 (bahan virus), 8 (kesalahan salin), 9 (virus cacat, lalu virus tahan obat), 10 (perisai = obat ARV). Pill hanya untuk enzim (reverse transcriptase, integrase, protease) dan "seleksi alam". `public/vo/S1E4.mp3` = dubbing episode ini (belum di-commit ke repo).
+
