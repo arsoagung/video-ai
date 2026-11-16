@@ -360,5 +360,5 @@ export const SYNC_SEGS: SyncSeg[] = [
  }
 ];
 export const AUDIO_END = 86.58; // akhir ucapan terakhir (waktu video)
-export const TAIL = 6; // ekor diam setelah ucapan terakhir
-export const SYNC_DUR = 92.58;
+export const TAIL = 11; // ekor diam setelah ucapan terakhir
+export const SYNC_DUR = 97.58;

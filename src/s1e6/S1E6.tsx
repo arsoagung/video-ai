@@ -7,7 +7,7 @@ import { COL, Defs, Helix, CellBody, Virus, Check, Cross } from '../ep3/shapes';
 import { Tube, Glass, Lake, VDot, Person, rnd, lakePoint, WATER_CLEAR } from './shapes';
 
 export const S1E6_FRAMES = Math.ceil(EP_DUR * FPS);
-const OLD_CLOSE = 72.03; // waktu mp3 asli saat kalimat penutup mulai (animasi memakai waktu mp3 asli lewat WARP)
+const OLD_CLOSE = 77.64; // waktu mp3 asli saat kalimat penutup mulai (animasi memakai waktu mp3 asli lewat WARP)
 
 const useFonts6 = () => {
   const [handle] = React.useState(() => delayRender('fonts6'));
@@ -194,7 +194,7 @@ const LENS_DOTS = (() => {
   return out;
 })();
 const SceneAB: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 0, 8.1, 0.45);
+  const o = win(t, 0, 7.98, 0.45);
   const shrink = ez(t, 0.3, 1.4, sine);
   const qK = ez(t, 2.4, 3.0, back) * (1 - ez(t, 3.7, 4.1));
   const tubeK = ez(t, 3.9, 4.6, out3);
@@ -242,7 +242,7 @@ const LAKE_DOTS = Array.from({ length: 70 }, (_, i) => {
 });
 const GLASS_DOTS = Array.from({ length: 16 }, (_, i) => ({ x: (rnd(i, 5) - 0.5) * 100, y: -10 + rnd(i, 6) * 90, i }));
 const SceneC: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 8.0, 16.3, 0.45);
+  const o = win(t, 8.0, 16.1, 0.45);
   const appear = ez(t, 8.1, 9.2, back);
   const k1 = ez(t, 14.0, 14.8, sine);
   const fill = ez(t, 14.6, 15.3);
@@ -250,7 +250,7 @@ const SceneC: React.FC<{ t: number }> = ({ t }) => {
   const gx = k2 > 0 ? lerp(420, 540, k2) : lerp(160, 420, k1);
   const gy = k2 > 0 ? lerp(960, 1010, k2) : lerp(500, 960, k1);
   const gs = lerp(1.3, 1.9, k2);
-  const lakeOp = 1 - 0.7 * ez(t, 15.2, 16.0);
+  const lakeOp = 1 - 0.7 * ez(t, 15.2, 15.9);
   // "mengukur seluruh danau": seluruh permukaan danau menyala bergelombang, lalu tanda silang
   const glow = ez(t, 11.9, 12.5) * (1 - ez(t, 13.3, 13.8)) * (0.6 + 0.4 * Math.sin(t * 7));
   const crossK = ez(t, 12.9, 13.5, back) * (1 - ez(t, 13.7, 14.0));
@@ -463,18 +463,25 @@ const SceneH: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ================= SCENE I: kembali ke gelas (68.79 - 72.1) =================
+// ================= SCENE I: kembali ke gelas (68.79 - akhir kalimat terakhir) =================
 const SceneI: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, 68.79, 72.2, 0.4);
+  const o = win(t, 68.79, 78.2, 0.4);
+  // "makin keruh atau makin jernih": virus bertambah (keruh) lalu menghilang (jernih)
+  const more = ez(t, 72.6, 74.2);
+  const clear = ez(t, 75.0, 77.0);
+  const dotOp = 1 - clear;
   return (
     <g opacity={o}>
       {SWARM.map((d) => {
         const on = ez(t, 69.0 + (d.i / 90) * 1.4, 69.3 + (d.i / 90) * 1.4);
-        return on > 0.01 ? <VDot key={d.i} x={d.x + Math.sin(t * 3 + d.i) * 5} y={d.y - 60 + Math.cos(t * 2.5 + d.i) * 5} r={6} op={0.65 * on} /> : null;
+        return on > 0.01 ? <VDot key={d.i} x={d.x + Math.sin(t * 3 + d.i) * 5} y={d.y - 60 + Math.cos(t * 2.5 + d.i) * 5} r={6} op={0.65 * on * dotOp} /> : null;
       })}
       <Glass x={540} y={1180} s={1.6} level={0.82} water={WATER_CLEAR}>
         {FLOAT.map((d) => (
-          <VDot key={d.i} x={d.x} y={d.y} r={6} />
+          <VDot key={d.i} x={d.x} y={d.y} r={6} op={dotOp} />
+        ))}
+        {Array.from({ length: 14 }, (_, i) => (
+          <VDot key={'m' + i} x={(rnd(i, 31) - 0.5) * 110} y={-10 + rnd(i, 32) * 90} r={6} op={more * dotOp} />
         ))}
       </Glass>
     </g>

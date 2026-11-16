@@ -17,7 +17,7 @@ const display = (s: string) => DISPLAY_MAP.reduce((o, [k, v]) => o.split(k.split
 export const CUES = makeCues(
   SYNC_SEGS.map((s) => ({ ...s, text: protect(s.text), clauses: s.clauses.map((c) => ({ ...c, text: protect(c.text) })) })),
 ).map((c) => ({ ...c, text: display(c.text) }));
-export const CLOSE = SEGS[SEGS.length - 1].a; // kalimat penutup terakhir
+export const CLOSE = SEGS[SEGS.length - 1].b + 0.5; // penutup (logo, referensi, medsos) tampil setelah dubbing selesai
 
 export const T = (n: number) => SEGS[n - 1].a;
 
