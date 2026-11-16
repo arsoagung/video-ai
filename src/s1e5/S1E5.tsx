@@ -243,7 +243,8 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const progress = keyed(t, [[s5 + 0.2, 0], [s5 + 1.9, 1], [s6, 1], [s7 - 0.2, 4], [s7 + 1.6, 5], [s7 + 5.0, 7.3]]) / 8;
   const d1 = pr(t, s5 + 0.2, s5 + 1.3, in3);
   const d2 = pr(t, s7 + 0.1, s7 + 1.2, in3);
-  const hour = 12 * (progress * 0.9);
+  // jam realistis: dosis sekali sehari. Tiap titik grafik = 6 jam; dosis 1 di jam 0, dosis 2 setelah 24 jam (jarum pendek 2 putaran)
+  const hour = Math.max(0, 6 * (progress * 8 - 1));
   return (
     <>
       <L.LineChart cx={540} cy={800} s={enter} op={enter} w={840} h={520} points={[0.05, 0.9, 0.74, 0.58, 0.42, 0.92, 0.76, 0.6, 0.46]} threshold={0.35} progress={progress} />
@@ -315,8 +316,10 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
 const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const s13 = T(13), s14 = T(14);
   const enter = pr(t, s13 - 0.1, s13 + 0.7, back);
-  const days = Math.floor(pr(t, s13 + 0.8, s13 + 3.6, sine) * 7.999);
-  const capDrops = [s13 + 0.8, s13 + 1.9, s13 + 3.0].map((h, i) => {
+  const drops = [s13 + 0.8, s13 + 1.9, s13 + 3.0];
+  const days = drops.filter((h) => t >= h + 0.8).length; // satu tanda per kapsul = satu hari
+  const dayF = Math.min(3, Math.max(0, (t - drops[0]) / 1.1)); // 1 hari = 24 jam = 2 putaran jarum pendek
+  const capDrops = drops.map((h, i) => {
     const k = pr(t, h, h + 0.9, sine);
     return k > 0 && k < 1 ? <L.Capsule key={i} cx={lerp(300, 700, k)} cy={880 - Math.sin(k * Math.PI) * 120} s={0.7} rot={k * 120} /> : null;
   });
@@ -328,7 +331,7 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const vy = pr(t, s14 + 5.4, s14 + 6.4, back);
   return (
     <>
-      <L.Clock cx={lerp(300, 540, swap) * (1 - toChart) + lerp(540, 270, toChart) * toChart} cy={lerp(760, 800, swap) * (1 - toChart) + 560 * toChart} s={lerp(1.3, 1.2, swap) * (1 - toChart * 0.45)} op={enter} frac={0} hour={t < s14 ? 0 + 3 * pr(t, s13 + 0.8, s13 + 3.6) : 12 * spin} />
+      <L.Clock cx={lerp(300, 540, swap) * (1 - toChart) + lerp(540, 270, toChart) * toChart} cy={lerp(760, 800, swap) * (1 - toChart) + 560 * toChart} s={lerp(1.3, 1.2, swap) * (1 - toChart * 0.45)} op={enter} frac={0} hour={t < s14 ? 24 * dayF : 72 + 48 * spin} />
       <L.Calendar cx={700} cy={760} s={1.3 * enter} op={enter * (1 - swap)} marks={Array.from({ length: days }, (_, i) => i)} markColor={LIB_COL.good} />
       {capDrops}
       <L.CrossBadge cx={640} cy={720} s={0.6 * noX} op={noX * (1 - toChart)} />
