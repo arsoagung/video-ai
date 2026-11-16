@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { Capsule } from '../shared/library';
+import { Capsule, Clock } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -268,5 +268,28 @@ export const ThumbApaCd4: React.FC = () => (
       </g>
     </Svg>
     <Pill cx={540} cy={1500} text="CD4" bg={SHAPE_COL.cd4} fg="#0B2A55" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Kenapa ARV harus diminum rutin?" (tema teal = ARV). Jam (rutin, sehari sekali) + kapsul ARV.
+export const ThumbS1E5: React.FC = () => (
+  <ThumbFrame
+    theme="teal"
+    title={
+      <>
+        Kenapa <span style={{ color: TEAL }}>ARV</span>
+        <br />
+        harus diminum
+        <br />
+        rutin?
+      </>
+    }
+    glowY={1250}
+  >
+    <Svg>
+      <Clock cx={540} cy={1150} s={2.5} frac={0} hour={2} />
+      <Capsule cx={540} cy={1580} s={2.2} rot={-12} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="ARV" bg="#72E3D3" fg="#063F38" size={56} />
   </ThumbFrame>
 );
