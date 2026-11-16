@@ -181,22 +181,11 @@ const SceneWrap: React.FC<{ i: number; t: number; children: React.ReactNode }> =
   return <g opacity={o}>{children}</g>;
 };
 
-// ---- Adegan 1 (kalimat 1): orang merasa sehat (hati berdetak), obat dihentikan (silang di strip) -> tanda tanya
+// ---- Adegan 1 (kalimat 1): hanya kalender; tiap tanggal menyala merah berurutan (berhenti minum obat) sampai tanggal 30
 const Scene1: React.FC<{ t: number }> = ({ t }) => {
-  const enter = pr(t, 0.2, 1.0, back);
-  const heart = pr(t, 0.9, 1.6, back);
-  const beat = 1 + 0.12 * Math.max(0, Math.sin(t * 6)) ** 2;
-  const cross = pr(t, 2.1, 2.8, back);
-  const q = pr(t, 3.0, 3.8, back);
-  return (
-    <>
-      <L.Person cx={540} cy={820} s={2.2 * enter} op={enter} />
-      <L.Heart cx={760} cy={650} s={0.6 * heart * beat} op={heart} />
-      <L.Blister cx={540} cy={1260} s={1.2 * enter} op={enter * (1 - 0.45 * cross)} taken={3} />
-      <L.CrossBadge cx={700} cy={1210} s={0.75 * cross} op={cross} />
-      <L.SpeechBubble cx={320} cy={600} s={0.95 * q} op={q} text="?" />
-    </>
-  );
+  const enter = pr(t, 0.1, 0.9, back);
+  const n = Math.floor(pr(t, 0.7, 4.9, sine) * 30.999);
+  return <L.Calendar cx={540} cy={820} s={2.3 * enter} op={enter} marks={Array.from({ length: n }, (_, i) => i)} markColor={LIB_COL.bad} />;
 };
 
 // ---- Adegan 2 (kalimat 2-4): mobil menuruni jalan, rem menahan tapi jalan tetap menurun, lalu ARV = rem
@@ -235,23 +224,23 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 3 (kalimat 5): virus menyalin; kapsul menekan; virus mengecil tapi tetap ada
+// ---- Adegan 3 (kalimat 5): virus beranak terus; kapsul datang -> replikasi langsung berhenti; virus yang sudah ada tidak mati
+const COPY_POS: [number, number][] = [[330, 760], [750, 760], [270, 960], [810, 960], [400, 1110]];
 const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const s5 = T(5);
   const enter = pr(t, s5, s5 + 0.9, back);
-  const bud = pr(t, s5 + 0.9, s5 + 2.8, sine) * (1 - pr(t, s5 + 4.3, s5 + 5.0));
-  const capK = pr(t, s5 + 2.4, s5 + 4.0, sine);
-  const press = pr(t, s5 + 3.9, s5 + 5.2, sine);
-  const r = lerp(110, 62, press);
-  const dim = lerp(1, 0.55, press);
-  const push = Math.sin(pr(t, s5 + 3.9, s5 + 4.5) * Math.PI) * 14;
+  const capK = pr(t, s5 + 2.0, s5 + 3.0, sine);
+  const stopK = pr(t, s5 + 3.0, s5 + 3.6, back);
+  const nudge = Math.sin(pr(t, s5 + 3.0, s5 + 3.4) * Math.PI) * 10;
   return (
     <>
-      <Virus x={540} y={880} r={r * enter} dim={dim} t={t} />
-      <Virus x={lerp(540, 300, bud)} y={lerp(880, 840, bud)} r={78 * bud} dim={0.7 * Math.min(1, bud * 2)} t={t} seed={1} />
-      <Virus x={lerp(540, 790, bud)} y={lerp(880, 840, bud)} r={78 * bud} dim={0.7 * Math.min(1, bud * 2)} t={t} seed={2} />
-      <L.Capsule cx={lerp(120, 410 + push, capK)} cy={lerp(1150, 880, capK)} s={0.95 * (capK > 0 ? 1 : 0)} rot={lerp(-40, 0, capK)} op={Math.min(1, capK * 4)} />
-      <L.Shield cx={540} cy={1190} s={0.9 * pr(t, s5 + 5.0, s5 + 5.9, back)} op={pr(t, s5 + 5.0, s5 + 5.9)} />
+      {COPY_POS.map(([x, y], i) => {
+        const k = pr(t, s5 + 0.3 + i * 0.45, s5 + 0.85 + i * 0.45, sine);
+        return <Virus key={i} x={lerp(540, x, k)} y={lerp(900, y, k)} r={64 * k} dim={Math.min(1, k * 2)} t={t} seed={i + 1} />;
+      })}
+      <Virus x={540} y={900} r={96 * enter} t={t} />
+      <L.Capsule cx={lerp(120, 380 + nudge, capK)} cy={lerp(1260, 900, capK)} s={0.95 * (capK > 0 ? 1 : 0)} rot={lerp(-40, 0, capK)} op={Math.min(1, capK * 4)} />
+      <L.CrossBadge cx={540} cy={900} s={0.8 * stopK} op={stopK * 0.95} />
     </>
   );
 };
@@ -375,13 +364,24 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
 
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
   { a: T(4) + 0.1, b: T(5) - 0.2, text: 'ARV = rem', k: 'arv', x: 540, y: 760, size: 42 },
-  { a: CL(5, 1) + 1.0, b: T(6) - 0.2, text: 'virus tetap ada', k: 'virus', x: 540, y: 1090, size: 38 },
+  { a: CL(5, 1) + 1.0, b: T(6) - 0.2, text: 'virus tetap ada', k: 'virus', x: 540, y: 1260, size: 38 },
   { a: T(6) + 0.3, b: T(7) - 0.2, text: 'kadar obat', k: 'arv', x: 640, y: 480, size: 38 },
   { a: CL(8, 3) + 0.4, b: T(9) - 0.2, text: 'risiko penularan', k: 'neutral', x: 540, y: 1395, size: 34 },
   { a: T(9) + 3.9, b: T(10) - 0.2, text: 'ARV dihentikan', k: 'arv', x: 540, y: 1290, size: 40 },
-  { a: T(10) + 0.6, b: T(10) + 4.2, text: 'Studi SMART', k: 'neutral', x: 540, y: 760, size: 40 },
+  { a: T(10) + 0.6, b: T(10) + 7.0, text: 'Studi SMART', k: 'neutral', x: 540, y: 760, size: 40 },
   { a: T(11) + 1.3, b: T(12) - 0.2, text: 'HIV belum hilang', k: 'virus', x: 760, y: 1110, size: 36 },
 ];
+const SubNote: React.FC<{ t: number }> = ({ t }) => {
+  const o = win(t, T(10) + 1.0, T(10) + 7.0, 0.4);
+  if (o < 0.01) return null;
+  return (
+    <div style={{ position: 'absolute', top: 818, left: 0, width: 1080, textAlign: 'center', fontFamily: FONT, fontWeight: 600, fontSize: 28, lineHeight: 1.3, color: '#EAF2FB', opacity: 0.92 * o }}>
+      Strategi untuk Manajemen Terapi Antiretroviral
+      <br />
+      <span style={{ opacity: 0.8 }}>Strategies for Management of Antiretroviral Therapy</span>
+    </div>
+  );
+};
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
     {PILLS.map((p, i) => {
@@ -545,6 +545,7 @@ export const S1E7Full: React.FC = () => {
             ))}
           </svg>
           <Pills t={t} />
+          <SubNote t={t} />
           <LegendBox t={t} a={T(5) + 0.1} b={T(5) + 4.6} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.1} b={T(8) - 0.3} items={[['#B9C3D0', 'Sel laten'], ['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(8) + 0.1} b={CL(8, 2) + 0.2} items={[[LIB_COL.bad, 'Viral load']]} />

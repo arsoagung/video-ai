@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { Capsule, Clock } from '../shared/library';
+import { Capsule, Clock, CrossBadge } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -291,5 +291,31 @@ export const ThumbS1E5: React.FC = () => (
       <Capsule cx={540} cy={1580} s={2.2} rot={-12} />
     </Svg>
     <Pill cx={540} cy={1790} text="ARV" bg="#72E3D3" fg="#063F38" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Apa yang terjadi kalau ARV dihentikan?" (tema indigo = tanpa pengobatan). Kapsul ARV disilang + virus yang kembali beranak.
+export const ThumbS1E7: React.FC = () => (
+  <ThumbFrame
+    theme="indigo"
+    title={
+      <>
+        Apa yang terjadi
+        <br />
+        kalau <span style={{ color: TEAL }}>ARV</span>
+        <br />
+        dihentikan?
+      </>
+    }
+    glowY={1250}
+  >
+    <Svg>
+      <FlatVirus cx={300} cy={1060} r={74} dim={0.75} rot={10} />
+      <FlatVirus cx={780} cy={1060} r={74} dim={0.75} rot={50} />
+      <FlatVirus cx={540} cy={1130} r={150} rot={20} />
+      <Capsule cx={540} cy={1560} s={2.2} rot={-12} />
+      <CrossBadge cx={760} cy={1500} s={1.5} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="dihentikan" bg="#FF9C85" fg="#3B1308" size={56} />
   </ThumbFrame>
 );
