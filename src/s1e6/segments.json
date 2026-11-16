@@ -1,0 +1,366 @@
+{
+ "code": "S1E6",
+ "duration": 77.32,
+ "speech": [
+  0,
+  77.14
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Virus HIV terlalu kecil untuk dihitung satu per satu.",
+   "a": 0,
+   "b": 3.56,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Virus HIV terlalu kecil untuk dihitung satu per satu.",
+     "a": 0,
+     "b": 3.56,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Tapi dokter bisa tahu jumlahnya dari satu tabung darah.",
+   "a": 3.89,
+   "b": 7.55,
+   "pauseAfter": 0.47,
+   "clauses": [
+    {
+     "text": "Tapi dokter bisa tahu jumlahnya dari satu tabung darah.",
+     "a": 3.89,
+     "b": 7.55,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Bayangkan danau luas yang ingin kamu ketahui kekeruhannya.",
+   "a": 8.02,
+   "b": 11.36,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Bayangkan danau luas yang ingin kamu ketahui kekeruhannya.",
+     "a": 8.02,
+     "b": 11.36,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Tidak perlu mengukur seluruh danau, cukup periksa satu gelas airnya.",
+   "a": 11.69,
+   "b": 15.81,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Tidak perlu mengukur seluruh danau,",
+     "a": 11.69,
+     "b": 13.6,
+     "anchored": true
+    },
+    {
+     "text": "cukup periksa satu gelas airnya.",
+     "a": 14.01,
+     "b": 15.81,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Begini caranya.",
+   "a": 16.19,
+   "b": 16.96,
+   "pauseAfter": 0.52,
+   "clauses": [
+    {
+     "text": "Begini caranya.",
+     "a": 16.19,
+     "b": 16.96,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Pertama, darah dipisahkan hingga tersisa cairan beningnya.",
+   "a": 17.48,
+   "b": 21.35,
+   "pauseAfter": 0.52,
+   "clauses": [
+    {
+     "text": "Pertama,",
+     "a": 17.48,
+     "b": 18.07,
+     "anchored": true
+    },
+    {
+     "text": "darah dipisahkan hingga tersisa cairan beningnya.",
+     "a": 18.43,
+     "b": 21.35,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Kedua, jejak genetik virus diambil dan digandakan sampai terbaca mesin.",
+   "a": 21.87,
+   "b": 26.76,
+   "pauseAfter": 0.51,
+   "clauses": [
+    {
+     "text": "Kedua,",
+     "a": 21.87,
+     "b": 22.38,
+     "anchored": true
+    },
+    {
+     "text": "jejak genetik virus diambil dan digandakan sampai terbaca mesin.",
+     "a": 22.79,
+     "b": 26.76,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Ketiga, mesin menghitung salinan virus di setiap mililiter darah.",
+   "a": 27.26,
+   "b": 31.42,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Ketiga,",
+     "a": 27.26,
+     "b": 27.81,
+     "anchored": true
+    },
+    {
+     "text": "mesin menghitung salinan virus di setiap mililiter darah.",
+     "a": 28.22,
+     "b": 31.42,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Semakin banyak salinan, semakin aktif virusnya.",
+   "a": 31.87,
+   "b": 34.66,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Semakin banyak salinan,",
+     "a": 31.87,
+     "b": 33.1,
+     "anchored": true
+    },
+    {
+     "text": "semakin aktif virusnya.",
+     "a": 33.31,
+     "b": 34.66,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Tanpa obat, bisa puluhan ribu atau lebih.",
+   "a": 35.08,
+   "b": 37.77,
+   "pauseAfter": 0.55,
+   "clauses": [
+    {
+     "text": "Tanpa obat,",
+     "a": 35.08,
+     "b": 35.7,
+     "anchored": true
+    },
+    {
+     "text": "bisa puluhan ribu atau lebih.",
+     "a": 35.99,
+     "b": 37.77,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Studi tahun seribu sembilan ratus sembilan puluh enam mengikuti seratus delapan puluh orang lebih dari sepuluh tahun.",
+   "a": 38.33,
+   "b": 44.56,
+   "pauseAfter": 0.53,
+   "clauses": [
+    {
+     "text": "Studi tahun seribu sembilan ratus sembilan puluh enam mengikuti seratus delapan puluh orang lebih dari sepuluh tahun.",
+     "a": 38.33,
+     "b": 44.56,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Hasilnya, viral load lebih jitu meramalkan perjalanan penyakit dibanding CD4.",
+   "a": 45.09,
+   "b": 50.4,
+   "pauseAfter": 0.52,
+   "clauses": [
+    {
+     "text": "Hasilnya,",
+     "a": 45.09,
+     "b": 45.71,
+     "anchored": true
+    },
+    {
+     "text": "viral load lebih jitu meramalkan perjalanan penyakit dibanding CD4.",
+     "a": 45.92,
+     "b": 50.4,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Tapi gelas hanya menangkap virus yang beredar, bukan yang bersembunyi di dalam sel.",
+   "a": 50.92,
+   "b": 55.68,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Tapi gelas hanya menangkap virus yang beredar,",
+     "a": 50.92,
+     "b": 53.6,
+     "anchored": true
+    },
+    {
+     "text": "bukan yang bersembunyi di dalam sel.",
+     "a": 53.83,
+     "b": 55.68,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Jadi viral load adalah potret sebagian, bukan seluruh danau.",
+   "a": 56.04,
+   "b": 60.52,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Jadi viral load adalah potret sebagian,",
+     "a": 56.04,
+     "b": 59.11,
+     "anchored": true
+    },
+    {
+     "text": "bukan seluruh danau.",
+     "a": 59.32,
+     "b": 60.52,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Tapi potret itu berguna.",
+   "a": 60.97,
+   "b": 62.68,
+   "pauseAfter": 0.27,
+   "clauses": [
+    {
+     "text": "Tapi potret itu berguna.",
+     "a": 60.97,
+     "b": 62.68,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 16,
+   "text": "Kalau ARV bekerja, angkanya turun tajam, bahkan bisa tidak terdeteksi.",
+   "a": 62.95,
+   "b": 68.35,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Kalau ARV bekerja,",
+     "a": 62.95,
+     "b": 64.58,
+     "anchored": true
+    },
+    {
+     "text": "angkanya turun tajam,",
+     "a": 64.79,
+     "b": 66.14,
+     "anchored": true
+    },
+    {
+     "text": "bahkan bisa tidak terdeteksi.",
+     "a": 66.48,
+     "b": 68.35,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 17,
+   "text": "Virusnya terlalu kecil untuk dihitung satu per satu.",
+   "a": 68.78,
+   "b": 71.51,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Virusnya terlalu kecil untuk dihitung satu per satu.",
+     "a": 68.78,
+     "b": 71.51,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 18,
+   "text": "Tapi satu gelas air cukup untuk tahu danaunya makin keruh atau makin jernih.",
+   "a": 71.83,
+   "b": 77.14,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Tapi satu gelas air cukup untuk tahu danaunya makin keruh atau makin jernih.",
+     "a": 71.83,
+     "b": 77.14,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
