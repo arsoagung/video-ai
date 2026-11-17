@@ -330,7 +330,7 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
     <>
       <L.Road cx={540} cy={cy} s={road} op={road} w={1240} h={290} />
       <TrafficCars t={t} f={FL4} cy={cy} s={0.58} />
-      <L.LineChart cx={540} cy={1120} s={chartOn} op={chartOn} w={800} h={340} points={[0.92, 0.9, 0.86, 0.5, 0.38, 0.3, 0.14, 0.1]} threshold={thr > 0.5 ? 0.2 : undefined} progress={Math.min(1, prog)} />
+      <L.LineChart cx={540} cy={1120} s={chartOn} op={chartOn} w={800} h={340} smooth points={[0.95, 0.654, 0.461, 0.335, 0.253, 0.2, 0.165, 0.142]} threshold={thr > 0.5 ? 0.2 : undefined} progress={Math.min(1, prog)} />
     </>
   );
 };
@@ -404,7 +404,7 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <L.Calendar cx={540} cy={720} s={1.7 * enter} op={enter} marks={marks} />
-      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} points={[0.92, 0.8, 0.55, 0.35, 0.2, 0.12]} threshold={0.2} progress={prog} />
+      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} smooth points={[0.95, 0.566, 0.356, 0.241, 0.177, 0.142]} threshold={0.2} progress={prog} />
     </>
   );
 };
@@ -420,8 +420,8 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <L.Blister cx={540} cy={760} s={1.55 * enter} op={enter} taken={taken} />
-      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} points={[0.14, 0.12, 0.13, 0.12, 0.13]} progress={pr(t, s15 + 0.6, s15 + 2.6, sine)} />
-      <L.LineChart cx={540} cy={1150} w={800} h={340} op={ghostOp} color={LIB_COL.bad} points={[0.12, 0.13, 0.4, 0.7, 0.9]} progress={ghost} />
+      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} smooth points={[0.14, 0.13, 0.13, 0.13, 0.13]} progress={pr(t, s15 + 0.6, s15 + 2.6, sine)} />
+      <L.LineChart cx={540} cy={1150} w={800} h={340} op={ghostOp} color={LIB_COL.bad} smooth points={[0.13, 0.15, 0.27, 0.55, 0.9]} progress={ghost} />
     </>
   );
 };
@@ -439,7 +439,7 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
     <>
       <L.Person cx={230} cy={1000} s={1.8 * enter} op={enter} color="#8FBDF7" />
       <L.Person cx={850} cy={1000} s={1.8 * enter} op={enter} color="#B9A2F5" />
-      <L.LineChart cx={230} cy={640} s={0.8 * chartOn} op={chartOn} w={400} h={260} points={[0.12, 0.11, 0.12, 0.1]} />
+      <L.LineChart cx={230} cy={640} s={0.8 * chartOn} op={chartOn} w={400} h={260} smooth points={[0.12, 0.12, 0.12, 0.12]} />
       <L.Shield cx={650} cy={1000} s={0.9 * sh} op={sh} />
       <Virus x={lerp(300, 560, go)} y={1000} r={36 * pr(t, c2 + 0.1, c2 + 0.4) * (1 - stop)} dim={0.9} t={t} />
       <L.Heart cx={540} cy={760} s={0.8 * heart} op={heart} />
@@ -467,7 +467,7 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
           </text>
         );
       })}
-      <L.LineChart cx={250} cy={1090} s={left} op={left} w={380} h={240} points={[0.12, 0.1, 0.11, 0.1]} />
+      <L.LineChart cx={250} cy={1090} s={left} op={left} w={380} h={240} smooth points={[0.12, 0.12, 0.12, 0.12]} />
       <text x={540} y={1130} textAnchor="middle" fontFamily={FONT} fontSize={110} fontWeight={800} fill="#FFFFFF" opacity={eq} transform={`scale(${eq})`} style={{ transformOrigin: '540px 1100px' }}>=</text>
       <L.Shield cx={830} cy={1090} s={0.8 * right} op={right} />
     </>

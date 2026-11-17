@@ -237,13 +237,14 @@ export const Syringe: React.FC<P & { fill?: number }> = ({ fill = 0.7, ...p }) =
 // ================= DATA =================
 
 // Grafik garis di dalam kartu. points = nilai 0..1 (kiri ke kanan), threshold = garis ambang 0..1, progress = 0..1 bagian garis yang tergambar.
-export const LineChart: React.FC<P & { w?: number; h?: number; points: number[]; threshold?: number; progress?: number; color?: string }> = ({
+export const LineChart: React.FC<P & { w?: number; h?: number; points: number[]; threshold?: number; progress?: number; color?: string; smooth?: boolean }> = ({
   w = 520,
   h = 320,
   points,
   threshold,
   progress = 1,
   color = LIB_COL.good,
+  smooth = false,
   ...p
 }) => {
   const padX = 44;
@@ -261,7 +262,37 @@ export const LineChart: React.FC<P & { w?: number; h?: number; points: number[];
       shown.push([xy[i - 1][0] + (xy[i][0] - xy[i - 1][0]) * f, xy[i - 1][1] + (xy[i][1] - xy[i - 1][1]) * f] as const);
     }
   }
-  const last = shown[shown.length - 1];
+  // smooth: kurva mulus (interpolasi kubik monoton, tanpa tikungan tajam), dipotong sesuai progress
+  let curve = shown;
+  if (smooth && xy.length > 2) {
+    const n = xy.length;
+    const dx = xy.slice(1).map((q, i) => q[0] - xy[i][0]);
+    const sl = xy.slice(1).map((q, i) => (q[1] - xy[i][1]) / dx[i]);
+    const m = xy.map((_, i) => (i === 0 ? sl[0] : i === n - 1 ? sl[n - 2] : sl[i - 1] * sl[i] <= 0 ? 0 : (sl[i - 1] + sl[i]) / 2));
+    for (let i = 0; i < n - 1; i++) {
+      if (sl[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+      const a = m[i] / sl[i], b = m[i + 1] / sl[i], r = a * a + b * b;
+      if (r > 9) { const t = 3 / Math.sqrt(r); m[i] = t * a * sl[i]; m[i + 1] = t * b * sl[i]; }
+    }
+    const dense: (readonly [number, number])[] = [];
+    const steps = 14;
+    for (let i = 0; i < n - 1; i++) {
+      for (let k = 0; k < steps; k++) {
+        const f = k / steps;
+        if (i + f > upto) break;
+        const h = dx[i], t2 = f * f, t3 = t2 * f;
+        const y = (2 * t3 - 3 * t2 + 1) * xy[i][1] + (t3 - 2 * t2 + f) * h * m[i] + (-2 * t3 + 3 * t2) * xy[i + 1][1] + (t3 - t2) * h * m[i + 1];
+        dense.push([xy[i][0] + f * h, y] as const);
+      }
+    }
+    if (upto >= total) dense.push(xy[n - 1]);
+    else {
+      const i = Math.min(n - 2, Math.floor(upto)), f = upto - i, h = dx[i], t2 = f * f, t3 = t2 * f;
+      dense.push([xy[i][0] + f * h, (2 * t3 - 3 * t2 + 1) * xy[i][1] + (t3 - 2 * t2 + f) * h * m[i] + (-2 * t3 + 3 * t2) * xy[i + 1][1] + (t3 - t2) * h * m[i + 1]] as const);
+    }
+    curve = dense;
+  }
+  const last = curve[curve.length - 1];
   return (
     <G {...p}>
       <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={36} fill="#fff" fillOpacity={0.12} />
@@ -270,7 +301,7 @@ export const LineChart: React.FC<P & { w?: number; h?: number; points: number[];
       {threshold !== undefined && (
         <line x1={-w / 2 + padX} y1={h / 2 - padY - threshold * ih} x2={w / 2 - padX} y2={h / 2 - padY - threshold * ih} stroke={LIB_COL.bad} strokeOpacity={0.8} strokeWidth={5} strokeDasharray="14 12" strokeLinecap="round" />
       )}
-      {shown.length > 1 && <polyline points={shown.map((q) => q.join(',')).join(' ')} fill="none" stroke={color} strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />}
+      {curve.length > 1 && <polyline points={curve.map((q) => q.join(',')).join(' ')} fill="none" stroke={color} strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />}
       {last && <circle cx={last[0]} cy={last[1]} r={13} fill={color} />}
     </G>
   );
