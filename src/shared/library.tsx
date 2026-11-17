@@ -701,3 +701,14 @@ export const Road: React.FC<P & { w?: number; h?: number }> = ({ w = 1000, h = 3
     <line x1={-w / 2 + 40} y1={0} x2={w / 2 - 40} y2={0} stroke={LIB_COL.light} strokeOpacity={0.55} strokeWidth={8} strokeDasharray="44 34" strokeLinecap="round" />
   </G>
 );
+
+// Kaca pembesar. Lensa berpusat di (0,0) radius 100 (isi lensa digambar oleh adegan, dipotong dengan clipPath lingkaran r=100*s); gagang ke kanan bawah.
+export const Magnifier: React.FC<P> = (p) => (
+  <G {...p}>
+    <line x1={72} y1={72} x2={176} y2={176} stroke={LIB_COL.ink} strokeWidth={34} strokeLinecap="round" />
+    <line x1={118} y1={118} x2={176} y2={176} stroke={LIB_COL.goodDark} strokeWidth={34} strokeLinecap="round" />
+    <circle r={112} fill={LIB_COL.light} />
+    <circle r={92} fill={LIB_COL.glass} fillOpacity={0.35} />
+    <path d="M -62 -30 A 70 70 0 0 1 -18 -66" fill="none" stroke="#fff" strokeOpacity={0.7} strokeWidth={12} strokeLinecap="round" />
+  </G>
+);

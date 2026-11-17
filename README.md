@@ -83,7 +83,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Biologi | `TCytoCell`, `BCell`, `Antibody(color)`, `RNAStrand(len, phase)`, `DNAHelix(len)`, `Enzyme(kind: rt/integrase/protease)`, `Membrane(w, receptors:[{x, kind: cd4/ccr5/cxcr4}])` |
 | Obat | `Capsule(colorA, colorB)`, `Tablet`, `Blister(taken)`, `PillBottle`, `Syringe(fill)` |
 | Data | `LineChart(points, threshold, progress)`, `PercentBars(items:[{label,pct}])`, `Clock(frac, hour)`, `Calendar(marks)` |
-| Tes | `BloodDrop`, `BloodTube(level)`, `TestKit(lines: 0/1/2)`, `CheckBadge`, `CrossBadge` |
+| Tes | `Magnifier` (kaca pembesar; isi lensa digambar adegan, clipPath lingkaran r=92*s), `BloodDrop`, `BloodTube(level)`, `TestKit(lines: 0/1/2)`, `CheckBadge`, `CrossBadge` |
 | Analogi | `Train(wagons, wagonColor)`, `Station(label, state: open/blocked/virus)`, `Dam(level)`, `Battery(level)`, `City(lit)`, `Shield`, `Car(color)`, `Scoreboard(home, away, pending)`, `Gear(rust: 0..1)` |
 | Lalu lintas (analogi) | `Road(w, h)` (jalan dengan marka tengah; mobil = `Car`) |
 | Olahraga (analogi) | `Goal(net)` (gawang + jaring, net 0..1 = kembung), `Ball` |
