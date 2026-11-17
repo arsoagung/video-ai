@@ -319,3 +319,35 @@ export const ThumbS1E7: React.FC = () => (
     <Pill cx={540} cy={1790} text="dihentikan" bg="#FF9C85" fg="#3B1308" size={56} />
   </ThumbFrame>
 );
+
+// Judul: "Apa itu window period HIV?" (tema biru). Virus di hari 0 -> bar tiga warna (merah belum terdeteksi, kuning kurang akurat, hijau akurat memudar) + jam.
+export const ThumbS1E8: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Apa itu
+        <br />
+        window period
+        <br />
+        <span style={{ color: CORAL }}>HIV</span>?
+      </>
+    }
+    glowY={1250}
+  >
+    <Svg>
+      <defs>
+        <linearGradient id="gFade" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#7ED6A8" stopOpacity="1" />
+          <stop offset="1" stopColor="#7ED6A8" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <Clock cx={650} cy={1180} s={1.9} frac={0.55} hour={3} />
+      <rect x={250} y={1520} width={220} height={70} rx={35} fill="#FF6B4D" />
+      <rect x={440} y={1520} width={330} height={70} rx={35} fill="#F4D77E" />
+      <rect x={740} y={1520} width={340} height={70} fill="url(#gFade)" />
+      <FlatVirus cx={170} cy={1555} r={70} rot={20} />
+    </Svg>
+    <Pill cx={540} cy={1730} text="masa jendela" bg="#F4D77E" fg="#4A3606" size={56} />
+  </ThumbFrame>
+);
