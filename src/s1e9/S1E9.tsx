@@ -179,18 +179,55 @@ const SceneWrap: React.FC<{ i: number; t: number; children: React.ReactNode }> =
   return <g opacity={o}>{children}</g>;
 };
 
-const CAR = '#FF9C85'; // mobil = virus (analogi)
-// slot mobil di jalan: 2 lajur x 4 kolom, relatif terhadap pusat jalan
-const SLOTS: [number, number][] = [[190, -62], [400, -62], [610, -62], [820, -62], [190, 62], [400, 62], [610, 62], [820, 62]];
-// satu mobil: masuk dari kanan di waktu `a`, keluar ke kiri di waktu `e` (opsional)
-const RCar: React.FC<{ t: number; i: number; cy: number; a: number; e?: number; s?: number }> = ({ t, i, cy, a, e, s = 0.6 }) => {
-  const [sx, sy] = SLOTS[i];
-  const inK = pr(t, a, a + 0.9, out3);
-  const outK = e === undefined ? 0 : pr(t, e, e + 1.0, in3);
-  if (inK <= 0 || outK >= 1) return null;
-  const x = outK > 0 ? lerp(sx, -220, outK) : lerp(1300, sx, inK);
-  return <L.Car cx={x} cy={cy + sy} s={s} color={CAR} />;
+// ---- Lalu lintas mengalir (mobil = virus): mobil masuk dari kanan, jalan ke kiri, tidak pernah berhenti/parkir ----
+// g(t) = kecepatan arus (1 = 200 px/dtk), D(t) = jarak antar mobil per lajur (px; Infinity = tidak ada mobil baru).
+const CAR = '#FF9C85';
+type Flow = { cum: (t: number) => number; cars: { t0: number; lane: number }[] };
+const buildFlow = (g: (t: number) => number, D: (t: number) => number, t0: number, t1: number): Flow => {
+  const dt = 1 / 30, N = Math.ceil(EP_DUR * 30) + 3;
+  const C = new Float32Array(N);
+  let a = 0;
+  for (let i = 0; i < N; i++) { C[i] = a; a += g(i * dt) * 200 * dt; }
+  const cum = (t: number) => C[Math.min(N - 1, Math.max(0, Math.round(t * 30)))];
+  const cars: { t0: number; lane: number }[] = [];
+  const last = [-1e9, -1e9];
+  for (let t = t0; t < t1; t += dt) {
+    for (let l = 0; l < 2; l++) {
+      const d = D(t);
+      if (!isFinite(d) || (l === 1 && t < t0 + 0.9)) continue;
+      if (cum(t) - last[l] >= d) {
+        cars.push({ t0: t, lane: l });
+        last[l] = cum(t);
+      }
+    }
+  }
+  return { cum, cars };
 };
+const TrafficCars: React.FC<{ t: number; f: Flow; cy: number; s?: number }> = ({ t, f, cy, s = 0.6 }) => (
+  <>
+    {f.cars.map((c, i) => {
+      const x = 1210 - (f.cum(t) - f.cum(c.t0));
+      if (t < c.t0 || x < -170) return null;
+      return <L.Car key={i} cx={x} cy={cy + (c.lane ? 62 : -62)} s={s} color={CAR} />;
+    })}
+  </>
+);
+const ramp = (t: number, a: number, b: number, v0: number, v1: number) => lerp(v0, v1, ez(t, a, b, sine));
+
+// arus adegan 2 (kalimat 3-5): lancar -> ramai (macet pelan) -> sepi, tinggal satu mobil lewat
+const FL2 = buildFlow(
+  (t) => ramp(t, T(4) + 0.2, T(4) + 1.8, 1.3, 0.7) + ramp(t, T(5), T(5) + 0.8, 0, 0.8),
+  (t) => (t < T(5) ? ramp(t, T(3) + 1.6, T(4), 800, 230) : t < T(5) ? 230 : t < T(5) + 1.9 ? Infinity : t < T(5) + 2.6 ? 1500 : Infinity),
+  T(3) + 1.6,
+  T(6),
+);
+// arus adegan 4 (kalimat 7-9): ramai -> mulai sepi -> hampir kosong -> kosong
+const FL4 = buildFlow(
+  (t) => ramp(t, CL(8, 1) - 0.3, CL(8, 1) + 1.0, 0.6, 1.0) + ramp(t, CL(9, 1), CL(9, 1) + 0.8, 0, 0.5),
+  (t) => (t < CL(8, 1) ? 215 : t < T(9) + 1.5 ? ramp(t, CL(8, 1), CL(8, 1) + 1.5, 215, 900) : t < T(9) + 2.2 ? 1500 : Infinity),
+  T(7) - 7,
+  T(10),
+);
 
 // ---- Adegan 1 (kalimat 1-2): hasil tes "tidak terdeteksi" (kaset 1 garis) -> pertanyaan: virus hilang? virus muncul dengan tanda tanya
 const Scene1: React.FC<{ t: number }> = ({ t }) => {
@@ -212,45 +249,69 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 2 (kalimat 3-5): jalan dengan mobil. virus berubah jadi mobil; banyak mobil = ramai; mobil pergi = sepi
+
+// ---- Adegan 2 (kalimat 3-5): jalan. virus berubah jadi mobil; arus makin ramai (macet pelan); lalu sepi, tinggal satu mobil lewat
 const Scene2: React.FC<{ t: number }> = ({ t }) => {
-  const s3 = T(3), s4 = T(4), s5 = T(5);
+  const s3 = T(3);
   const road = pr(t, s3, s3 + 0.9, back);
-  const vOut = pr(t, s3 + 1.6, s3 + 2.4);
+  const vOut = pr(t, s3 + 1.4, s3 + 2.1);
   const vIn = pr(t, s3 + 0.5, s3 + 1.2, back);
   const cy = 900;
-  const exits = [2, 3, 4, 6, 7, 1];
   return (
     <>
-      <L.Road cx={540} cy={cy} s={road} op={road} w={1000} h={300} />
+      <L.Road cx={540} cy={cy} s={road} op={road} w={1240} h={300} />
       <Virus x={300} y={560} r={64 * vIn * (1 - vOut)} t={t} />
-      <RCar t={t} i={0} cy={cy} a={s3 + 1.8} />
-      {[1, 2, 3, 4, 5, 6, 7].map((i) => {
-        const k = exits.indexOf(i);
-        const e = k >= 0 && i !== 5 ? s5 + 0.1 + k * 0.18 : undefined;
-        return <RCar key={i} t={t} i={i} cy={cy} a={s4 + 0.1 + i * 0.16} e={e} />;
-      })}
+      <TrafficCars t={t} f={FL2} cy={cy} />
     </>
   );
 };
 
-// ---- Adegan 3 (kalimat 6): tabung darah; salinan HIV muncul satu per satu dan dihitung
+// ---- Adegan 3 (kalimat 6): kaca pembesar memeriksa tabung darah; virus berkeliaran di darah, dihitung satu per satu
+const VP: [number, number, number][] = [[-42, -60, 0], [38, -5, 1], [-30, 60, 2], [44, 110, 3], [-38, 165, 4], [30, 215, 5]];
 const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const s6 = T(6);
+  const tubeX = 420, tubeY = 830;
   const enter = pr(t, s6, s6 + 0.8, back);
-  const spots: [number, number][] = [[-12, 10], [12, 60], [-8, 110], [10, 160], [-10, 210]];
-  const n = spots.reduce((c, _, i) => c + (t >= s6 + 1.4 + i * 0.5 ? 1 : 0), 0);
-  const cnt = pr(t, s6 + 1.3, s6 + 1.8, back);
+  const lensIn = pr(t, s6 + 0.5, s6 + 1.4, sine);
+  const scan = pr(t, s6 + 1.3, s6 + 3.6, sine);
+  const lx = lerp(980, tubeX + 40, lensIn) + Math.sin(scan * Math.PI * 3) * 14;
+  const ly = lerp(700, 1070, scan) - (1 - lensIn) * 40;
+  const LS = 1.35, R = 92 * LS, MAG = 2.3;
+  const pos = (i: number) => {
+    const [dx, dy, ph] = VP[i];
+    return [tubeX + dx + Math.sin(t * 1.3 + ph * 1.7) * 11, tubeY + dy + Math.cos(t * 1.1 + ph) * 10] as const;
+  };
+  const seen = VP.reduce((c, _, i) => c + (scan > 0 && pos(i)[1] < ly + 10 ? 1 : 0), 0);
+  const cnt = pr(t, s6 + 1.4, s6 + 2.0, back);
+  const vOp = pr(t, s6 + 0.3, s6 + 0.9);
   return (
     <>
-      <L.BloodTube cx={330} cy={820} s={2.4 * enter} op={enter} level={0.75} />
-      {spots.map(([dx, dy], i) => {
-        const k = pr(t, s6 + 1.4 + i * 0.5, s6 + 1.9 + i * 0.5, back);
-        return <Virus key={i} x={330 + dx * 2.0} y={620 + dy * 1.6} r={26 * k} t={t} seed={i} />;
+      <L.BloodTube cx={tubeX} cy={tubeY} s={2.4 * enter} op={enter} level={0.75} />
+      {VP.map((_, i) => {
+        const [x, y] = pos(i);
+        return <Virus key={i} x={x} y={y} r={14 * vOp} dim={0.9} t={t} seed={i} />;
       })}
-      <g opacity={cnt} transform={`translate(760 ${860 + (1 - cnt) * 30})`}>
-        <circle r={150} fill="#fff" fillOpacity={0.14} />
-        <text textAnchor="middle" y={44} fontFamily={FONT} fontSize={150} fontWeight={800} fill="#FFFFFF">{n}</text>
+      {lensIn > 0.02 && (
+        <>
+          <defs>
+            <clipPath id="lensClip">
+              <circle cx={lx} cy={ly} r={R} />
+            </clipPath>
+          </defs>
+          <g clipPath="url(#lensClip)" opacity={lensIn}>
+            <circle cx={lx} cy={ly} r={R} fill={LIB_COL.blood} />
+            {VP.map((_, i) => {
+              const [x, y] = pos(i);
+              const mx = lx + (x - lx) * MAG, my = ly + (y - ly) * MAG;
+              return <Virus key={i} x={mx} y={my} r={14 * MAG * vOp} t={t} seed={i} />;
+            })}
+          </g>
+          <L.Magnifier cx={lx} cy={ly} s={LS} op={lensIn} />
+        </>
+      )}
+      <g opacity={cnt} transform={`translate(880 ${700 + (1 - cnt) * 30})`}>
+        <circle r={110} fill="#fff" fillOpacity={0.14} />
+        <text textAnchor="middle" y={42} fontFamily={FONT} fontSize={130} fontWeight={800} fill="#FFFFFF">{seen}</text>
       </g>
     </>
   );
@@ -258,63 +319,55 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 4 (kalimat 7-9): jalan ramai -> mulai sepi -> kosong, sambil garis viral load turun di bawah batas alat
 const Scene4: React.FC<{ t: number }> = ({ t }) => {
-  const s7 = T(7), s8 = T(8), s9 = T(9);
+  const s7 = T(7), s9 = T(9);
   const c2 = CL(8, 1), c9b = CL(9, 1);
   const road = pr(t, s7, s7 + 0.7, back);
-  const cy = 700;
-  // 8 mobil -> 3 saat "mulai sepi" -> 0 saat "kosong"
-  const outA = [1, 2, 4, 5, 7];
-  const outB = [0, 3, 6];
-  const prog = lerp(0, 0.3, pr(t, s7 + 0.3, s7 + 1.8, sine)) + 0.38 * pr(t, c2, c2 + 2.0, sine) + 0.32 * pr(t, c9b, c9b + 1.6, sine);
+  const cy = 640;
+  const prog = lerp(0, 0.3, pr(t, s7 + 0.3, s7 + 2.0, sine)) + 0.38 * pr(t, c2, c2 + 2.2, sine) + 0.32 * pr(t, c9b, c9b + 1.8, sine);
   const chartOn = pr(t, s7 + 0.2, s7 + 0.9, back);
   const thr = pr(t, s9, s9 + 0.6);
   return (
     <>
-      <L.Road cx={540} cy={cy} s={road} op={road} w={1000} h={290} />
-      {Array.from({ length: 8 }, (_, i) => {
-        const e = outA.includes(i) ? c2 + 0.1 + outA.indexOf(i) * 0.15 : outB.includes(i) ? c9b + 0.1 + outB.indexOf(i) * 0.2 : undefined;
-        return <RCar key={i} t={t} i={i} cy={cy} a={s7 + 0.15 + i * 0.1} e={e} s={0.58} />;
-      })}
+      <L.Road cx={540} cy={cy} s={road} op={road} w={1240} h={290} />
+      <TrafficCars t={t} f={FL4} cy={cy} s={0.58} />
       <L.LineChart cx={540} cy={1120} s={chartOn} op={chartOn} w={800} h={340} points={[0.92, 0.9, 0.86, 0.5, 0.38, 0.3, 0.14, 0.1]} threshold={thr > 0.5 ? 0.2 : undefined} progress={Math.min(1, prog)} />
     </>
   );
 };
 
-// ---- Adegan 5 (kalimat 10): jalan kosong, mobil terakhir pergi -> kaset tes: tidak terdeteksi
+// ---- Adegan 5 (kalimat 10): jalan kosong -> kaset tes: tidak terdeteksi
 const Scene5: React.FC<{ t: number }> = ({ t }) => {
   const s10 = T(10);
   const road = pr(t, s10, s10 + 0.5);
-  const cy = 780;
-  const kit = pr(t, s10 + 1.2, s10 + 2.0, back);
-  const ok = pr(t, s10 + 2.0, s10 + 2.7, back);
+  const kit = pr(t, s10 + 0.9, s10 + 1.7, back);
+  const ok = pr(t, s10 + 1.7, s10 + 2.4, back);
   return (
     <>
-      <L.Road cx={540} cy={cy} op={road} w={1000} h={290} />
+      <L.Road cx={540} cy={780} op={road} w={1240} h={290} />
       <L.TestKit cx={470} cy={1150} s={0.95 * kit} op={kit} lines={1} />
       <L.CheckBadge cx={720} cy={1110} s={0.8 * ok} op={ok} />
     </>
   );
 };
 
-// ---- Adegan 6 (kalimat 11-12): jalan kosong tapi mobil mungil tetap ada; alat pemindai lewat dan tidak membaca
+// ---- Adegan 6 (kalimat 11-12): jalan kosong, tapi tau-tau satu mobil lewat (masih ada); pemindai lewat dan tidak membaca
 const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const s11 = T(11), s12 = T(12);
   const cy = 780;
-  const tiny: [number, number][] = [[260, -50], [560, 52], [820, -44]];
-  const sweepK = pr(t, s12 + 0.5, s12 + 2.0, sine);
+  const cars = [{ t0: s11 + 1.5, lane: 0 }, { t0: s12 + 1.4, lane: 1 }];
+  const sweepK = pr(t, s12 + 0.4, s12 + 2.2, sine);
   const bx = lerp(90, 990, sweepK);
-  const beamOn = pr(t, s12 + 0.3, s12 + 0.7) * (1 - pr(t, s12 + 2.0, s12 + 2.4));
+  const beamOn = pr(t, s12 + 0.3, s12 + 0.7) * (1 - pr(t, s12 + 2.2, s12 + 2.6));
   return (
     <>
-      <L.Road cx={540} cy={cy} w={1000} h={290} />
-      {tiny.map(([x, dy], i) => {
-        const k = pr(t, s11 + 1.4 + i * 0.35, s11 + 2.0 + i * 0.35, back);
-        const near = 1 - Math.min(1, Math.abs(bx - x) / 120);
-        return <L.Car key={i} cx={x} cy={cy + dy} s={0.24 * k * (1 + 0.15 * near * beamOn)} color={CAR} op={k} />;
+      <L.Road cx={540} cy={cy} w={1240} h={290} />
+      {cars.map((c, i) => {
+        const x = 1210 - 230 * (t - c.t0);
+        return t >= c.t0 && x > -170 ? <L.Car key={i} cx={x} cy={cy + (c.lane ? 62 : -62)} s={0.6} color={CAR} /> : null;
       })}
       <rect x={bx - 22} y={cy - 190} width={44} height={380} rx={22} fill="#EAF2FB" opacity={0.28 * beamOn} />
       <rect x={bx - 5} y={cy - 190} width={10} height={380} rx={5} fill="#FFFFFF" opacity={0.7 * beamOn} />
-      <L.CrossBadge cx={540} cy={1110} s={0.65 * pr(t, s12 + 2.0, s12 + 2.6, back)} op={pr(t, s12 + 2.0, s12 + 2.6)} />
+      <L.CrossBadge cx={540} cy={1110} s={0.65 * pr(t, s12 + 2.1, s12 + 2.7, back)} op={pr(t, s12 + 2.1, s12 + 2.7)} />
     </>
   );
 };
@@ -340,11 +393,12 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 8 (kalimat 14): kalender enam bulan terisi, garis viral load turun di bawah batas alat
+
+// ---- Adegan 8 (kalimat 14): kalender enam bulan terisi pelan, garis viral load turun di bawah batas alat
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
   const s14 = T(14);
   const enter = pr(t, s14, s14 + 0.8, back);
-  const prog = pr(t, s14 + 0.6, s14 + 3.4, sine);
+  const prog = pr(t, s14 + 0.7, s14 + 4.0, sine);
   const marks = Array.from({ length: Math.min(6, Math.floor(prog * 6.2)) }, (_, i) => i);
   const chartOn = pr(t, s14 + 0.3, s14 + 1.0, back);
   return (
@@ -355,18 +409,18 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 9 (kalimat 15): strip obat diminum satu per satu; garis tetap rendah, garis naik (jika berhenti) memudar
+// ---- Adegan 9 (kalimat 15): obat diminum teratur satu per satu (pelan); garis tetap rendah, garis naik (jika berhenti) hanya bayangan yang memudar
 const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const s15 = T(15);
-  const enter = pr(t, s15, s15 + 0.7, back);
-  const taken = Math.min(6, Math.floor(Math.max(0, t - (s15 + 0.5)) / 0.3));
-  const chartOn = pr(t, s15 + 0.2, s15 + 0.9, back);
-  const ghost = pr(t, s15 + 1.5, s15 + 2.2, sine);
-  const ghostOp = 0.5 * (1 - pr(t, s15 + 2.2, s15 + 2.9));
+  const enter = pr(t, s15, s15 + 0.8, back);
+  const taken = Math.min(6, Math.floor(Math.max(0, t - (s15 + 0.6)) / 0.7));
+  const chartOn = pr(t, s15 + 0.3, s15 + 1.0, back);
+  const ghost = pr(t, s15 + 2.2, s15 + 3.4, sine);
+  const ghostOp = 0.5 * pr(t, s15 + 2.2, s15 + 2.5) * (1 - pr(t, s15 + 3.6, s15 + 4.4));
   return (
     <>
       <L.Blister cx={540} cy={760} s={1.55 * enter} op={enter} taken={taken} />
-      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} points={[0.14, 0.12, 0.13, 0.12, 0.13]} progress={pr(t, s15 + 0.4, s15 + 1.4, sine)} />
+      <L.LineChart cx={540} cy={1150} s={chartOn} op={chartOn} w={800} h={340} points={[0.14, 0.12, 0.13, 0.12, 0.13]} progress={pr(t, s15 + 0.6, s15 + 2.6, sine)} />
       <L.LineChart cx={540} cy={1150} w={800} h={340} op={ghostOp} color={LIB_COL.bad} points={[0.12, 0.13, 0.4, 0.7, 0.9]} progress={ghost} />
     </>
   );
@@ -393,19 +447,20 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 11 (kalimat 17): U=U dibuka huruf per huruf; "tidak terdeteksi" = "tidak menularkan"
+
+// ---- Adegan 11 (kalimat 17): U=U dibuka pelan; "tidak terdeteksi" = "tidak menularkan"
 const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const s17 = T(17), c1 = CL(17, 1), c2 = CL(17, 2);
-  const uu = pr(t, s17, s17 + 0.7, back);
+  const uu = pr(t, s17, s17 + 0.8, back);
   const rows = ['Undetectable', 'Equals', 'Untransmittable'];
-  const left = pr(t, c2, c2 + 0.6, back);
-  const eq = pr(t, c2 + 1.2, c2 + 1.7, back);
-  const right = pr(t, c2 + 1.7, c2 + 2.3, back);
+  const left = pr(t, c2, c2 + 0.7, back);
+  const eq = pr(t, c2 + 1.4, c2 + 1.9, back);
+  const right = pr(t, c2 + 2.0, c2 + 2.6, back);
   return (
     <>
       <text x={540} y={560} textAnchor="middle" fontFamily={FONT} fontSize={230} fontWeight={800} fill="#FFFFFF" opacity={uu} transform={`translate(0 ${(1 - uu) * 30})`}>U=U</text>
       {rows.map((w, i) => {
-        const k = pr(t, c1 + i * 0.28, c1 + i * 0.28 + 0.5, back);
+        const k = pr(t, c1 + i * 0.6, c1 + i * 0.6 + 0.6, back);
         return (
           <text key={w} x={540} y={700 + i * 78} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={52} fill="#EAF2FB" opacity={k} transform={`translate(0 ${(1 - k) * 18})`}>
             <tspan fill="#F4D77E" fontWeight={800} fontSize={64}>{w[0]}</tspan>{w.slice(1)}
@@ -436,11 +491,12 @@ const Scene12: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
+
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
   { a: 1.9, b: T(2) - 0.2, text: 'tidak terdeteksi', k: 'neutral', x: 760, y: 1160, size: 36 },
   { a: T(3) + 0.5, b: T(3) + 2.4, text: 'viral load', k: 'virus', x: 300, y: 470, size: 40 },
   { a: T(4) + 1.0, b: T(5) - 0.1, text: 'ramai', k: 'virus', x: 540, y: 1130, size: 52 },
-  { a: T(5) + 0.9, b: T(6) - 0.2, text: 'sepi', k: 'neutral', x: 540, y: 1130, size: 52 },
+  { a: T(5) + 1.9, b: T(6) - 0.2, text: 'sepi', k: 'neutral', x: 540, y: 1130, size: 52 },
   { a: T(6) + 1.0, b: T(7) - 0.2, text: 'per mililiter darah', k: 'neutral', x: 400, y: 1180, size: 36 },
   { a: T(7) + 0.5, b: T(8) + 0.2, text: '> 1.000', k: 'virus', x: 540, y: 420, size: 50 },
   { a: T(8) + 0.4, b: T(9) - 0.1, text: '≤ 1.000', k: 'neutral', x: 540, y: 420, size: 50 },
@@ -623,7 +679,7 @@ export const S1E9Full: React.FC = () => {
           <LegendBox t={t} a={T(6) + 0.4} b={T(7) - 0.2} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.3} b={T(9) - 0.1} items={[['#FF9C85', 'Mobil = virus'], ['#72E3D3', 'Viral load']]} />
           <LegendBox t={t} a={T(9) - 0.0} b={T(10) - 0.2} items={[['#72E3D3', 'Viral load'], ['#FF6B4D', 'Batas alat']]} />
-          <LegendBox t={t} a={T(11) + 1.3} b={T(11) + 5.8} items={[['#FF9C85', 'Mobil mungil = virus']]} />
+          <LegendBox t={t} a={T(11) + 1.3} b={T(11) + 5.8} items={[['#FF9C85', 'Mobil = virus']]} />
           <LegendBox t={t} a={T(13) + 0.2} b={T(13) + 3.0} items={[['#FF9C85', 'Virus HIV'], ['#72E3D3', 'ARV']]} />
           <LegendBox t={t} a={T(14) + 0.2} b={T(14) + 3.6} items={[['#72E3D3', 'Viral load'], ['#FF6B4D', 'Batas alat']]} />
           <LegendBox t={t} a={T(15) + 0.2} b={T(16) - 0.2} items={[['#72E3D3', 'Viral load stabil'], ['#FF6B4D', 'Jika berhenti']]} />

@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { Capsule, Clock, CrossBadge } from '../shared/library';
+import { Capsule, Clock, CrossBadge, LineChart } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -349,5 +349,30 @@ export const ThumbS1E8: React.FC = () => (
       <FlatVirus cx={170} cy={1555} r={70} rot={20} />
     </Svg>
     <Pill cx={540} cy={1730} text="masa jendela" bg="#F4D77E" fg="#4A3606" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Apa arti viral load tidak terdeteksi?" (tema biru tua/indigo). Grafik viral load turun di bawah batas alat (tetap di atas sumbu), virus kecil tetap ada.
+export const ThumbS1E9: React.FC = () => (
+  <ThumbFrame
+    theme="indigo"
+    title={
+      <>
+        Apa arti
+        <br />
+        <span style={{ color: CORAL }}>viral load</span>
+        <br />
+        tidak
+        <br />
+        terdeteksi?
+      </>
+    }
+    glowY={1330}
+  >
+    <Svg>
+      <LineChart cx={540} cy={1330} w={900} h={560} points={[0.92, 0.85, 0.55, 0.36, 0.2, 0.1]} threshold={0.24} />
+      <FlatVirus cx={845} cy={1130} r={52} rot={20} dim={0.7} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="tidak terdeteksi" bg="#72E3D3" fg="#063F38" size={56} />
   </ThumbFrame>
 );

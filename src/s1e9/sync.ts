@@ -8,14 +8,14 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 1,
   "text": "Pernah melihat hasil tes HIV bertuliskan \"tidak terdeteksi\"?",
   "sa": 0,
-  "sb": 3.67,
+  "sb": 3.66,
   "a": 0,
-  "b": 3.67,
+  "b": 3.66,
   "clauses": [
    {
     "text": "Pernah melihat hasil tes HIV bertuliskan \"tidak terdeteksi\"?",
     "a": 0,
-    "b": 3.67,
+    "b": 3.66,
     "anchored": true
    }
   ]
@@ -25,13 +25,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Apakah artinya virus sudah hilang?",
   "sa": 4.16,
   "sb": 6.16,
-  "a": 4.12,
-  "b": 6.12,
+  "a": 4.11,
+  "b": 6.11,
   "clauses": [
    {
     "text": "Apakah artinya virus sudah hilang?",
-    "a": 4.12,
-    "b": 6.12,
+    "a": 4.11,
+    "b": 6.11,
     "anchored": true
    }
   ]
@@ -40,14 +40,14 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 3,
   "text": "Bayangkan viral load seperti jumlah mobil di jalan.",
   "sa": 6.66,
-  "sb": 10.02,
-  "a": 7.12,
-  "b": 10.48,
+  "sb": 10.01,
+  "a": 7.11,
+  "b": 10.46,
   "clauses": [
    {
     "text": "Bayangkan viral load seperti jumlah mobil di jalan.",
-    "a": 7.12,
-    "b": 10.48,
+    "a": 7.11,
+    "b": 10.46,
     "anchored": true
    }
   ]
@@ -55,43 +55,43 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 4,
   "text": "Semakin banyak virus, semakin ramai.",
-  "sa": 10.36,
-  "sb": 12.6,
-  "a": 11.08,
-  "b": 13.32,
+  "sa": 10.37,
+  "sb": 12.59,
+  "a": 11.06,
+  "b": 13.28,
   "clauses": [
    {
     "text": "Semakin banyak virus,",
-    "a": 11.08,
-    "b": 12.29,
-    "anchored": false
+    "a": 11.06,
+    "b": 12.26,
+    "anchored": true
    },
    {
     "text": "semakin ramai.",
-    "a": 12.29,
-    "b": 13.32,
-    "anchored": false
+    "a": 12.41,
+    "b": 13.28,
+    "anchored": true
    }
   ]
  },
  {
   "n": 5,
   "text": "Semakin sedikit, semakin sepi.",
-  "sa": 12.96,
-  "sb": 14.96,
-  "a": 13.77,
-  "b": 15.77,
+  "sa": 12.97,
+  "sb": 14.95,
+  "a": 13.73,
+  "b": 15.71,
   "clauses": [
    {
     "text": "Semakin sedikit,",
-    "a": 13.77,
-    "b": 14.58,
+    "a": 13.73,
+    "b": 14.53,
     "anchored": true
    },
    {
     "text": "semakin sepi.",
-    "a": 14.88,
-    "b": 15.77,
+    "a": 14.87,
+    "b": 15.71,
     "anchored": true
    }
   ]
@@ -99,15 +99,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 6,
   "text": "Viral load mengukur jumlah salinan HIV per mililiter darah.",
-  "sa": 15.45,
-  "sb": 19.24,
-  "a": 16.77,
-  "b": 20.56,
+  "sa": 15.47,
+  "sb": 19.22,
+  "a": 17.41,
+  "b": 21.16,
   "clauses": [
    {
     "text": "Viral load mengukur jumlah salinan HIV per mililiter darah.",
-    "a": 16.77,
-    "b": 20.56,
+    "a": 17.41,
+    "b": 21.16,
     "anchored": true
    }
   ]
@@ -116,20 +116,20 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 7,
   "text": "Di atas 1.000, jalan masih ramai.",
   "sa": 19.63,
-  "sb": 21.9,
-  "a": 21.01,
-  "b": 23.28,
+  "sb": 21.89,
+  "a": 21.61,
+  "b": 23.87,
   "clauses": [
    {
     "text": "Di atas 1.000,",
-    "a": 21.01,
-    "b": 21.95,
+    "a": 21.61,
+    "b": 22.55,
     "anchored": true
    },
    {
     "text": "jalan masih ramai.",
-    "a": 22.13,
-    "b": 23.28,
+    "a": 22.73,
+    "b": 23.87,
     "anchored": true
    }
   ]
@@ -138,20 +138,20 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 8,
   "text": "Jika terdeteksi tetapi 1.000 atau kurang, jalan mulai sepi.",
   "sa": 22.32,
-  "sb": 29.68,
-  "a": 24.08,
-  "b": 31.44,
+  "sb": 26.31,
+  "a": 24.67,
+  "b": 28.66,
   "clauses": [
    {
     "text": "Jika terdeteksi tetapi 1.000 atau kurang,",
-    "a": 24.08,
-    "b": 28.08,
+    "a": 24.67,
+    "b": 27.26,
     "anchored": true
    },
    {
     "text": "jalan mulai sepi.",
-    "a": 28.48,
-    "b": 31.44,
+    "a": 27.51,
+    "b": 28.66,
     "anchored": true
    }
   ]
@@ -159,21 +159,21 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 9,
   "text": "Jika berada di bawah batas kemampuan alat pemeriksaan, jalan terlihat kosong.",
-  "sa": 29.93,
-  "sb": 33.94,
-  "a": 32.34,
-  "b": 36.35,
+  "sa": 26.72,
+  "sb": 31.24,
+  "a": 29.56,
+  "b": 34.08,
   "clauses": [
    {
     "text": "Jika berada di bawah batas kemampuan alat pemeriksaan,",
-    "a": 32.34,
-    "b": 33.66,
+    "a": 29.56,
+    "b": 32.51,
     "anchored": true
    },
    {
     "text": "jalan terlihat kosong.",
-    "a": 34.07,
-    "b": 36.35,
+    "a": 32.78,
+    "b": 34.08,
     "anchored": true
    }
   ]
@@ -181,15 +181,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 10,
   "text": "Inilah yang disebut tidak terdeteksi.",
-  "sa": 34.36,
-  "sb": 37.1,
-  "a": 37.65,
-  "b": 40.39,
+  "sa": 31.66,
+  "sb": 33.93,
+  "a": 35.38,
+  "b": 37.65,
   "clauses": [
    {
     "text": "Inilah yang disebut tidak terdeteksi.",
-    "a": 37.65,
-    "b": 40.39,
+    "a": 35.38,
+    "b": 37.65,
     "anchored": true
    }
   ]
@@ -197,15 +197,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 11,
   "text": "Tapi jalan kosong bukan berarti tak ada mobil.",
-  "sa": 37.39,
-  "sb": 40.16,
-  "a": 41.39,
-  "b": 44.16,
+  "sa": 34.36,
+  "sb": 37.09,
+  "a": 38.65,
+  "b": 41.38,
   "clauses": [
    {
     "text": "Tapi jalan kosong bukan berarti tak ada mobil.",
-    "a": 41.39,
-    "b": 44.16,
+    "a": 38.65,
+    "b": 41.38,
     "anchored": true
    }
   ]
@@ -213,15 +213,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 12,
   "text": "Jumlahnya hanya terlalu sedikit untuk terbaca alat.",
-  "sa": 40.69,
-  "sb": 43.48,
-  "a": 44.61,
-  "b": 47.4,
+  "sa": 37.39,
+  "sb": 40.16,
+  "a": 42.08,
+  "b": 44.85,
   "clauses": [
    {
     "text": "Jumlahnya hanya terlalu sedikit untuk terbaca alat.",
-    "a": 44.61,
-    "b": 47.4,
+    "a": 42.08,
+    "b": 44.85,
     "anchored": true
    }
   ]
@@ -229,15 +229,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 13,
   "text": "ARV membantu menekan replikasi HIV.",
-  "sa": 43.88,
-  "sb": 46.77,
-  "a": 48.6,
-  "b": 51.49,
+  "sa": 40.69,
+  "sb": 43.47,
+  "a": 46.05,
+  "b": 48.83,
   "clauses": [
    {
     "text": "ARV membantu menekan replikasi HIV.",
-    "a": 48.6,
-    "b": 51.49,
+    "a": 46.05,
+    "b": 48.83,
     "anchored": true
    }
   ]
@@ -245,15 +245,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 14,
   "text": "Kebanyakan orang mencapai kondisi ini dalam enam bulan.",
-  "sa": 47.12,
-  "sb": 50.94,
-  "a": 51.94,
-  "b": 55.76,
+  "sa": 43.88,
+  "sb": 46.77,
+  "a": 49.83,
+  "b": 52.72,
   "clauses": [
    {
     "text": "Kebanyakan orang mencapai kondisi ini dalam enam bulan.",
-    "a": 51.94,
-    "b": 55.76,
+    "a": 49.83,
+    "b": 52.72,
     "anchored": true
    }
   ]
@@ -261,15 +261,15 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 15,
   "text": "Obat tetap harus diminum teratur agar virus tidak kembali meningkat.",
-  "sa": 51.36,
-  "sb": 53.82,
-  "a": 56.66,
-  "b": 59.12,
+  "sa": 47.12,
+  "sb": 50.94,
+  "a": 53.62,
+  "b": 57.44,
   "clauses": [
    {
     "text": "Obat tetap harus diminum teratur agar virus tidak kembali meningkat.",
-    "a": 56.66,
-    "b": 59.12,
+    "a": 53.62,
+    "b": 57.44,
     "anchored": true
    }
   ]
@@ -277,21 +277,21 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 16,
   "text": "Selama viral load tetap tidak terdeteksi, HIV tidak menular melalui hubungan seksual.",
-  "sa": 54,
-  "sb": 58.94,
-  "a": 60.32,
-  "b": 65.26,
+  "sa": 51.36,
+  "sb": 57.65,
+  "a": 58.64,
+  "b": 64.93,
   "clauses": [
    {
     "text": "Selama viral load tetap tidak terdeteksi,",
-    "a": 60.32,
-    "b": 63.06,
+    "a": 58.64,
+    "b": 60.94,
     "anchored": true
    },
    {
     "text": "HIV tidak menular melalui hubungan seksual.",
-    "a": 63.47,
-    "b": 65.26,
+    "a": 61.29,
+    "b": 64.93,
     "anchored": true
    }
   ]
@@ -299,27 +299,27 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 17,
   "text": "Inilah U=U, Undetectable Equals Untransmittable: tidak terdeteksi sama dengan tidak menularkan.",
-  "sa": 59.26,
-  "sb": 64.96,
-  "a": 66.26,
-  "b": 71.96,
+  "sa": 57.82,
+  "sb": 65.95,
+  "a": 65.93,
+  "b": 74.06,
   "clauses": [
    {
     "text": "Inilah U=U,",
-    "a": 66.26,
-    "b": 67.5,
+    "a": 65.93,
+    "b": 68,
     "anchored": false
    },
    {
     "text": "Undetectable Equals Untransmittable:",
-    "a": 67.5,
-    "b": 68.67,
+    "a": 68,
+    "b": 70.55,
     "anchored": false
    },
    {
     "text": "tidak terdeteksi sama dengan tidak menularkan.",
-    "a": 69.05,
-    "b": 71.96,
+    "a": 70.55,
+    "b": 74.06,
     "anchored": true
    }
   ]
@@ -327,21 +327,21 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 18,
   "text": "Jadi, tidak terdeteksi bukan berarti HIV hilang.",
-  "sa": 65.39,
+  "sa": 66.26,
   "sb": 68.97,
-  "a": 73.36,
-  "b": 76.94,
+  "a": 75.46,
+  "b": 78.17,
   "clauses": [
    {
     "text": "Jadi,",
-    "a": 73.36,
-    "b": 74.05,
-    "anchored": true
+    "a": 75.46,
+    "b": 75.66,
+    "anchored": false
    },
    {
     "text": "tidak terdeteksi bukan berarti HIV hilang.",
-    "a": 74.23,
-    "b": 76.94,
+    "a": 75.66,
+    "b": 78.17,
     "anchored": true
    }
   ]
@@ -350,19 +350,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 19,
   "text": "Ini tanda pengobatan bekerja dan harus terus dijaga.",
   "sa": 69.3,
-  "sb": 72.61,
-  "a": 78.14,
-  "b": 81.45,
+  "sb": 72.55,
+  "a": 79.37,
+  "b": 82.62,
   "clauses": [
    {
     "text": "Ini tanda pengobatan bekerja dan harus terus dijaga.",
-    "a": 78.14,
-    "b": 81.45,
+    "a": 79.37,
+    "b": 82.62,
     "anchored": true
    }
   ]
  }
 ];
-export const AUDIO_END = 81.45; // akhir ucapan terakhir (waktu video)
+export const AUDIO_END = 82.62; // akhir ucapan terakhir (waktu video)
 export const TAIL = 6; // ekor diam setelah ucapan terakhir
-export const SYNC_DUR = 87.45;
+export const SYNC_DUR = 88.62;
