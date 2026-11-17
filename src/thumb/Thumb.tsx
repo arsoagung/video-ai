@@ -370,7 +370,22 @@ export const ThumbS1E9: React.FC = () => (
     glowY={1330}
   >
     <Svg>
-      <LineChart cx={540} cy={1330} w={900} h={560} points={[0.92, 0.85, 0.55, 0.36, 0.2, 0.1]} threshold={0.24} />
+      {/* grafik sendiri: kurva turun melengkung mulus (peluruhan eksponensial), bukan garis patah */}
+      <g transform="translate(540 1330)">
+        <rect x={-450} y={-280} width={900} height={560} rx={36} fill="#fff" fillOpacity={0.12} />
+        <line x1={-406} y1={240} x2={406} y2={240} stroke="#fff" strokeOpacity={0.35} strokeWidth={4} strokeLinecap="round" />
+        <line x1={-406} y1={-240} x2={-406} y2={240} stroke="#fff" strokeOpacity={0.35} strokeWidth={4} strokeLinecap="round" />
+        <line x1={-406} y1={240 - 0.24 * 480} x2={406} y2={240 - 0.24 * 480} stroke="#FF6B4D" strokeOpacity={0.8} strokeWidth={5} strokeDasharray="14 12" strokeLinecap="round" />
+        <path
+          d={Array.from({ length: 61 }, (_, i) => {
+            const u = i / 60;
+            const v = 0.12 + 0.8 * Math.exp(-3.4 * u);
+            return `${i ? 'L' : 'M'} ${-406 + u * 812} ${240 - v * 480}`;
+          }).join(' ')}
+          fill="none" stroke="#72E3D3" strokeWidth={12} strokeLinecap="round" strokeLinejoin="round"
+        />
+        <circle cx={406} cy={240 - (0.12 + 0.8 * Math.exp(-3.4)) * 480} r={13} fill="#72E3D3" />
+      </g>
       <FlatVirus cx={845} cy={1130} r={52} rot={20} dim={0.7} />
     </Svg>
     <Pill cx={540} cy={1790} text="tidak terdeteksi" bg="#72E3D3" fg="#063F38" size={56} />
