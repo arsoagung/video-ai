@@ -707,8 +707,8 @@ export const Magnifier: React.FC<P> = (p) => (
   <G {...p}>
     <line x1={72} y1={72} x2={176} y2={176} stroke={LIB_COL.ink} strokeWidth={34} strokeLinecap="round" />
     <line x1={118} y1={118} x2={176} y2={176} stroke={LIB_COL.goodDark} strokeWidth={34} strokeLinecap="round" />
-    <circle r={112} fill={LIB_COL.light} />
-    <circle r={92} fill={LIB_COL.glass} fillOpacity={0.35} />
+    <circle r={102} fill="none" stroke={LIB_COL.light} strokeWidth={20} />
+    <circle r={92} fill={LIB_COL.glass} fillOpacity={0.14} />
     <path d="M -62 -30 A 70 70 0 0 1 -18 -66" fill="none" stroke="#fff" strokeOpacity={0.7} strokeWidth={12} strokeLinecap="round" />
   </G>
 );
