@@ -5,7 +5,7 @@ import { ez, lerp, win, out3, sine, back, in3 } from '../motion';
 import * as L from '../shared/library';
 import { LIB_COL } from '../shared/library';
 import { FlatVirus, FlatCell, SHAPE_COL } from '../shared/shapes';
-import { CUES, CLOSE, SCENE_T, T, CL, EP_DUR } from './timeline';
+import { CUES, CLOSE, SCENE_T, T, WA, WB, EP_DUR } from './timeline';
 
 export const S1E11_FRAMES = Math.ceil(EP_DUR * FPS);
 
@@ -194,7 +194,7 @@ const Big: React.FC<{ x: number; y: number; text: string; size: number; op: numb
 
 // ---- Adegan 1 (k1): hook. Kalender terisi tanda hari, jam berputar, lalu alat tes muncul: kapan harus tes?
 const Scene1: React.FC<{ t: number }> = ({ t }) => {
-  const cal = pr(t, 0.1, 0.8, back), clk = pr(t, 0.4, 1.1, back), kit = pr(t, 1.3, 2.0, back);
+  const cal = pr(t, 0.1, 0.8, back), clk = pr(t, 0.4, 1.1, back), kit = pr(t, WA(1, 'tes') - 0.2, WA(1, 'tes') + 0.5, back);
   const sweep = pr(t, 0.6, 2.6, sine);
   const marks = [3, 10, 17, 24, 31].filter((_, i) => t >= 0.8 + i * 0.3);
   const q = pr(t, 0.2, 0.9, back);
@@ -208,23 +208,24 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 2 (k2-4): analogi kendaraan: mobil melaju dan diperiksa rutin; ada kejadian lalu diperiksa lagi; lalu giliran orang dengan tes HIV
+// ---- Adegan 2 (k2-4): analogi kendaraan: mobil melaju; "rutin" = kalender + centang; "setelah kejadian" = tanda bahaya, mobil mengerem, lalu diperiksa; lalu giliran orang dengan tes HIV
 const Scene2: React.FC<{ t: number }> = ({ t }) => {
-  const s2 = T(2), s3 = T(3), s4 = T(4);
+  const s2 = T(2), s4 = T(4);
+  const rutin = WA(3, 'rutin'), setelah = WA(3, 'setelah'), kejadian = WA(3, 'kejadian'), tertentu = WA(3, 'tertentu');
   const road = pr(t, s2 - 0.1, s2 + 0.5);
   const drive = pr(t, s2 + 0.1, s2 + 1.9, sine);
-  const stop = pr(t, s3 + 1.9, s3 + 3.1, sine); // mobil mengerem sebelum tanda bahaya
+  const stop = pr(t, setelah + 0.1, kejadian + 0.3, sine);
   const carX = lerp(-180, 330, drive) + 150 * stop;
-  const bump = Math.sin(pr(t, s3 + 3.0, s3 + 3.4) * Math.PI * 2) * 7;
-  const cal = pr(t, s3 + 0.1, s3 + 0.8, back);
-  const marks = [4, 11, 18, 25].filter((_, i) => t >= s3 + 0.5 + i * 0.28);
-  const ck1 = pr(t, s3 + 1.2, s3 + 1.8, back) * (1 - pr(t, s3 + 1.9, s3 + 2.3));
-  const warn = pr(t, s3 + 1.9, s3 + 2.5, back);
-  const ck2 = pr(t, s3 + 3.5, s3 + 4.1, back);
+  const bump = Math.sin(pr(t, kejadian + 0.1, kejadian + 0.5) * Math.PI * 2) * 7;
+  const cal = pr(t, rutin - 0.2, rutin + 0.5, back);
+  const marks = [4, 11, 18, 25].filter((_, i) => t >= rutin + i * 0.2);
+  const ck1 = pr(t, rutin + 0.3, rutin + 0.9, back) * (1 - pr(t, setelah, setelah + 0.3));
+  const warn = pr(t, setelah, setelah + 0.5, back);
+  const ck2 = pr(t, tertentu, tertentu + 0.5, back);
   const carOut = 1 - pr(t, s4 - 0.1, s4 + 0.6);
   const person = pr(t, s4 + 0.2, s4 + 0.9, back);
-  const kit = pr(t, s4 + 0.7, s4 + 1.4, back);
-  const ok = pr(t, s4 + 1.3, s4 + 1.9, back);
+  const kit = pr(t, WA(4, 'tes') + 0.1, WA(4, 'tes') + 0.8, back);
+  const ok = pr(t, WA(4, 'begitu') + 0.2, WA(4, 'begitu') + 0.8, back);
   const px = lerp(1100, 330, pr(t, s4 + 0.1, s4 + 0.9, sine));
   return (
     <>
@@ -243,34 +244,35 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 3 (k5-6): kontak berisiko -> jam 72 jam -> PEP (kapsul) melindungi
+// ---- Adegan 3 (k5-6): kontak berisiko -> jam 72 jam -> PEP (tablet ARV) melindungi
 const Scene3: React.FC<{ t: number }> = ({ t }) => {
-  const s5 = T(5), c1 = CL(5, 1), s6 = T(6), p1 = CL(6, 1), p2 = CL(6, 2);
+  const s5 = T(5), s6 = T(6);
+  const kontak = WA(5, 'kontak'), lewat = WA(6, 'lewat'), jam = WB(6, 'jam'), pep = WA(6, 'PEP'), obat = WA(6, 'obat'), darurat = WA(6, 'darurat');
   const a = pr(t, s5, s5 + 0.7, back), b = pr(t, s5 + 0.1, s5 + 0.8, back);
-  const meet = pr(t, c1, c1 + 1.0, sine);
+  const meet = pr(t, kontak, kontak + 1.0, sine);
   const bx = lerp(800, 640, meet), ax = lerp(280, 440, meet);
-  const vk = pr(t, c1 + 0.5, c1 + 1.5, sine);
-  const warn = pr(t, c1 + 1.1, c1 + 1.7, back) * (1 - pr(t, s6 - 0.1, s6 + 0.4));
+  const vk = pr(t, kontak + 0.4, kontak + 1.3, sine);
+  const warn = pr(t, kontak + 1.0, kontak + 1.6, back) * (1 - pr(t, s6 - 0.1, s6 + 0.4));
   const bOut = 1 - pr(t, s6 - 0.1, s6 + 0.5);
   const slide = pr(t, s6, s6 + 0.9, sine);
   const aX = lerp(ax, 290, slide);
   const clk = pr(t, s6 + 0.2, s6 + 0.9, back);
-  const sweep = pr(t, s6 + 0.5, p1 - 0.3, sine);
-  const cap = pr(t, p1, p1 + 0.7, back);
-  const capGo = pr(t, p2 - 0.3, p2 + 1.0, sine);
-  const shield = pr(t, p2 + 0.8, p2 + 1.5, back);
-  const vOn = pr(t, c1 + 0.3, c1 + 0.6);
-  const vFade = 1 - pr(t, p2 + 0.8, p2 + 1.4);
+  const sweep = pr(t, lewat, jam, sine);
+  const cap = pr(t, pep, pep + 0.6, back);
+  const capGo = pr(t, obat, darurat + 0.2, sine);
+  const shield = pr(t, darurat, darurat + 0.7, back);
+  const vOn = pr(t, kontak + 0.3, kontak + 0.6);
+  const vFade = 1 - pr(t, darurat, darurat + 0.6);
   return (
     <>
       <L.Person cx={aX} cy={1050} s={1.8 * a} op={a} />
       <g opacity={bOut}>
         <L.Person cx={bx} cy={1050} s={1.8 * b} op={b} color="#B9A2F5" />
       </g>
-      <Virus x={lerp(bx - 10, ax + 60, vk)} y={lerp(1050, 1060, vk) - 80 * Math.sin(vk * Math.PI)} r={26 * vOn * (1 - 0.0 * vk)} dim={0.95 * (bOut > 0.5 ? 1 : vFade)} t={t} />
+      <Virus x={lerp(bx - 10, ax + 60, vk)} y={lerp(1050, 1060, vk) - 80 * Math.sin(vk * Math.PI)} r={26 * vOn} dim={0.95 * (bOut > 0.5 ? 1 : vFade)} t={t} />
       <Warn cx={540} cy={760} s={0.95 * warn} op={warn} />
       <L.Clock cx={640} cy={760} s={1.5 * clk} op={clk} frac={Math.max(0.02, 0.78 * sweep)} hour={4} />
-      <L.Capsule cx={lerp(860, aX + 90, capGo)} cy={lerp(1040, 1010, capGo)} s={1.0 * cap} rot={lerp(-35, 0, capGo)} op={cap * (1 - pr(t, p2 + 1.0, p2 + 1.4))} />
+      <L.Tablet cx={lerp(860, aX + 100, capGo)} cy={lerp(1040, 1010, capGo)} s={1.5 * cap} rot={lerp(-25, 0, capGo)} op={cap * (1 - pr(t, darurat + 0.6, darurat + 1.0))} />
       <L.Shield cx={aX} cy={1010} s={1.75 * shield} op={0.55 * shield} />
     </>
   );
@@ -279,33 +281,37 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
 // ---- Adegan 4 (k7): masa jendela: kadar virus naik sampai melewati batas deteksi alat tes, lalu tes mampu mendeteksi
 const WIN_P = 0.63;
 const Scene4: React.FC<{ t: number }> = ({ t }) => {
-  const s7 = T(7), c1 = CL(7, 1);
+  const s7 = T(7);
+  const mampu = WA(7, 'mampu'), mendeteksi = WA(7, 'mendeteksi');
   const chart = pr(t, s7, s7 + 0.8, back);
-  const prog = pr(t, s7 + 0.7, c1 + 3.4, sine);
+  const p0 = s7 + 0.6, p1 = p0 + (mampu - p0) / WIN_P; // kurva melewati batas tepat di kata "mampu"
+  const prog = pr(t, p0, p1, (x) => x);
   const bandW = Math.min(prog, WIN_P) * 772;
-  const kit = pr(t, c1 + 1.7, c1 + 2.5, back);
+  const kit = pr(t, mendeteksi, mendeteksi + 0.6, back);
   return (
     <>
       <L.LineChart cx={540} cy={880} s={chart} op={chart} w={860} h={380} color={VIRUSC} threshold={0.3} points={[0.02, 0.03, 0.07, 0.16, 0.34, 0.58, 0.82]} progress={prog} />
       {chart > 0.5 && <rect x={154} y={730} width={bandW} height={300} rx={24} fill="#F4D77E" opacity={0.22} />}
       <L.TestKit cx={540} cy={1275} s={0.85 * kit} op={kit} lines={2} />
-      <L.CheckBadge cx={760} cy={1250} s={0.5 * pr(t, c1 + 2.3, c1 + 2.9, back)} op={pr(t, c1 + 2.3, c1 + 2.9)} />
+      <L.CheckBadge cx={760} cy={1250} s={0.5 * pr(t, mendeteksi + 0.4, mendeteksi + 1.0, back)} op={pr(t, mendeteksi + 0.4, mendeteksi + 1.0)} />
     </>
   );
 };
 
 // ---- Adegan 5 (k8-9): risiko berlanjut -> tes berkala (alat tes muncul berurutan); pengguna PrEP -> garis waktu tiga bulan -> tes
 const Scene5: React.FC<{ t: number }> = ({ t }) => {
-  const s8 = T(8), c1 = CL(8, 1), s9 = T(9);
+  const s8 = T(8), s9 = T(9);
+  const risiko = WA(8, 'risiko'), berkala = WA(8, 'berkala');
+  const prep = WA(9, 'PrEP'), tiga = WA(9, 'tiga'), bulan = WB(9, 'bulan');
   const a = pr(t, s8, s8 + 0.7, back);
-  const v = pr(t, s8 + 0.5, s8 + 1.1, back);
+  const v = pr(t, risiko, risiko + 0.6, back);
   const kitsOut = 1 - pr(t, s9 - 0.1, s9 + 0.5);
   const xs = [520, 700, 880];
-  const cap = pr(t, s9 + 0.1, s9 + 0.8, back);
-  const bar = pr(t, s9 + 0.5, s9 + 1.1, back);
-  const k = pr(t, s9 + 0.9, s9 + 3.0, sine);
-  const months = Math.min(3, Math.floor(k * 3.05));
-  const kit = pr(t, s9 + 2.6, s9 + 3.2, back);
+  const cap = pr(t, prep, prep + 0.6, back);
+  const bar = pr(t, tiga - 0.3, tiga + 0.3, back);
+  const k = pr(t, tiga, bulan, (x) => x);
+  const months = Math.min(3, Math.floor(k * 3.02));
+  const kit = pr(t, bulan - 0.1, bulan + 0.5, back);
   const x0 = 150, x1 = 930;
   return (
     <>
@@ -313,11 +319,11 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
       <Virus x={470} y={980} r={26 * v} dim={0.95} t={t} />
       <g opacity={kitsOut}>
         {xs.map((x, i) => {
-          const q = pr(t, c1 + 0.2 + i * 0.7, c1 + 0.9 + i * 0.7, back);
+          const q = pr(t, berkala + i * 0.55, berkala + 0.6 + i * 0.55, back);
           return <L.TestKit key={i} cx={x} cy={900} s={0.7 * q} op={q} lines={1} />;
         })}
       </g>
-      <L.Capsule cx={500} cy={790} s={0.9 * cap} rot={-20} op={cap} colorA={TEAL} />
+      <L.Tablet cx={500} cy={790} s={1.4 * cap} rot={-20} op={cap} />
       <Big x={700} y={640} text="3 bulan" size={104} op={bar} />
       <rect x={x0} y={1080} width={x1 - x0} height={24} rx={12} fill="#fff" fillOpacity={0.18} opacity={bar} />
       <rect x={x0} y={1080} width={Math.max(24, (x1 - x0) * k)} height={24} rx={12} fill={TEAL} opacity={bar} />
@@ -331,16 +337,18 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 6 (k10): tiga keadaan: hamil, gejala, TBC -> semuanya mengarah ke tes
 const Scene6: React.FC<{ t: number }> = ({ t }) => {
-  const s10 = T(10), c1 = CL(10, 1), c2 = CL(10, 2), c3 = CL(10, 3);
-  const q = (a: number) => pr(t, a, a + 0.7, back);
-  const m = q(c1), g = q(c2), b = q(c3);
-  const link = pr(t, c3 + 1.0, c3 + 1.7, sine);
-  const kit = pr(t, c3 + 1.2, c3 + 1.9, back);
+  const s10 = T(10);
+  const hamil = WA(10, 'hamil'), gejala = WA(10, 'gejala'), tbc = WA(10, 'TBC');
+  const q = (a: number) => pr(t, a, a + 0.6, back);
+  const m = q(hamil - 0.1), g = q(gejala - 0.1), b = q(WA(10, 'didiagnosis') - 0.1);
+  const link = pr(t, WB(10, 'TBC') - 0.3, WB(10, 'TBC') + 0.4, sine);
+  const kit = pr(t, WB(10, 'TBC') - 0.1, WB(10, 'TBC') + 0.6, back);
   const xs = [210, 540, 870];
   const fade = pr(t, s10, s10 + 0.5);
+  void tbc;
   return (
     <>
-      <Big x={540} y={600} text="Ketiga" size={80} op={fade * (1 - pr(t, c1 + 1.0, c1 + 1.5))} />
+      <Big x={540} y={600} text="Ketiga" size={80} op={fade * (1 - pr(t, hamil - 0.2, hamil + 0.2))} />
       <Card cx={xs[0]} cy={830} w={300} h={400} op={m} s={m} />
       <Card cx={xs[1]} cy={830} w={300} h={400} op={g} s={g} />
       <Card cx={xs[2]} cy={830} w={300} h={400} op={b} s={b} />
@@ -357,28 +365,37 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 7 (k11-12): usia 13-64 tahun, tes setidaknya sekali; lalu pertanyaan "mengapa penting?"
+// ---- Adegan 7 (k11-12): kartu penjelas CDC; usia 13-64 tahun, tes setidaknya sekali; lalu pertanyaan "mengapa penting?"
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
-  const s11 = T(11), s12 = T(12);
-  const num = pr(t, s11, s11 + 0.8, back);
-  const k = pr(t, s11 + 0.7, s11 + 3.2, sine);
-  const bar = pr(t, s11 + 0.5, s11 + 1.1, back);
+  const s12 = T(12);
+  const cdc = WA(11, 'CDC'), usia = WA(11, '13–64'), tahun = WB(11, 'tahun'), sekali = WA(11, 'sekali');
+  const card = pr(t, cdc, cdc + 0.6, back);
+  const num = pr(t, usia, usia + 0.6, back);
+  const k = pr(t, usia, tahun, (x) => x);
+  const bar = pr(t, usia - 0.1, usia + 0.4, back);
   const xs = [210, 375, 540, 705, 870];
   const grpOut = 1 - pr(t, s12 - 0.1, s12 + 0.4);
-  const chk = pr(t, s11 + 3.2, s11 + 3.9, back);
+  const chk = pr(t, sekali, sekali + 0.6, back);
   const q = pr(t, s12, s12 + 0.8, back);
   const wob = Math.sin((t - s12) * 5) * 4 * q;
   return (
     <>
       <g opacity={grpOut}>
-        <Big x={540} y={640} text="13–64 tahun" size={110} op={num} sc={0.85 + 0.15 * num} />
-        <rect x={150} y={1090} width={780} height={22} rx={11} fill="#fff" fillOpacity={0.18} opacity={bar} />
-        <rect x={150} y={1090} width={Math.max(22, 780 * k)} height={22} rx={11} fill={TEAL} opacity={bar} />
+        <g opacity={card} transform={`translate(0 ${(1 - card) * 24})`}>
+          <rect x={90} y={380} width={900} height={290} rx={44} fill="#fff" fillOpacity={0.14} />
+          <text x={540} y={475} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={84} fill="#8FBDF7">CDC</text>
+          <text x={540} y={535} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={36} fill="#FFFFFF">Centers for Disease Control</text>
+          <text x={540} y={579} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={36} fill="#FFFFFF">and Prevention</text>
+          <text x={540} y={632} textAnchor="middle" fontFamily={FONT} fontWeight={600} fontSize={30} fill="#EAF2FB">lembaga kesehatan masyarakat Amerika Serikat</text>
+        </g>
+        <Big x={540} y={800} text="13–64 tahun" size={96} op={num} sc={0.85 + 0.15 * num} />
+        <rect x={150} y={1150} width={780} height={22} rx={11} fill="#fff" fillOpacity={0.18} opacity={bar} />
+        <rect x={150} y={1150} width={Math.max(22, 780 * k)} height={22} rx={11} fill={TEAL} opacity={bar} />
         {xs.map((x, i) => {
-          const p = pr(t, s11 + 0.9 + i * 0.5, s11 + 1.5 + i * 0.5, back);
-          return <L.Person key={i} cx={x} cy={900} s={1.0 * p} op={p} kid={i === 0} color={['#8FBDF7', '#B9A2F5', '#F4D77E', '#7ED6A8', '#FF9C85'][i]} />;
+          const p = pr(t, usia + i * 0.25, usia + 0.5 + i * 0.25, back);
+          return <L.Person key={i} cx={x} cy={975} s={1.0 * p} op={p} kid={i === 0} color={['#8FBDF7', '#B9A2F5', '#F4D77E', '#7ED6A8', '#FF9C85'][i]} />;
         })}
-        <L.CheckBadge cx={540} cy={1260} s={0.65 * chk} op={chk} />
+        <L.CheckBadge cx={540} cy={1255} s={0.6 * chk} op={chk} />
       </g>
       <Big x={540} y={1010 + wob} text="?" size={640} op={0.95 * q} sc={0.6 + 0.4 * q} />
     </>
@@ -387,19 +404,19 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 8 (k13): 100 orang dengan HIV; titik teal bertambah sampai 68 (yang tahu status), sisanya abu
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
-  const s13 = T(13), c1 = CL(13, 1), c2 = CL(13, 2);
-  const yr = pr(t, s13 + 0.1, s13 + 0.8, back);
-  const doc = pr(t, c1 + 0.1, c1 + 0.8, back);
-  const fillK = pr(t, c2 + 1.0, c2 + 6.0, sine);
+  const yrW = WA(13, '2025'), kem = WA(13, 'Kemenkes'), baru = WA(13, 'baru'), persen = WB(13, 'persen');
+  const yr = pr(t, yrW, yrW + 0.6, back);
+  const doc = pr(t, kem - 0.2, kem + 0.5, back);
+  const fillK = pr(t, baru + 0.2, persen, (x) => x);
   const n = Math.round(68 * fillK);
-  const pct = pr(t, c2 + 1.0, c2 + 1.5);
+  const pct = pr(t, baru + 0.2, baru + 0.7);
   return (
     <>
       <Big x={290} y={620} text="2025" size={120} op={yr} sc={0.85 + 0.15 * yr} />
       <L.Document cx={820} cy={570} s={0.7 * doc} op={doc} kind="paper" stamp />
       {Array.from({ length: 100 }, (_, i) => {
         const r = Math.floor(i / 10), c = i % 10;
-        const appear = pr(t, c1 + 0.2 + i * 0.012, c1 + 0.6 + i * 0.012, back);
+        const appear = pr(t, kem + 0.2 + i * 0.01, kem + 0.6 + i * 0.01, back);
         const on = i < n;
         return <circle key={i} cx={540 + (c - 4.5) * 62} cy={1030 + (r - 4.5) * 56 - 10} r={21 * appear} fill={on ? TEAL : '#B9C3D0'} opacity={on ? 1 : 0.55 * appear} />;
       })}
@@ -410,17 +427,18 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 9 (k14-15): hasil negatif terlalu dini (virus belum terbaca) -> tanda tanya; lalu kalender masa jendela -> tes ulang
 const Scene9: React.FC<{ t: number }> = ({ t }) => {
-  const s14 = T(14), c1 = s14 + 0.0, s15 = T(15);
+  const s14 = T(14), s15 = T(15);
+  const neg = WA(14, 'negatif'), belum = WA(14, 'belum'), diulang = WA(15, 'diulang'), jendela = WA(15, 'masa'), berakhir = WA(15, 'berakhir');
   const a = pr(t, s14, s14 + 0.7, back);
-  const v = pr(t, s14 + 0.5, s14 + 1.1, back);
-  const kit = pr(t, s14 + 1.0, s14 + 1.7, back);
-  const ok = pr(t, s14 + 1.7, s14 + 2.3, back) * (1 - pr(t, s14 + 3.0, s14 + 3.5));
-  const q = pr(t, s14 + 3.2, s14 + 3.9, back);
+  const v = pr(t, neg, neg + 0.5, back);
+  const kit = pr(t, neg, neg + 0.7, back);
+  const ok = pr(t, WB(14, 'negatif'), WB(14, 'negatif') + 0.5, back) * (1 - pr(t, belum, belum + 0.3));
+  const q = pr(t, belum + 0.2, belum + 0.8, back);
   const out = 1 - pr(t, s15 - 0.1, s15 + 0.4);
   const cal = pr(t, s15 + 0.1, s15 + 0.8, back);
-  const marks = [2, 5, 8, 11, 14, 17, 20].filter((_, i) => t >= s15 + 0.5 + i * 0.22);
-  const kit2 = pr(t, s15 + 1.7, s15 + 2.4, back);
-  const spin = pr(t, s15 + 1.3, s15 + 2.8, sine);
+  const marks = [2, 5, 8, 11, 14, 17, 20].filter((_, i) => t >= jendela + i * 0.12);
+  const kit2 = pr(t, berakhir, berakhir + 0.6, back);
+  const spin = pr(t, diulang, diulang + 1.0, sine);
   return (
     <>
       <g opacity={out}>
@@ -432,7 +450,7 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
       </g>
       <L.Calendar cx={540} cy={700} s={1.6 * cal} op={cal} marks={marks} markColor={TEAL} />
       <L.TestKit cx={300} cy={1100} s={0.9 * cal} op={0.5 * cal} lines={1} />
-      <g transform={`translate(540 1100) rotate(${spin * 360})`} opacity={cal}>
+      <g transform={`translate(540 1100) rotate(${spin * 360})`} opacity={pr(t, diulang - 0.1, diulang + 0.3)}>
         <path d="M -60 0 A 60 60 0 1 1 0 60" fill="none" stroke="#fff" strokeWidth={14} strokeLinecap="round" />
         <polygon points="-16,38 18,64 -6,86" fill="#fff" />
       </g>
@@ -443,13 +461,13 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 10 (k16): tempat tes: puskesmas, rumah sakit, klinik, layanan komunitas
 const Scene10: React.FC<{ t: number }> = ({ t }) => {
-  const cl = [CL(16, 0), CL(16, 1), CL(16, 2), CL(16, 3)];
+  const cl = [WA(16, 'puskesmas'), WA(16, 'rumah'), WA(16, 'klinik'), WA(16, 'komunitas')];
   const pos: [number, number][] = [[300, 760], [780, 760], [300, 1130], [780, 1130]];
   return (
     <>
       {pos.map(([x, y], i) => {
-        const q = pr(t, cl[i], cl[i] + 0.7, back);
-        const kit = pr(t, cl[i] + 0.5, cl[i] + 1.1, back);
+        const q = pr(t, cl[i] - 0.1, cl[i] + 0.5, back);
+        const kit = pr(t, cl[i] + 0.4, cl[i] + 1.0, back);
         return (
           <React.Fragment key={i}>
             <Card cx={x} cy={y} w={420} h={320} op={q} s={q} />
@@ -462,23 +480,25 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 11 (k17): tahu status lebih cepat -> ARV lebih cepat dimulai
+// ---- Adegan 11 (k17): tahu status lebih cepat -> ARV (tablet) lebih cepat dimulai
 const Scene11: React.FC<{ t: number }> = ({ t }) => {
-  const s17 = T(17), c1 = CL(17, 1);
+  const s17 = T(17);
+  const status = WA(17, 'status'), cepat = WA(17, 'cepat'), arv = WA(17, 'ARV'), mulai = WB(17, 'dimulai');
   const a = pr(t, s17, s17 + 0.7, back);
-  const kit = pr(t, s17 + 0.3, s17 + 1.0, back);
-  const doc = pr(t, s17 + 1.2, s17 + 1.9, back);
-  const clk = pr(t, s17 + 0.2, s17 + 0.9, back);
-  const sweep = pr(t, s17 + 0.6, c1 + 0.2, sine);
-  const cap = pr(t, c1, c1 + 1.4, sine);
-  const heart = pr(t, c1 + 1.3, c1 + 1.9, back);
+  const kit = pr(t, WA(17, 'mengetahui'), WA(17, 'mengetahui') + 0.6, back);
+  const doc = pr(t, status, status + 0.6, back);
+  const clk = pr(t, cepat - 0.4, cepat + 0.3, back);
+  const sweep = pr(t, cepat, arv, sine);
+  const cap = pr(t, arv - 0.9, mulai, sine);
+  const heart = pr(t, mulai - 0.1, mulai + 0.5, back);
+  const gone = pr(t, arv - 0.9, arv - 0.4);
   return (
     <>
       <L.Person cx={290} cy={1040} s={1.9 * a} op={a} />
       <L.Clock cx={640} cy={680} s={1.2 * clk} op={clk} frac={Math.max(0.02, 0.96 * sweep)} hour={2 + 8 * sweep} />
-      <L.TestKit cx={820} cy={1060} s={1.0 * kit * (1 - pr(t, c1 - 0.1, c1 + 0.4))} op={kit * (1 - pr(t, c1 - 0.1, c1 + 0.4))} lines={1} />
-      <L.Document cx={400} cy={780} s={0.9 * doc} op={doc * (1 - pr(t, c1 + 0.2, c1 + 0.7))} stamp />
-      <L.Capsule cx={lerp(1150, 420, cap)} cy={lerp(1000, 1040, cap)} s={0.95} rot={lerp(-30, 0, cap)} op={pr(t, c1, c1 + 0.4) * (1 - heart)} colorA={TEAL} />
+      <L.TestKit cx={820} cy={1060} s={1.0 * kit * (1 - gone)} op={kit * (1 - gone)} lines={1} />
+      <L.Document cx={400} cy={780} s={0.9 * doc} op={doc * (1 - pr(t, arv, arv + 0.5))} stamp />
+      <L.Tablet cx={lerp(1150, 420, cap)} cy={lerp(1000, 1040, cap)} s={1.5} rot={lerp(-25, 0, cap)} op={pr(t, arv - 0.9, arv - 0.5) * (1 - heart)} />
       <L.Heart cx={290} cy={1000} s={0.6 * heart} op={heart} color={GREEN} />
     </>
   );
@@ -486,12 +506,13 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 12 (k18): jangan tunggu sakit: gejala dicoret, tes sebagai jalan
 const Scene12: React.FC<{ t: number }> = ({ t }) => {
-  const s18 = T(18), c1 = CL(18, 1);
+  const s18 = T(18);
+  const sakit = WA(18, 'sakit'), tes = WA(18, 'tes'), hiv = WA(18, 'HIV');
   const a = pr(t, s18, s18 + 0.7, back);
-  const bub = pr(t, c1 + 0.3, c1 + 0.9, back);
-  const x = pr(t, c1 + 1.0, c1 + 1.6, back);
-  const kit = pr(t, c1 + 1.6, c1 + 2.3, back);
-  const ok = pr(t, c1 + 2.2, c1 + 2.8, back);
+  const bub = pr(t, sakit - 0.2, sakit + 0.4, back);
+  const x = pr(t, sakit + 0.3, sakit + 0.9, back);
+  const kit = pr(t, tes - 0.1, tes + 0.6, back);
+  const ok = pr(t, hiv, hiv + 0.6, back);
   return (
     <>
       <L.Person cx={300} cy={1030} s={1.9 * a} op={a} />
@@ -506,32 +527,32 @@ const Scene12: React.FC<{ t: number }> = ({ t }) => {
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
   { a: 0.9, b: T(2) - 0.15, text: 'waktu tepat tes', k: 'neutral', x: 540, y: 1330, size: 40 },
   { a: T(2) + 1.8, b: T(3) - 0.1, text: 'periksa mobil', k: 'neutral', x: 540, y: 1330, size: 40 },
-  { a: T(3) + 0.6, b: CL(3, 0) + 3.0, text: 'rutin', k: 'neutral', x: 290, y: 430, size: 40 },
-  { a: T(3) + 2.3, b: T(4) - 0.1, text: 'setelah kejadian', k: 'neutral', x: 760, y: 1330, size: 38 },
-  { a: T(4) + 1.4, b: T(5) - 0.2, text: 'tes HIV pun begitu', k: 'recep', x: 540, y: 1330, size: 40 },
-  { a: CL(5, 1) + 1.2, b: T(6) - 0.1, text: 'kontak berisiko', k: 'virus', x: 540, y: 1250, size: 42 },
-  { a: T(6) + 1.0, b: CL(6, 1) - 0.1, text: '72 jam', k: 'neutral', x: 640, y: 540, size: 54 },
-  { a: CL(6, 1) + 0.3, b: CL(6, 2) - 0.1, text: 'PEP', k: 'arv', x: 860, y: 1180, size: 50 },
-  { a: CL(6, 2) + 0.2, b: T(7) - 0.2, text: 'obat pencegahan darurat', k: 'arv', x: 540, y: 1250, size: 38 },
-  { a: T(7) + 1.0, b: CL(7, 1) - 0.1, text: 'masa jendela', k: 'recep', x: 540, y: 540, size: 48 },
-  { a: CL(7, 1) + 1.8, b: T(8) - 0.2, text: 'tes mampu mendeteksi', k: 'neutral', x: 540, y: 540, size: 40 },
-  { a: T(8) + 1.0, b: CL(8, 1) + 2.0, text: 'risiko berlanjut', k: 'virus', x: 540, y: 560, size: 42 },
-  { a: CL(8, 1) + 0.6, b: T(9) - 0.1, text: 'tes berkala', k: 'neutral', x: 700, y: 1160, size: 42 },
-  { a: T(9) + 0.5, b: T(10) - 0.2, text: 'PrEP', k: 'arv', x: 290, y: 560, size: 50 },
-  { a: T(10) + 1.8, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
-  { a: CL(10, 2) + 0.9, b: T(11) - 0.05, text: 'gejala HIV', k: 'neutral', x: 540, y: 1005, size: 36 },
-  { a: CL(10, 3) + 0.9, b: T(11) - 0.05, text: 'didiagnosis TBC', k: 'neutral', x: 870, y: 1005, size: 32 },
-  { a: T(11) + 3.4, b: T(12) - 0.1, text: 'setidaknya sekali', k: 'recep', x: 540, y: 1370, size: 40 },
-  { a: T(13) + 2.0, b: T(14) - 0.2, text: 'perkiraan Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
-  { a: T(14) + 0.9, b: CL(14, 0) + 3.1, text: 'terlalu dini', k: 'neutral', x: 540, y: 560, size: 44 },
-  { a: T(15) + 0.9, b: T(16) - 0.3, text: 'tes ulang', k: 'recep', x: 540, y: 1330, size: 44 },
-  { a: CL(16, 0) + 0.7, b: T(17) - 0.05, text: 'puskesmas', k: 'neutral', x: 300, y: 940, size: 32 },
-  { a: CL(16, 1) + 0.7, b: T(17) - 0.05, text: 'rumah sakit', k: 'neutral', x: 780, y: 940, size: 32 },
-  { a: CL(16, 2) + 0.7, b: T(17) - 0.05, text: 'klinik', k: 'neutral', x: 300, y: 1310, size: 32 },
-  { a: CL(16, 3) + 0.7, b: T(17) - 0.05, text: 'komunitas', k: 'neutral', x: 780, y: 1310, size: 32 },
-  { a: T(17) + 1.4, b: CL(17, 1) - 0.1, text: 'status diketahui', k: 'neutral', x: 760, y: 1320, size: 36 },
-  { a: CL(17, 1) + 1.0, b: T(18) - 0.2, text: 'ARV dimulai', k: 'arv', x: 540, y: 1300, size: 46 },
-  { a: CL(18, 1) + 1.2, b: CLOSE - 0.2, text: 'tes HIV', k: 'recep', x: 800, y: 1305, size: 44 },
+  { a: WA(3, 'rutin') + 0.2, b: WA(3, 'setelah'), text: 'rutin', k: 'neutral', x: 290, y: 430, size: 40 },
+  { a: WA(3, 'setelah') + 0.2, b: T(4) - 0.1, text: 'setelah kejadian', k: 'neutral', x: 760, y: 1330, size: 38 },
+  { a: WA(4, 'begitu') + 0.6, b: T(5) - 0.2, text: 'tes HIV pun begitu', k: 'recep', x: 540, y: 1330, size: 40 },
+  { a: WA(5, 'kontak') + 1.2, b: T(6) - 0.1, text: 'kontak berisiko', k: 'virus', x: 540, y: 1250, size: 42 },
+  { a: WB(6, 'jam') - 0.5, b: WA(6, 'PEP'), text: '72 jam', k: 'neutral', x: 640, y: 540, size: 54 },
+  { a: WA(6, 'PEP'), b: WA(6, 'obat') - 0.1, text: 'PEP', k: 'arv', x: 860, y: 1180, size: 50 },
+  { a: WA(6, 'obat'), b: T(7) - 0.2, text: 'obat pencegahan darurat', k: 'arv', x: 540, y: 1250, size: 38 },
+  { a: WA(7, 'masa'), b: WA(7, 'mampu') + 0.6, text: 'masa jendela', k: 'recep', x: 540, y: 540, size: 48 },
+  { a: WA(7, 'mendeteksi') + 0.3, b: T(8) - 0.2, text: 'tes mampu mendeteksi', k: 'neutral', x: 540, y: 540, size: 40 },
+  { a: WA(8, 'risiko') + 0.3, b: WA(8, 'berkala') + 1.5, text: 'risiko berlanjut', k: 'virus', x: 540, y: 560, size: 42 },
+  { a: WA(8, 'berkala') + 0.8, b: T(9) - 0.1, text: 'tes berkala', k: 'neutral', x: 700, y: 1160, size: 42 },
+  { a: WA(9, 'PrEP') + 0.2, b: T(10) - 0.2, text: 'PrEP', k: 'arv', x: 290, y: 560, size: 50 },
+  { a: WA(10, 'hamil') + 0.4, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
+  { a: WA(10, 'gejala') + 0.4, b: T(11) - 0.05, text: 'gejala HIV', k: 'neutral', x: 540, y: 1005, size: 36 },
+  { a: WA(10, 'didiagnosis') + 0.4, b: T(11) - 0.05, text: 'didiagnosis TBC', k: 'neutral', x: 870, y: 1005, size: 32 },
+  { a: WA(11, 'sekali') + 0.4, b: T(12) - 0.1, text: 'setidaknya sekali', k: 'recep', x: 540, y: 1345, size: 40 },
+  { a: WA(13, 'Kemenkes') + 0.3, b: T(14) - 0.2, text: 'perkiraan Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
+  { a: WA(14, 'terlalu'), b: WA(14, 'belum') + 1.5, text: 'terlalu dini', k: 'neutral', x: 540, y: 560, size: 44 },
+  { a: WA(15, 'diulang'), b: T(16) - 0.3, text: 'tes ulang', k: 'recep', x: 540, y: 1330, size: 44 },
+  { a: WA(16, 'puskesmas') + 0.5, b: T(17) - 0.05, text: 'puskesmas', k: 'neutral', x: 300, y: 940, size: 32 },
+  { a: WA(16, 'rumah') + 0.5, b: T(17) - 0.05, text: 'rumah sakit', k: 'neutral', x: 780, y: 940, size: 32 },
+  { a: WA(16, 'klinik') + 0.5, b: T(17) - 0.05, text: 'klinik', k: 'neutral', x: 300, y: 1310, size: 32 },
+  { a: WA(16, 'komunitas') + 0.5, b: T(17) - 0.05, text: 'komunitas', k: 'neutral', x: 780, y: 1310, size: 32 },
+  { a: WA(17, 'status') + 0.4, b: WA(17, 'ARV') - 0.8, text: 'status diketahui', k: 'neutral', x: 760, y: 1320, size: 36 },
+  { a: WA(17, 'ARV') + 0.6, b: T(18) - 0.2, text: 'ARV dimulai', k: 'arv', x: 540, y: 1300, size: 46 },
+  { a: WA(18, 'tes') + 0.5, b: CLOSE - 0.2, text: 'tes HIV', k: 'recep', x: 800, y: 1305, size: 44 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -695,11 +716,11 @@ export const S1E11Full: React.FC = () => {
             ))}
           </svg>
           <Pills t={t} />
-          <LegendBox t={t} a={CL(5, 1) + 1.6} b={T(6) - 0.1} items={[['#FF9C85', 'Virus HIV']]} />
+          <LegendBox t={t} a={WA(5, 'kontak') + 1.4} b={T(6) - 0.1} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.3} b={T(8) - 0.2} items={[['#FF9C85', 'Kadar virus HIV'], ['#FF6B4D', 'Batas terdeteksi tes']]} />
-          <LegendBox t={t} a={T(8) + 0.3} b={CL(8, 1) + 1.5} items={[['#FF9C85', 'Virus HIV']]} />
-          <LegendBox t={t} a={CL(13, 1) + 0.5} b={T(14) - 0.2} items={[['#72E3D3', 'Sudah tahu status'], ['#B9C3D0', 'Belum tahu']]} />
-          <LegendBox t={t} a={T(14) + 0.4} b={T(14) + 4.2} items={[['#FF9C85', 'Virus HIV (belum terbaca tes)']]} />
+          <LegendBox t={t} a={WA(8, 'risiko')} b={WA(8, 'risiko') + 3.5} items={[['#FF9C85', 'Virus HIV']]} />
+          <LegendBox t={t} a={WA(13, 'Kemenkes') + 0.2} b={T(14) - 0.2} items={[['#72E3D3', 'Sudah tahu status'], ['#B9C3D0', 'Belum tahu']]} />
+          <LegendBox t={t} a={WA(14, 'negatif') + 0.2} b={T(15) - 0.3} items={[['#FF9C85', 'Virus HIV (belum terbaca tes)']]} />
         </AbsoluteFill>
       )}
       {subOn && cue && (
