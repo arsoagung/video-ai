@@ -94,6 +94,7 @@ for i,k,j in res:
     fl=[]
     rate=S[i-1]/max(b0-a0,0.1)
     if rate>8.5 or rate<3.2: fl.append(f"laju {rate:.1f} suku kata/dtk")
+    if i<N and pa<0.25: fl.append(f"jeda akhir kalimat hanya {pa} dtk (batas kalimat biasanya >= 0,3): cek apakah kata pertama kalimat berikutnya terbawa")
     out.append({"n":i,"text":sents[i-1],"a":r2(a0),"b":r2(b0),"pauseAfter":pa,"clauses":clauses,"flags":fl})
     print(f"{i:3d} {a0:6.2f}-{b0:6.2f} jeda {pa} suku {S[i-1]} puncak {cnt(a0,b0)} klausa {len(cl)} {sents[i-1][:40]} {'!! '+fl[0] if fl else ''}")
 import os

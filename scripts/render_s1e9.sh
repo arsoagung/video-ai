@@ -1,5 +1,5 @@
 #!/bin/bash
-# Render S1E9Full (episode "Apa arti viral load tidak terdeteksi?", 2D flat penuh, 1080x1920, 30 fps, 2659 frame)
+# Render S1E9Full (episode "Apa arti viral load tidak terdeteksi?", 2D flat penuh, 1080x1920, 30 fps, 2648 frame)
 # dalam potongan berurutan, bisa dilanjut (potongan yang sudah ada dilewati), lalu gabung + audio loudnorm.
 # usage: bash scripts/render_s1e9.sh   (dari root repo; public/vo/S1E9.mp3 harus ada; suara disusun ulang ke out/S1E9/vo_synced.wav; BROWSER=path chrome jika perlu)
 cd "$(dirname "$0")/.."
@@ -11,7 +11,7 @@ node scripts/retime.mjs build S1E9 >> $LOG 2>&1 || { echo "retime build gagal"; 
 echo "start $(date)" >> $LOG
 [ -d out/bundle ] || npx remotion bundle src/index.ts --out-dir=out/bundle >> $LOG 2>&1
 i=0
-for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2658"; do
+for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2647"; do
   set -- $rng
   f=out/S1E9/c$i.mp4
   if [ ! -s "$f" ]; then

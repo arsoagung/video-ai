@@ -278,9 +278,9 @@ export const SYNC_SEGS: SyncSeg[] = [
   "n": 16,
   "text": "Selama viral load tetap tidak terdeteksi, HIV tidak menular melalui hubungan seksual.",
   "sa": 51.36,
-  "sb": 57.65,
+  "sb": 56.73,
   "a": 58.64,
-  "b": 64.93,
+  "b": 64.01,
   "clauses": [
    {
     "text": "Selama viral load tetap tidak terdeteksi,",
@@ -291,7 +291,7 @@ export const SYNC_SEGS: SyncSeg[] = [
    {
     "text": "HIV tidak menular melalui hubungan seksual.",
     "a": 61.29,
-    "b": 64.93,
+    "b": 64.01,
     "anchored": true
    }
   ]
@@ -299,27 +299,27 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 17,
   "text": "Inilah U=U, Undetectable Equals Untransmittable: tidak terdeteksi sama dengan tidak menularkan.",
-  "sa": 57.82,
-  "sb": 65.95,
-  "a": 65.93,
-  "b": 74.06,
+  "sa": 57.15,
+  "sb": 64.96,
+  "a": 65.01,
+  "b": 72.82,
   "clauses": [
    {
     "text": "Inilah U=U,",
-    "a": 65.93,
-    "b": 68,
-    "anchored": false
+    "a": 65.01,
+    "b": 66.78,
+    "anchored": true
    },
    {
     "text": "Undetectable Equals Untransmittable:",
-    "a": 68,
-    "b": 70.55,
-    "anchored": false
+    "a": 67.12,
+    "b": 69.51,
+    "anchored": true
    },
    {
     "text": "tidak terdeteksi sama dengan tidak menularkan.",
-    "a": 70.55,
-    "b": 74.06,
+    "a": 69.91,
+    "b": 72.82,
     "anchored": true
    }
   ]
@@ -327,21 +327,21 @@ export const SYNC_SEGS: SyncSeg[] = [
  {
   "n": 18,
   "text": "Jadi, tidak terdeteksi bukan berarti HIV hilang.",
-  "sa": 66.26,
+  "sa": 65.39,
   "sb": 68.97,
-  "a": 75.46,
-  "b": 78.17,
+  "a": 74.22,
+  "b": 77.8,
   "clauses": [
    {
     "text": "Jadi,",
-    "a": 75.46,
-    "b": 75.66,
-    "anchored": false
+    "a": 74.22,
+    "b": 74.78,
+    "anchored": true
    },
    {
     "text": "tidak terdeteksi bukan berarti HIV hilang.",
-    "a": 75.66,
-    "b": 78.17,
+    "a": 75.09,
+    "b": 77.8,
     "anchored": true
    }
   ]
@@ -351,18 +351,18 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Ini tanda pengobatan bekerja dan harus terus dijaga.",
   "sa": 69.3,
   "sb": 72.55,
-  "a": 79.37,
-  "b": 82.62,
+  "a": 79,
+  "b": 82.25,
   "clauses": [
    {
     "text": "Ini tanda pengobatan bekerja dan harus terus dijaga.",
-    "a": 79.37,
-    "b": 82.62,
+    "a": 79,
+    "b": 82.25,
     "anchored": true
    }
   ]
  }
 ];
-export const AUDIO_END = 82.62; // akhir ucapan terakhir (waktu video)
+export const AUDIO_END = 82.25; // akhir ucapan terakhir (waktu video)
 export const TAIL = 6; // ekor diam setelah ucapan terakhir
-export const SYNC_DUR = 88.62;
+export const SYNC_DUR = 88.25;

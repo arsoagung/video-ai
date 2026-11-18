@@ -216,7 +216,7 @@ Tanpa storyboard. Kode: `src/s1e8/` (`timeline.ts` = kalimat narasi_final + bata
 
 ## Episode S1E9: "Apa arti viral load tidak terdeteksi?"
 
-Tanpa storyboard. Kode: `src/s1e9/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E9.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E9Full` (2659 frame, 30 fps; suara 72,83 dtk + jeda, total 88,62 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e9.sh` -> `out/S1E9.mp4`. Objek library baru: `Road`, `Magnifier`. Sinkron memakai `scripts/align_syl.py` (suku kata, bukan proporsi karakter; hasil retime lama bergeser satu kalimat di kalimat 8 sampai 16). Arus mobil mengalir kanan ke kiri (tidak parkir); sepi = satu mobil lewat. Legenda: adegan 1, 2, 3, 4 (mobil = virus, grafik), 6, 7, 8, 9, 10, 12. Cover: `media/cover/S1E9.png` (`ThumbS1E9`).
+Tanpa storyboard. Kode: `src/s1e9/` (`timeline.ts` = kalimat narasi_final + batas adegan dari jeda suara, 19 kalimat; `S1E9.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S1E9Full` (2648 frame, 30 fps; suara 72,83 dtk + jeda, total 88,25 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e9.sh` -> `out/S1E9.mp4`. Objek library baru: `Road`, `Magnifier`. Sinkron memakai `scripts/align_syl.py` (suku kata, bukan proporsi karakter; hasil retime lama bergeser satu kalimat di kalimat 8 sampai 16; batas 16-18 dikoreksi manual lewat jeda: "Inilah" dan "Jadi," sempat terbawa ke kalimat sebelumnya). Arus mobil mengalir kanan ke kiri (tidak parkir); sepi = satu mobil lewat. Legenda: adegan 1, 2, 3, 4 (mobil = virus, grafik), 6, 7, 8, 9, 10, 12. Cover: `media/cover/S1E9.png` (`ThumbS1E9`).
 
 ---
 

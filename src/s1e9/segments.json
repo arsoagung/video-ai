@@ -282,8 +282,8 @@
    "n": 16,
    "text": "Selama viral load tetap tidak terdeteksi, HIV tidak menular melalui hubungan seksual.",
    "a": 51.36,
-   "b": 57.65,
-   "pauseAfter": 0.17,
+   "b": 56.73,
+   "pauseAfter": 0.42,
    "clauses": [
     {
      "text": "Selama viral load tetap tidak terdeteksi,",
@@ -294,7 +294,7 @@
     {
      "text": "HIV tidak menular melalui hubungan seksual.",
      "a": 54.01,
-     "b": 57.65,
+     "b": 56.73,
      "anchored": true
     }
    ],
@@ -303,26 +303,26 @@
   {
    "n": 17,
    "text": "Inilah U=U, Undetectable Equals Untransmittable: tidak terdeteksi sama dengan tidak menularkan.",
-   "a": 57.82,
-   "b": 65.95,
-   "pauseAfter": 0.3,
+   "a": 57.15,
+   "b": 64.96,
+   "pauseAfter": 0.43,
    "clauses": [
     {
      "text": "Inilah U=U,",
-     "a": 57.82,
-     "b": 59.89,
-     "anchored": false
+     "a": 57.15,
+     "b": 58.92,
+     "anchored": true
     },
     {
      "text": "Undetectable Equals Untransmittable:",
-     "a": 59.89,
-     "b": 62.44,
-     "anchored": false
+     "a": 59.26,
+     "b": 61.65,
+     "anchored": true
     },
     {
      "text": "tidak terdeteksi sama dengan tidak menularkan.",
-     "a": 62.44,
-     "b": 65.95,
+     "a": 62.05,
+     "b": 64.96,
      "anchored": true
     }
    ],
@@ -331,19 +331,19 @@
   {
    "n": 18,
    "text": "Jadi, tidak terdeteksi bukan berarti HIV hilang.",
-   "a": 66.26,
+   "a": 65.39,
    "b": 68.97,
    "pauseAfter": 0.33,
    "clauses": [
     {
      "text": "Jadi,",
-     "a": 66.26,
-     "b": 66.46,
-     "anchored": false
+     "a": 65.39,
+     "b": 65.95,
+     "anchored": true
     },
     {
      "text": "tidak terdeteksi bukan berarti HIV hilang.",
-     "a": 66.46,
+     "a": 66.26,
      "b": 68.97,
      "anchored": true
     }
