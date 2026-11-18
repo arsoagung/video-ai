@@ -192,6 +192,7 @@ Dibuat otomatis dari scene-spec storyboard (artifact di kolom `storyboard`). Kod
 - "Bagaimana ARV menghentikan replikasi HIV?": tema `teal`, `media/cover/S1E3.png` (komposisi `ThumbArv`). Judul 3 baris (Bagaimana ARV / menghentikan / replikasi HIV?); kapsul ARV -> satu virus, dua salinan pucat (replikasi terhenti, virus tidak hilang).
 - "Kenapa ARV harus diminum rutin?": tema `teal`, `media/cover/S1E5.png` (komposisi `ThumbS1E5`). Jam + kapsul ARV (rutin, sekali sehari); judul 3 baris.
 - "Apa itu window period HIV?": tema `biru`, `media/cover/S1E8.png` (komposisi `ThumbS1E8`). Judul 3 baris; virus (hari 0) -> bar tiga warna (merah, kuning, hijau memudar) + jam + pill "masa jendela".
+- "Kapan waktu terbaik untuk tes HIV?": tema `biru`, `media/cover/S1E11.png` (komposisi `ThumbS1E11`). Kalender (tanggal bertanda) + alat tes, pill "tes HIV".
 - "Apa itu CD4 dan kenapa penting?" (kode S2E9 sejak penomoran ulang): tema `indigo`, `media/cover/S3E2.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
 
 ---

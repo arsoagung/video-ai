@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { Capsule, Clock, CrossBadge, LineChart } from '../shared/library';
+import { Calendar, Capsule, Clock, CrossBadge, LineChart, TestKit } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -419,5 +419,28 @@ export const ThumbS1E10: React.FC = () => (
       <polyline points="872,1180 892,1202 930,1158" fill="none" stroke="#173A5E" strokeWidth={16} strokeLinecap="round" strokeLinejoin="round" opacity={0.8} />
     </Svg>
     <Pill cx={900} cy={1330} text="sehat" bg="#EAF2FB" fg="#12304F" size={46} />
+  </ThumbFrame>
+);
+
+// Judul: "Kapan waktu terbaik untuk tes HIV?" (tema biru). Kalender (waktu) + alat tes, pill "tes HIV".
+export const ThumbS1E11: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Kapan waktu
+        <br />
+        terbaik untuk
+        <br />
+        tes <span style={{ color: CORAL }}>HIV</span>?
+      </>
+    }
+    glowY={1330}
+  >
+    <Svg>
+      <Calendar cx={380} cy={1330} s={2.1} marks={[9, 16, 23]} markColor="#72E3D3" />
+      <TestKit cx={790} cy={1360} s={1.5} lines={1} />
+    </Svg>
+    <Pill cx={540} cy={1780} text="tes HIV" bg="#72E3D3" fg="#063F38" size={56} />
   </ThumbFrame>
 );
