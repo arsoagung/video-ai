@@ -1,5 +1,5 @@
 #!/bin/bash
-# Render S1E10Full (episode "HIV bisa ada tanpa gejala. kok bisa?", 2D flat penuh, 1080x1920, 30 fps, 2765 frame)
+# Render S1E10Full (episode "HIV bisa ada tanpa gejala. kok bisa?", 2D flat penuh, 1080x1920, 30 fps, 2825 frame)
 # dalam potongan berurutan, bisa dilanjut (potongan yang sudah ada dilewati), lalu gabung + audio loudnorm.
 # usage: bash scripts/render_s1e10.sh   (dari root repo; public/vo/S1E10.mp3 harus ada; suara disusun ulang ke out/S1E10/vo_synced.wav; BROWSER=path chrome jika perlu)
 cd "$(dirname "$0")/.."
@@ -11,7 +11,7 @@ node scripts/retime.mjs build S1E10 >> $LOG 2>&1 || { echo "retime build gagal";
 echo "start $(date)" >> $LOG
 [ -d out/bundle ] || npx remotion bundle src/index.ts --out-dir=out/bundle >> $LOG 2>&1
 i=0
-for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2699" "2700 2764"; do
+for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2249" "2250 2699" "2700 2824"; do
   set -- $rng
   f=out/S1E10/c$i.mp4
   if [ ! -s "$f" ]; then

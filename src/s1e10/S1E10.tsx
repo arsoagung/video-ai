@@ -235,7 +235,7 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
       <L.Person cx={ax} cy={1000} s={2.0 * enter} op={enter} />
       <Virus x={lerp(100, ax + 30, fly)} y={lerp(700, 1070, fly)} r={46 * (1 - 0.45 * inside)} dim={pr(t, s5 + 0.3, s5 + 0.6) * (1 - 0.0 * inside)} t={t} />
       <g opacity={cal * bubbleOut}>
-        <L.Calendar cx={ax + 380} cy={600} s={0.9 * cal} marks={marks} />
+        <L.Calendar cx={730} cy={560} s={0.95 * cal} marks={marks} />
       </g>
       <L.Person cx={800} cy={1000} s={2.0 * b} op={b} color="#B9A2F5" />
       <Virus x={830} y={1070} r={22 * vb} dim={0.95} t={t} seed={2} />
@@ -244,7 +244,15 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 4 (kalimat 8-9): fase kronis: virus memperbanyak diri sementara sel CD4 perlahan berkurang; grafik CD4 turun
+// ---- Adegan 4 (kalimat 8-9): fase kronis: virus memperbanyak diri sementara sel CD4 perlahan berkurang; dua grafik: CD4 turun (biru), virus naik (oranye)
+const endPos = (pts: number[], progress: number, cx: number, cy: number, w: number, h: number): [number, number] => {
+  const padX = 44, padY = 40, iw = w - padX * 2, ih = h - padY * 2;
+  const u = Math.min(1, Math.max(0, progress)) * (pts.length - 1);
+  const i = Math.min(pts.length - 2, Math.floor(u));
+  const f = u - i;
+  const v = pts[i] + (pts[i + 1] - pts[i]) * f;
+  return [cx - w / 2 + padX + (u / (pts.length - 1)) * iw, cy + h / 2 - padY - v * ih];
+};
 const Scene4: React.FC<{ t: number }> = ({ t }) => {
   const s8 = T(8), s9 = T(9), c2 = CL(9, 1), c4 = CL(9, 3);
   const xs = [190, 410, 630, 850];
@@ -254,6 +262,12 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
   const copies = [[-190, 40], [210, -40], [-100, 160], [140, 150], [-300, 140], [300, 130]];
   const chartOn = pr(t, s9 + 0.2, s9 + 1.0, back);
   const prog = pr(t, c2, c4 + 2.6, sine);
+  const cdPts = [0.9, 0.84, 0.76, 0.66, 0.54, 0.42, 0.32];
+  const vPts = [0.1, 0.14, 0.2, 0.3, 0.42, 0.58, 0.74];
+  const CX = 540, CY = 1200, W = 800, H = 320;
+  const [ex1, ey1] = endPos(cdPts, prog, CX, CY, W, H);
+  const [ex2, ey2] = endPos(vPts, prog, CX, CY, W, H);
+  const ic = chartOn * pr(t, c2 + 0.2, c2 + 0.8, back);
   return (
     <>
       {xs.map((x, i) => (
@@ -264,7 +278,10 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
         const k = pr(t, s9 + 0.3 + i * 0.28, s9 + 0.9 + i * 0.28, back);
         return <Virus key={i} x={540 + dx * k} y={560 + dy * k} r={30 * k} dim={0.9} t={t} seed={i + 1} />;
       })}
-      <L.LineChart cx={540} cy={1200} s={chartOn} op={chartOn} w={800} h={320} color={CD4C} points={[0.9, 0.84, 0.76, 0.66, 0.54, 0.42, 0.32]} progress={prog} />
+      <L.LineChart cx={CX} cy={CY} s={chartOn} op={chartOn} w={W} h={H} color={CD4C} points={cdPts} progress={prog} />
+      <L.LineChart cx={CX} cy={CY} s={chartOn} op={chartOn} w={W} h={H} color={LIB_COL.bad} points={vPts} progress={prog} />
+      <Cell x={ex1 + 4} y={ey1 + 34} r={22 * ic} op={ic} />
+      <Virus x={ex2 + 4} y={ey2 - 36} r={16 * ic} dim={ic} t={t} seed={5} />
     </>
   );
 };
@@ -362,20 +379,20 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 8 (kalimat 18): "merasa sehat bukan bukti" - orang sehat dicoret; alat tes muncul sebagai jalan untuk mengetahui
+// ---- Adegan 8 (kalimat 18-19): "merasa sehat bukan bukti" - orang sehat dicoret; "tes adalah cara untuk mengetahui" - alat tes muncul, centang
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
-  const s18 = T(18);
+  const s18 = T(18), s19 = T(19);
   const a = pr(t, s18, s18 + 0.7, back);
   const h = pr(t, s18 + 0.3, s18 + 0.9, back);
   const x = pr(t, s18 + 0.9, s18 + 1.5, back);
-  const kit = pr(t, s18 + 2.1, s18 + 2.8, back);
-  const ok = pr(t, s18 + 2.7, s18 + 3.3, back);
-  const px = lerp(540, 300, pr(t, s18 + 1.9, s18 + 2.6, sine));
+  const kit = pr(t, s19 + 0.1, s19 + 0.8, back);
+  const ok = pr(t, s19 + 0.9, s19 + 1.5, back);
+  const px = lerp(540, 300, pr(t, s19, s19 + 0.7, sine));
   return (
     <>
       <L.Person cx={px} cy={980} s={2.1 * a} op={a} />
       <L.Heart cx={px} cy={940} s={0.55 * h} op={h} color={GREEN} />
-      <L.CrossBadge cx={px + 220} cy={720} s={0.8 * x} op={x} />
+      <L.CrossBadge cx={px + 220} cy={720} s={0.8 * x * (1 - 0.0)} op={x * (1 - pr(t, s19 + 0.5, s19 + 1.0))} />
       <L.TestKit cx={780} cy={1000} s={1.2 * kit} op={kit} lines={1} />
       <L.CheckBadge cx={780} cy={720} s={0.8 * ok} op={ok} />
     </>
@@ -388,13 +405,13 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: T(3) + 1.0, b: T(4) - 0.1, text: 'mesin normal', k: 'neutral', x: 540, y: 1200, size: 46 },
   { a: CL(4, 1) + 2.0, b: T(5) - 0.2, text: 'karat', k: 'virus', x: 540, y: 1200, size: 52 },
   { a: T(5) + 0.4, b: T(6) - 0.1, text: 'tanpa pengobatan', k: 'neutral', x: 540, y: 520, size: 40 },
-  { a: CL(6, 1) + 0.8, b: T(7) - 0.2, text: 'gejala seperti flu', k: 'neutral', x: 560, y: 440, size: 34 },
-  { a: CL(6, 2) - 0.2, b: T(7) - 0.2, text: 'ruam', k: 'neutral', x: 560, y: 520, size: 34 },
-  { a: CL(6, 3) - 0.2, b: T(7) - 0.2, text: 'sakit tenggorokan', k: 'neutral', x: 560, y: 600, size: 34 },
+  { a: CL(6, 1) + 0.8, b: T(7) - 0.2, text: 'gejala seperti flu', k: 'neutral', x: 730, y: 790, size: 36 },
+  { a: CL(6, 2) - 0.2, b: T(7) - 0.2, text: 'ruam', k: 'neutral', x: 730, y: 880, size: 36 },
+  { a: CL(6, 3) - 0.2, b: T(7) - 0.2, text: 'sakit tenggorokan', k: 'neutral', x: 730, y: 970, size: 36 },
   { a: T(7) + 1.8, b: T(8) - 0.3, text: 'tanpa gejala', k: 'neutral', x: 800, y: 1260, size: 38 },
   { a: T(8) + 0.9, b: T(9) - 0.2, text: 'fase kronis', k: 'neutral', x: 540, y: 380, size: 46 },
   { a: CL(9, 0) + 0.2, b: CL(9, 1) - 0.1, text: 'virus memperbanyak diri', k: 'virus', x: 540, y: 380, size: 38 },
-  { a: CL(9, 2) + 0.2, b: T(10) - 0.2, text: 'CD4 menurun', k: 'cell', x: 540, y: 380, size: 44 },
+  { a: CL(9, 2) + 0.2, b: T(10) - 0.2, text: 'CD4 turun, virus naik', k: 'cell', x: 540, y: 380, size: 40 },
   { a: T(10) + 1.0, b: T(11) - 0.3, text: 'tanpa gejala', k: 'neutral', x: 540, y: 470, size: 46 },
   { a: T(11) + 1.0, b: T(12) - 0.2, text: 'tahap AIDS', k: 'virus', x: 540, y: 400, size: 48 },
   { a: T(12) + 1.0, b: T(13) - 0.3, text: 'bukan berarti aman', k: 'neutral', x: 540, y: 1230, size: 40 },
@@ -405,7 +422,8 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: T(16) + 2.0, b: T(17) - 0.3, text: 'status diketahui', k: 'neutral', x: 780, y: 470, size: 36 },
   { a: T(17) + 0.5, b: CL(17, 1) - 0.1, text: 'cepat diketahui', k: 'neutral', x: 720, y: 470, size: 38 },
   { a: CL(17, 1) + 0.9, b: T(18) - 0.2, text: 'ARV dimulai', k: 'arv', x: 540, y: 470, size: 46 },
-  { a: T(18) + 1.0, b: CLOSE - 0.2, text: 'bukan bukti', k: 'neutral', x: 540, y: 1240, size: 46 },
+  { a: T(18) + 1.0, b: T(19) - 0.2, text: 'bukan bukti', k: 'neutral', x: 540, y: 1240, size: 46 },
+  { a: T(19) + 1.0, b: CLOSE - 0.2, text: 'tes HIV', k: 'recep', x: 780, y: 1240, size: 46 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -574,7 +592,7 @@ export const S1E10Full: React.FC = () => {
           <LegendBox t={t} a={CL(4, 1) + 0.3} b={T(5) - 0.2} items={[['#E39A5B', 'Karat = virus HIV'], ['#B3C7DC', 'Mesin = tubuh']]} />
           <LegendBox t={t} a={T(5) + 0.3} b={T(6) - 0.2} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(8) + 0.2} b={T(9) - 0.1} items={[['#8FBDF7', 'Sel CD4'], ['#FF9C85', 'Virus HIV']]} />
-          <LegendBox t={t} a={T(9) + 0.2} b={T(10) - 0.2} items={[['#8FBDF7', 'Jumlah CD4']]} />
+          <LegendBox t={t} a={T(9) + 0.2} b={T(10) - 0.2} items={[['#8FBDF7', 'Jumlah CD4'], ['#FF6B4D', 'Jumlah virus']]} />
           <LegendBox t={t} a={CL(11, 0) + 0.2} b={T(12) - 0.2} items={[['#8FBDF7', 'Jumlah CD4'], ['#FF6B4D', 'Batas tahap lanjut']]} />
           <LegendBox t={t} a={T(13) + 0.2} b={T(14) - 0.2} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(14) + 0.3} b={T(15) - 0.2} items={[['#FF9C85', 'Virus HIV di dalam tabung darah']]} />

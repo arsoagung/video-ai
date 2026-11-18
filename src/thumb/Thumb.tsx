@@ -391,3 +391,33 @@ export const ThumbS1E9: React.FC = () => (
     <Pill cx={540} cy={1790} text="tidak terdeteksi" bg="#72E3D3" fg="#063F38" size={56} />
   </ThumbFrame>
 );
+
+// Judul: "HIV bisa ada tanpa gejala. kok bisa?" (tema biru = pembuka video). Orang tampak sehat (hati hijau, centang), virus kecil tetap ada di dalam.
+export const ThumbS1E10: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        <span style={{ color: CORAL }}>HIV</span> bisa ada
+        <br />
+        tanpa gejala.
+        <br />
+        kok bisa?
+      </>
+    }
+    glowY={1350}
+  >
+    <Svg>
+      <g transform="translate(540 1420) scale(3.3)">
+        <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill="#8FBDF7" />
+        <circle cx={0} cy={-60} r={34} fill="#8FBDF7" />
+        <circle cx={-12} cy={-68} r={11} fill="#fff" opacity={0.18} />
+        <path d="M 0 40 C -30 18 -34 -4 -18 -12 C -8 -16 -2 -10 0 -4 C 2 -10 8 -16 18 -12 C 34 -4 30 18 0 40 Z" fill="#7ED6A8" />
+      </g>
+      <FlatVirus cx={600} cy={1560} r={50} rot={20} />
+      <circle cx={900} cy={1180} r={62} fill="#72E3D3" />
+      <polyline points="872,1180 892,1202 930,1158" fill="none" stroke="#173A5E" strokeWidth={16} strokeLinecap="round" strokeLinejoin="round" opacity={0.8} />
+    </Svg>
+    <Pill cx={900} cy={1330} text="sehat" bg="#EAF2FB" fg="#12304F" size={46} />
+  </ThumbFrame>
+);
