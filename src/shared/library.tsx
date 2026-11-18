@@ -182,16 +182,16 @@ export const Capsule: React.FC<P & { colorA?: string; colorB?: string }> = ({ co
   </G>
 );
 
-// Tablet bulat dengan garis belah.
+// Tablet lonjong: persegi panjang bersudut membulat (mirip kapsul tapi tablet, BUKAN bulat), dengan garis belah.
 export const Tablet: React.FC<P & { color?: string }> = ({ color = LIB_COL.light, ...p }) => (
   <G {...p}>
-    <circle r={60} fill={color} />
-    <circle cx={-18} cy={-22} r={20} fill="#fff" opacity={0.4} />
-    <rect x={-44} y={-4} width={88} height={8} rx={4} fill={LIB_COL.ink} opacity={0.22} />
+    <rect x={-72} y={-40} width={144} height={80} rx={26} fill={color} />
+    <rect x={-56} y={-28} width={52} height={14} rx={7} fill="#fff" opacity={0.4} />
+    <rect x={-3} y={-40} width={6} height={80} fill={LIB_COL.ink} opacity={0.2} />
   </G>
 );
 
-// Strip obat (blister) 2x3. taken = jumlah sumur yang sudah kosong (dari kiri atas).
+// Strip obat (blister) 2x3. taken = jumlah sumur yang sudah kosong (dari kiri atas). Tablet lonjong bersudut membulat (bukan bulat).
 export const Blister: React.FC<P & { taken?: number }> = ({ taken = 0, ...p }) => (
   <G {...p}>
     <rect x={-140} y={-92} width={280} height={184} rx={26} fill={LIB_COL.track} />
@@ -200,9 +200,15 @@ export const Blister: React.FC<P & { taken?: number }> = ({ taken = 0, ...p }) =
       const y = -42 + Math.floor(i / 3) * 84;
       const empty = i < taken;
       return (
-        <g key={i}>
-          <circle cx={x} cy={y} r={32} fill={empty ? '#8FA7BF' : '#DDEBFF'} />
-          {!empty && <ellipse cx={x} cy={y} rx={22} ry={12} fill={LIB_COL.good} />}
+        <g key={i} transform={`translate(${x} ${y})`}>
+          <rect x={-38} y={-27} width={76} height={54} rx={18} fill={empty ? '#8FA7BF' : '#DDEBFF'} />
+          {!empty && (
+            <>
+              <rect x={-29} y={-17} width={58} height={34} rx={12} fill={LIB_COL.good} />
+              <rect x={-22} y={-12} width={26} height={7} rx={3.5} fill="#fff" opacity={0.45} />
+              <rect x={-1.5} y={-17} width={3} height={34} fill={LIB_COL.ink} opacity={0.18} />
+            </>
+          )}
         </g>
       );
     })}
