@@ -27,6 +27,9 @@ export const LIB_COL = {
   blood: '#F0616A',
   bloodDark: '#C9434D',
   glass: '#DDEBFF',
+  arvTablet: '#FFA27B', // tablet ARV/TLD (juga dipakai untuk PEP): oranye muda salem
+  prepTablet: '#86D0F5', // tablet PrEP: biru muda
+  prepTabletInk: '#4FA6D8',
   panel: '#FFFFFF',
 };
 
@@ -183,10 +186,20 @@ export const Capsule: React.FC<P & { colorA?: string; colorB?: string }> = ({ co
 );
 
 // Tablet berbentuk kapsul (ARV Indonesia): satu warna oranye rata, tanpa kilau; coakan di tengah = garis pendek bayangan (tidak sampai ujung).
-export const Tablet: React.FC<P & { color?: string }> = ({ color = '#F7A23B', ...p }) => (
+export const Tablet: React.FC<P & { color?: string }> = ({ color = LIB_COL.arvTablet, ...p }) => (
   <G {...p}>
     <rect x={-60} y={-30} width={120} height={60} rx={30} fill={color} />
-    <rect x={-3.5} y={-16} width={7} height={32} rx={3.5} fill="#8A4A0E" opacity={0.38} />
+    <rect x={-3.5} y={-16} width={7} height={32} rx={3.5} fill="#B5502A" opacity={0.38} />
+  </G>
+);
+
+// Tablet PrEP: biru muda, persegi panjang membulat, tulisan "PrEP" tercetak (flat, tanpa outline). Beda dari Tablet (ARV/TLD/PEP = oranye salem).
+export const TabletPrEP: React.FC<P> = (p) => (
+  <G {...p}>
+    <rect x={-80} y={-34} width={160} height={68} rx={30} fill={LIB_COL.prepTablet} />
+    <text x={0} y={12} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={34} letterSpacing={2} fill={LIB_COL.prepTabletInk}>
+      PrEP
+    </text>
   </G>
 );
 
@@ -203,8 +216,8 @@ export const Blister: React.FC<P & { taken?: number }> = ({ taken = 0, ...p }) =
           <rect x={-38} y={-27} width={76} height={54} rx={18} fill={empty ? '#8FA7BF' : '#DDEBFF'} />
           {!empty && (
             <>
-              <rect x={-30} y={-15} width={60} height={30} rx={15} fill="#F7A23B" />
-              <rect x={-1.75} y={-8} width={3.5} height={16} rx={1.75} fill="#8A4A0E" opacity={0.38} />
+              <rect x={-30} y={-15} width={60} height={30} rx={15} fill={LIB_COL.arvTablet} />
+              <rect x={-1.75} y={-8} width={3.5} height={16} rx={1.75} fill="#B5502A" opacity={0.38} />
             </>
           )}
         </g>
