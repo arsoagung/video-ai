@@ -356,7 +356,6 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
       <L.Person cx={xs[1]} cy={830} s={1.3 * g} op={g} />
       <L.SpeechBubble cx={xs[1] + 40} cy={690} s={0.5 * g} op={g} w={200} />
       <L.Document cx={xs[2]} cy={810} s={1.2 * b} op={b} />
-      <Big x={xs[2]} y={900} text="TBC" size={54} op={b} fill="#FFB7A5" />
       {xs.map((x, i) => (
         <line key={i} x1={x} y1={1070} x2={lerp(x, 540, link)} y2={lerp(1070, 1150, link)} stroke="#fff" strokeOpacity={0.45} strokeWidth={8} strokeLinecap="round" strokeDasharray="4 18" opacity={link} />
       ))}
@@ -524,35 +523,22 @@ const Scene12: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
+// Pill label hemat (README): hanya istilah kunci / penanda ikon yang tidak jelas dari bentuknya. Kalimat yang sudah jelas di narasi/subtitle tidak diulang.
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
-  { a: 0.9, b: T(2) - 0.15, text: 'waktu tepat tes', k: 'neutral', x: 540, y: 1330, size: 40 },
-  { a: T(2) + 1.8, b: T(3) - 0.1, text: 'periksa mobil', k: 'neutral', x: 540, y: 1330, size: 40 },
-  { a: WA(3, 'rutin') + 0.2, b: WA(3, 'setelah'), text: 'rutin', k: 'neutral', x: 290, y: 430, size: 40 },
-  { a: WA(3, 'setelah') + 0.2, b: T(4) - 0.1, text: 'setelah kejadian', k: 'neutral', x: 760, y: 1330, size: 38 },
-  { a: WA(4, 'begitu') + 0.6, b: T(5) - 0.2, text: 'tes HIV pun begitu', k: 'recep', x: 540, y: 1330, size: 40 },
-  { a: WA(5, 'kontak') + 1.2, b: T(6) - 0.1, text: 'kontak berisiko', k: 'virus', x: 540, y: 1250, size: 42 },
   { a: WB(6, 'jam') - 0.5, b: WA(6, 'PEP'), text: '72 jam', k: 'neutral', x: 640, y: 540, size: 54 },
-  { a: WA(6, 'PEP'), b: WA(6, 'obat') - 0.1, text: 'PEP', k: 'arv', x: 860, y: 1180, size: 50 },
-  { a: WA(6, 'obat'), b: T(7) - 0.2, text: 'obat pencegahan darurat', k: 'arv', x: 540, y: 1250, size: 38 },
-  { a: WA(7, 'masa'), b: WA(7, 'mampu') + 0.6, text: 'masa jendela', k: 'recep', x: 540, y: 540, size: 48 },
-  { a: WA(7, 'mendeteksi') + 0.3, b: T(8) - 0.2, text: 'tes mampu mendeteksi', k: 'neutral', x: 540, y: 540, size: 40 },
-  { a: WA(8, 'risiko') + 0.3, b: WA(8, 'berkala') + 1.5, text: 'risiko berlanjut', k: 'virus', x: 540, y: 560, size: 42 },
-  { a: WA(8, 'berkala') + 0.8, b: T(9) - 0.1, text: 'tes berkala', k: 'neutral', x: 700, y: 1160, size: 42 },
-  { a: WA(9, 'PrEP') + 0.2, b: T(10) - 0.2, text: 'PrEP', k: 'arv', x: 290, y: 560, size: 50 },
-  { a: WA(10, 'hamil') + 0.4, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
-  { a: WA(10, 'gejala') + 0.4, b: T(11) - 0.05, text: 'gejala HIV', k: 'neutral', x: 540, y: 1005, size: 36 },
-  { a: WA(10, 'didiagnosis') + 0.4, b: T(11) - 0.05, text: 'didiagnosis TBC', k: 'neutral', x: 870, y: 1005, size: 32 },
-  { a: WA(11, 'sekali') + 0.4, b: T(12) - 0.1, text: 'setidaknya sekali', k: 'recep', x: 540, y: 1345, size: 40 },
-  { a: WA(13, 'Kemenkes') + 0.3, b: T(14) - 0.2, text: 'perkiraan Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
-  { a: WA(14, 'terlalu'), b: WA(14, 'belum') + 1.5, text: 'terlalu dini', k: 'neutral', x: 540, y: 560, size: 44 },
+  { a: WA(6, 'PEP'), b: T(7) - 0.2, text: 'PEP', k: 'arv', x: 860, y: 1180, size: 50 },
+  { a: WA(7, 'masa'), b: WA(7, 'mampu') + 0.8, text: 'masa jendela', k: 'recep', x: 540, y: 540, size: 48 },
+  { a: WA(9, 'PrEP') + 0.1, b: T(10) - 0.2, text: 'PrEP', k: 'arv', x: 290, y: 560, size: 50 },
+  { a: WA(10, 'hamil') + 0.3, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
+  { a: WA(10, 'gejala') + 0.3, b: T(11) - 0.05, text: 'gejala', k: 'neutral', x: 540, y: 1005, size: 36 },
+  { a: WA(10, 'TBC') - 0.3, b: T(11) - 0.05, text: 'TBC', k: 'neutral', x: 870, y: 1005, size: 36 },
+  { a: WA(13, 'Kemenkes') + 0.3, b: T(14) - 0.2, text: 'Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
   { a: WA(15, 'diulang'), b: T(16) - 0.3, text: 'tes ulang', k: 'recep', x: 540, y: 1330, size: 44 },
   { a: WA(16, 'puskesmas') + 0.5, b: T(17) - 0.05, text: 'puskesmas', k: 'neutral', x: 300, y: 940, size: 32 },
   { a: WA(16, 'rumah') + 0.5, b: T(17) - 0.05, text: 'rumah sakit', k: 'neutral', x: 780, y: 940, size: 32 },
   { a: WA(16, 'klinik') + 0.5, b: T(17) - 0.05, text: 'klinik', k: 'neutral', x: 300, y: 1310, size: 32 },
   { a: WA(16, 'komunitas') + 0.5, b: T(17) - 0.05, text: 'komunitas', k: 'neutral', x: 780, y: 1310, size: 32 },
-  { a: WA(17, 'status') + 0.4, b: WA(17, 'ARV') - 0.8, text: 'status diketahui', k: 'neutral', x: 760, y: 1320, size: 36 },
-  { a: WA(17, 'ARV') + 0.6, b: T(18) - 0.2, text: 'ARV dimulai', k: 'arv', x: 540, y: 1300, size: 46 },
-  { a: WA(18, 'tes') + 0.5, b: CLOSE - 0.2, text: 'tes HIV', k: 'recep', x: 800, y: 1305, size: 44 },
+  { a: WA(17, 'ARV') + 0.3, b: T(18) - 0.2, text: 'ARV', k: 'arv', x: 540, y: 1300, size: 46 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -716,7 +702,7 @@ export const S1E11Full: React.FC = () => {
             ))}
           </svg>
           <Pills t={t} />
-          <LegendBox t={t} a={WA(5, 'kontak') + 1.4} b={T(6) - 0.1} items={[['#FF9C85', 'Virus HIV']]} />
+          <LegendBox t={t} a={WA(5, 'kontak') + 0.9} b={WA(5, 'kontak') + 5.0} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.3} b={T(8) - 0.2} items={[['#FF9C85', 'Kadar virus HIV'], ['#FF6B4D', 'Batas terdeteksi tes']]} />
           <LegendBox t={t} a={WA(8, 'risiko')} b={WA(8, 'risiko') + 3.5} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={WA(13, 'Kemenkes') + 0.2} b={T(14) - 0.2} items={[['#72E3D3', 'Sudah tahu status'], ['#B9C3D0', 'Belum tahu']]} />
