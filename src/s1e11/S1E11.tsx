@@ -5,7 +5,7 @@ import { ez, lerp, win, out3, sine, back, in3 } from '../motion';
 import * as L from '../shared/library';
 import { LIB_COL } from '../shared/library';
 import { FlatVirus, FlatCell, SHAPE_COL } from '../shared/shapes';
-import { CUES, CLOSE, SCENE_T, T, WA, WB, EP_DUR } from './timeline';
+import { CUES, CLOSE, SCENE_T, T, CL, SEGS, WA, WB, EP_DUR } from './timeline';
 
 export const S1E11_FRAMES = Math.ceil(EP_DUR * FPS);
 
@@ -365,18 +365,19 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ---- Adegan 7 (k11-12): kartu penjelas CDC; usia 13-64 tahun, tes setidaknya sekali; lalu pertanyaan "mengapa penting?"
+// Kalimat 11 dan 12: aksi dipatok ke awal/akhir kalimat dan proporsi durasinya (bukan ke kata), karena waktu kata di kalimat berangka tidak pasti.
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
-  const cdc = WA(11, 'CDC'), usia = WA(11, '13–64'), tahun = WB(11, 'tahun'), sekali = WA(11, 'sekali');
+  const s11 = T(11), e11 = SEGS[10].b, d11 = e11 - s11, s12 = T(12);
+  const cdc = s11 + 0.05, usia = s11 + 0.4 * d11, tahun = s11 + 0.75 * d11, sekali = e11 - 0.7;
   const card = pr(t, cdc, cdc + 0.6, back);
   const num = pr(t, usia, usia + 0.6, back);
   const k = pr(t, usia, tahun, (x) => x);
   const bar = pr(t, usia - 0.1, usia + 0.4, back);
   const xs = [210, 375, 540, 705, 870];
-  const mengapa = WA(12, 'Mengapa'), penting = WA(12, 'penting');
-  const grpOut = 1 - pr(t, mengapa, mengapa + 0.5);
+  const grpOut = 1 - pr(t, s12, s12 + 0.5);
   const chk = pr(t, sekali, sekali + 0.6, back);
-  const q = pr(t, penting - 0.15, penting + 0.45, back);
-  const wob = Math.sin(Math.max(0, t - penting) * 5) * 4 * q;
+  const q = pr(t, s12 + 0.4, s12 + 0.9, back);
+  const wob = Math.sin(Math.max(0, t - s12 - 0.4) * 5) * 4 * q;
   return (
     <>
       <g opacity={grpOut}>
@@ -402,20 +403,21 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ---- Adegan 8 (k13): 100 orang dengan HIV; titik teal bertambah sampai 68 (yang tahu status), sisanya abu
+// Aksi dipatok ke awal klausa (batas = jeda nyata), bukan ke kata.
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
-  const yrW = WA(13, '2025'), kem = WA(13, 'Kemenkes'), baru = WA(13, 'baru'), persen = WB(13, 'persen');
-  const yr = pr(t, yrW, yrW + 0.6, back);
-  const doc = pr(t, kem - 0.2, kem + 0.5, back);
-  const fillK = pr(t, baru + 0.2, persen, (x) => x);
+  const c1 = CL(13, 0), c2 = CL(13, 1), c3 = CL(13, 2), e13 = SEGS[12].b;
+  const yr = pr(t, c1 + 0.1, c1 + 0.7, back);
+  const doc = pr(t, c2 + 0.1, c2 + 0.7, back);
+  const fillK = pr(t, c3 + 0.4, e13 - 1.8, (x) => x);
   const n = Math.round(68 * fillK);
-  const pct = pr(t, baru + 0.2, baru + 0.7);
+  const pct = pr(t, c3 + 0.4, c3 + 0.9);
   return (
     <>
       <Big x={290} y={620} text="2025" size={120} op={yr} sc={0.85 + 0.15 * yr} />
       <L.Document cx={820} cy={570} s={0.7 * doc} op={doc} kind="paper" stamp />
       {Array.from({ length: 100 }, (_, i) => {
         const r = Math.floor(i / 10), c = i % 10;
-        const appear = pr(t, kem + 0.2 + i * 0.01, kem + 0.6 + i * 0.01, back);
+        const appear = pr(t, c2 + 0.4 + i * 0.01, c2 + 0.8 + i * 0.01, back);
         const on = i < n;
         return <circle key={i} cx={540 + (c - 4.5) * 62} cy={1030 + (r - 4.5) * 56 - 10} r={21 * appear} fill={on ? TEAL : '#B9C3D0'} opacity={on ? 1 : 0.55 * appear} />;
       })}
@@ -531,7 +533,7 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: WA(10, 'hamil') + 0.3, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
   { a: WA(10, 'gejala') + 0.3, b: T(11) - 0.05, text: 'gejala', k: 'neutral', x: 540, y: 1005, size: 36 },
   { a: WA(10, 'TBC') - 0.3, b: T(11) - 0.05, text: 'TBC', k: 'neutral', x: 870, y: 1005, size: 36 },
-  { a: WA(13, 'Kemenkes') + 0.3, b: T(14) - 0.2, text: 'Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
+  { a: CL(13, 1) + 0.4, b: T(14) - 0.2, text: 'Kemenkes', k: 'neutral', x: 820, y: 690, size: 30 },
   { a: WA(15, 'diulang'), b: T(16) - 0.3, text: 'tes ulang', k: 'recep', x: 540, y: 1330, size: 44 },
   { a: WA(16, 'puskesmas') + 0.5, b: T(17) - 0.05, text: 'puskesmas', k: 'neutral', x: 300, y: 940, size: 32 },
   { a: WA(16, 'rumah') + 0.5, b: T(17) - 0.05, text: 'rumah sakit', k: 'neutral', x: 780, y: 940, size: 32 },
@@ -704,7 +706,7 @@ export const S1E11Full: React.FC = () => {
           <LegendBox t={t} a={WA(5, 'kontak') + 0.9} b={WA(5, 'kontak') + 5.0} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(7) + 0.3} b={T(8) - 0.2} items={[['#FF9C85', 'Kadar virus HIV'], ['#FF6B4D', 'Batas terdeteksi tes']]} />
           <LegendBox t={t} a={WA(8, 'risiko')} b={WA(8, 'risiko') + 3.5} items={[['#FF9C85', 'Virus HIV']]} />
-          <LegendBox t={t} a={WA(13, 'Kemenkes') + 0.2} b={T(14) - 0.2} items={[['#72E3D3', 'Sudah tahu status'], ['#B9C3D0', 'Belum tahu']]} />
+          <LegendBox t={t} a={CL(13, 1) + 0.4} b={T(14) - 0.2} items={[['#72E3D3', 'Sudah tahu status'], ['#B9C3D0', 'Belum tahu']]} />
           <LegendBox t={t} a={WA(14, 'negatif') + 0.2} b={T(15) - 0.3} items={[['#FF9C85', 'Virus HIV (belum terbaca tes)']]} />
         </AbsoluteFill>
       )}

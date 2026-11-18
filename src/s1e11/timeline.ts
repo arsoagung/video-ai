@@ -30,9 +30,15 @@ export const WB = (n: number, pat: string, occ = 0) => find(n, pat, occ).b;
 export type Cue = { a: number; b: number; text: string; n?: number };
 const UNIT = new Set(['tahun', 'persen', 'jam', 'bulan', 'hari', 'dtk']);
 const MAXC = 36;
+// Kalimat 11-13 memuat angka yang dibacakan dengan kecepatan tidak pasti: subtitle per KLAUSA (batas = jeda nyata), bukan per kata
+const COARSE = new Set([11, 12, 13]);
 export const CUES: Cue[] = (() => {
   const out: Cue[] = [];
   for (const s of SYNC_SEGS) {
+    if (COARSE.has(s.n)) {
+      s.clauses.forEach((c) => out.push({ a: c.a, b: c.b, text: c.text, n: s.n }));
+      continue;
+    }
     s.clauses.forEach((_, k) => {
       const ws = WORDS.filter((w) => w.n === s.n && w.k === k);
       const n = ws.length;
