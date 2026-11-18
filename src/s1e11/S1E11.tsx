@@ -366,17 +366,17 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
 
 // ---- Adegan 7 (k11-12): kartu penjelas CDC; usia 13-64 tahun, tes setidaknya sekali; lalu pertanyaan "mengapa penting?"
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
-  const s12 = T(12);
   const cdc = WA(11, 'CDC'), usia = WA(11, '13–64'), tahun = WB(11, 'tahun'), sekali = WA(11, 'sekali');
   const card = pr(t, cdc, cdc + 0.6, back);
   const num = pr(t, usia, usia + 0.6, back);
   const k = pr(t, usia, tahun, (x) => x);
   const bar = pr(t, usia - 0.1, usia + 0.4, back);
   const xs = [210, 375, 540, 705, 870];
-  const grpOut = 1 - pr(t, s12 - 0.1, s12 + 0.4);
+  const mengapa = WA(12, 'Mengapa'), penting = WA(12, 'penting');
+  const grpOut = 1 - pr(t, mengapa, mengapa + 0.5);
   const chk = pr(t, sekali, sekali + 0.6, back);
-  const q = pr(t, s12, s12 + 0.8, back);
-  const wob = Math.sin((t - s12) * 5) * 4 * q;
+  const q = pr(t, penting - 0.15, penting + 0.45, back);
+  const wob = Math.sin(Math.max(0, t - penting) * 5) * 4 * q;
   return (
     <>
       <g opacity={grpOut}>
