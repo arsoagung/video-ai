@@ -182,16 +182,15 @@ export const Capsule: React.FC<P & { colorA?: string; colorB?: string }> = ({ co
   </G>
 );
 
-// Tablet lonjong: persegi panjang bersudut membulat (mirip kapsul tapi tablet, BUKAN bulat), dengan garis belah.
-export const Tablet: React.FC<P & { color?: string }> = ({ color = LIB_COL.light, ...p }) => (
+// Tablet berbentuk kapsul (ARV Indonesia): satu warna oranye rata, tanpa kilau; coakan di tengah = garis pendek bayangan (tidak sampai ujung).
+export const Tablet: React.FC<P & { color?: string }> = ({ color = '#F7A23B', ...p }) => (
   <G {...p}>
-    <rect x={-72} y={-40} width={144} height={80} rx={26} fill={color} />
-    <rect x={-56} y={-28} width={52} height={14} rx={7} fill="#fff" opacity={0.4} />
-    <rect x={-3} y={-40} width={6} height={80} fill={LIB_COL.ink} opacity={0.2} />
+    <rect x={-60} y={-30} width={120} height={60} rx={30} fill={color} />
+    <rect x={-3.5} y={-16} width={7} height={32} rx={3.5} fill="#8A4A0E" opacity={0.38} />
   </G>
 );
 
-// Strip obat (blister) 2x3. taken = jumlah sumur yang sudah kosong (dari kiri atas). Tablet lonjong bersudut membulat (bukan bulat).
+// Strip obat (blister) 2x3. taken = jumlah sumur yang sudah kosong (dari kiri atas). Tablet ARV berbentuk kapsul oranye rata dengan coakan pendek di tengah.
 export const Blister: React.FC<P & { taken?: number }> = ({ taken = 0, ...p }) => (
   <G {...p}>
     <rect x={-140} y={-92} width={280} height={184} rx={26} fill={LIB_COL.track} />
@@ -204,9 +203,8 @@ export const Blister: React.FC<P & { taken?: number }> = ({ taken = 0, ...p }) =
           <rect x={-38} y={-27} width={76} height={54} rx={18} fill={empty ? '#8FA7BF' : '#DDEBFF'} />
           {!empty && (
             <>
-              <rect x={-29} y={-17} width={58} height={34} rx={12} fill={LIB_COL.good} />
-              <rect x={-22} y={-12} width={26} height={7} rx={3.5} fill="#fff" opacity={0.45} />
-              <rect x={-1.5} y={-17} width={3} height={34} fill={LIB_COL.ink} opacity={0.18} />
+              <rect x={-30} y={-15} width={60} height={30} rx={15} fill="#F7A23B" />
+              <rect x={-1.75} y={-8} width={3.5} height={16} rx={1.75} fill="#8A4A0E" opacity={0.38} />
             </>
           )}
         </g>

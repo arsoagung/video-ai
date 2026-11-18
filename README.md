@@ -82,7 +82,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Kelompok | Komponen (parameter khusus) |
 |---|---|
 | Biologi | `TCytoCell`, `BCell`, `Antibody(color)`, `RNAStrand(len, phase)`, `DNAHelix(len)`, `Enzyme(kind: rt/integrase/protease)`, `Membrane(w, receptors:[{x, kind: cd4/ccr5/cxcr4}])` |
-| Obat | `Capsule(colorA, colorB)`, `Tablet` (lonjong bersudut membulat, bukan bulat), `Blister(taken)` (6 tablet lonjong), `PillBottle`, `Syringe(fill)` |
+| Obat | `Capsule(colorA, colorB)`, `Tablet` (bentuk kapsul oranye rata + coakan pendek, tanpa kilau), `Blister(taken)` (6 tablet ARV kapsul oranye), `PillBottle`, `Syringe(fill)` |
 | Data | `LineChart(points, threshold, progress, smooth)` (smooth = kurva mulus tanpa patahan), `PercentBars(items:[{label,pct}])`, `Clock(frac, hour)`, `Calendar(marks)` |
 | Tes | `Magnifier` (kaca pembesar; isi lensa digambar adegan, clipPath lingkaran r=92*s), `BloodDrop`, `BloodTube(level)`, `TestKit(lines: 0/1/2)`, `CheckBadge`, `CrossBadge` |
 | Analogi | `Train(wagons, wagonColor)`, `Station(label, state: open/blocked/virus)`, `Dam(level)`, `Battery(level)`, `City(lit)`, `Shield`, `Car(color)`, `Scoreboard(home, away, pending)`, `Gear(rust: 0..1)` |
