@@ -323,7 +323,7 @@ const Scene5: React.FC<{ t: number }> = ({ t }) => {
           return <L.TestKit key={i} cx={x} cy={900} s={0.7 * q} op={q} lines={1} />;
         })}
       </g>
-      <L.Tablet cx={500} cy={790} s={1.4 * cap} rot={-20} op={cap} />
+      <L.TabletPrEP cx={540} cy={770} s={1.6 * cap} rot={-12} op={cap} />
       <Big x={700} y={640} text="3 bulan" size={104} op={bar} />
       <rect x={x0} y={1080} width={x1 - x0} height={24} rx={12} fill="#fff" fillOpacity={0.18} opacity={bar} />
       <rect x={x0} y={1080} width={Math.max(24, (x1 - x0) * k)} height={24} rx={12} fill={TEAL} opacity={bar} />
@@ -528,7 +528,6 @@ const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; 
   { a: WB(6, 'jam') - 0.5, b: WA(6, 'PEP'), text: '72 jam', k: 'neutral', x: 640, y: 540, size: 54 },
   { a: WA(6, 'PEP'), b: T(7) - 0.2, text: 'PEP', k: 'arv', x: 860, y: 1180, size: 50 },
   { a: WA(7, 'masa'), b: WA(7, 'mampu') + 0.8, text: 'masa jendela', k: 'recep', x: 540, y: 540, size: 48 },
-  { a: WA(9, 'PrEP') + 0.1, b: T(10) - 0.2, text: 'PrEP', k: 'arv', x: 290, y: 560, size: 50 },
   { a: WA(10, 'hamil') + 0.3, b: T(11) - 0.05, text: 'hamil', k: 'neutral', x: 210, y: 1005, size: 36 },
   { a: WA(10, 'gejala') + 0.3, b: T(11) - 0.05, text: 'gejala', k: 'neutral', x: 540, y: 1005, size: 36 },
   { a: WA(10, 'TBC') - 0.3, b: T(11) - 0.05, text: 'TBC', k: 'neutral', x: 870, y: 1005, size: 36 },
