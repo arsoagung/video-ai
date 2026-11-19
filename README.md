@@ -195,6 +195,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Bagaimana HIV memperbanyak diri?": tema `ungu` (baru, gradien adegan dalam sel), `media/cover/S1E4.png` (komposisi `ThumbReplikasi`). Judul dipecah 3 baris (Bagaimana HIV / memperbanyak / diri?) supaya ukuran 116 tetap terpakai.
 - "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `media/cover/S1E6.png` (komposisi `ThumbViralLoad`).
 - "Apa yang terjadi kalau ARV dihentikan?": tema `indigo`, `media/cover/S1E7.png` (komposisi `ThumbS1E7`). Judul 3 baris; virus beranak + kapsul ARV disilang.
+- "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?": tema `biru`, `media/cover/S2E2.png` (komposisi `ThumbS2E2`). Judul 4 baris; orang memegang hasil tes -> klinik + tablet ARV, pill "HIV positif".
 
 ---
 
@@ -259,6 +260,12 @@ Tanpa storyboard. Sebelumnya episode ini bernama "ep3" (`src/ep3/`, tidak diubah
 Tanpa storyboard. Kode: `src/s2e1/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `align_syl.py`; `S2E1.tsx` = 11 adegan animasi + subtitle + penutup). Composition `S2E1Full` (2302 frame, 30 fps; suara 67 dtk + jeda, total 76,72 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e1.sh` -> `out/S2E1.mp4`. Tidak ada objek library baru. Tokoh "kamu" = `Person` lavender sepanjang episode. Legenda: adegan 4 (virus), 6 (virus + ARV), 7 dan 8 (grafik jumlah virus + batas deteksi), 8b dan 11 (virus). Cover: `media/cover/S2E1.png` (`ThumbS2E1`). Direvisi: batas kalimat 4 sampai 7 sebelumnya salah dari `align_syl` (dikoreksi dengan jeda nyata mp3), jeda total 7,2 dtk (10,7%), subtitle ditahan selama jeda, objek baru Doctor/PointHand/Embrace/BodyLens/Tie/DiningTable/Sun.
 
 > **PERINGATAN (temuan S2E1):** `align_syl.py` bisa memotong kalimat di tempat yang salah (S2E1: batas kalimat 4 sampai 7 meleset sampai satu kalimat penuh, lalu jeda panjang masuk di tengah kalimat). Jangan percaya satu skrip. Setelah `analyze`/`align_syl`, WAJIB cocokkan batas kalimat dengan jeda nyata di mp3: `ffmpeg -i public/vo/<KODE>.mp3 -af silencedetect=n=-38dB:d=0.25 -f null -` (atau hitung energi per 10 ms). Batas kalimat harus jatuh di jeda >= 0,3 dtk dan akhir kalimat dengan "jeda sesudah" < 0,25 dtk dianggap SALAH. Kalau `retime.mjs analyze` melapor "Semua batas kalimat meyakinkan" dan batasnya cocok dengan jeda nyata, pakai hasil itu; kalau dua skrip beda, pilih yang batasnya cocok dengan jeda nyata dan teks (punctuation).
+
+---
+
+## Episode S2E2: "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?"
+
+Tanpa storyboard. Kode: `src/s2e2/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `align_syl.py`; `S2E2.tsx` = 13 adegan animasi + subtitle + penutup). Composition `S2E2Full` (2045 frame, 30 fps; suara 58,67 dtk + jeda, total 68,14 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e2.sh` -> `out/S2E2.mp4`. Objek library baru: `Coin`. Tokoh "kamu" = `Person` lavender, pasangan = hijau. Legenda: adegan 2 (ARV), 3 (virus + sampel darah), 4 (virus + ARV), 5 (grafik), 6 klausa 2 (virus). Cover: `media/cover/S2E2.png` (`ThumbS2E2`).
 
 ### Penyelaras suku kata (`scripts/align_syl.py`)
 

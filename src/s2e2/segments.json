@@ -1,0 +1,300 @@
+{
+ "code": "S2E2",
+ "duration": 58.67,
+ "speech": [
+  0,
+  58.49
+ ],
+ "noiseDb": -32,
+ "minPause": 0.12,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Hasil tes HIV-mu positif?",
+   "a": 0,
+   "b": 1.82,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Hasil tes HIV-mu positif?",
+     "a": 0,
+     "b": 1.82,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Harus gimana?",
+   "a": 2.2,
+   "b": 3.02,
+   "pauseAfter": 0.47,
+   "clauses": [
+    {
+     "text": "Harus gimana?",
+     "a": 2.2,
+     "b": 3.02,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Ini yang biasanya terjadi.",
+   "a": 3.49,
+   "b": 5.02,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Ini yang biasanya terjadi.",
+     "a": 3.49,
+     "b": 5.02,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Kamu akan diminta untuk minum ARV setiap hari.",
+   "a": 5.4,
+   "b": 8.37,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Kamu akan diminta untuk minum ARV setiap hari.",
+     "a": 5.4,
+     "b": 8.37,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Jumlah virus di darahmu akan dipantau secara berkala.",
+   "a": 8.68,
+   "b": 11.73,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Jumlah virus di darahmu akan dipantau secara berkala.",
+     "a": 8.68,
+     "b": 11.73,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "ARV akan menekan replikasi virus, bukan menghapusnya.",
+   "a": 12.06,
+   "b": 15.82,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "ARV akan menekan replikasi virus,",
+     "a": 12.06,
+     "b": 14.56,
+     "anchored": true
+    },
+    {
+     "text": "bukan menghapusnya.",
+     "a": 14.7,
+     "b": 15.82,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Umumnya dalam satu sampai enam bulan, virus turun sampai tidak terdeteksi.",
+   "a": 16.14,
+   "b": 21.15,
+   "pauseAfter": 0.4,
+   "clauses": [
+    {
+     "text": "Umumnya dalam satu sampai enam bulan,",
+     "a": 16.14,
+     "b": 18.49,
+     "anchored": true
+    },
+    {
+     "text": "virus turun sampai tidak terdeteksi.",
+     "a": 18.83,
+     "b": 21.15,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Setelah sekitar enam bulan minum ARV rutin dan hasil tes viral load tidak terdeteksi, kamu tidak menularkan virus ke pasanganmu, selama ARV tetap rutin diminum.",
+   "a": 21.55,
+   "b": 32.12,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Setelah sekitar enam bulan minum ARV rutin dan hasil tes viral load tidak terdeteksi,",
+     "a": 21.55,
+     "b": 26.74,
+     "anchored": true
+    },
+    {
+     "text": "kamu tidak menularkan virus ke pasanganmu,",
+     "a": 27.16,
+     "b": 29.42,
+     "anchored": true
+    },
+    {
+     "text": "selama ARV tetap rutin diminum.",
+     "a": 29.75,
+     "b": 32.12,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Istilahnya U sama dengan U.",
+   "a": 32.44,
+   "b": 34.62,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Istilahnya U sama dengan U.",
+     "a": 32.44,
+     "b": 34.62,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Di fasilitas pemerintah, ARV gratis lewat jalur program Kemenkes.",
+   "a": 34.91,
+   "b": 39.29,
+   "pauseAfter": 0.27,
+   "clauses": [
+    {
+     "text": "Di fasilitas pemerintah,",
+     "a": 34.91,
+     "b": 36.3,
+     "anchored": true
+    },
+    {
+     "text": "ARV gratis lewat jalur program Kemenkes.",
+     "a": 36.47,
+     "b": 39.29,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Statusmu dirahasiakan, itu prinsip layanan tes HIV.",
+   "a": 39.56,
+   "b": 43.39,
+   "pauseAfter": 0.26,
+   "clauses": [
+    {
+     "text": "Statusmu dirahasiakan,",
+     "a": 39.56,
+     "b": 41.59,
+     "anchored": true
+    },
+    {
+     "text": "itu prinsip layanan tes HIV.",
+     "a": 41.72,
+     "b": 43.39,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Aturan Kemenkes juga menargetkan penghapusan stigma dan diskriminasi.",
+   "a": 43.65,
+   "b": 47.84,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Aturan Kemenkes juga menargetkan penghapusan stigma dan diskriminasi.",
+     "a": 43.65,
+     "b": 47.84,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Kalau minum ARV secara rutin, kamu masih bisa hidup normal.",
+   "a": 48.19,
+   "b": 51.88,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Kalau minum ARV secara rutin,",
+     "a": 48.19,
+     "b": 50.06,
+     "anchored": true
+    },
+    {
+     "text": "kamu masih bisa hidup normal.",
+     "a": 50.21,
+     "b": 51.88,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Jadi hasil positif bukan akhir.",
+   "a": 52.17,
+   "b": 54.55,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Jadi hasil positif bukan akhir.",
+     "a": 52.17,
+     "b": 54.55,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Itu awal perawatan, dan kamu tidak sendirian.",
+   "a": 54.88,
+   "b": 58.49,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Itu awal perawatan,",
+     "a": 54.88,
+     "b": 56.36,
+     "anchored": true
+    },
+    {
+     "text": "dan kamu tidak sendirian.",
+     "a": 56.67,
+     "b": 58.49,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
