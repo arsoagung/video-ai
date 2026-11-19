@@ -635,7 +635,7 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
 
 // ================= komposisi =================
 const CLOSE_GRAD = ['#0A2540', '#0F3B66', '#0B4F63'];
-export const S2E9Full: React.FC = () => {
+export const S3E2Full: React.FC = () => {
   useFonts4();
   const f = useCurrentFrame();
   const tv = f / FPS; // waktu video
@@ -673,7 +673,7 @@ export const S2E9Full: React.FC = () => {
         </div>
       )}
       <Closing t={tv} />
-      <Audio src={staticFile('vo/S2E9.mp3')} />
+      <Audio src={staticFile('vo/S3E2.mp3')} />
     </AbsoluteFill>
   );
 };

@@ -1,4 +1,4 @@
-// Episode S2E9: "Apa itu CD4 dan kenapa penting?"
+// Episode S3E2: "Apa itu CD4 dan kenapa penting?"
 // Timing disinkronkan per kalimat/klausa dari mp3 (scripts/retime.mjs) + jeda kontekstual (holds.json).
 import { SYNC_SEGS, SYNC_DUR } from './sync';
 import { toSegs, makeCues } from '../shared/cues';

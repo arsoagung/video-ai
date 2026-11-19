@@ -1,4 +1,4 @@
-// OTOMATIS dari scripts/retime.mjs build S2E9 (jangan diedit tangan; ubah src/s2e9/holds.json lalu jalankan ulang).
+// OTOMATIS dari scripts/retime.mjs build S3E2 (jangan diedit tangan; ubah src/s3e2/holds.json lalu jalankan ulang).
 // a,b = waktu VIDEO (detik) awal/akhir ucapan tiap kalimat setelah jeda disusun ulang. sa,sb = waktu di mp3 asli.
 // clauses = potongan klausa tiap kalimat (waktu video; anchored=true bila waktunya dari jeda nyata), dipakai untuk subtitle.
 export type SyncClause = { text: string; a: number; b: number; anchored: boolean };
