@@ -197,6 +197,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Apa yang terjadi kalau ARV dihentikan?": tema `indigo`, `media/cover/S1E7.png` (komposisi `ThumbS1E7`). Judul 3 baris; virus beranak + kapsul ARV disilang.
 - "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?": tema `biru`, `media/cover/S2E2.png` (komposisi `ThumbS2E2`). Judul 4 baris; orang memegang hasil tes -> klinik + tablet ARV, pill "HIV positif".
 - "Baru didiagnosis HIV? Merasa kaget itu wajar.": tema `biru`, `media/cover/S2E3.png` (komposisi `ThumbS2E3`). Judul 4 baris; orang (lavender) dengan hati hijau di tengah ombak, pill "kaget itu wajar".
+- "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman.": tema `biru`, `media/cover/S2E4.png` (komposisi `ThumbS2E4`). Judul 5 baris; lima tetes cairan berwarna, masing-masing membawa virus, pill "lima cairan".
 
 ---
 
@@ -277,3 +278,9 @@ Tanpa storyboard. Kode: `src/s2e2/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ## Episode S2E3: "Baru didiagnosis HIV? Merasa kaget itu wajar."
 
 Tanpa storyboard. Kode: `src/s2e3/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (batas kalimat cocok dengan jeda nyata mp3); `S2E3.tsx` = 14 adegan animasi (satu per kalimat) + subtitle + penutup). Composition `S2E3Full` (1886 frame, 30 fps; suara 55,72 dtk + jeda, total 62,86 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e3.sh` -> `out/S2E3.mp4`. Tidak ada objek library baru (ombak/laut, air mata, buku ditulis di adegan). Tokoh "kamu" = `Person` lavender, teman aman = hijau. Legenda: adegan 10 (blister ARV) dan 13 (tablet ARV). Pill: "orang dengan HIV" (adegan 9), "lebih dari 250 ribu" (adegan 13). Cover: `media/cover/S2E3.png` (`ThumbS2E3`).
+
+---
+
+## Episode S2E4: "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman."
+
+Tanpa storyboard. Kode: `src/s2e4/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (batas kalimat cocok dengan jeda nyata mp3); `S2E4.tsx` = 11 adegan animasi (satu per kalimat) + subtitle + penutup). Composition `S2E4Full` (suara 70,53 dtk + jeda, total 80,89 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e4.sh` -> `out/S2E4.mp4` (jumlah potongan dihitung dari `SYNC_DUR`). Tidak ada objek library baru (tetes cairan, selaput lendir/luka/pembuluh, grafik titik, ikon udara/air/nyamuk/jabat tangan ditulis di adegan). Tetes cairan: darah merah, air mani putih, cairan vagina merah muda, cairan dubur oranye muda, ASI krem, semua membawa `FlatVirus`; tetes bening = cairan lain tanpa virus. Pill di dalam adegan SVG memakai `SvgPill` (bukan `PillBox`, karena div tidak tampil di dalam SVG). Legenda: adegan 1 (virus), 8 (grafik titik: kontak seksual vs lainnya), 10 klausa 6 (obat ARV + virus). Cover: `media/cover/S2E4.png` (`ThumbS2E4`).

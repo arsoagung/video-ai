@@ -540,3 +540,38 @@ export const ThumbS2E3: React.FC = () => {
     </ThumbFrame>
   );
 };
+
+// "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman." (tema biru): lima tetes cairan berwarna, tiap tetes membawa virus; pill "lima cairan"
+export const ThumbS2E4: React.FC = () => {
+  const cols = ['#F0616A', '#F2F4F8', '#F4A6C8', '#FFC38A', '#FFE9A8'];
+  return (
+    <ThumbFrame
+      theme="biru"
+      title={
+        <>
+          Cuma lima
+          <br />
+          cairan tubuh
+          <br />
+          yang bisa
+          <br />
+          menularkan <span style={{ color: CORAL }}>HIV</span>.
+          <br />
+          Sisanya aman.
+        </>
+      }
+      glowY={1450}
+    >
+      <Svg>
+        {cols.map((c, i) => (
+          <g key={i} transform={`translate(${130 + i * 205} ${1540 + (i % 2) * 26}) scale(1.5)`}>
+            <path d="M 0 -90 C 40 -34 64 -6 64 30 A 64 64 0 0 1 -64 30 C -64 -6 -40 -34 0 -90 Z" fill={c} />
+            <ellipse cx={-30} cy={22} rx={9} ry={18} fill="#fff" opacity={0.35} transform="rotate(20 -30 22)" />
+            <FlatVirus cx={4} cy={30} r={25} />
+          </g>
+        ))}
+      </Svg>
+      <Pill cx={540} cy={1790} text="lima cairan" bg="#EAF2FB" fg="#12304F" size={52} />
+    </ThumbFrame>
+  );
+};

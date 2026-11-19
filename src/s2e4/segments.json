@@ -1,0 +1,350 @@
+{
+ "code": "S2E4",
+ "duration": 70.53,
+ "speech": [
+  0,
+  70.26
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Hanya lima cairan tubuh yang bisa menularkan HIV.",
+   "a": 0,
+   "b": 3.25,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Hanya lima cairan tubuh yang bisa menularkan HIV.",
+     "a": 0,
+     "b": 3.25,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Cairan lainnya tidak.",
+   "a": 3.57,
+   "b": 5.01,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Cairan lainnya tidak.",
+     "a": 3.57,
+     "b": 5.01,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Kenapa bisa setegas itu?",
+   "a": 5.4,
+   "b": 6.87,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Kenapa bisa setegas itu?",
+     "a": 5.4,
+     "b": 6.87,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Lima cairan itu adalah darah, air mani termasuk cairan pra-ejakulasi, cairan vagina, cairan dubur, dan ASI.",
+   "a": 7.22,
+   "b": 15.28,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Lima cairan itu adalah darah,",
+     "a": 7.22,
+     "b": 9.22,
+     "anchored": true
+    },
+    {
+     "text": "air mani termasuk cairan pra-ejakulasi,",
+     "a": 9.51,
+     "b": 12.06,
+     "anchored": true
+    },
+    {
+     "text": "cairan vagina,",
+     "a": 12.43,
+     "b": 13.38,
+     "anchored": true
+    },
+    {
+     "text": "cairan dubur,",
+     "a": 13.68,
+     "b": 14.49,
+     "anchored": true
+    },
+    {
+     "text": "dan ASI.",
+     "a": 14.66,
+     "b": 15.28,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Tapi cairan saja belum cukup.",
+   "a": 15.64,
+   "b": 17.71,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Tapi cairan saja belum cukup.",
+     "a": 15.64,
+     "b": 17.71,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Ia harus masuk lewat jalur tertentu: hubungan seks tanpa pelindung, jarum suntik yang dipakai bergantian, dari ibu ke bayi saat hamil, persalinan, atau menyusui, dan transfusi darah atau tusukan jarum yang tidak aman.",
+   "a": 18.08,
+   "b": 32.07,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Ia harus masuk lewat jalur tertentu:",
+     "a": 18.08,
+     "b": 20.25,
+     "anchored": true
+    },
+    {
+     "text": "hubungan seks tanpa pelindung,",
+     "a": 20.62,
+     "b": 22.14,
+     "anchored": true
+    },
+    {
+     "text": "jarum suntik yang dipakai bergantian,",
+     "a": 22.43,
+     "b": 24.46,
+     "anchored": true
+    },
+    {
+     "text": "dari ibu ke bayi saat hamil,",
+     "a": 24.71,
+     "b": 26.55,
+     "anchored": true
+    },
+    {
+     "text": "persalinan,",
+     "a": 26.8,
+     "b": 27.49,
+     "anchored": false
+    },
+    {
+     "text": "atau menyusui,",
+     "a": 27.49,
+     "b": 28.63,
+     "anchored": false
+    },
+    {
+     "text": "dan transfusi darah atau tusukan jarum yang tidak aman.",
+     "a": 28.87,
+     "b": 32.07,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Intinya, cairan itu harus bertemu selaput lendir, yaitu lapisan lembap di dalam tubuh, atau luka terbuka, atau masuk langsung ke aliran darah.",
+   "a": 32.38,
+   "b": 41.65,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Intinya,",
+     "a": 32.38,
+     "b": 32.91,
+     "anchored": false
+    },
+    {
+     "text": "cairan itu harus bertemu selaput lendir,",
+     "a": 32.91,
+     "b": 35.49,
+     "anchored": false
+    },
+    {
+     "text": "yaitu lapisan lembap di dalam tubuh,",
+     "a": 35.74,
+     "b": 37.91,
+     "anchored": true
+    },
+    {
+     "text": "atau luka terbuka,",
+     "a": 38.11,
+     "b": 39.37,
+     "anchored": true
+    },
+    {
+     "text": "atau masuk langsung ke aliran darah.",
+     "a": 39.63,
+     "b": 41.65,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Menurut CDC, kontak seksual menyumbang sekitar delapan puluh sembilan persen diagnosis HIV baru di Amerika Serikat.",
+   "a": 41.97,
+   "b": 48.82,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Menurut CDC,",
+     "a": 41.97,
+     "b": 43,
+     "anchored": true
+    },
+    {
+     "text": "kontak seksual menyumbang sekitar delapan puluh sembilan persen diagnosis HIV baru di Amerika Serikat.",
+     "a": 43.22,
+     "b": 48.82,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Di luar jalur itu, udara, air, gigitan nyamuk, pelukan, jabat tangan, dan berbagi makanan tidak menularkan HIV.",
+   "a": 49.14,
+   "b": 57.7,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Di luar jalur itu,",
+     "a": 49.14,
+     "b": 50.31,
+     "anchored": true
+    },
+    {
+     "text": "udara,",
+     "a": 50.55,
+     "b": 51.14,
+     "anchored": true
+    },
+    {
+     "text": "air,",
+     "a": 51.42,
+     "b": 51.89,
+     "anchored": true
+    },
+    {
+     "text": "gigitan nyamuk,",
+     "a": 52.11,
+     "b": 53.04,
+     "anchored": true
+    },
+    {
+     "text": "pelukan,",
+     "a": 53.26,
+     "b": 53.88,
+     "anchored": true
+    },
+    {
+     "text": "jabat tangan,",
+     "a": 54.06,
+     "b": 55.09,
+     "anchored": false
+    },
+    {
+     "text": "dan berbagi makanan tidak menularkan HIV.",
+     "a": 55.09,
+     "b": 57.7,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Karena jalurnya jelas, pencegahannya tepat sasaran: kondom, jarum steril, PrEP, dan ARV yang menekan virus sampai tidak terdeteksi.",
+   "a": 58.03,
+   "b": 66.96,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Karena jalurnya jelas,",
+     "a": 58.03,
+     "b": 59.35,
+     "anchored": true
+    },
+    {
+     "text": "pencegahannya tepat sasaran:",
+     "a": 59.53,
+     "b": 61.28,
+     "anchored": true
+    },
+    {
+     "text": "kondom,",
+     "a": 61.55,
+     "b": 62.1,
+     "anchored": true
+    },
+    {
+     "text": "jarum steril,",
+     "a": 62.26,
+     "b": 63.09,
+     "anchored": true
+    },
+    {
+     "text": "PrEP,",
+     "a": 63.36,
+     "b": 63.56,
+     "anchored": true
+    },
+    {
+     "text": "dan ARV yang menekan virus sampai tidak terdeteksi.",
+     "a": 63.84,
+     "b": 66.96,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Kenali jalurnya, dan kamu bisa memutusnya.",
+   "a": 67.26,
+   "b": 70.26,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Kenali jalurnya,",
+     "a": 67.26,
+     "b": 68.22,
+     "anchored": true
+    },
+    {
+     "text": "dan kamu bisa memutusnya.",
+     "a": 68.47,
+     "b": 70.26,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
