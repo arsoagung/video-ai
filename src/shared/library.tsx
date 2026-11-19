@@ -872,3 +872,20 @@ export const Tie: React.FC<P & { len?: number; broken?: number }> = ({ len = 300
     </G>
   );
 };
+
+// Kuman/mikroba lain (infeksi menular seksual selain HIV, dsb.): kapsul ungu muda dengan bintik dan bulu getar pendek. Bukan varian virus HIV.
+export const Microbe: React.FC<P & { color?: string }> = ({ color = '#C7A6E8', ...p }) => (
+  <G {...p}>
+    {[-52, -26, 0, 26, 52].map((x) => (
+      <g key={x}>
+        <rect x={x - 3} y={-62} width={6} height={20} rx={3} fill={color} opacity={0.8} />
+        <rect x={x - 3} y={42} width={6} height={20} rx={3} fill={color} opacity={0.8} />
+      </g>
+    ))}
+    <rect x={-84} y={-46} width={168} height={92} rx={46} fill={color} />
+    <circle cx={-34} cy={-6} r={12} fill="#9B73C9" opacity={0.7} />
+    <circle cx={10} cy={14} r={9} fill="#9B73C9" opacity={0.7} />
+    <circle cx={38} cy={-14} r={11} fill="#9B73C9" opacity={0.7} />
+    <ellipse cx={-40} cy={-24} rx={22} ry={8} fill="#fff" opacity={0.28} />
+  </G>
+);

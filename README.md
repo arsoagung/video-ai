@@ -92,6 +92,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Uang (analogi) | `Coin` (koin polos; dengan `CrossBadge` = gratis) |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail, w)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
 | Peran & pose (S2E1) | `Doctor(color)` (jas putih + stetoskop), `PointHand(flip)` (tangan menuding, menghakimi; menunjuk kiri, `flip` = menunjuk kanan), `Embrace(colorA, colorB, heart)` (dua orang saling merangkul), `BodyLens` (virus di dalam lensa bening di dada), `Tie(len, broken)` (ikatan manik, putus saat broken 0..1), `DiningTable(w)` (meja makan + piring + gelas), `Sun` (matahari pagi) |
+| Infeksi lain (S2E6) | `Microbe(color)` (kuman kapsul ungu muda dengan bintik dan bulu getar; untuk infeksi menular seksual lain/mikroba umum, BUKAN varian HIV) |
 
 ### Alur pembuatan video (tanpa storyboard)
 
