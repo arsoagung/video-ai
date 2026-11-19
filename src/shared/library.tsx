@@ -760,3 +760,13 @@ export const Magnifier: React.FC<P> = (p) => (
     <path d="M -62 -30 A 70 70 0 0 1 -18 -66" fill="none" stroke="#fff" strokeOpacity={0.7} strokeWidth={12} strokeLinecap="round" />
   </G>
 );
+
+// Koin (biaya/uang). Dipakai dengan CrossBadge untuk "gratis". Flat, tanpa tulisan.
+export const Coin: React.FC<P> = (p) => (
+  <G {...p}>
+    <circle cx={0} cy={0} r={70} fill="#F4D77E" />
+    <circle cx={0} cy={0} r={50} fill="#E8C35C" />
+    <rect x={-9} y={-30} width={18} height={60} rx={9} fill="#F4D77E" />
+    <circle cx={-24} cy={-26} r={9} fill="#fff" opacity={0.3} />
+  </G>
+);
