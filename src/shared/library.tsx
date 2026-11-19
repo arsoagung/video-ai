@@ -913,3 +913,19 @@ export const Mosquito: React.FC<P & { belly?: number; wing?: number; prob?: numb
     </G>
   );
 };
+
+// Biji (analogi virus yang tertidur di dalam tanah, S2E8): biji oval cokelat muda dengan belahan dan kilau. sprout 0..1 = tunas hijau tumbuh. Bukan varian virus HIV.
+export const Seed: React.FC<P & { sprout?: number }> = ({ sprout = 0, ...p }) => (
+  <G {...p}>
+    {sprout > 0.02 && (
+      <g transform={`scale(1 ${sprout})`} style={{ transformOrigin: '0px -30px' }}>
+        <rect x={-5} y={-30 - 62} width={10} height={64} rx={5} fill={LIB_COL.tcell} />
+        <ellipse cx={-22} cy={-30 - 62} rx={24} ry={12} fill={LIB_COL.tcell} transform="rotate(-25 -22 -92)" />
+        <ellipse cx={22} cy={-30 - 76} rx={24} ry={12} fill={LIB_COL.tcellDark} transform="rotate(25 22 -106)" />
+      </g>
+    )}
+    <ellipse cx={0} cy={0} rx={38} ry={48} fill="#D9A864" />
+    <path d="M 0 -46 Q 10 0 0 46" fill="none" stroke="#B9803F" strokeWidth={6} strokeLinecap="round" />
+    <ellipse cx={-14} cy={-16} rx={9} ry={16} fill="#fff" opacity={0.3} />
+  </G>
+);
