@@ -1,0 +1,268 @@
+{
+ "code": "S2E8",
+ "duration": 70.11,
+ "speech": [
+  0,
+  69.95
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "ARV bisa menekan HIV sampai tidak terdeteksi.",
+   "a": 0,
+   "b": 3.86,
+   "pauseAfter": 0.51,
+   "clauses": [
+    {
+     "text": "ARV bisa menekan HIV sampai tidak terdeteksi.",
+     "a": 0,
+     "b": 3.86,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Tapi kenapa HIV belum bisa benar-benar sembuh?",
+   "a": 4.37,
+   "b": 7.28,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Tapi kenapa HIV belum bisa benar-benar sembuh?",
+     "a": 4.37,
+     "b": 7.28,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Bayangkan taman yang rumputnya sudah dicabut, tapi di dalam tanah masih ada biji yang tertidur.",
+   "a": 7.63,
+   "b": 13.6,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Bayangkan taman yang rumputnya sudah dicabut,",
+     "a": 7.63,
+     "b": 10.04,
+     "anchored": true
+    },
+    {
+     "text": "tapi di dalam tanah masih ada biji yang tertidur.",
+     "a": 10.5,
+     "b": 13.6,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "HIV bisa bersembunyi di sel kekebalan CD4 memori, lalu menyisipkan materi genetiknya ke DNA sel itu.",
+   "a": 14.02,
+   "b": 21.56,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "HIV bisa bersembunyi di sel kekebalan CD4 memori,",
+     "a": 14.02,
+     "b": 17.15,
+     "anchored": false
+    },
+    {
+     "text": "lalu menyisipkan materi genetiknya ke DNA sel itu.",
+     "a": 17.15,
+     "b": 21.56,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Sel itu beristirahat, dan virus di dalamnya diam.",
+   "a": 21.93,
+   "b": 25.13,
+   "pauseAfter": 0.4,
+   "clauses": [
+    {
+     "text": "Sel itu beristirahat,",
+     "a": 21.93,
+     "b": 23.17,
+     "anchored": true
+    },
+    {
+     "text": "dan virus di dalamnya diam.",
+     "a": 23.51,
+     "b": 25.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "ARV hanya bisa menghentikan virus yang sedang memperbanyak diri, jadi biji yang diam tidak tersentuh.",
+   "a": 25.53,
+   "b": 32.1,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "ARV hanya bisa menghentikan virus yang sedang memperbanyak diri,",
+     "a": 25.53,
+     "b": 29.22,
+     "anchored": true
+    },
+    {
+     "text": "jadi biji yang diam tidak tersentuh.",
+     "a": 29.46,
+     "b": 32.1,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Awalnya peneliti memperkirakan biji ini menyusut separuh setiap empat puluh empat bulan, dan butuh lebih dari tujuh puluh tahun untuk habis.",
+   "a": 32.46,
+   "b": 41.03,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Awalnya peneliti memperkirakan biji ini menyusut separuh setiap empat puluh empat bulan,",
+     "a": 32.46,
+     "b": 37.7,
+     "anchored": true
+    },
+    {
+     "text": "dan butuh lebih dari tujuh puluh tahun untuk habis.",
+     "a": 37.88,
+     "b": 41.03,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Tapi studi tahun dua ribu dua puluh tiga pada biji yang masih bisa tumbuh menemukan penyusutan itu berhenti setelah tujuh tahun, karena sel pembawa biji terus membelah dan menyalin DNA virusnya.",
+   "a": 41.32,
+   "b": 53.92,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Tapi studi tahun dua ribu dua puluh tiga pada biji yang masih bisa tumbuh menemukan penyusutan itu berhenti setelah tujuh tahun,",
+     "a": 41.32,
+     "b": 49.31,
+     "anchored": true
+    },
+    {
+     "text": "karena sel pembawa biji terus membelah dan menyalin DNA virusnya.",
+     "a": 49.55,
+     "b": 53.92,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Jadi bukan obatnya yang lemah.",
+   "a": 54.29,
+   "b": 56.16,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Jadi bukan obatnya yang lemah.",
+     "a": 54.29,
+     "b": 56.16,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Targetnya bukan sekadar tidur.",
+   "a": 56.52,
+   "b": 58.31,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Targetnya bukan sekadar tidur.",
+     "a": 56.52,
+     "b": 58.31,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Peneliti kini mencoba membangunkan lalu membersihkannya, atau mengunci biji agar tidak tumbuh.",
+   "a": 58.68,
+   "b": 64.94,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Peneliti kini mencoba membangunkan lalu membersihkannya,",
+     "a": 58.68,
+     "b": 62.05,
+     "anchored": true
+    },
+    {
+     "text": "atau mengunci biji agar tidak tumbuh.",
+     "a": 62.3,
+     "b": 64.94,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Keduanya masih riset.",
+   "a": 65.24,
+   "b": 66.32,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Keduanya masih riset.",
+     "a": 65.24,
+     "b": 66.32,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Sampai saat itu, ARV tetap harus diminum.",
+   "a": 66.77,
+   "b": 69.95,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Sampai saat itu,",
+     "a": 66.77,
+     "b": 67.83,
+     "anchored": true
+    },
+    {
+     "text": "ARV tetap harus diminum.",
+     "a": 68.08,
+     "b": 69.95,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

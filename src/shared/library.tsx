@@ -918,7 +918,7 @@ export const Mosquito: React.FC<P & { belly?: number; wing?: number; prob?: numb
 export const Seed: React.FC<P & { sprout?: number }> = ({ sprout = 0, ...p }) => (
   <G {...p}>
     {sprout > 0.02 && (
-      <g transform={`scale(1 ${sprout})`} style={{ transformOrigin: '0px -30px' }}>
+      <g transform={`translate(0 -30) scale(1 ${sprout}) translate(0 30)`}>
         <rect x={-5} y={-30 - 62} width={10} height={64} rx={5} fill={LIB_COL.tcell} />
         <ellipse cx={-22} cy={-30 - 62} rx={24} ry={12} fill={LIB_COL.tcell} transform="rotate(-25 -22 -92)" />
         <ellipse cx={22} cy={-30 - 76} rx={24} ry={12} fill={LIB_COL.tcellDark} transform="rotate(25 22 -106)" />

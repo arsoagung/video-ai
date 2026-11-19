@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito } from '../shared/library';
+import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito, Seed } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -672,5 +672,34 @@ export const ThumbS2E7: React.FC = () => (
       <CrossBadge cx={660} cy={1290} s={0.8} />
     </Svg>
     <Pill cx={540} cy={1790} text="bisa ketularan" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);
+
+// ---- S2E8: "Kenapa HIV belum bisa benar-benar disembuhkan?" (tema biru)
+export const ThumbS2E8: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Kenapa <span style={{ color: CORAL }}>HIV</span>
+        <br />
+        belum bisa
+        <br />
+        benar-benar
+        <br />
+        disembuhkan?
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <rect x={110} y={1400} width={860} height={250} rx={50} fill="#6E4F42" />
+      <rect x={110} y={1400} width={860} height={64} rx={32} fill="#8A6A58" />
+      <Seed cx={290} cy={1540} s={1.7} rot={-15} />
+      <Seed cx={540} cy={1580} s={1.7} />
+      <Seed cx={790} cy={1530} s={1.7} rot={20} />
+      <Tablet cx={540} cy={1230} s={1.6} rot={-15} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="belum bisa" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
