@@ -575,3 +575,43 @@ export const ThumbS2E4: React.FC = () => {
     </ThumbFrame>
   );
 };
+
+// "Makan sepiring dengan ODHIV, tertular nggak ya?" (tema biru): dua orang (hijau = ODHIV dengan virus kecil di dada, lavender = kamu) di meja, satu piring + satu sendok di tengah; pill "sepiring"
+export const ThumbS2E5: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Makan sepiring
+        <br />
+        dengan <span style={{ color: CORAL }}>ODHIV</span>,
+        <br />
+        tertular
+        <br />
+        nggak ya?
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <Person cx={220} cy={1500} s={2.3} color="#7ED6A8" />
+      <circle cx={220} cy={1560} r={70} fill="#fff" opacity={0.26} />
+      <FlatVirus cx={220} cy={1560} r={30} />
+      <Person cx={860} cy={1500} s={2.3} color="#B9A2F5" />
+      <rect x={90} y={1640} width={900} height={36} rx={18} fill="#EAF2FB" />
+      <rect x={160} y={1676} width={32} height={120} rx={14} fill="#B3C7DC" />
+      <rect x={888} y={1676} width={32} height={120} rx={14} fill="#B3C7DC" />
+      <ellipse cx={540} cy={1640} rx={210} ry={52} fill="#B3C7DC" />
+      <ellipse cx={540} cy={1628} rx={210} ry={52} fill="#FFFFFF" />
+      <ellipse cx={540} cy={1624} rx={140} ry={32} fill="#DDEBFF" />
+      <ellipse cx={500} cy={1612} rx={54} ry={30} fill="#F4D77E" />
+      <circle cx={580} cy={1608} r={26} fill="#7ED6A8" />
+      <circle cx={626} cy={1618} r={18} fill="#FFB07A" />
+      <g transform="translate(760 1600) rotate(75)">
+        <rect x={-12} y={0} width={24} height={150} rx={12} fill="#EAF2FB" />
+        <ellipse cx={0} cy={-24} rx={38} ry={52} fill="#EAF2FB" />
+      </g>
+    </Svg>
+    <Pill cx={540} cy={1790} text="sepiring" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);

@@ -198,6 +198,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?": tema `biru`, `media/cover/S2E2.png` (komposisi `ThumbS2E2`). Judul 4 baris; orang memegang hasil tes -> klinik + tablet ARV, pill "HIV positif".
 - "Baru didiagnosis HIV? Merasa kaget itu wajar.": tema `biru`, `media/cover/S2E3.png` (komposisi `ThumbS2E3`). Judul 4 baris; orang (lavender) dengan hati hijau di tengah ombak, pill "kaget itu wajar".
 - "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman.": tema `biru`, `media/cover/S2E4.png` (komposisi `ThumbS2E4`). Judul 5 baris; lima tetes cairan berwarna, masing-masing membawa virus, pill "lima cairan".
+- "Makan sepiring dengan ODHIV, tertular nggak ya?": tema `biru`, `media/cover/S2E5.png` (komposisi `ThumbS2E5`). Judul 4 baris; orang hijau (ODHIV, virus kecil di dada) dan lavender (kamu) di meja dengan satu piring + sendok, pill "sepiring".
 
 ---
 
@@ -284,3 +285,9 @@ Tanpa storyboard. Kode: `src/s2e3/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ## Episode S2E4: "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman."
 
 Tanpa storyboard. Kode: `src/s2e4/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (batas kalimat cocok dengan jeda nyata mp3); `S2E4.tsx` = 11 adegan animasi (satu per kalimat) + subtitle + penutup). Composition `S2E4Full` (suara 70,53 dtk + jeda, total 80,89 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e4.sh` -> `out/S2E4.mp4` (jumlah potongan dihitung dari `SYNC_DUR`). Tidak ada objek library baru (tetes cairan, selaput lendir/luka/pembuluh, grafik titik, ikon udara/air/nyamuk/jabat tangan ditulis di adegan). Tetes cairan: darah merah, air mani putih, cairan vagina merah muda, cairan dubur oranye muda, ASI krem, semua membawa `FlatVirus`; tetes bening = cairan lain tanpa virus. Pill di dalam adegan SVG memakai `SvgPill` (bukan `PillBox`, karena div tidak tampil di dalam SVG). Legenda: adegan 1 (virus), 8 (grafik titik: kontak seksual vs lainnya), 10 klausa 6 (obat ARV + virus). Cover: `media/cover/S2E4.png` (`ThumbS2E4`).
+
+---
+
+## Episode S2E5: "Makan sepiring dengan ODHIV, tertular nggak ya?"
+
+Tanpa storyboard. Kode: `src/s2e5/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze`; `S2E5.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S2E5Full` (suara 71,24 dtk + jeda 7 dtk, total 80,96 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e5.sh` -> `out/S2E5.mp4`. Tidak ada objek library baru (piring, sendok, gelas, tetes cairan, jaringan, titik langka ditulis di adegan). Tokoh: ODHIV = `Person` hijau dengan lensa berisi virus di dada, "kamu" = lavender. Klausa kalimat 4 dan 8 dikoreksi manual di `timeline.ts` (retime menggeser daftar cairan satu item; dicek terhadap jeda nyata mp3). Legenda: adegan 1 dan 2 (virus HIV). Cover: `media/cover/S2E5.png` (`ThumbS2E5`).

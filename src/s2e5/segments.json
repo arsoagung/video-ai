@@ -1,0 +1,374 @@
+{
+ "code": "S2E5",
+ "duration": 71.24,
+ "speech": [
+  0,
+  71.05
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Satu piring, satu sendok.",
+   "a": 0,
+   "b": 1.97,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Satu piring,",
+     "a": 0,
+     "b": 0.94,
+     "anchored": true
+    },
+    {
+     "text": "satu sendok.",
+     "a": 1.14,
+     "b": 1.97,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Apakah HIV bisa ikut berpindah?",
+   "a": 2.39,
+   "b": 4.5,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Apakah HIV bisa ikut berpindah?",
+     "a": 2.39,
+     "b": 4.5,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Tidak.",
+   "a": 4.93,
+   "b": 5.36,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Tidak.",
+     "a": 4.93,
+     "b": 5.36,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "HIV hanya menular lewat lima cairan: darah, air mani, cairan vagina, cairan dubur, dan ASI.",
+   "a": 5.68,
+   "b": 13.61,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "HIV hanya menular lewat lima cairan:",
+     "a": 5.68,
+     "b": 8.39,
+     "anchored": true
+    },
+    {
+     "text": "darah,",
+     "a": 8.85,
+     "b": 8.18,
+     "anchored": false
+    },
+    {
+     "text": "air mani,",
+     "a": 8.18,
+     "b": 9.45,
+     "anchored": false
+    },
+    {
+     "text": "cairan vagina,",
+     "a": 9.66,
+     "b": 10.38,
+     "anchored": true
+    },
+    {
+     "text": "cairan dubur,",
+     "a": 10.56,
+     "b": 11.53,
+     "anchored": true
+    },
+    {
+     "text": "dan ASI.",
+     "a": 11.76,
+     "b": 13.61,
+     "anchored": true
+    }
+   ],
+   "flags": [
+    "menyimpang 1.5s dari perkiraan"
+   ]
+  },
+  {
+   "n": 5,
+   "text": "Makanan dan minuman bukan salah satunya, jadi sendok dan piring hanya membawa sisa makanan.",
+   "a": 14.02,
+   "b": 19.69,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Makanan dan minuman bukan salah satunya,",
+     "a": 14.02,
+     "b": 16.25,
+     "anchored": true
+    },
+    {
+     "text": "jadi sendok dan piring hanya membawa sisa makanan.",
+     "a": 16.5,
+     "b": 19.69,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Air liur juga bukan cairan penular.",
+   "a": 20.07,
+   "b": 22.08,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "Air liur juga bukan cairan penular.",
+     "a": 20.07,
+     "b": 22.08,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Menurut NIH, HIV tidak menyebar lewat air liur, jadi sendok yang menyentuh mulut tidak membawa HIV ke orang berikutnya.",
+   "a": 22.49,
+   "b": 30.38,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Menurut NIH,",
+     "a": 22.49,
+     "b": 23.57,
+     "anchored": true
+    },
+    {
+     "text": "HIV tidak menyebar lewat air liur,",
+     "a": 23.88,
+     "b": 26.08,
+     "anchored": true
+    },
+    {
+     "text": "jadi sendok yang menyentuh mulut tidak membawa HIV ke orang berikutnya.",
+     "a": 26.33,
+     "b": 30.38,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Keringat, air mata, dan urine pun bukan.",
+   "a": 30.75,
+   "b": 33.32,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Keringat,",
+     "a": 30.75,
+     "b": 30.85,
+     "anchored": false
+    },
+    {
+     "text": "air mata,",
+     "a": 30.85,
+     "b": 31.22,
+     "anchored": false
+    },
+    {
+     "text": "dan urine pun bukan.",
+     "a": 31.51,
+     "b": 33.32,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Lalu, penularan butuh jalan masuk: cairan penular harus bertemu selaput lendir atau aliran darah.",
+   "a": 33.7,
+   "b": 40.11,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Lalu,",
+     "a": 33.7,
+     "b": 34.22,
+     "anchored": true
+    },
+    {
+     "text": "penularan butuh jalan masuk:",
+     "a": 34.44,
+     "b": 35.98,
+     "anchored": true
+    },
+    {
+     "text": "cairan penular harus bertemu selaput lendir atau aliran darah.",
+     "a": 36.21,
+     "b": 40.11,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Makan bersama tidak membuka jalan itu.",
+   "a": 40.46,
+   "b": 42.86,
+   "pauseAfter": 0.36,
+   "clauses": [
+    {
+     "text": "Makan bersama tidak membuka jalan itu.",
+     "a": 40.46,
+     "b": 42.86,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Memang, dalam kondisi yang sangat tidak biasa, darah dalam jumlah cukup besar yang bercampur air liur bisa menimbulkan risiko jika masuk melalui luka.",
+   "a": 43.22,
+   "b": 52.53,
+   "pauseAfter": 0.4,
+   "clauses": [
+    {
+     "text": "Memang,",
+     "a": 43.22,
+     "b": 43.62,
+     "anchored": false
+    },
+    {
+     "text": "dalam kondisi yang sangat tidak biasa,",
+     "a": 43.62,
+     "b": 46.08,
+     "anchored": false
+    },
+    {
+     "text": "darah dalam jumlah cukup besar yang bercampur air liur bisa menimbulkan risiko jika masuk melalui luka.",
+     "a": 46.08,
+     "b": 52.53,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Namun, hal ini tidak menjadikan berbagi peralatan makan sebagai aktivitas berisiko menularkan HIV.",
+   "a": 52.92,
+   "b": 59.26,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Namun,",
+     "a": 52.92,
+     "b": 53.52,
+     "anchored": false
+    },
+    {
+     "text": "hal ini tidak menjadikan berbagi peralatan makan sebagai aktivitas berisiko menularkan HIV.",
+     "a": 53.52,
+     "b": 59.26,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Menurut WHO, HIV tidak menyebar lewat ciuman, pelukan, atau berbagi makanan.",
+   "a": 59.62,
+   "b": 65.25,
+   "pauseAfter": 0.29,
+   "clauses": [
+    {
+     "text": "Menurut WHO,",
+     "a": 59.62,
+     "b": 60.69,
+     "anchored": true
+    },
+    {
+     "text": "HIV tidak menyebar lewat ciuman,",
+     "a": 60.95,
+     "b": 62.86,
+     "anchored": false
+    },
+    {
+     "text": "pelukan,",
+     "a": 62.86,
+     "b": 63.22,
+     "anchored": false
+    },
+    {
+     "text": "atau berbagi makanan.",
+     "a": 63.41,
+     "b": 65.25,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Tidak perlu memisahkan peralatan makan.",
+   "a": 65.54,
+   "b": 67.74,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Tidak perlu memisahkan peralatan makan.",
+     "a": 65.54,
+     "b": 67.74,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 15,
+   "text": "Piring boleh sama, meja makan boleh ramai.",
+   "a": 68.16,
+   "b": 71.05,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Piring boleh sama,",
+     "a": 68.16,
+     "b": 69.18,
+     "anchored": true
+    },
+    {
+     "text": "meja makan boleh ramai.",
+     "a": 69.43,
+     "b": 71.05,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}
