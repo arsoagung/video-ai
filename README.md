@@ -207,6 +207,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Nyamuk gigit ODHIV, lalu gigit kamu. Bisa ketularan?": tema `biru`, `media/cover/S2E7.png` (komposisi `ThumbS2E7`). Judul 4 baris (ODHIV aksen koral); orang hijau berlensa virus + nyamuk berperut darah disilang + kamu (lavender), pill "bisa ketularan".
 - "Kenapa HIV belum bisa benar-benar disembuhkan?": tema `biru`, `media/cover/S2E8.png` (komposisi `ThumbS2E8`). Judul 4 baris (HIV aksen koral); tanah berisi tiga biji + kapsul ARV di atasnya, pill "belum bisa".
 - "Hidup serumah dengan ODHIV, perlu takut tertular?": tema `biru`, `media/cover/S2E9.png` (komposisi `ThumbS2E9`). Judul 4 baris (ODHIV aksen koral); rumah dengan tiga orang di depannya (hijau berlensa virus = ODHIV, lavender = kamu, biru kecil = anak), pill "serumah".
+- "Kenapa hasil tes HIV bisa salah?": tema `biru`, `media/cover/S2E10.png` (komposisi `ThumbS2E10`). Judul 3 baris (HIV aksen koral); orang lavender berlensa virus + alat tes satu garis (negatif padahal virus ada), pill "bisa salah".
 
 ---
 
@@ -323,3 +324,9 @@ Tanpa storyboard. Kode: `src/s2e8/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ## Episode S2E9: "Hidup serumah dengan ODHIV, perlu takut tertular?"
 
 Tanpa storyboard. Kode CD4 lama yang sempat memakai nama S2E9 dipindah ke `src/s3e2/` (`S3E2Full`, `scripts/render_s3e2.sh`, mp3 lamanya disalin ke `public/vo/S3E2.mp3`); kode S2E9 sekarang = episode serumah ini. Kode: `src/s2e9/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (14 kalimat, semua batas meyakinkan); `S2E9.tsx` = 13 adegan animasi + subtitle + penutup). Composition `S2E9Full` (suara 65,72 dtk + jeda 6,6 dtk (10%), total 75,02 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e9.sh` -> `out/S2E9.mp4`. Objek library baru: `Razor`, `Toothbrush`. Tokoh: ODHIV = `Person` hijau dengan lensa berisi virus kecil, "kamu"/anggota keluarga = lavender, anak = biru. Legenda: adegan 1, 3, 5 (virus), 10 dan 12 (titik warna anggota keluarga/anak dengan HIV). Cover: `media/cover/S2E9.png` (`ThumbS2E9`).
+
+---
+
+## Episode S2E10: "Kenapa hasil tes HIV bisa salah?"
+
+Tanpa storyboard. Kode: `src/s2e10/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (12 kalimat, semua batas meyakinkan); `S2E10.tsx` = 11 adegan animasi + subtitle + penutup). Composition `S2E10Full` (suara 69,25 dtk + jeda 6,1 dtk, total 79,35 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e10.sh` -> `out/S2E10.mp4`. Tidak ada objek library baru (kamera, foto, bagian virus/duri, panah ulang, batang jendela waktu ditulis di adegan). Tokoh "kamu" = `Person` lavender dengan lensa berisi virus. Analogi: tes = kamera yang hanya memotret yang sudah muncul; tiga tes dibaca kaca pembesar (antibodi Y pucat, bagian virus = satu duri, materi genetik = RNA koral). Legenda: adegan 1, 3, 4, 5 dan 6. Pill: nama tes, "paparan", "jendela waktu", "CDC", angka hari (10–33, 18–45, 23–90), "reaktif", "tes lanjutan", "diagnosis", "ulangi tes", "PEP", "PrEP", "tenaga kesehatan", "jadwal tes". Cover: `media/cover/S2E10.png` (`ThumbS2E10`).

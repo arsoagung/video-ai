@@ -1,0 +1,258 @@
+{
+ "code": "S2E10",
+ "duration": 69.25,
+ "speech": [
+  0,
+  69.25
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Kenapa hasil tes HIV bisa keliru?",
+   "a": 0,
+   "b": 2.24,
+   "pauseAfter": 0.5,
+   "clauses": [
+    {
+     "text": "Kenapa hasil tes HIV bisa keliru?",
+     "a": 0,
+     "b": 2.24,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Sering kali ini soal waktu.",
+   "a": 2.75,
+   "b": 4.53,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Sering kali ini soal waktu.",
+     "a": 2.75,
+     "b": 4.53,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Anggap tes HIV seperti kamera: ia hanya bisa memotret apa yang sudah muncul.",
+   "a": 4.97,
+   "b": 10.45,
+   "pauseAfter": 0.46,
+   "clauses": [
+    {
+     "text": "Anggap tes HIV seperti kamera:",
+     "a": 4.97,
+     "b": 7.03,
+     "anchored": true
+    },
+    {
+     "text": "ia hanya bisa memotret apa yang sudah muncul.",
+     "a": 7.38,
+     "b": 10.45,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Tes antibodi mencari antibodi, yaitu protein yang dibuat tubuh untuk melawan virus.",
+   "a": 10.91,
+   "b": 16.69,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Tes antibodi mencari antibodi,",
+     "a": 10.91,
+     "b": 13.03,
+     "anchored": true
+    },
+    {
+     "text": "yaitu protein yang dibuat tubuh untuk melawan virus.",
+     "a": 13.26,
+     "b": 16.69,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Tes antigen dan antibodi mencari antibodi sekaligus bagian dari virus.",
+   "a": 17.07,
+   "b": 21.9,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Tes antigen dan antibodi mencari antibodi sekaligus bagian dari virus.",
+     "a": 17.07,
+     "b": 21.9,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Tes asam nukleat mencari materi genetik virus.",
+   "a": 22.28,
+   "b": 25.25,
+   "pauseAfter": 0.43,
+   "clauses": [
+    {
+     "text": "Tes asam nukleat mencari materi genetik virus.",
+     "a": 22.28,
+     "b": 25.25,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Masalahnya ada jendela waktu, yaitu jeda antara paparan sampai tes bisa membacanya.",
+   "a": 25.68,
+   "b": 32.05,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Masalahnya ada jendela waktu,",
+     "a": 25.68,
+     "b": 27.78,
+     "anchored": true
+    },
+    {
+     "text": "yaitu jeda antara paparan sampai tes bisa membacanya.",
+     "a": 27.99,
+     "b": 32.05,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Menurut CDC, tes asam nukleat butuh sepuluh sampai tiga puluh tiga hari, tes antigen dan antibodi di laboratorium delapan belas sampai empat puluh lima hari, dan tes antibodi dua puluh tiga sampai sembilan puluh hari.",
+   "a": 32.49,
+   "b": 46.81,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "Menurut CDC,",
+     "a": 32.49,
+     "b": 33.51,
+     "anchored": true
+    },
+    {
+     "text": "tes asam nukleat butuh sepuluh sampai tiga puluh tiga hari,",
+     "a": 33.79,
+     "b": 37.24,
+     "anchored": true
+    },
+    {
+     "text": "tes antigen dan antibodi di laboratorium delapan belas sampai empat puluh lima hari,",
+     "a": 37.52,
+     "b": 42.65,
+     "anchored": true
+    },
+    {
+     "text": "dan tes antibodi dua puluh tiga sampai sembilan puluh hari.",
+     "a": 42.87,
+     "b": 46.81,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Tes sebelum jendela itu lewat bisa tampak negatif padahal virus sudah ada.",
+   "a": 47.23,
+   "b": 52.13,
+   "pauseAfter": 0.39,
+   "clauses": [
+    {
+     "text": "Tes sebelum jendela itu lewat bisa tampak negatif padahal virus sudah ada.",
+     "a": 47.23,
+     "b": 52.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Hasil reaktif awal dikonfirmasi lewat tes lanjutan, supaya hasil keliru tidak jadi diagnosis.",
+   "a": 52.52,
+   "b": 59.02,
+   "pauseAfter": 0.35,
+   "clauses": [
+    {
+     "text": "Hasil reaktif awal dikonfirmasi lewat tes lanjutan,",
+     "a": 52.52,
+     "b": 55.77,
+     "anchored": true
+    },
+    {
+     "text": "supaya hasil keliru tidak jadi diagnosis.",
+     "a": 55.94,
+     "b": 59.02,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Jadi kalau ada paparan, ulangi tes setelah jendela waktu lewat.",
+   "a": 59.36,
+   "b": 63.27,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Jadi kalau ada paparan,",
+     "a": 59.36,
+     "b": 61.03,
+     "anchored": true
+    },
+    {
+     "text": "ulangi tes setelah jendela waktu lewat.",
+     "a": 61.2,
+     "b": 63.27,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Kalau memakai PEP atau PrEP, tanya tenaga kesehatan soal jadwal tes.",
+   "a": 63.68,
+   "b": 69.25,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Kalau memakai PEP atau PrEP,",
+     "a": 63.68,
+     "b": 66.17,
+     "anchored": true
+    },
+    {
+     "text": "tanya tenaga kesehatan soal jadwal tes.",
+     "a": 66.45,
+     "b": 69.25,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

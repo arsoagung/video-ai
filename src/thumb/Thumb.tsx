@@ -732,3 +732,27 @@ export const ThumbS2E9: React.FC = () => (
     <Pill cx={540} cy={1790} text="serumah" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
+
+export const ThumbS2E10: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Kenapa hasil
+        <br />
+        tes <span style={{ color: CORAL }}>HIV</span> bisa
+        <br />
+        salah?
+      </>
+    }
+    glowY={1400}
+  >
+    <Svg>
+      <Person cx={300} cy={1330} s={2.1} color="#B9A2F5" />
+      <circle cx={300} cy={1401} r={72} fill="#fff" opacity={0.28} />
+      <FlatVirus cx={300} cy={1401} r={32} />
+      <TestKit cx={770} cy={1330} s={1.7} lines={1} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="bisa salah" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);
