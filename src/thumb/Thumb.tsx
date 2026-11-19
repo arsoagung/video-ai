@@ -615,3 +615,33 @@ export const ThumbS2E5: React.FC = () => (
     <Pill cx={540} cy={1790} text="sepiring" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
+
+// ---- S2E6: "Tidak terdeteksi maka tidak menularkan. Ini Buktinya."
+export const ThumbS2E6: React.FC = () => (
+  <ThumbFrame
+    theme="teal"
+    title={
+      <>
+        <span style={{ color: TEAL }}>Tidak terdeteksi</span>
+        <br />
+        maka tidak
+        <br />
+        menularkan.
+        <br />
+        Ini Buktinya.
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <TestKit cx={250} cy={1470} s={1.4} lines={1} />
+      <Document cx={540} cy={1500} s={1.5} stamp />
+      <Person cx={800} cy={1530} s={1.4} color="#B9A2F5" />
+      <Person cx={950} cy={1530} s={1.4} color="#7ED6A8" />
+      <circle cx={950} cy={1575} r={50} fill="#fff" opacity={0.26} />
+      <FlatVirus cx={950} cy={1575} r={14} />
+      <Heart cx={875} cy={1330} s={0.6} color="#F4A6C8" />
+    </Svg>
+    <Pill cx={540} cy={1790} text="tidak menular" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);
