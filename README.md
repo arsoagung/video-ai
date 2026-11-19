@@ -95,6 +95,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Infeksi lain (S2E6) | `Microbe(color)` (kuman kapsul ungu muda dengan bintik dan bulu getar; untuk infeksi menular seksual lain/mikroba umum, BUKAN varian HIV) |
 | Serangga (S2E7) | `Mosquito(belly, wing, prob)` (nyamuk: perut bisa terisi darah 0..1, `wing` = fase kepakan, `prob` = panjang belalai; belalai ke kanan, putar lewat `rot`) |
 | Biji (S2E8) | `Seed(sprout)` (biji analogi virus yang tertidur di tanah; `sprout` 0..1 = tunas hijau; BUKAN varian HIV) |
+| Alat pribadi (S2E9) | `Razor(color)` (pisau cukur), `Toothbrush(color)` (sikat gigi); keduanya menghadap atas |
 
 ### Alur pembuatan video (tanpa storyboard)
 

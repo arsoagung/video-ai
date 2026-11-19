@@ -929,3 +929,26 @@ export const Seed: React.FC<P & { sprout?: number }> = ({ sprout = 0, ...p }) =>
     <ellipse cx={-14} cy={-16} rx={9} ry={16} fill="#fff" opacity={0.3} />
   </G>
 );
+
+// Pisau cukur (S2E9): gagang abu-biru + kepala logam dengan bilah. Menghadap atas (kepala di atas). Alat pribadi yang terkena darah, tidak dipakai bersama.
+export const Razor: React.FC<P & { color?: string }> = ({ color = LIB_COL.bcell, ...p }) => (
+  <G {...p}>
+    <rect x={-14} y={-10} width={28} height={130} rx={14} fill={color} />
+    <rect x={-8} y={0} width={8} height={100} rx={4} fill="#fff" opacity={0.25} />
+    <rect x={-54} y={-62} width={108} height={58} rx={16} fill={LIB_COL.track} />
+    <rect x={-42} y={-46} width={84} height={12} rx={6} fill={LIB_COL.ink} opacity={0.35} />
+    <rect x={-42} y={-26} width={84} height={6} rx={3} fill="#fff" opacity={0.6} />
+  </G>
+);
+
+// Sikat gigi (S2E9): gagang berwarna, kepala dengan bulu sikat. Menghadap atas.
+export const Toothbrush: React.FC<P & { color?: string }> = ({ color = LIB_COL.goodDark, ...p }) => (
+  <G {...p}>
+    <rect x={-13} y={-20} width={26} height={150} rx={13} fill={color} />
+    <rect x={-7} y={0} width={7} height={110} rx={3.5} fill="#fff" opacity={0.25} />
+    <rect x={-22} y={-96} width={44} height={86} rx={18} fill={LIB_COL.light} />
+    {[-14, -5, 4, 13].map((x) => (
+      <rect key={x} x={x - 3} y={-124} width={6} height={34} rx={3} fill={LIB_COL.glass} />
+    ))}
+  </G>
+);
