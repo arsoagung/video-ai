@@ -787,8 +787,9 @@ export const Doctor: React.FC<P & { color?: string }> = ({ color = SHAPE_COL.cd4
 );
 
 // Tangan menuding (menghakimi): menunjuk ke kiri; pakai rot/skala untuk arah lain. Warna netral terang.
-export const PointHand: React.FC<P & { color?: string }> = ({ color = LIB_COL.light, ...p }) => (
+export const PointHand: React.FC<P & { color?: string; flip?: boolean }> = ({ color = LIB_COL.light, flip = false, ...p }) => (
   <G {...p}>
+    <g transform={flip ? 'scale(-1 1)' : undefined}>
     <rect x={40} y={-30} width={70} height={60} rx={14} fill={LIB_COL.track} />
     <rect x={-90} y={-30} width={150} height={26} rx={13} fill={color} />
     <rect x={-8} y={-10} width={76} height={50} rx={22} fill={color} />
@@ -796,6 +797,7 @@ export const PointHand: React.FC<P & { color?: string }> = ({ color = LIB_COL.li
       <circle key={i} cx={8 + i * 20} cy={42} r={13} fill={color} />
     ))}
     <rect x={0} y={-24} width={30} height={14} rx={7} fill="#fff" opacity={0.35} />
+    </g>
   </G>
 );
 

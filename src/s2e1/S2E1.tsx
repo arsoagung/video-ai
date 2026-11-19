@@ -167,88 +167,91 @@ const SceneWrap: React.FC<{ i: number; t: number; children: React.ReactNode }> =
   return <g opacity={o}>{children}</g>;
 };
 
-// ---- Adegan 1 (kalimat 1-2): "kamu" menerima kertas hasil pemeriksaan; dokter berbicara, gelembung "positif HIV"
+// ---- Adegan 1 (kalimat 1-2): "kamu" menerima kertas hasil pemeriksaan; dokter (stetoskop) berbicara, gelembung "positif HIV"
 const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const s2 = T(2), c1 = CL(2, 1);
   const me = pr(t, 0.2, 1.0, back);
-  const doc = pr(t, 1.2, 2.4, sine); // kertas meluncur dari kanan ke tangan "kamu"
+  const doc = pr(t, 1.2, 2.6, sine);
   const dr = pr(t, s2, s2 + 0.8, back);
   const bub = pr(t, c1, c1 + 0.7, back);
   const myX = lerp(540, 330, pr(t, s2, s2 + 0.9, sine));
   return (
     <>
       <L.Person cx={myX} cy={1000} s={2.2 * me} op={me} color={KAMU} />
-      <L.Document cx={lerp(1000, myX + 190, doc)} cy={lerp(760, 1010, doc)} s={1.0 * me} op={me * (1 - 0.0)} rot={lerp(-12, 8, doc)} />
-      <L.Person cx={800} cy={1000} s={2.2 * dr} op={dr} color={DOK} />
-      <L.SpeechBubble cx={760} cy={700} s={1.0 * bub} op={bub} text="positif HIV" w={420} tail="r" />
+      <L.Document cx={lerp(1000, myX + 190, doc)} cy={lerp(760, 1010, doc)} s={1.0 * me} op={me} rot={lerp(-12, 8, doc)} />
+      <L.Doctor cx={800} cy={1000} s={2.2 * dr} op={dr} />
+      <L.SpeechBubble cx={720} cy={690} s={1.0 * bub} op={bub} text="positif HIV" w={420} tail="r" />
     </>
   );
 };
 
-// ---- Adegan 2 (kalimat 3-4): pikiran penuh (gelembung tanya bermunculan); lalu empat lingkaran orang terdekat muncul satu per satu
+// ---- Adegan 2 (kalimat 3-4): pikiran penuh (gelembung tanya); lalu orang terdekat muncul satu per satu dan tersambung ke "kamu"
 const Scene2: React.FC<{ t: number }> = ({ t }) => {
   const s3 = T(3);
   const me = pr(t, s3 - 0.4, s3 + 0.3, back);
-  const q = [0, 1, 2].map((i) => pr(t, s3 + 0.1 + i * 0.35, s3 + 0.7 + i * 0.35, back));
-  const qFade = pr(t, CL(4, 0) - 0.3, CL(4, 0) + 0.3);
-  const k0 = pr(t, CL(4, 0) + 0.3, CL(4, 0) + 0.9, back);
-  const k1 = pr(t, CL(4, 1) + 0.1, CL(4, 1) + 0.7, back);
-  const k2 = pr(t, CL(4, 2) - 0.1, CL(4, 2) + 0.4, back);
-  const k3 = pr(t, CL(4, 3) + 0.1, CL(4, 3) + 0.8, back);
+  const q = [0, 1, 2].map((i) => pr(t, s3 + 0.1 + i * 0.3, s3 + 0.6 + i * 0.3, back));
+  const qFade = pr(t, CL(4, 0) - 0.2, CL(4, 0) + 0.3);
+  const ks = [CL(4, 0) + 0.2, CL(4, 1) + 0.1, CL(4, 2) - 0.05, CL(4, 3) + 0.05].map((a) => pr(t, a, a + 0.6, back));
+  const X = [170, 400, 620, 850];
   return (
     <>
-      <L.Person cx={540} cy={1080} s={2.1 * me} op={me} color={KAMU} />
-      {[[360, 760, 'l'], [540, 640, 'r'], [730, 780, 'r']].map(([x, y, tl], i) => (
+      <L.Person cx={540} cy={1100} s={2.1 * me} op={me} color={KAMU} />
+      {[[360, 800, 'l'], [540, 690, 'r'], [730, 820, 'r']].map(([x, y, tl], i) => (
         <L.SpeechBubble key={i} cx={x as number} cy={y as number} s={0.9 * q[i]} op={q[i] * (1 - qFade)} text="?" w={150} tail={tl as 'l' | 'r'} />
       ))}
-      <L.Heart cx={170} cy={740} s={0.8 * k0} op={k0} color={GREEN} />
-      <L.Home cx={400} cy={730} s={0.9 * k1} op={k1} />
-      <L.Person cx={620} cy={750} s={1.0 * k2} op={k2} color={GRP[0]} />
-      <L.Group cx={850} cy={775} s={0.7 * k3} op={k3} n={3} />
+      {X.map((x, i) => (
+        <line key={i} x1={540} y1={1010} x2={lerp(540, x, ks[i])} y2={lerp(1010, 820, ks[i])} stroke="#FFFFFF" strokeOpacity={0.28 * ks[i]} strokeWidth={6} strokeDasharray="2 14" strokeLinecap="round" />
+      ))}
+      <L.Heart cx={X[0]} cy={740} s={0.8 * ks[0]} op={ks[0]} color={GREEN} />
+      <L.Home cx={X[1]} cy={730} s={0.9 * ks[1]} op={ks[1]} />
+      <L.Person cx={X[2]} cy={750} s={1.0 * ks[2]} op={ks[2]} color={GRP[0]} />
+      <L.Group cx={X[3]} cy={775} s={0.7 * ks[3]} op={ks[3]} n={3} />
     </>
   );
 };
 
-// ---- Adegan 3 (kalimat 5-6): kelompok mendekat dengan tanda tanya; lalu menjauh, "kamu" tinggal sendiri
+// ---- Adegan 3 (kalimat 5-6): kelompok mendekat dan menatap ("tahu?"); lalu mereka berbalik dan berjalan menjauh, ikatan putus
 const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const s5 = T(5), s6 = T(6);
   const me = pr(t, s5 - 0.2, s5 + 0.5, back);
-  const come = pr(t, s5, s5 + 0.9, sine);
-  const bub = pr(t, s5 + 0.9, s5 + 1.4, back) * (1 - pr(t, s6 - 0.2, s6 + 0.1));
-  const away = pr(t, s6 + 0.1, s6 + 1.6, in3);
-  const gx = lerp(1250, 780, come) + 150 * away;
-  const gop = pr(t, s5, s5 + 0.4) * (1 - 0.6 * pr(t, s6 + 0.8, s6 + 1.7));
-  const bub2 = pr(t, s6 + 0.05, s6 + 0.6, back) * (1 - pr(t, s6 + 1.2, s6 + 1.7));
-  const gap = pr(t, s6 + 1.4, s6 + 2.2, sine);
+  const come = pr(t, s5, s5 + 1.0, sine);
+  const bub = pr(t, s5 + 0.9, s5 + 1.3, back) * (1 - pr(t, s6 - 0.15, s6 + 0.15));
+  const go = pr(t, s6 + 0.1, s6 + 1.9, in3);
+  const tie = pr(t, s5 + 0.9, s5 + 1.5, back);
+  const broken = pr(t, s6 + 0.3, s6 + 1.4, sine);
+  const gop = pr(t, s5, s5 + 0.4) * (1 - 0.65 * pr(t, s6 + 0.9, s6 + 1.9));
+  const people = [0, 1, 2].map((i) => ({ x: lerp(1250 + i * 120, 600 + i * 150, come) + (230 + i * 60) * go, rot: 14 * go, s: 1.3 - 0.3 * go }));
   return (
     <>
-      <L.Person cx={300} cy={1020} s={2.1 * me} op={me} color={KAMU} />
-      <L.Group cx={gx} cy={1030 - 20 * away} s={1.2 - 0.5 * away} op={gop} n={3} />
-      <L.SpeechBubble cx={gx - 40} cy={730} s={0.9 * bub} op={bub} text="tahu?" w={240} tail="l" />
-      <L.SpeechBubble cx={gx - 20} cy={730} s={0.9 * bub2} op={bub2} text="jauh" w={240} tail="l" />
+      <L.Person cx={260} cy={1020} s={2.1 * me} op={me} color={KAMU} />
+      <L.Tie cx={450} cy={900} len={220} broken={broken} op={tie * (1 - 0.8 * pr(t, s6 + 1.4, s6 + 2.0))} />
+      {people.map((q, i) => (
+        <L.Person key={i} cx={q.x} cy={1040 - 10 * go} s={q.s} rot={q.rot} op={gop} color={GRP[i]} />
+      ))}
+      <L.SpeechBubble cx={720} cy={690} s={0.9 * bub} op={bub} text="?" w={160} tail="l" />
     </>
   );
 };
 
-// ---- Adegan 4 (kalimat 7): virus tampak menakutkan (membesar); lalu "penerimaan" (pelukan) memudar dan pergi
+// ---- Adegan 4 (kalimat 7): virus tampak menakutkan, tapi mengecil; yang hilang adalah pelukan (penerimaan): muncul lalu menjauh, disilang
 const Scene4: React.FC<{ t: number }> = ({ t }) => {
   const s7 = T(7), c1 = CL(7, 1), c2 = CL(7, 2);
   const me = pr(t, s7 - 0.2, s7 + 0.5, back);
   const v = pr(t, c1, c1 + 0.7, back);
-  const vShrink = 1 - 0.45 * pr(t, c2 - 0.2, c2 + 1.0, sine);
-  const hug = pr(t, c2 - 0.3, c2 + 0.4, back);
-  const hugGo = pr(t, c2 + 1.4, c2 + 3.0, sine);
+  const vShrink = 1 - 0.5 * pr(t, c2 - 0.2, c2 + 1.0, sine);
+  const hug = pr(t, c2 - 0.3, c2 + 0.5, back);
+  const hugGo = pr(t, c2 + 1.4, c2 + 2.8, sine);
   return (
     <>
-      <L.Person cx={300} cy={1030} s={2.1 * me} op={me} color={KAMU} />
-      <Virus x={800} y={820} r={90 * v * vShrink} t={t} />
-      <L.Hug cx={lerp(700, 1000, hugGo)} cy={1120} s={1.5 * hug} op={hug * (1 - hugGo)} />
-      <L.CrossBadge cx={720} cy={1000} s={0.8 * pr(t, c2 + 1.8, c2 + 2.5, back)} op={pr(t, c2 + 1.8, c2 + 2.5)} />
+      <L.Person cx={280} cy={1030} s={2.1 * me} op={me} color={KAMU} />
+      <Virus x={810} y={800} r={90 * v * vShrink} t={t} />
+      <L.Embrace cx={lerp(680, 960, hugGo)} cy={1080} s={1.4 * hug} op={hug * (1 - 0.9 * hugGo)} />
+      <L.CrossBadge cx={700} cy={960} s={0.8 * pr(t, c2 + 1.5, c2 + 2.2, back)} op={pr(t, c2 + 1.5, c2 + 2.2)} />
     </>
   );
 };
 
-// ---- Adegan 5 (kalimat 8): "bukan akhir kehidupan": kalender terus terisi hari demi hari (hijau), orang tetap berdiri
+// ---- Adegan 5 (kalimat 8): "bukan akhir kehidupan": hari demi hari terus terisi (kalender hijau)
 const Scene5: React.FC<{ t: number }> = ({ t }) => {
   const s8 = T(8), c1 = CL(8, 1);
   const me = pr(t, s8 - 0.2, s8 + 0.5, back);
@@ -282,21 +285,21 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 7 (kalimat 10): grafik jumlah virus dalam darah turun di bawah batas deteksi (tetap di atas sumbu: tidak hilang total)
+// ---- Adegan 7 (kalimat 10): tabung darah di samping grafik jumlah virus; kadar turun di bawah batas deteksi (tetap di atas sumbu)
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
   const s10 = T(10);
   const ch = pr(t, s10, s10 + 0.7, back);
   const prog = pr(t, s10 + 0.5, s10 + 3.0, sine);
-  const tube = pr(t, s10 + 0.3, s10 + 1.0, back);
+  const tube = pr(t, s10 - 0.1, s10 + 0.6, back);
   return (
     <>
-      <L.LineChart cx={540} cy={920} s={ch} op={ch} w={860} h={460} color="#F4D77E" threshold={0.2} points={[0.92, 0.78, 0.6, 0.42, 0.26, 0.14, 0.1, 0.09, 0.09]} progress={prog} smooth />
-      <L.BloodTube cx={170} cy={1330} s={0.8 * tube} op={tube} level={lerp(0.8, 0.3, prog)} />
+      <L.BloodTube cx={150} cy={940} s={1.2 * tube} op={tube} level={lerp(0.85, 0.3, prog)} />
+      <L.LineChart cx={620} cy={920} s={ch} op={ch} w={740} h={460} color="#F4D77E" threshold={0.2} points={[0.92, 0.78, 0.6, 0.42, 0.26, 0.14, 0.1, 0.09, 0.09]} progress={prog} smooth />
     </>
   );
 };
 
-// ---- Adegan 8 (kalimat 11): tidak terdeteksi dipertahankan (jam berputar, grafik tetap rendah); lalu virus tidak menyeberang ke orang lain
+// ---- Adegan 8 (kalimat 11): tidak terdeteksi dipertahankan (jam berputar, garis tetap rendah); lalu virus tidak menyeberang ke orang lain
 const Scene8: React.FC<{ t: number }> = ({ t }) => {
   const s11 = T(11), c1 = CL(11, 1);
   const ch = pr(t, s11, s11 + 0.7, back) * (1 - pr(t, c1 - 0.3, c1 + 0.4));
@@ -313,7 +316,7 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
       <L.LineChart cx={380} cy={900} s={ch} op={ch} w={620} h={380} color="#F4D77E" threshold={0.2} points={[0.1, 0.09, 0.09, 0.08, 0.09, 0.08, 0.09]} progress={prog} smooth />
       <L.Clock cx={850} cy={900} s={1.1 * clk} op={clk} frac={0.02 + 0.96 * sweep} hour={3} />
       <L.Person cx={260} cy={1050} s={2.0 * pA} op={pA} color={KAMU} />
-      <Virus x={300} y={1100} r={30 * pA} dim={0.95} t={t} />
+      <L.BodyLens cx={262} cy={1088} s={1.1 * pA} op={pA} />
       <L.Person cx={820} cy={1050} s={2.0 * pB} op={pB} color={GRP[1]} />
       <line x1={420} y1={900} x2={lerp(420, 640, arrow)} y2={900} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" opacity={0.85 * arrow * (1 - 0.5 * hold)} strokeDasharray="6 22" />
       <L.CrossBadge cx={540} cy={900} s={0.9 * cross} op={cross} />
@@ -322,68 +325,67 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 9 (kalimat 12): bangun pagi (jam pagi), berangkat kerja (mobil melintas), tertawa di meja makan (orang berkumpul + hati)
+// ---- Adegan 9 (kalimat 12): bangun pagi (matahari terbit), berangkat kerja (mobil melintas), tertawa di meja makan (orang + meja + hati)
 const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const s12 = T(12), c1 = CL(12, 1), c2 = CL(12, 2);
-  const clk = pr(t, s12, s12 + 0.7, back) * (1 - pr(t, c1 - 0.1, c1 + 0.4));
-  const sweep = pr(t, s12 + 0.1, c1, sine);
+  const out1 = pr(t, c1 - 0.1, c1 + 0.4);
+  const sun = pr(t, s12, s12 + 1.4, sine) * (1 - out1);
   const me = pr(t, s12 - 0.2, s12 + 0.5, back) * (1 - pr(t, c1 + 0.2, c1 + 0.6));
-  const car = pr(t, c1, c1 + 0.2) * (1 - pr(t, c1 + 1.6, c1 + 2.0));
-  const carX = lerp(-120, 1200, pr(t, c1, c1 + 1.9, sine));
+  const car = pr(t, c1, c1 + 0.2) * (1 - pr(t, c1 + 0.8, c1 + 1.2));
+  const carX = lerp(-120, 1200, pr(t, c1, c1 + 1.3, sine));
   const tab = pr(t, c2, c2 + 0.6, back);
-  const hrt = pr(t, c2 + 1.0, c2 + 1.7, back);
-  const beat = 1 + 0.08 * Math.max(0, Math.sin(Math.max(0, t - c2 - 1.2) * 6));
+  const hrt = pr(t, c2 + 0.8, c2 + 1.5, back);
+  const beat = 1 + 0.08 * Math.max(0, Math.sin(Math.max(0, t - c2 - 1.0) * 6));
   return (
     <>
+      <L.Sun cx={720} cy={lerp(1000, 760, sun)} s={1.5} op={sun} />
+      <rect x={0} y={1010} width={1080} height={600} fill="#0D1B45" opacity={0.0} />
       <L.Person cx={320} cy={1000} s={2.0 * me} op={me} color={KAMU} />
-      <L.Clock cx={720} cy={800} s={1.3 * clk} op={clk} frac={0.02 + 0.5 * sweep} hour={7} />
       <rect x={0} y={1150} width={1080} height={14} rx={7} fill="#FFFFFF" opacity={0.25 * car} />
-      <L.Car cx={carX} cy={1090} s={1.4} op={car} color={KAMU} />
-      <rect x={250} y={1020} width={580} height={26} rx={13} fill="#EAF2FB" opacity={tab} transform={`translate(0 ${(1 - tab) * 30})`} />
-      <rect x={290} y={1046} width={26} height={110} rx={10} fill="#B3C7DC" opacity={tab} />
-      <rect x={764} y={1046} width={26} height={110} rx={10} fill="#B3C7DC" opacity={tab} />
+      <L.Car cx={carX} cy={1090} s={1.4} op={car} />
       <L.Group cx={540} cy={900} s={1.25 * tab} op={tab} n={3} />
-      <L.Heart cx={540} cy={680} s={0.7 * hrt * beat} op={hrt} color={GREEN} />
+      <L.DiningTable cx={540} cy={1030} op={tab} />
+      <L.Heart cx={540} cy={690} s={0.7 * hrt * beat} op={hrt} color={GREEN} />
     </>
   );
 };
 
-// ---- Adegan 10 (kalimat 13): persoalan kesehatan butuh pengobatan (klinik + tablet); menghakimi dicoret (gelembung tuding dicoret)
+// ---- Adegan 10 (kalimat 13): persoalan kesehatan butuh pengobatan (dokter memberi tablet); menghakimi = tangan menuding, disilang dan mundur
 const Scene10: React.FC<{ t: number }> = ({ t }) => {
   const s13 = T(13), c1 = CL(13, 1);
-  const cl = pr(t, s13, s13 + 0.8, back);
-  const tb = pr(t, s13 + 0.8, s13 + 1.6, sine);
-  const ok = pr(t, s13 + 2.0, s13 + 2.7, back);
-  const me = pr(t, c1 - 0.2, c1 + 0.5, back);
-  const bub = pr(t, c1 + 0.1, c1 + 0.7, back);
+  const me = pr(t, s13 - 0.2, s13 + 0.5, back);
+  const dr = pr(t, s13, s13 + 0.7, back) * (1 - pr(t, c1 - 0.3, c1 + 0.3));
+  const tb = pr(t, s13 + 1.0, s13 + 2.2, sine);
+  const ok = pr(t, s13 + 2.3, s13 + 2.9, back);
+  const hands = pr(t, c1 + 0.1, c1 + 0.8, back);
   const cross = pr(t, c1 + 0.9, c1 + 1.5, back);
+  const back2 = pr(t, c1 + 1.5, c1 + 2.0, sine);
   return (
     <>
-      <g opacity={1 - pr(t, c1 - 0.3, c1 + 0.3)}>
-        <L.Clinic cx={400} cy={900} s={1.6 * cl} op={cl} />
-        <L.Tablet cx={lerp(1100, 780, tb)} cy={lerp(780, 960, tb)} s={1.1} rot={lerp(-40, 0, tb)} op={pr(t, s13 + 0.8, s13 + 1.1)} />
-        <L.CheckBadge cx={400} cy={640} s={0.8 * ok} op={ok} />
-      </g>
-      <L.Person cx={760} cy={1040} s={2.0 * me} op={me} color={KAMU} />
-      <L.SpeechBubble cx={400} cy={760} s={1.0 * bub} op={bub} text="salah!" w={320} tail="r" />
-      <L.CrossBadge cx={400} cy={760} s={1.0 * cross} op={cross} />
+      <L.Doctor cx={250} cy={1040} s={2.0 * dr} op={dr} />
+      <L.Person cx={780} cy={1040} s={2.0 * me} op={me} color={KAMU} />
+      <L.Tablet cx={lerp(330, 640, tb)} cy={lerp(900, 960, tb)} s={0.9} rot={lerp(-10, 0, tb)} op={pr(t, s13 + 1.0, s13 + 1.3) * (1 - pr(t, c1 - 0.3, c1 + 0.2))} />
+      <L.CheckBadge cx={780} cy={780} s={0.8 * ok * (1 - pr(t, c1 - 0.3, c1 + 0.2))} op={ok * (1 - pr(t, c1 - 0.3, c1 + 0.2))} />
+      <L.PointHand cx={lerp(120, 420, hands) - 40 * back2} cy={900} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
+      <L.PointHand cx={lerp(120, 450, hands) - 40 * back2} cy={1040} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
+      <L.CrossBadge cx={560} cy={970} s={1.0 * cross} op={cross} />
     </>
   );
 };
 
-// ---- Adegan 11 (kalimat 14): virus terlepas dari orang dan menjauh (yang dilawan = virusnya); orang-orang berpelukan (bukan manusianya)
+// ---- Adegan 11 (kalimat 14): virus (di dada) terlepas dan menjauh = yang dilawan; "kamu" dan orang lain berpelukan = bukan manusianya
 const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const s14 = T(14), c1 = CL(14, 1);
   const me = pr(t, s14 - 0.2, s14 + 0.5, back);
-  const v = pr(t, s14, s14 + 0.6, back);
+  const lens = pr(t, s14, s14 + 0.5, back) * (1 - pr(t, s14 + 0.7, s14 + 1.1));
   const lift = pr(t, s14 + 0.8, c1 - 0.2, sine);
   const hug = pr(t, c1 + 0.1, c1 + 0.9, back);
-  const meX = lerp(540, 380, pr(t, c1 - 0.2, c1 + 0.6, sine));
   return (
     <>
-      <L.Person cx={meX} cy={1020} s={2.1 * me * (1 - hug)} op={me * (1 - hug)} color={KAMU} />
-      <L.Hug cx={540} cy={1010} s={2.0 * hug} op={hug} />
-      <Virus x={lerp(meX + 30, 880, lift)} y={lerp(1100, 700, lift)} r={46 * v} t={t} />
+      <L.Person cx={540} cy={1020} s={2.1 * me * (1 - hug)} op={me * (1 - hug)} color={KAMU} />
+      <L.BodyLens cx={542} cy={1060} s={1.2 * lens} op={lens} />
+      <Virus x={lerp(542, 880, lift)} y={lerp(1060, 700, lift)} r={lerp(20, 46, lift) * pr(t, s14 + 0.7, s14 + 1.0)} t={t} />
+      <L.Embrace cx={540} cy={1010} s={2.0 * hug} op={hug} />
     </>
   );
 };
@@ -391,7 +393,7 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
   { a: CL(9, 0) + 0.3, b: CL(9, 1) + 0.2, text: 'ARV rutin', k: 'arv', x: 340, y: 1250, size: 44 },
   { a: T(10) + 2.4, b: T(11) - 0.2, text: 'tidak terdeteksi', k: 'neutral', x: 540, y: 1260, size: 44 },
-  { a: CL(11, 1) + 2.4, b: T(12) - 0.2, text: 'tidak menular', k: 'arv', x: 540, y: 1330, size: 46 },
+  { a: CL(11, 1) + 2.4, b: T(12) - 0.2, text: 'tidak dapat ditularkan', k: 'arv', x: 540, y: 1330, size: 42 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>
@@ -539,7 +541,8 @@ export const S2E1Full: React.FC = () => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const g = gradAt(t);
-  const cue = CUES.find((c) => t >= c.a - 0.05 && t < c.b);
+  let cue = CUES.find((c) => t >= c.a - 0.05 && t < c.b);
+  if (!cue) { const prev = [...CUES].reverse().find((c) => c.b <= t); const nxt = CUES.find((c) => c.a - 0.05 > t); if (prev && nxt && nxt.a - prev.b < 1.4) cue = prev; } // tahan subtitle selama jeda
   const ck = cue ? Math.min(1, (t - cue.a + 0.05) / 0.18) : 0;
   const subOn = t < CLOSE - 0.05;
   const scenes = [Scene1, Scene2, Scene3, Scene4, Scene5, Scene6, Scene7, Scene8, Scene9, Scene10, Scene11];

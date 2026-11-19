@@ -91,7 +91,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Data (lanjutan) | `CompareBars(labelA, labelB, pa, pb, mark)` (dua bar tanpa angka, B = 2,35x A, penanda 2x) |
 | Uang (analogi) | `Coin` (koin polos; dengan `CrossBadge` = gratis) |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail, w)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
-| Peran & pose (S2E1) | `Doctor(color)` (jas putih + stetoskop), `PointHand` (tangan menuding, menghakimi), `Embrace(colorA, colorB, heart)` (dua orang saling merangkul), `BodyLens` (virus di dalam lensa bening di dada), `Tie(len, broken)` (ikatan manik, putus saat broken 0..1), `DiningTable(w)` (meja makan + piring + gelas), `Sun` (matahari pagi) |
+| Peran & pose (S2E1) | `Doctor(color)` (jas putih + stetoskop), `PointHand(flip)` (tangan menuding, menghakimi; menunjuk kiri, `flip` = menunjuk kanan), `Embrace(colorA, colorB, heart)` (dua orang saling merangkul), `BodyLens` (virus di dalam lensa bening di dada), `Tie(len, broken)` (ikatan manik, putus saat broken 0..1), `DiningTable(w)` (meja makan + piring + gelas), `Sun` (matahari pagi) |
 
 ### Alur pembuatan video (tanpa storyboard)
 
@@ -256,7 +256,7 @@ Tanpa storyboard. Sebelumnya episode ini bernama "ep3" (`src/ep3/`, tidak diubah
 
 ## Episode S2E1: "Yang paling menyakitkan kadang bukan virusnya, tapi stigma."
 
-Tanpa storyboard. Kode: `src/s2e1/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `align_syl.py`; `S2E1.tsx` = 11 adegan animasi + subtitle + penutup). Composition `S2E1Full` (2540 frame, 30 fps; suara 67 dtk + jeda, total 84,64 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e1.sh` -> `out/S2E1.mp4`. Tidak ada objek library baru. Tokoh "kamu" = `Person` lavender sepanjang episode. Legenda: adegan 4 (virus), 6 (virus + ARV), 7 dan 8 (grafik jumlah virus + batas deteksi), 8b dan 11 (virus). Cover: `media/cover/S2E1.png` (`ThumbS2E1`).
+Tanpa storyboard. Kode: `src/s2e1/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `align_syl.py`; `S2E1.tsx` = 11 adegan animasi + subtitle + penutup). Composition `S2E1Full` (2302 frame, 30 fps; suara 67 dtk + jeda, total 76,72 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e1.sh` -> `out/S2E1.mp4`. Tidak ada objek library baru. Tokoh "kamu" = `Person` lavender sepanjang episode. Legenda: adegan 4 (virus), 6 (virus + ARV), 7 dan 8 (grafik jumlah virus + batas deteksi), 8b dan 11 (virus). Cover: `media/cover/S2E1.png` (`ThumbS2E1`). Direvisi: batas kalimat 4 sampai 7 sebelumnya salah dari `align_syl` (dikoreksi dengan jeda nyata mp3), jeda total 7,2 dtk (10,7%), subtitle ditahan selama jeda, objek baru Doctor/PointHand/Embrace/BodyLens/Tie/DiningTable/Sun.
 
 > **PERINGATAN (temuan S2E1):** `align_syl.py` bisa memotong kalimat di tempat yang salah (S2E1: batas kalimat 4 sampai 7 meleset sampai satu kalimat penuh, lalu jeda panjang masuk di tengah kalimat). Jangan percaya satu skrip. Setelah `analyze`/`align_syl`, WAJIB cocokkan batas kalimat dengan jeda nyata di mp3: `ffmpeg -i public/vo/<KODE>.mp3 -af silencedetect=n=-38dB:d=0.25 -f null -` (atau hitung energi per 10 ms). Batas kalimat harus jatuh di jeda >= 0,3 dtk dan akhir kalimat dengan "jeda sesudah" < 0,25 dtk dianggap SALAH. Kalau `retime.mjs analyze` melapor "Semua batas kalimat meyakinkan" dan batasnya cocok dengan jeda nyata, pakai hasil itu; kalau dua skrip beda, pilih yang batasnya cocok dengan jeda nyata dan teks (punctuation).
 
