@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito, Seed } from '../shared/library';
+import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito, Seed, Home } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -701,5 +701,34 @@ export const ThumbS2E8: React.FC = () => (
       <Tablet cx={540} cy={1230} s={1.6} rot={-15} />
     </Svg>
     <Pill cx={540} cy={1790} text="belum bisa" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);
+
+// ---- S2E9: "Hidup serumah dengan ODHIV, perlu takut tertular?" (tema biru)
+export const ThumbS2E9: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Hidup serumah
+        <br />
+        dengan <span style={{ color: CORAL }}>ODHIV</span>,
+        <br />
+        perlu takut
+        <br />
+        tertular?
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <Home cx={540} cy={1400} s={2.0} />
+      <Person cx={300} cy={1530} s={1.6} color="#7ED6A8" />
+      <circle cx={300} cy={1584} r={48} fill="#fff" opacity={0.26} />
+      <FlatVirus cx={300} cy={1584} r={21} />
+      <Person cx={540} cy={1530} s={1.6} color="#B9A2F5" />
+      <Person cx={780} cy={1530} s={1.6} color="#8FBDF7" kid />
+    </Svg>
+    <Pill cx={540} cy={1790} text="serumah" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );

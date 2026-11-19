@@ -206,6 +206,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Tidak terdeteksi maka tidak menularkan. Ini Buktinya.": tema `teal`, `media/cover/S2E6.png` (komposisi `ThumbS2E6`). Judul 4 baris (kata "Tidak terdeteksi" aksen teal); alat tes satu garis + dokumen bercentang + pasangan (lavender dan hijau berlensa virus kecil) dengan hati, pill "tidak menular".
 - "Nyamuk gigit ODHIV, lalu gigit kamu. Bisa ketularan?": tema `biru`, `media/cover/S2E7.png` (komposisi `ThumbS2E7`). Judul 4 baris (ODHIV aksen koral); orang hijau berlensa virus + nyamuk berperut darah disilang + kamu (lavender), pill "bisa ketularan".
 - "Kenapa HIV belum bisa benar-benar disembuhkan?": tema `biru`, `media/cover/S2E8.png` (komposisi `ThumbS2E8`). Judul 4 baris (HIV aksen koral); tanah berisi tiga biji + kapsul ARV di atasnya, pill "belum bisa".
+- "Hidup serumah dengan ODHIV, perlu takut tertular?": tema `biru`, `media/cover/S2E9.png` (komposisi `ThumbS2E9`). Judul 4 baris (ODHIV aksen koral); rumah dengan tiga orang di depannya (hijau berlensa virus = ODHIV, lavender = kamu, biru kecil = anak), pill "serumah".
 
 ---
 
@@ -316,3 +317,9 @@ Tanpa storyboard. Kode: `src/s2e7/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ## Episode S2E8: "Kenapa HIV belum bisa benar-benar disembuhkan?"
 
 Tanpa storyboard. Kode: `src/s2e8/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (13 kalimat, semua batas meyakinkan); `S2E8.tsx` = 13 adegan animasi + subtitle + penutup). Composition `S2E8Full` (suara 70,11 dtk + jeda 7,2 dtk (10%), total 80,55 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e8.sh` -> `out/S2E8.mp4`. Objek library baru: `Seed`. Analogi: taman = tubuh, biji tertidur = sel CD4 memori berisi DNA virus yang diam; sel istirahat ditandai bulan sabit. Legenda: adegan 1 (grafik), 2 (biji), 3 (virus + sel CD4 memori; DNA sel + materi genetik virus), 5 (virus + sel CD4), 6 dan 7 (grafik jumlah biji; studi vs perkiraan). Pill: "44 bulan", "70 tahun", "2023", "7 tahun". Cover: `media/cover/S2E8.png` (`ThumbS2E8`).
+
+---
+
+## Episode S2E9: "Hidup serumah dengan ODHIV, perlu takut tertular?"
+
+Tanpa storyboard. Kode CD4 lama yang sempat memakai nama S2E9 dipindah ke `src/s3e2/` (`S3E2Full`, `scripts/render_s3e2.sh`, mp3 lamanya disalin ke `public/vo/S3E2.mp3`); kode S2E9 sekarang = episode serumah ini. Kode: `src/s2e9/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (14 kalimat, semua batas meyakinkan); `S2E9.tsx` = 13 adegan animasi + subtitle + penutup). Composition `S2E9Full` (suara 65,72 dtk + jeda 6,6 dtk (10%), total 75,02 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e9.sh` -> `out/S2E9.mp4`. Objek library baru: `Razor`, `Toothbrush`. Tokoh: ODHIV = `Person` hijau dengan lensa berisi virus kecil, "kamu"/anggota keluarga = lavender, anak = biru. Legenda: adegan 1, 3, 5 (virus), 10 dan 12 (titik warna anggota keluarga/anak dengan HIV). Cover: `media/cover/S2E9.png` (`ThumbS2E9`).

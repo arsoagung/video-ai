@@ -15,6 +15,8 @@ import { S2E6Full, S2E6_FRAMES } from './s2e6/S2E6';
 import { S2E7Full, S2E7_FRAMES } from './s2e7/S2E7';
 import { S2E8Full, S2E8_FRAMES } from './s2e8/S2E8';
 import { S3E2Full } from './s3e2/S3E2';
+import { S2E9Full } from './s2e9/S2E9';
+import { EP_DUR as S2E9_DUR } from './s2e9/timeline';
 import { EP_DUR as S3E2_DUR } from './s3e2/timeline';
 import React from 'react';
 import { AbsoluteFill, Audio, Composition, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
@@ -29,7 +31,7 @@ import { Overlay2, Ep2Full } from './ep2/Overlay2';
 import { Ep3Full } from './ep3/Ep3';
 import { Ep5Full } from './ep5/Ep5';
 import { Ep3ArvFull } from './ep3arv/Ep3Arv';
-import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, ThumbApaCd4, ThumbS1E5, ThumbS1E7, ThumbS1E8, ThumbS1E9, ThumbS1E10, ThumbS1E11, ThumbS2E1, ThumbS2E2, ThumbS2E3, ThumbS2E4, ThumbS2E5, ThumbS2E6, ThumbS2E7, ThumbS2E8, THUMB_W, THUMB_H } from './thumb/Thumb';
+import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, ThumbApaCd4, ThumbS1E5, ThumbS1E7, ThumbS1E8, ThumbS1E9, ThumbS1E10, ThumbS1E11, ThumbS2E1, ThumbS2E2, ThumbS2E3, ThumbS2E4, ThumbS2E5, ThumbS2E6, ThumbS2E7, ThumbS2E8, ThumbS2E9, THUMB_W, THUMB_H } from './thumb/Thumb';
 
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fonts'));
@@ -114,6 +116,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S1E6Full" component={S1E6Full} durationInFrames={S1E6_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E4Full" component={S1E4Full} durationInFrames={S1E4_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S3E2Full" component={S3E2Full} durationInFrames={Math.ceil(S3E2_DUR * FPS)} fps={FPS} width={1080} height={1920} />
+    <Composition id="S2E9Full" component={S2E9Full} durationInFrames={Math.ceil(S2E9_DUR * FPS)} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E10Full" component={S1E10Full} durationInFrames={S1E10_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S1E11Full" component={S1E11Full} durationInFrames={S1E11_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Ep5Full" component={Ep5Full} durationInFrames={2502} fps={FPS} width={1080} height={1920} />
@@ -144,6 +147,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S2E8Full" component={S2E8Full} durationInFrames={S2E8_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbS2E7" component={ThumbS2E7} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbS2E8" component={ThumbS2E8} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
+    <Composition id="ThumbS2E9" component={ThumbS2E9} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbViralLoad" component={ThumbViralLoad} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
   </>
 );
