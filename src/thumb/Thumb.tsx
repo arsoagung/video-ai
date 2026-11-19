@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { Calendar, Capsule, Clock, CrossBadge, LineChart, TestKit } from '../shared/library';
+import { Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -442,5 +442,34 @@ export const ThumbS1E11: React.FC = () => (
       <TestKit cx={790} cy={1360} s={1.5} lines={1} />
     </Svg>
     <Pill cx={540} cy={1780} text="tes HIV" bg="#72E3D3" fg="#063F38" size={56} />
+  </ThumbFrame>
+);
+
+// Judul: "Yang paling menyakitkan kadang bukan virusnya, tapi stigma." (S2E1, tema biru = pembuka video).
+// Orang (lavender = tokoh "kamu") dengan virus kecil; sekelompok orang di seberang menjauh, pill "stigma".
+export const ThumbS2E1: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Yang paling
+        <br />
+        menyakitkan
+        <br />
+        kadang bukan
+        <br />
+        <span style={{ color: CORAL }}>virusnya</span>,
+        <br />
+        tapi stigma.
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <Person cx={270} cy={1500} s={2.6} color="#B9A2F5" />
+      <FlatVirus cx={340} cy={1580} r={34} rot={20} />
+      <Group cx={800} cy={1530} s={1.15} n={3} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="stigma" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );

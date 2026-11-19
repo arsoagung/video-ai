@@ -1,0 +1,316 @@
+{
+ "code": "S2E1",
+ "duration": 67.0,
+ "speech": [
+  0,
+  66.8
+ ],
+ "noiseDb": -32,
+ "minPause": 0.12,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Kamu baru saja menerima diagnosis yang mengubah cara pandangmu terhadap hidup.",
+   "a": 0,
+   "b": 4.33,
+   "pauseAfter": 0.61,
+   "clauses": [
+    {
+     "text": "Kamu baru saja menerima diagnosis yang mengubah cara pandangmu terhadap hidup.",
+     "a": 0,
+     "b": 4.33,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Dokter mengatakan, hasil pemeriksaanmu positif HIV.",
+   "a": 4.93,
+   "b": 8.88,
+   "pauseAfter": 0.6,
+   "clauses": [
+    {
+     "text": "Dokter mengatakan,",
+     "a": 4.93,
+     "b": 5.97,
+     "anchored": true
+    },
+    {
+     "text": "hasil pemeriksaanmu positif HIV.",
+     "a": 6.46,
+     "b": 8.88,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Pikiranmu mendadak penuh.",
+   "a": 9.48,
+   "b": 10.81,
+   "pauseAfter": 0.54,
+   "clauses": [
+    {
+     "text": "Pikiranmu mendadak penuh.",
+     "a": 9.48,
+     "b": 10.81,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Bukan hanya soal kesehatanmu, tetapi juga keluarga, teman, dan orang-orang di sekitarmu.",
+   "a": 11.36,
+   "b": 18.74,
+   "pauseAfter": 0.5,
+   "clauses": [
+    {
+     "text": "Bukan hanya soal kesehatanmu,",
+     "a": 11.36,
+     "b": 13.65,
+     "anchored": false
+    },
+    {
+     "text": "tetapi juga keluarga,",
+     "a": 13.65,
+     "b": 16.17,
+     "anchored": false
+    },
+    {
+     "text": "teman,",
+     "a": 16.17,
+     "b": 16.54,
+     "anchored": false
+    },
+    {
+     "text": "dan orang-orang di sekitarmu.",
+     "a": 16.54,
+     "b": 18.74,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Bagaimana kalau mereka tahu?",
+   "a": 19.24,
+   "b": 20.86,
+   "pauseAfter": 0.46,
+   "clauses": [
+    {
+     "text": "Bagaimana kalau mereka tahu?",
+     "a": 19.24,
+     "b": 20.86,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Bagaimana kalau mereka menjauh?",
+   "a": 21.32,
+   "b": 23.13,
+   "pauseAfter": 0.15,
+   "clauses": [
+    {
+     "text": "Bagaimana kalau mereka menjauh?",
+     "a": 21.32,
+     "b": 23.13,
+     "anchored": true
+    }
+   ],
+   "flags": [
+    "jeda akhir kalimat hanya 0.15 dtk (batas kalimat biasanya >= 0,3): cek apakah kata pertama kalimat berikutnya terbawa"
+   ]
+  },
+  {
+   "n": 7,
+   "text": "Kadang, yang paling menakutkan bukan hanya virusnya, tetapi kehilangan penerimaan dari orang lain.",
+   "a": 23.28,
+   "b": 28.62,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Kadang,",
+     "a": 23.28,
+     "b": 23.74,
+     "anchored": false
+    },
+    {
+     "text": "yang paling menakutkan bukan hanya virusnya,",
+     "a": 23.74,
+     "b": 25.85,
+     "anchored": false
+    },
+    {
+     "text": "tetapi kehilangan penerimaan dari orang lain.",
+     "a": 25.85,
+     "b": 28.62,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Padahal, diagnosis HIV bukan akhir kehidupan.",
+   "a": 29.0,
+   "b": 31.44,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Padahal,",
+     "a": 29.0,
+     "b": 29.35,
+     "anchored": false
+    },
+    {
+     "text": "diagnosis HIV bukan akhir kehidupan.",
+     "a": 29.35,
+     "b": 31.44,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Dengan pengobatan antiretroviral atau ARV secara rutin, HIV dapat dikendalikan.",
+   "a": 31.76,
+   "b": 37.51,
+   "pauseAfter": 0.32,
+   "clauses": [
+    {
+     "text": "Dengan pengobatan antiretroviral atau ARV secara rutin,",
+     "a": 31.76,
+     "b": 35.13,
+     "anchored": true
+    },
+    {
+     "text": "HIV dapat dikendalikan.",
+     "a": 35.26,
+     "b": 37.51,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Jumlah virus dalam darah bisa ditekan hingga tidak terdeteksi.",
+   "a": 37.83,
+   "b": 41.29,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Jumlah virus dalam darah bisa ditekan hingga tidak terdeteksi.",
+     "a": 37.83,
+     "b": 41.29,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Ketika jumlah virus dalam darah berhasil ditekan dan dipertahankan hingga tidak terdeteksi, HIV tidak lagi dapat ditularkan kepada orang lain.",
+   "a": 41.63,
+   "b": 50.11,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Ketika jumlah virus dalam darah berhasil ditekan dan dipertahankan hingga tidak terdeteksi,",
+     "a": 41.63,
+     "b": 46.73,
+     "anchored": true
+    },
+    {
+     "text": "HIV tidak lagi dapat ditularkan kepada orang lain.",
+     "a": 47.11,
+     "b": 50.11,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Kamu tetap bisa bangun pagi, berangkat kerja, dan tertawa di meja makan bersama orang yang kamu sayang.",
+   "a": 50.43,
+   "b": 56.57,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Kamu tetap bisa bangun pagi,",
+     "a": 50.43,
+     "b": 51.74,
+     "anchored": false
+    },
+    {
+     "text": "berangkat kerja,",
+     "a": 51.74,
+     "b": 52.63,
+     "anchored": true
+    },
+    {
+     "text": "dan tertawa di meja makan bersama orang yang kamu sayang.",
+     "a": 52.76,
+     "b": 56.57,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "HIV adalah persoalan kesehatan yang butuh pengobatan, bukan alasan untuk menghakimi orang.",
+   "a": 56.89,
+   "b": 62.59,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "HIV adalah persoalan kesehatan yang butuh pengobatan,",
+     "a": 56.89,
+     "b": 60.21,
+     "anchored": true
+    },
+    {
+     "text": "bukan alasan untuk menghakimi orang.",
+     "a": 60.57,
+     "b": 62.59,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Karena yang perlu kita lawan adalah virusnya, bukan manusianya.",
+   "a": 62.89,
+   "b": 66.8,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Karena yang perlu kita lawan adalah virusnya,",
+     "a": 62.89,
+     "b": 65.07,
+     "anchored": false
+    },
+    {
+     "text": "bukan manusianya.",
+     "a": 65.07,
+     "b": 66.8,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

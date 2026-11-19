@@ -194,6 +194,7 @@ Dibuat otomatis dari scene-spec storyboard (artifact di kolom `storyboard`). Kod
 - "Kenapa ARV harus diminum rutin?": tema `teal`, `media/cover/S1E5.png` (komposisi `ThumbS1E5`). Jam + kapsul ARV (rutin, sekali sehari); judul 3 baris.
 - "Apa itu window period HIV?": tema `biru`, `media/cover/S1E8.png` (komposisi `ThumbS1E8`). Judul 3 baris; virus (hari 0) -> bar tiga warna (merah, kuning, hijau memudar) + jam + pill "masa jendela".
 - "Kapan waktu terbaik untuk tes HIV?": tema `biru`, `media/cover/S1E11.png` (komposisi `ThumbS1E11`). Kalender (tanggal bertanda) + alat tes, pill "tes HIV".
+- "Yang paling menyakitkan kadang bukan virusnya, tapi stigma.": tema `biru`, `media/cover/S2E1.png` (komposisi `ThumbS2E1`). Judul 5 baris; orang (lavender = tokoh "kamu") dengan virus kecil + sekelompok orang di seberang, pill "stigma".
 - "Apa itu CD4 dan kenapa penting?" (kode S2E9 sejak penomoran ulang): tema `indigo`, `media/cover/S3E2.png` (komposisi `ThumbApaCd4`). Sel CD4 + indikator baterai (analogi video).
 
 ---
@@ -238,6 +239,12 @@ Tanpa storyboard. Kode: `src/s1e11/` (`timeline.ts` = kalimat narasi_final + bat
 
 Tanpa storyboard. Sebelumnya episode ini bernama "ep3" (`src/ep3/`, tidak diubah) dan bergeser jadi S1E4 di sheet; video CD4 yang dulu S1E4 sekarang S2E9 (`src/s2e9/`, `S2E9Full`, `public/vo/S2E9.mp3`, `scripts/render_s2e9.sh`, `media/cover/S3E2.png`). Kode: `src/s1e4/` (`S1E4.tsx` = adegan 2D flat dari ep3 + subtitle + penutup baku, `shapes.tsx` = salinan bentuk ep3, `timeline.ts` = kalimat hasil `retime.mjs` + fungsi `WARP`, `holds.json`, `sync.ts`, `segments.json`, `narasi.txt`). Composition `S1E4Full` (3945 frame, 30 fps; suara 115,64 dtk + jeda, total 131,5 dtk termasuk ekor 6 dtk). Render: `bash scripts/render_s1e4.sh` -> `out/S1E4.mp4`. Tidak ada objek library baru. Animasi adegan ditulis dalam waktu mp3 asli dan dipetakan ke waktu video lewat `WARP` (jeda menahan hasil aksi). Batas kalimat 1-6 ikut hasil `retime` (jeda 9,11 dan 12,04 dst.), jadi adegan A dan B (pembuka, HIV masuk sel CD4) disesuaikan ke batas itu. Penutup dimulai di kalimat 23 ("HIV memang licik dan cepat berubah."), pasangan dua kalimat penutup. Legenda: adegan 1 (virus), 2 (sel CD4, lalu virus), 3 (RNA virus dan DNA sel), 4 (DNA sel dan DNA virus), 5 (bahan virus), 8 (kesalahan salin), 9 (virus cacat, lalu virus tahan obat), 10 (perisai = obat ARV). Pill hanya untuk enzim (reverse transcriptase, integrase, protease) dan "seleksi alam". `public/vo/S1E4.mp3` = dubbing episode ini (belum di-commit ke repo).
 
+
+---
+
+## Episode S2E1: "Yang paling menyakitkan kadang bukan virusnya, tapi stigma."
+
+Tanpa storyboard. Kode: `src/s2e1/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `align_syl.py`; `S2E1.tsx` = 11 adegan animasi + subtitle + penutup). Composition `S2E1Full` (2540 frame, 30 fps; suara 67 dtk + jeda, total 84,64 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e1.sh` -> `out/S2E1.mp4`. Tidak ada objek library baru. Tokoh "kamu" = `Person` lavender sepanjang episode. Legenda: adegan 4 (virus), 6 (virus + ARV), 7 dan 8 (grafik jumlah virus + batas deteksi), 8b dan 11 (virus). Cover: `media/cover/S2E1.png` (`ThumbS2E1`).
 
 ### Penyelaras suku kata (`scripts/align_syl.py`)
 
