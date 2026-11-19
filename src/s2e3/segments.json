@@ -1,0 +1,290 @@
+{
+ "code": "S2E3",
+ "duration": 55.72,
+ "speech": [
+  0,
+  55.49
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Tidak ada perasaan yang salah saat pertama kali mendengar diagnosis HIV.",
+   "a": 0,
+   "b": 4.32,
+   "pauseAfter": 0.62,
+   "clauses": [
+    {
+     "text": "Tidak ada perasaan yang salah saat pertama kali mendengar diagnosis HIV.",
+     "a": 0,
+     "b": 4.32,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Perasaan itu datang seperti ombak.",
+   "a": 4.95,
+   "b": 7.19,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Perasaan itu datang seperti ombak.",
+     "a": 4.95,
+     "b": 7.19,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Ada yang kaget, takut, atau sedih.",
+   "a": 7.5,
+   "b": 10.27,
+   "pauseAfter": 0.56,
+   "clauses": [
+    {
+     "text": "Ada yang kaget,",
+     "a": 7.5,
+     "b": 8.53,
+     "anchored": true
+    },
+    {
+     "text": "takut,",
+     "a": 8.88,
+     "b": 9.31,
+     "anchored": true
+    },
+    {
+     "text": "atau sedih.",
+     "a": 9.59,
+     "b": 10.27,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Itu reaksi manusia yang wajar, dan kamu tidak sendirian.",
+   "a": 10.83,
+   "b": 14.64,
+   "pauseAfter": 0.53,
+   "clauses": [
+    {
+     "text": "Itu reaksi manusia yang wajar,",
+     "a": 10.83,
+     "b": 12.64,
+     "anchored": true
+    },
+    {
+     "text": "dan kamu tidak sendirian.",
+     "a": 13.03,
+     "b": 14.64,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Lalu apa yang membantu?",
+   "a": 15.16,
+   "b": 16.63,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Lalu apa yang membantu?",
+     "a": 15.16,
+     "b": 16.63,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Pertama, beri dirimu jeda.",
+   "a": 17.08,
+   "b": 19.13,
+   "pauseAfter": 0.48,
+   "clauses": [
+    {
+     "text": "Pertama,",
+     "a": 17.08,
+     "b": 17.68,
+     "anchored": true
+    },
+    {
+     "text": "beri dirimu jeda.",
+     "a": 18,
+     "b": 19.13,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Tidak semua harus diputuskan hari ini.",
+   "a": 19.61,
+   "b": 21.81,
+   "pauseAfter": 0.5,
+   "clauses": [
+    {
+     "text": "Tidak semua harus diputuskan hari ini.",
+     "a": 19.61,
+     "b": 21.81,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Kedua, cari satu orang yang aman untuk bercerita.",
+   "a": 22.31,
+   "b": 25.64,
+   "pauseAfter": 0.51,
+   "clauses": [
+    {
+     "text": "Kedua,",
+     "a": 22.31,
+     "b": 22.81,
+     "anchored": true
+    },
+    {
+     "text": "cari satu orang yang aman untuk bercerita.",
+     "a": 23.23,
+     "b": 25.64,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Ketiga, cari teman sesama orang dengan HIV.",
+   "a": 26.15,
+   "b": 29.31,
+   "pauseAfter": 0.5,
+   "clauses": [
+    {
+     "text": "Ketiga,",
+     "a": 26.15,
+     "b": 26.72,
+     "anchored": true
+    },
+    {
+     "text": "cari teman sesama orang dengan HIV.",
+     "a": 27.11,
+     "b": 29.31,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Penelitian menunjukkan dukungan sesama ODHIV membantu orang bertahan dalam perawatan.",
+   "a": 29.81,
+   "b": 35.44,
+   "pauseAfter": 0.47,
+   "clauses": [
+    {
+     "text": "Penelitian menunjukkan dukungan sesama ODHIV membantu orang bertahan dalam perawatan.",
+     "a": 29.81,
+     "b": 35.44,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Keempat, mulai berobat bersama tenaga kesehatan.",
+   "a": 35.92,
+   "b": 39.1,
+   "pauseAfter": 0.45,
+   "clauses": [
+    {
+     "text": "Keempat,",
+     "a": 35.92,
+     "b": 36.38,
+     "anchored": true
+    },
+    {
+     "text": "mulai berobat bersama tenaga kesehatan.",
+     "a": 36.83,
+     "b": 39.1,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Tapi ombak pertama bukan gambaran seluruh laut.",
+   "a": 39.54,
+   "b": 42.69,
+   "pauseAfter": 0.44,
+   "clauses": [
+    {
+     "text": "Tapi ombak pertama bukan gambaran seluruh laut.",
+     "a": 39.54,
+     "b": 42.69,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Di Indonesia, lebih dari dua ratus lima puluh ribu orang dengan HIV sedang menjalani pengobatan ARV.",
+   "a": 43.13,
+   "b": 49.74,
+   "pauseAfter": 0.57,
+   "clauses": [
+    {
+     "text": "Di Indonesia,",
+     "a": 43.13,
+     "b": 44.16,
+     "anchored": false
+    },
+    {
+     "text": "lebih dari dua ratus lima puluh ribu orang dengan HIV sedang menjalani pengobatan ARV.",
+     "a": 44.16,
+     "b": 49.74,
+     "anchored": false
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Perasaan pertama itu nyata, tapi ia bukan satu-satunya bab dalam ceritamu.",
+   "a": 50.3,
+   "b": 55.49,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Perasaan pertama itu nyata,",
+     "a": 50.3,
+     "b": 51.97,
+     "anchored": true
+    },
+    {
+     "text": "tapi ia bukan satu-satunya bab dalam ceritamu.",
+     "a": 52.4,
+     "b": 55.49,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

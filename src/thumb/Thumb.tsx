@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet } from '../shared/library';
+import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -502,3 +502,41 @@ export const ThumbS2E2: React.FC = () => (
     <Pill cx={540} cy={1790} text="HIV positif" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
+
+// "Baru didiagnosis HIV? Merasa kaget itu wajar." (tema biru): orang (lavender) dengan hati hijau, ombak mengelilingi, pill "kaget itu wajar"
+export const ThumbS2E3: React.FC = () => {
+  const wave = (base: number, amp: number, ph: number, bump: number) => {
+    let d = `M -700 1900 L -700 ${base}`;
+    for (let x = -700; x <= 1800; x += 18) d += ` L ${x} ${(base - amp * Math.sin((x / 300) * Math.PI * 2 + ph) - bump * Math.exp(-(((x - 300) / 230) ** 2))).toFixed(1)}`;
+    return d + ' L 1800 1900 Z';
+  };
+  return (
+    <ThumbFrame
+      theme="biru"
+      title={
+        <>
+          Baru
+          <br />
+          didiagnosis <span style={{ color: CORAL }}>HIV</span>?
+          <br />
+          Merasa kaget
+          <br />
+          itu wajar.
+        </>
+      }
+      glowY={1450}
+    >
+      <svg width={THUMB_W} height={THUMB_H} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
+        <Person cx={600} cy={1520} s={2.6} color="#B9A2F5" />
+        <Heart cx={600} cy={1210} s={0.6} color="#7ED6A8" />
+        <defs>
+          <linearGradient id="wvA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2F5E92" stopOpacity="0.9" /><stop offset="1" stopColor="#2F5E92" stopOpacity="0" /></linearGradient>
+          <linearGradient id="wvB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4A7FCC" stopOpacity="0.95" /><stop offset="1" stopColor="#4A7FCC" stopOpacity="0" /></linearGradient>
+        </defs>
+        <path d={wave(1610, 24, 1.3, 0)} fill="url(#wvA)" />
+        <path d={wave(1570, 30, 0.2, 120)} fill="url(#wvB)" />
+      </svg>
+      <Pill cx={540} cy={1790} text="kaget itu wajar" bg="#EAF2FB" fg="#12304F" size={52} />
+    </ThumbFrame>
+  );
+};

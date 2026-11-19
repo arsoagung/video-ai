@@ -196,6 +196,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Apa itu viral load? Bagaimana diukurnya?": tema `teal`, `media/cover/S1E6.png` (komposisi `ThumbViralLoad`).
 - "Apa yang terjadi kalau ARV dihentikan?": tema `indigo`, `media/cover/S1E7.png` (komposisi `ThumbS1E7`). Judul 3 baris; virus beranak + kapsul ARV disilang.
 - "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?": tema `biru`, `media/cover/S2E2.png` (komposisi `ThumbS2E2`). Judul 4 baris; orang memegang hasil tes -> klinik + tablet ARV, pill "HIV positif".
+- "Baru didiagnosis HIV? Merasa kaget itu wajar.": tema `biru`, `media/cover/S2E3.png` (komposisi `ThumbS2E3`). Judul 4 baris; orang (lavender) dengan hati hijau di tengah ombak, pill "kaget itu wajar".
 
 ---
 
@@ -270,3 +271,9 @@ Tanpa storyboard. Kode: `src/s2e2/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ### Penyelaras suku kata (`scripts/align_syl.py`)
 
 `retime.mjs analyze` mencocokkan kalimat ke jeda dengan proporsi karakter, dan bisa meleset satu kalimat penuh kalau ada jeda di tengah kalimat (kasus S1E9). Untuk episode baru, jalankan dulu `python3 scripts/align_syl.py <KODE> narasi.txt` (menulis `src/<kode>/segments.json` dengan format yang sama), cek laju tiap kalimat (harus sekitar 4 sampai 7 suku kata/dtk; yang jauh di luar itu = batas salah), baru `node scripts/retime.mjs build <KODE>`. Skrip menghitung puncak energi suku kata di mp3 dan memilih jeda batas kalimat yang jumlah puncaknya paling cocok dengan suku kata teks. Butuh numpy dan scipy.
+
+---
+
+## Episode S2E3: "Baru didiagnosis HIV? Merasa kaget itu wajar."
+
+Tanpa storyboard. Kode: `src/s2e3/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (batas kalimat cocok dengan jeda nyata mp3); `S2E3.tsx` = 14 adegan animasi (satu per kalimat) + subtitle + penutup). Composition `S2E3Full` (1886 frame, 30 fps; suara 55,72 dtk + jeda, total 62,86 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e3.sh` -> `out/S2E3.mp4`. Tidak ada objek library baru (ombak/laut, air mata, buku ditulis di adegan). Tokoh "kamu" = `Person` lavender, teman aman = hijau. Legenda: adegan 10 (blister ARV) dan 13 (tablet ARV). Pill: "orang dengan HIV" (adegan 9), "lebih dari 250 ribu" (adegan 13). Cover: `media/cover/S2E3.png` (`ThumbS2E3`).
