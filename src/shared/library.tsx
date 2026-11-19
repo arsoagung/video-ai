@@ -889,3 +889,27 @@ export const Microbe: React.FC<P & { color?: string }> = ({ color = '#C7A6E8', .
     <ellipse cx={-40} cy={-24} rx={22} ry={8} fill="#fff" opacity={0.28} />
   </G>
 );
+
+// Nyamuk (analogi/mitos penularan lewat gigitan): tubuh abu kebiruan bergaris, sayap tipis, belalai panjang ke kanan, enam kaki.
+// belly 0..1 = perut terisi darah (merah), wing = fase kepakan sayap (radian), prob = panjang belalai 0..1. Bukan varian virus HIV.
+export const Mosquito: React.FC<P & { belly?: number; wing?: number; prob?: number }> = ({ belly = 0, wing = 0, prob = 1, ...p }) => {
+  const fl = Math.sin(wing) * 16;
+  return (
+    <G {...p}>
+      {[-62, -34, -6].map((x, i) => (
+        <path key={x} d={`M ${x} 14 Q ${x - 14} 52 ${x - 30 - i * 4} 74`} fill="none" stroke="#7388A6" strokeWidth={6} strokeLinecap="round" />
+      ))}
+      <ellipse cx={-14} cy={-26} rx={74} ry={16} fill="#fff" opacity={0.55} transform={`rotate(${-22 - fl} 14 -14)`} />
+      <ellipse cx={-30} cy={-22} rx={64} ry={13} fill="#fff" opacity={0.4} transform={`rotate(${-8 + fl * 0.6} 14 -14)`} />
+      <ellipse cx={-62} cy={2} rx={72} ry={24} fill="#8E9FBB" />
+      {[-90, -66, -42].map((x) => (
+        <rect key={x} x={x} y={-22} width={8} height={44} rx={4} fill="#5E7392" opacity={0.7} />
+      ))}
+      {belly > 0.02 && <ellipse cx={-70} cy={4} rx={50 * belly} ry={16 * belly + 2} fill={LIB_COL.blood} />}
+      <ellipse cx={14} cy={-3} rx={36} ry={27} fill="#7388A6" />
+      <circle cx={58} cy={0} r={17} fill="#8E9FBB" />
+      <rect x={72} y={-3} width={Math.max(2, 90 * prob)} height={6} rx={3} fill="#C9D6E3" />
+      <circle cx={-2} cy={-12} r={8} fill="#fff" opacity={0.2} />
+    </G>
+  );
+};
