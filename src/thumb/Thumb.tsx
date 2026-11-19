@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart } from '../shared/library';
+import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -643,5 +643,34 @@ export const ThumbS2E6: React.FC = () => (
       <Heart cx={875} cy={1330} s={0.6} color="#F4A6C8" />
     </Svg>
     <Pill cx={540} cy={1790} text="tidak menular" bg="#EAF2FB" fg="#12304F" size={52} />
+  </ThumbFrame>
+);
+
+// ---- S2E7: "Nyamuk gigit ODHIV, lalu gigit kamu. Bisa ketularan?" (tema biru)
+export const ThumbS2E7: React.FC = () => (
+  <ThumbFrame
+    theme="biru"
+    title={
+      <>
+        Nyamuk gigit
+        <br />
+        <span style={{ color: CORAL }}>ODHIV</span>, lalu
+        <br />
+        gigit kamu.
+        <br />
+        Bisa ketularan?
+      </>
+    }
+    glowY={1450}
+  >
+    <Svg>
+      <Person cx={170} cy={1560} s={2.0} color="#7ED6A8" />
+      <circle cx={170} cy={1610} r={62} fill="#fff" opacity={0.26} />
+      <FlatVirus cx={170} cy={1610} r={26} />
+      <Person cx={920} cy={1560} s={2.0} color="#B9A2F5" />
+      <Mosquito cx={520} cy={1430} s={1.9} belly={1} wing={0.5} />
+      <CrossBadge cx={660} cy={1290} s={0.8} />
+    </Svg>
+    <Pill cx={540} cy={1790} text="bisa ketularan" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );

@@ -1,0 +1,332 @@
+{
+ "code": "S2E7",
+ "duration": 65.96,
+ "speech": [
+  0,
+  65.96
+ ],
+ "noiseDb": -38,
+ "minPause": 0.15,
+ "sentences": [
+  {
+   "n": 1,
+   "text": "Satu nyamuk menggigit orang dengan HIV, lalu menggigit kamu.",
+   "a": 0,
+   "b": 4.21,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Satu nyamuk menggigit orang dengan HIV,",
+     "a": 0,
+     "b": 2.69,
+     "anchored": true
+    },
+    {
+     "text": "lalu menggigit kamu.",
+     "a": 2.93,
+     "b": 4.21,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 2,
+   "text": "Apakah HIV berpindah?",
+   "a": 4.63,
+   "b": 6.15,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Apakah HIV berpindah?",
+     "a": 4.63,
+     "b": 6.15,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 3,
+   "text": "Tidak.",
+   "a": 6.53,
+   "b": 7.03,
+   "pauseAfter": 0.38,
+   "clauses": [
+    {
+     "text": "Tidak.",
+     "a": 6.53,
+     "b": 7.03,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 4,
+   "text": "Ini alasannya.",
+   "a": 7.41,
+   "b": 8.24,
+   "pauseAfter": 0.37,
+   "clauses": [
+    {
+     "text": "Ini alasannya.",
+     "a": 7.41,
+     "b": 8.24,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 5,
+   "text": "Pertama, saat menggigit, nyamuk menyuntikkan air liurnya sendiri, bukan darah korban sebelumnya.",
+   "a": 8.62,
+   "b": 14.53,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Pertama,",
+     "a": 8.62,
+     "b": 9.19,
+     "anchored": true
+    },
+    {
+     "text": "saat menggigit,",
+     "a": 9.43,
+     "b": 10.24,
+     "anchored": true
+    },
+    {
+     "text": "nyamuk menyuntikkan air liurnya sendiri,",
+     "a": 10.54,
+     "b": 12.66,
+     "anchored": true
+    },
+    {
+     "text": "bukan darah korban sebelumnya.",
+     "a": 12.95,
+     "b": 14.53,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 6,
+   "text": "Kedua, belalainya hanya menyisakan darah dalam jumlah sangat kecil.",
+   "a": 14.86,
+   "b": 19.28,
+   "pauseAfter": 0.33,
+   "clauses": [
+    {
+     "text": "Kedua,",
+     "a": 14.86,
+     "b": 15.37,
+     "anchored": true
+    },
+    {
+     "text": "belalainya hanya menyisakan darah dalam jumlah sangat kecil.",
+     "a": 15.63,
+     "b": 19.28,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 7,
+   "text": "Ketiga, setelah makan, serangga biasanya istirahat dulu untuk mencerna, bukan langsung menggigit orang lain.",
+   "a": 19.61,
+   "b": 26.24,
+   "pauseAfter": 0.27,
+   "clauses": [
+    {
+     "text": "Ketiga,",
+     "a": 19.61,
+     "b": 19.05,
+     "anchored": false
+    },
+    {
+     "text": "setelah makan,",
+     "a": 19.05,
+     "b": 20.15,
+     "anchored": false
+    },
+    {
+     "text": "serangga biasanya istirahat dulu untuk mencerna,",
+     "a": 20.42,
+     "b": 24.18,
+     "anchored": true
+    },
+    {
+     "text": "bukan langsung menggigit orang lain.",
+     "a": 24.5,
+     "b": 26.24,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 8,
+   "text": "Keempat, dan ini yang terpenting, HIV tidak berkembang biak dan tidak bertahan hidup di dalam serangga.",
+   "a": 26.51,
+   "b": 33.03,
+   "pauseAfter": 0.42,
+   "clauses": [
+    {
+     "text": "Keempat,",
+     "a": 26.51,
+     "b": 27.01,
+     "anchored": true
+    },
+    {
+     "text": "dan ini yang terpenting,",
+     "a": 27.26,
+     "b": 28.56,
+     "anchored": true
+    },
+    {
+     "text": "HIV tidak berkembang biak dan tidak bertahan hidup di dalam serangga.",
+     "a": 28.88,
+     "b": 33.03,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 9,
+   "text": "Bagaimana dengan daerah yang banyak nyamuk dan banyak kasus HIV?",
+   "a": 33.45,
+   "b": 37.03,
+   "pauseAfter": 0.41,
+   "clauses": [
+    {
+     "text": "Bagaimana dengan daerah yang banyak nyamuk dan banyak kasus HIV?",
+     "a": 33.45,
+     "b": 37.03,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 10,
+   "text": "Justru di sana pun, CDC menyebut tidak ditemukan bukti penularan lewat nyamuk atau serangga lain.",
+   "a": 37.43,
+   "b": 43.65,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Justru di sana pun,",
+     "a": 37.43,
+     "b": 38.68,
+     "anchored": true
+    },
+    {
+     "text": "CDC menyebut tidak ditemukan bukti penularan lewat nyamuk atau serangga lain.",
+     "a": 38.85,
+     "b": 43.65,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 11,
+   "text": "Penularan HIV butuh kontak dengan cairan tubuh tertentu lewat selaput lendir, luka terbuka, atau langsung ke aliran darah.",
+   "a": 43.96,
+   "b": 51.57,
+   "pauseAfter": 0.3,
+   "clauses": [
+    {
+     "text": "Penularan HIV butuh kontak dengan cairan tubuh tertentu lewat selaput lendir,",
+     "a": 43.96,
+     "b": 48.44,
+     "anchored": true
+    },
+    {
+     "text": "luka terbuka,",
+     "a": 48.82,
+     "b": 49.72,
+     "anchored": true
+    },
+    {
+     "text": "atau langsung ke aliran darah.",
+     "a": 49.87,
+     "b": 51.57,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 12,
+   "text": "Itu berbeda dengan jarum suntik yang dipakai bergantian, yang memang bisa menularkan.",
+   "a": 51.87,
+   "b": 56.59,
+   "pauseAfter": 0.34,
+   "clauses": [
+    {
+     "text": "Itu berbeda dengan jarum suntik yang dipakai bergantian,",
+     "a": 51.87,
+     "b": 54.74,
+     "anchored": true
+    },
+    {
+     "text": "yang memang bisa menularkan.",
+     "a": 54.91,
+     "b": 56.59,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 13,
+   "text": "Jadi tidak perlu takut pada nyamuk, apalagi menjauhi orang dengan HIV.",
+   "a": 56.94,
+   "b": 61.61,
+   "pauseAfter": 0.31,
+   "clauses": [
+    {
+     "text": "Jadi tidak perlu takut pada nyamuk,",
+     "a": 56.94,
+     "b": 59.09,
+     "anchored": true
+    },
+    {
+     "text": "apalagi menjauhi orang dengan HIV.",
+     "a": 59.42,
+     "b": 61.61,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  },
+  {
+   "n": 14,
+   "text": "Dari gigitan nyamuk, yang perlu kamu khawatirkan hanya gatalnya.",
+   "a": 61.92,
+   "b": 65.96,
+   "pauseAfter": 0,
+   "clauses": [
+    {
+     "text": "Dari gigitan nyamuk,",
+     "a": 61.92,
+     "b": 62.98,
+     "anchored": true
+    },
+    {
+     "text": "yang perlu kamu khawatirkan hanya gatalnya.",
+     "a": 63.24,
+     "b": 65.96,
+     "anchored": true
+    }
+   ],
+   "flags": []
+  }
+ ]
+}

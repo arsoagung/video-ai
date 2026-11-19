@@ -202,6 +202,7 @@ Dipilih Arso (Nov 2026) dan berlaku untuk SEMUA episode. Kalau Arso bilang "buat
 - "Cuma lima cairan tubuh yang bisa menularkan HIV. Sisanya aman.": tema `biru`, `media/cover/S2E4.png` (komposisi `ThumbS2E4`). Judul 5 baris; lima tetes cairan berwarna, masing-masing membawa virus, pill "lima cairan".
 - "Makan sepiring dengan ODHIV, tertular nggak ya?": tema `biru`, `media/cover/S2E5.png` (komposisi `ThumbS2E5`). Judul 4 baris; orang hijau (ODHIV, virus kecil di dada) dan lavender (kamu) di meja dengan satu piring + sendok, pill "sepiring".
 - "Tidak terdeteksi maka tidak menularkan. Ini Buktinya.": tema `teal`, `media/cover/S2E6.png` (komposisi `ThumbS2E6`). Judul 4 baris (kata "Tidak terdeteksi" aksen teal); alat tes satu garis + dokumen bercentang + pasangan (lavender dan hijau berlensa virus kecil) dengan hati, pill "tidak menular".
+- "Nyamuk gigit ODHIV, lalu gigit kamu. Bisa ketularan?": tema `biru`, `media/cover/S2E7.png` (komposisi `ThumbS2E7`). Judul 4 baris (ODHIV aksen koral); orang hijau berlensa virus + nyamuk berperut darah disilang + kamu (lavender), pill "bisa ketularan".
 
 ---
 
@@ -300,3 +301,9 @@ Tanpa storyboard. Kode: `src/s2e5/` (`timeline.ts`, `holds.json`, `sync.ts`, `se
 ## Episode S2E6: "Tidak terdeteksi maka tidak menularkan. Ini Buktinya."
 
 Tanpa storyboard. Kode: `src/s2e6/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (10 kalimat, semua batas cocok dengan jeda nyata mp3); `S2E6.tsx` = 10 adegan animasi (satu per kalimat) + subtitle + penutup). Composition `S2E6Full` (suara 70,26 dtk + jeda 5,6 dtk, total 78,26 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e6.sh` -> `out/S2E6.mp4`. Objek library baru: `Microbe` (infeksi menular seksual lain). Tokoh: "kamu" = `Person` lavender, orang dengan HIV = hijau dengan lensa berisi virus kecil di dada (mengecil saat ARV bekerja, tidak pernah hilang). Legenda: adegan 1 (virus), 2 (grafik: jumlah virus + batas deteksi tes), 4 klausa 2 (virus dicoret), 7 (batas deteksi tes), 8 klausa 2 (infeksi lain). Referensi 5 entri dipakai apa adanya. Cover: `media/cover/S2E6.png` (`ThumbS2E6`).
+
+---
+
+## Episode S2E7: "Nyamuk gigit ODHIV, lalu gigit kamu. Bisa ketularan?"
+
+Tanpa storyboard. Kode: `src/s2e7/` (`timeline.ts`, `holds.json`, `sync.ts`, `segments.json` dari `retime.mjs analyze` (14 kalimat, semua batas cocok dengan jeda nyata mp3); `S2E7.tsx` = 12 adegan animasi + subtitle + penutup). Composition `S2E7Full` (suara 65,96 dtk + jeda, total 76,13 dtk termasuk ekor 8 dtk). Render: `bash scripts/render_s2e7.sh` -> `out/S2E7.mp4`. Objek library baru: `Mosquito`. Klausa kalimat 7 dikoreksi manual di `timeline.ts` (retime menghasilkan klausa terbalik). Tokoh: ODHIV = `Person` hijau dengan lensa berisi virus, "kamu" = lavender. Legenda: adegan 1 dan 2 (virus), 3 (virus dalam tetes darah), 6 (virus dalam nyamuk), 9 (virus dalam tetes cairan). Pill: "air liur", "CDC", "selaput lendir", "luka terbuka", "aliran darah". Cover: `media/cover/S2E7.png` (`ThumbS2E7`).
