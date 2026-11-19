@@ -1,5 +1,5 @@
 import React from 'react';
-import { SHAPE_COL } from './shapes';
+import { SHAPE_COL, FlatVirus } from './shapes';
 
 // Library objek SVG seri Makna Positif (prioritas 1). Melengkapi src/shared/shapes.tsx (FlatVirus, FlatCell, Figure, Star).
 // Aturan: flat, tanpa outline/border pada objek, tanpa wajah. Koordinat lokal berpusat di (0,0);
@@ -770,3 +770,103 @@ export const Coin: React.FC<P> = (p) => (
     <circle cx={-24} cy={-26} r={9} fill="#fff" opacity={0.3} />
   </G>
 );
+// ================= TAMBAHAN (S2E1): tokoh berperan, pose, benda lengkap =================
+
+// Dokter: Person dengan jas putih dan stetoskop (beda jelas dari orang biasa). color = warna kepala + baju dalam.
+export const Doctor: React.FC<P & { color?: string }> = ({ color = SHAPE_COL.cd4, ...p }) => (
+  <G {...p}>
+    <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill="#F4F8FF" />
+    <polygon points="-20,-8 20,-8 0,44" fill={color} />
+    <path d="M -22 -6 Q -40 52 0 56 Q 40 52 22 -6" fill="none" stroke={LIB_COL.ink} strokeWidth={7} strokeLinecap="round" />
+    <circle cx={0} cy={60} r={12} fill={LIB_COL.ink} />
+    <circle cx={0} cy={60} r={5} fill={LIB_COL.good} />
+    <circle cx={0} cy={-60} r={34} fill={color} />
+    <circle cx={-12} cy={-68} r={11} fill="#fff" opacity={0.18} />
+    <rect x={30} y={22} width={26} height={30} rx={6} fill="#B3C7DC" opacity={0.7} />
+  </G>
+);
+
+// Tangan menuding (menghakimi): menunjuk ke kiri; pakai rot/skala untuk arah lain. Warna netral terang.
+export const PointHand: React.FC<P & { color?: string }> = ({ color = LIB_COL.light, ...p }) => (
+  <G {...p}>
+    <rect x={40} y={-30} width={70} height={60} rx={14} fill={LIB_COL.track} />
+    <rect x={-90} y={-30} width={150} height={26} rx={13} fill={color} />
+    <rect x={-8} y={-10} width={76} height={50} rx={22} fill={color} />
+    {[0, 1, 2].map((i) => (
+      <circle key={i} cx={8 + i * 20} cy={42} r={13} fill={color} />
+    ))}
+    <rect x={0} y={-24} width={30} height={14} rx={7} fill="#fff" opacity={0.35} />
+  </G>
+);
+
+// Meja makan lengkap: papan meja, kaki, piring dan gelas. Orang duduk/berdiri di belakangnya (digambar sebelum meja).
+export const DiningTable: React.FC<P & { w?: number }> = ({ w = 520, ...p }) => (
+  <G {...p}>
+    <rect x={-w / 2} y={0} width={w} height={26} rx={13} fill={LIB_COL.light} />
+    <rect x={-w / 2 + 40} y={26} width={22} height={110} rx={10} fill={LIB_COL.track} />
+    <rect x={w / 2 - 62} y={26} width={22} height={110} rx={10} fill={LIB_COL.track} />
+    {[-1, 0, 1].map((i) => (
+      <g key={i}>
+        <ellipse cx={(i * w) / 3.6} cy={-4} rx={44} ry={11} fill="#fff" />
+        <ellipse cx={(i * w) / 3.6} cy={-6} rx={26} ry={6} fill={LIB_COL.track} opacity={0.7} />
+      </g>
+    ))}
+    <rect x={w / 2 - 120} y={-44} width={30} height={40} rx={8} fill={LIB_COL.glass} />
+    <rect x={-w / 2 + 90} y={-44} width={30} height={40} rx={8} fill={LIB_COL.glass} />
+  </G>
+);
+
+// Matahari terbit (pagi): bola kuning + 10 sinar.
+export const Sun: React.FC<P> = (p) => (
+  <G {...p}>
+    {Array.from({ length: 10 }, (_, i) => (
+      <rect key={i} x={-7} y={-122} width={14} height={34} rx={7} fill={SHAPE_COL.receptor} transform={`rotate(${i * 36})`} />
+    ))}
+    <circle r={68} fill={SHAPE_COL.receptor} />
+    <circle cx={-20} cy={-22} r={22} fill="#fff" opacity={0.3} />
+  </G>
+);
+
+// Pelukan: dua orang condong saling mendekat, lengan menyilang di punggung (penerimaan). Beda dari Hug lama (dua badan tempel).
+export const Embrace: React.FC<P & { colorA?: string; colorB?: string; heart?: boolean }> = ({ colorA = '#B9A2F5', colorB = '#7ED6A8', heart = true, ...p }) => (
+  <G {...p}>
+    <g transform="translate(-40 0) rotate(8 0 90)">
+      <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill={colorA} />
+      <circle cx={0} cy={-60} r={34} fill={colorA} />
+      <circle cx={-12} cy={-68} r={11} fill="#fff" opacity={0.18} />
+    </g>
+    <g transform="translate(40 0) rotate(-8 0 90)">
+      <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill={colorB} />
+      <circle cx={0} cy={-60} r={34} fill={colorB} />
+      <circle cx={-12} cy={-68} r={11} fill="#fff" opacity={0.18} />
+    </g>
+    <path d="M -62 34 Q 0 56 64 34" fill="none" stroke={colorA} strokeWidth={24} strokeLinecap="round" />
+    <path d="M 62 52 Q 0 74 -60 52" fill="none" stroke={colorB} strokeWidth={24} strokeLinecap="round" />
+    {heart && (
+      <path transform="translate(0 -138) scale(0.42)" d="M 0 70 C -110 -2 -86 -76 -40 -76 C -14 -76 0 -56 0 -42 C 0 -56 14 -76 40 -76 C 86 -76 110 -2 0 70 Z" fill={LIB_COL.bad} />
+    )}
+  </G>
+);
+
+// Virus di dalam tubuh: lensa bening (lingkaran terang) berisi virus kecil, ditaruh di dada orang. Tidak mengubah FlatVirus.
+export const BodyLens: React.FC<P> = (p) => (
+  <G {...p}>
+    <circle r={40} fill="#fff" opacity={0.28} />
+    <FlatVirus cx={0} cy={0} r={17} />
+  </G>
+);
+
+// Ikatan/hubungan: deretan manik antara dua pihak. broken 0..1: putus, kedua sisi menjauh dan manik memudar.
+export const Tie: React.FC<P & { len?: number; broken?: number }> = ({ len = 300, broken = 0, ...p }) => {
+  const n = 7;
+  return (
+    <G {...p}>
+      {Array.from({ length: n }, (_, i) => {
+        const x = -len / 2 + (i / (n - 1)) * len;
+        const side = i < n / 2 ? -1 : 1;
+        const mid = i === Math.floor(n / 2);
+        return <circle key={i} cx={x + side * broken * 70} cy={0} r={mid ? 9 : 11} fill={mid && broken > 0 ? 'none' : LIB_COL.light} opacity={mid ? 1 - broken : 1 - 0.5 * broken} />;
+      })}
+    </G>
+  );
+};
