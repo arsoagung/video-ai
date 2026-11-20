@@ -173,7 +173,9 @@ const pr = (t: number, a: number, b: number, e: (x: number) => number = out3) =>
 const SceneWrap: React.FC<{ i: number; t: number; children: React.ReactNode }> = ({ i, t, children }) => {
   const o = win(t, SCENE_T[i], SCENE_T[i + 1] + 0.25, 0.45);
   if (o < 0.005) return null;
-  return <g opacity={o}>{children}</g>;
+  const k = Math.max(0, Math.min(1, (t - SCENE_T[i]) / (SCENE_T[i + 1] - SCENE_T[i])));
+  const z = 1 + 0.04 * k;
+  return <g opacity={o} transform={`translate(540 960) scale(${z}) translate(-540 -960)`}>{children}</g>;
 };
 
 // ---- Adegan 1 (kalimat 1-3): kertas hasil tes sampai ke "kamu" (positif HIV); pertanyaan bermunculan; lalu jalur ke klinik tergambar (yang biasanya terjadi)
@@ -187,7 +189,7 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const cl = pr(t, s3 + 1.0, s3 + 1.6, back);
   return (
     <>
-      <L.Person cx={360} cy={1010} s={2.2 * me} op={me} color={KAMU} />
+      <L.PersonPose cx={360} cy={1010} s={2.3 * me} op={me} color={KAMU} bow={pr(t, 0.9, 1.8, sine) - 1.6 * pr(t, s3 + 0.3, s3 + 1.3, sine)} />
       <L.Document cx={lerp(1000, 580, doc)} cy={lerp(760, 1030, doc)} s={0.95 * me} op={me} rot={lerp(-14, 6, doc)} />
       <L.SpeechBubble cx={700} cy={700} s={0.95 * bub} op={bub} text="positif HIV" w={400} tail="l" />
       {[[250, 700, 'l'], [440, 610, 'r'], [610, 720, 'r']].map(([x, y, tl], i) => (
@@ -264,10 +266,10 @@ const Scene4: React.FC<{ t: number }> = ({ t }) => {
   const vx = lerp(540, 330, pr(t, c1 - 0.2, c1 + 0.5, sine));
   return (
     <>
-      <Virus x={vx} y={960} r={140 * v * shrink} dim={dim} t={t} />
-      <L.Tablet cx={lerp(960, 640, tb)} cy={lerp(760, 940, tb)} s={1.0} rot={lerp(-35, 0, tb)} op={pr(t, s6 + 0.3, s6 + 0.6) * (1 - pr(t, s6 + 1.9, s6 + 2.3))} />
-      <circle cx={740} cy={960} r={86} fill="none" stroke="#EAF2FB" strokeWidth={10} strokeDasharray="14 18" strokeLinecap="round" opacity={0.8 * ghost} />
-      <L.CrossBadge cx={740} cy={960} s={0.8 * cross} op={cross} />
+      <Virus x={vx} y={1010} r={140 * v * shrink} dim={dim} t={t} />
+      <L.Tablet cx={lerp(980, 660, tb)} cy={lerp(700, 800, tb)} s={1.1} rot={lerp(-35, -18, tb)} op={pr(t, s6 + 0.3, s6 + 0.6) * (1 - pr(t, s6 + 1.4, s6 + 1.8))} />
+      <circle cx={740} cy={1010} r={86} fill="none" stroke="#EAF2FB" strokeWidth={10} strokeDasharray="14 18" strokeLinecap="round" opacity={0.8 * ghost} />
+      <L.CrossBadge cx={740} cy={1010} s={0.8 * cross} op={cross} />
     </>
   );
 };
@@ -303,39 +305,46 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const hold = pr(t, c2 + 0.2, c2 + 0.8);
   return (
     <>
-      <L.Blister cx={330} cy={950} s={1.5 * bl} op={bl} taken={taken} />
-      <L.BloodTube cx={780} cy={980} s={1.3 * tube} op={tube} level={0.12} />
-      <L.CheckBadge cx={780} cy={1230} s={0.7 * ok} op={ok} />
-      <L.Person cx={230} cy={1000} s={2.0 * pA} op={pA} color={KAMU} />
-      <Virus x={280} y={1060} r={26 * pA} t={t} />
-      <L.Person cx={850} cy={1000} s={2.0 * pB} op={pB} color={PAS} />
-      <line x1={400} y1={900} x2={lerp(400, 680, arrow)} y2={900} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" strokeDasharray="6 22" opacity={0.85 * arrow * (1 - 0.5 * hold)} />
-      <L.CrossBadge cx={540} cy={900} s={0.9 * cross} op={cross} />
-      <L.Blister cx={540} cy={1190} s={0.85 * bl2} op={bl2} taken={taken2} />
+      <L.Blister cx={310} cy={880} s={1.5 * bl} op={bl} taken={taken} />
+      <L.BloodTube cx={780} cy={900} s={1.3 * tube} op={tube} level={0.12} />
+      <L.CheckBadge cx={780} cy={1160} s={0.7 * ok} op={ok} />
+      <L.Person cx={230} cy={960} s={2.0 * pA} op={pA} color={KAMU} />
+      <Virus x={280} y={1020} r={26 * pA} t={t} />
+      <L.Person cx={850} cy={960} s={2.0 * pB} op={pB} color={PAS} />
+      <line x1={400} y1={860} x2={lerp(400, 680, arrow)} y2={860} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" strokeDasharray="6 22" opacity={0.85 * arrow * (1 - 0.5 * hold)} />
+      <L.CrossBadge cx={540} cy={860} s={0.9 * cross} op={cross} />
+      <L.Blister cx={540} cy={1170} s={0.75 * bl2} op={bl2} taken={taken2} />
     </>
   );
 };
 
-// ---- Adegan 7 (kalimat 9): U sama dengan U (tidak terdeteksi = tidak menularkan)
+// ---- Adegan 7 (kalimat 9): U sama dengan U. Kiri: viral load tidak terdeteksi (tabung darah hampir kosong); kanan: pasangan terlindung (tidak tertular)
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
   const s9 = T(9);
-  const u1 = pr(t, s9, s9 + 0.6, back);
-  const eq = pr(t, s9 + 0.8, s9 + 1.3, back);
-  const u2 = pr(t, s9 + 1.2, s9 + 1.8, back);
+  const u1 = pr(t, s9, s9 + 0.5, back);
+  const tube = pr(t, s9 + 0.3, s9 + 0.9, back);
+  const eq = pr(t, s9 + 0.7, s9 + 1.1, back);
+  const u2 = pr(t, s9 + 1.0, s9 + 1.5, back);
+  const pas = pr(t, s9 + 1.2, s9 + 1.8, back);
+  const sh = pr(t, s9 + 1.5, s9 + 2.1, back);
   const g = (cx: number, k: number) => (
-    <g opacity={k} transform={`translate(${cx} 960) scale(${k})`}>
-      <circle r={150} fill="#72E3D3" />
-      <text textAnchor="middle" y={62} fontFamily={FONT} fontWeight={800} fontSize={190} fill="#173A5E">U</text>
+    <g opacity={k} transform={`translate(${cx} 800) scale(${k})`}>
+      <circle r={140} fill="#72E3D3" />
+      <text textAnchor="middle" y={58} fontFamily={FONT} fontWeight={800} fontSize={180} fill="#173A5E">U</text>
     </g>
   );
   return (
     <>
       {g(250, u1)}
-      <g opacity={eq} transform={`translate(540 960) scale(${eq})`}>
+      <g opacity={eq} transform={`translate(540 800) scale(${eq})`}>
         <rect x={-50} y={-34} width={100} height={20} rx={10} fill="#EAF2FB" />
         <rect x={-50} y={14} width={100} height={20} rx={10} fill="#EAF2FB" />
       </g>
       {g(830, u2)}
+      <L.BloodTube cx={250} cy={1150} s={1.2 * tube} op={tube} level={0.12} />
+      <Virus x={330} y={1190} r={20 * tube} t={t} />
+      <L.Person cx={800} cy={1130} s={1.7 * pas} op={pas} color={PAS} />
+      <L.Shield cx={870} cy={1160} s={0.95 * sh} op={sh} />
     </>
   );
 };
@@ -362,22 +371,25 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 9 (kalimat 11): status dirahasiakan: dokumen masuk gembok yang menutup; prinsip layanan tes (alat tes + centang)
+// ---- Adegan 9 (kalimat 11): status dirahasiakan: kertas hasil tes digembok (gembok jatuh dan menutup), pengamat tidak boleh melihat; lalu prinsip layanan tes (alat tes + centang)
 const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const s11 = T(11), c1 = CL(11, 1);
   const me = pr(t, s11 - 0.2, s11 + 0.4, back);
-  const doc = pr(t, s11 + 0.2, s11 + 1.2, sine);
-  const lk = pr(t, s11 + 0.2, s11 + 0.7, back);
-  const shut = pr(t, s11 + 1.1, s11 + 1.6);
+  const doc = pr(t, s11 + 0.1, s11 + 0.7, back);
+  const drop = pr(t, s11 + 0.7, s11 + 1.3, in3);
+  const obs = pr(t, s11 + 0.4, s11 + 0.9, back) * (1 - pr(t, c1 - 0.2, c1 + 0.3));
+  const cross = pr(t, s11 + 1.3, s11 + 1.8, back) * (1 - pr(t, c1 - 0.2, c1 + 0.3));
   const kit = pr(t, c1, c1 + 0.7, back);
   const ok = pr(t, c1 + 0.9, c1 + 1.5, back);
   return (
     <>
-      <L.Person cx={260} cy={1020} s={2.0 * me} op={me} color={KAMU} />
-      <L.Document cx={lerp(380, 640, doc)} cy={lerp(1000, 900, doc)} s={0.9 * (1 - 0.35 * doc)} op={me * (1 - 0.8 * shut)} rot={lerp(8, 0, doc)} />
-      <L.Lock cx={640} cy={900} s={1.5 * lk} op={lk} open={shut < 0.5} />
-      <L.TestKit cx={900} cy={1040} s={0.85 * kit} op={kit} lines={1} />
-      <L.CheckBadge cx={900} cy={780} s={0.55 * ok} op={ok} />
+      <L.Person cx={230} cy={1020} s={2.0 * me} op={me} color={KAMU} />
+      <L.Document cx={520} cy={930} s={1.7 * doc} op={doc} rot={-4} />
+      <L.Lock cx={590} cy={lerp(600, 1000, drop)} s={1.4} op={pr(t, s11 + 0.6, s11 + 0.9)} open={drop < 0.95} />
+      <L.Group cx={880} cy={1050} s={0.95 * obs} op={obs} n={3} />
+      <L.CrossBadge cx={880} cy={830} s={0.6 * cross} op={cross} />
+      <L.TestKit cx={880} cy={1010} s={0.9 * kit} op={kit} lines={1} />
+      <L.CheckBadge cx={880} cy={730} s={0.55 * ok} op={ok} />
     </>
   );
 };
@@ -397,8 +409,7 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
       <L.Group cx={lerp(260, 400, near)} cy={1040} s={1.1 * gr * (1 - hug)} op={gr * (1 - hug)} n={3} />
       <L.SpeechBubble cx={330} cy={760} s={0.9 * bub} op={bub} tail="r" w={240} />
       <L.CrossBadge cx={330} cy={760} s={0.8 * cross} op={cross} />
-      <L.Hug cx={540} cy={1010} s={2.1 * hug} op={hug} />
-      <L.Heart cx={540} cy={760} s={0.7 * hug} op={hug} color="#7ED6A8" />
+      <L.Embrace cx={540} cy={1010} s={2.2 * hug} op={hug} colorB="#8FBDF7" />
     </>
   );
 };
@@ -425,16 +436,21 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 12 (kalimat 14): hasil positif bukan akhir: orang terus berjalan di jalan yang tidak berhenti
+// ---- Adegan 12 (kalimat 14): hasil positif bukan akhir: orang berjalan di jalan yang terus ke depan, matahari terbit menyambut, lengan terangkat lega
 const Scene12: React.FC<{ t: number }> = ({ t }) => {
   const s14 = T(14);
   const road = pr(t, s14 - 0.2, s14 + 0.5, back);
-  const x = lerp(160, 940, pr(t, s14 + 0.2, s14 + 2.2, sine));
+  const x = lerp(160, 560, pr(t, s14 + 0.1, s14 + 2.2, sine));
+  const sun = pr(t, s14 + 0.5, s14 + 2.2, sine);
   const sc = pr(t, s14 - 0.2, s14 + 0.4, back);
+  const bob = Math.abs(Math.sin(Math.max(0, t - s14) * 6)) * 8 * (1 - pr(t, s14 + 2.0, s14 + 2.4));
+  const lift = pr(t, s14 + 1.8, s14 + 2.5, back);
   return (
     <>
-      <L.Road cx={540} cy={1100} s={1.0 * road} op={road} w={1000} h={220} />
-      <L.Person cx={x} cy={1010} s={1.7 * sc} op={sc} color={KAMU} />
+      <defs><clipPath id="hz12"><rect x={0} y={0} width={1080} height={1095} /></clipPath></defs>
+      <g clipPath="url(#hz12)"><L.Sun cx={780} cy={lerp(1190, 760, sun)} s={1.7} op={pr(t, s14 + 0.3, s14 + 0.7)} /></g>
+      <L.Road cx={540} cy={1200} s={1.0 * road} op={road} w={1000} h={220} />
+      <L.PersonPose cx={x} cy={1100 - bob} s={1.8 * sc} op={sc} color={KAMU} bow={-lift} lift={lift} />
     </>
   );
 };
@@ -450,11 +466,11 @@ const Scene13: React.FC<{ t: number }> = ({ t }) => {
   const hug = pr(t, c1 + 1.2, c1 + 1.9, back);
   return (
     <>
-      <L.Person cx={lerp(540, 600, near)} cy={1020} s={2.1 * me * (1 - hug)} op={me * (1 - hug)} color={KAMU} />
+      <L.PersonPose cx={lerp(540, 600, near)} cy={1020} s={2.1 * me * (1 - hug)} op={me * (1 - hug)} color={KAMU} bow={lerp(0.5, -1, pr(t, c1 - 0.2, c1 + 1.2, sine))} lift={0} />
       <L.Clinic cx={820} cy={800} s={1.1 * cl} op={cl} />
       <L.Tablet cx={lerp(780, 640, tb)} cy={lerp(900, 930, tb)} s={0.7} op={pr(t, s15 + 0.6, s15 + 0.9) * (1 - pr(t, c1 - 0.2, c1 + 0.2))} />
       <L.Group cx={lerp(120, 380, near)} cy={1040} s={1.1 * gr * (1 - hug)} op={gr * (1 - hug)} n={3} />
-      <L.Hug cx={540} cy={1010} s={2.1 * hug} op={hug} />
+      <L.Embrace cx={540} cy={1010} s={2.2 * hug} op={hug} colorB="#8FBDF7" />
     </>
   );
 };
@@ -627,7 +643,7 @@ export const S2E2Full: React.FC = () => {
           </svg>
           <Pills t={t} />
           <LegendBox t={t} a={T(4) + 0.2} b={T(4) + 3.0} items={[['#FFA27B', 'Obat ARV']]} />
-          <LegendBox t={t} a={T(5) + 0.3} b={T(6) - 0.2} items={[['#FF9C85', 'Virus HIV'], ['#F0616A', 'Sampel darah']]} />
+          <LegendBox t={t} a={T(5) + 0.3} b={T(6) - 0.2} items={[['#FF9C85', 'Virus HIV']]} />
           <LegendBox t={t} a={T(6) + 0.2} b={T(7) - 0.2} items={[['#FF9C85', 'Virus HIV'], ['#FFA27B', 'Obat ARV']]} />
           <LegendBox t={t} a={CL(7, 1) + 0.3} b={T(8) - 0.2} items={[['#F4D77E', 'Jumlah virus'], ['#FF6B4D', 'Batas deteksi']]} />
           <LegendBox t={t} a={CL(8, 1) + 0.3} b={CL(8, 2) - 0.2} items={[['#FF9C85', 'Virus HIV']]} />

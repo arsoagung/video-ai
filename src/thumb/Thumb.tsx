@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
-import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, Heart, Mosquito, Seed, Home } from '../shared/library';
+import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, PersonPose, Heart, Mosquito, Seed, Home } from '../shared/library';
 
 // Thumbnail 9:16 (1080x1920) untuk "Apa bedanya HIV dan AIDS?". Tokoh dari src/shared/shapes.tsx, logo asli.
 export const THUMB_W = 1080;
@@ -493,13 +493,12 @@ export const ThumbS2E2: React.FC = () => (
     glowY={1450}
   >
     <Svg>
-      <Person cx={250} cy={1500} s={2.5} color="#B9A2F5" />
-      <Document cx={470} cy={1540} s={0.9} rot={6} />
-      <line x1={560} y1={1630} x2={690} y2={1630} stroke="#EAF2FB" strokeWidth={12} strokeLinecap="round" strokeDasharray="4 24" />
-      <Clinic cx={850} cy={1520} s={1.15} />
-      <Tablet cx={850} cy={1700} s={0.8} />
+      <PersonPose cx={250} cy={1520} s={3.0} color="#B9A2F5" bow={0.3} />
+      <Document cx={470} cy={1520} s={1.1} rot={8} />
+      <line x1={590} y1={1620} x2={700} y2={1620} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" strokeDasharray="4 26" />
+      <Clinic cx={880} cy={1560} s={1.3} />
+      <Tablet cx={880} cy={1330} s={1.0} rot={-14} />
     </Svg>
-    <Pill cx={540} cy={1790} text="HIV positif" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
 

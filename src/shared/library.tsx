@@ -960,7 +960,7 @@ export const PersonPose: React.FC<P & { color?: string; bow?: number; lift?: num
     <G {...p}>
       {lift > 0.01 &&
         [-1, 1].map((d) => (
-          <rect key={d} x={-11} y={-80 * lift} width={22} height={90 * lift + 10} rx={11} fill={color} transform={`translate(${d * 62} 40) rotate(${d * (14 + 30 * lift)} 0 ${60 * lift})`} />
+          <rect key={d} x={-11} y={-110 * lift} width={22} height={110 * lift + 14} rx={11} fill={color} transform={`translate(${d * 56} 30) rotate(${d * (18 + 22 * lift)})`} />
         ))}
       <g transform={`rotate(${b * 7} 0 90)`}>
         <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill={color} />
