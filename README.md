@@ -89,6 +89,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Lalu lintas (analogi) | `Road(w, h)` (jalan dengan marka tengah; mobil = `Car`) |
 | Olahraga (analogi) | `Goal(net)` (gawang + jaring, net 0..1 = kembung), `Ball` |
 | Data (lanjutan) | `CompareBars(labelA, labelB, pa, pb, mark)` (dua bar tanpa angka, B = 2,35x A, penanda 2x) |
+| Pose (S2E2) | `PersonPose(color, bow, lift)` (orang berpose: `bow` -1 lega .. 0 netral .. 1 tertunduk, `lift` 0..1 lengan terangkat; Person lama tidak diubah) |
 | Uang (analogi) | `Coin` (koin polos; dengan `CrossBadge` = gratis) |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail, w)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
 | Peran & pose (S2E1) | `Doctor(color)` (jas putih + stetoskop), `PointHand(flip)` (tangan menuding, menghakimi; menunjuk kiri, `flip` = menunjuk kanan), `Embrace(colorA, colorB, heart)` (dua orang saling merangkul), `BodyLens` (virus di dalam lensa bening di dada), `Tie(len, broken)` (ikatan manik, putus saat broken 0..1), `DiningTable(w)` (meja makan + piring + gelas), `Sun` (matahari pagi) |

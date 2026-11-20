@@ -952,3 +952,23 @@ export const Toothbrush: React.FC<P & { color?: string }> = ({ color = LIB_COL.g
     ))}
   </G>
 );
+
+// Orang berpose (varian baru dari Person; Person lama tidak diubah). bow: -1 (lega: dada naik, kepala tegak ke belakang) .. 0 (netral) .. 1 (tertunduk: kepala jatuh, badan condong). lift 0..1 = kedua lengan terangkat (lega/menyambut).
+export const PersonPose: React.FC<P & { color?: string; bow?: number; lift?: number }> = ({ color = PERSON_COLS[1], bow = 0, lift = 0, ...p }) => {
+  const b = Math.max(-1, Math.min(1, bow));
+  return (
+    <G {...p}>
+      {lift > 0.01 &&
+        [-1, 1].map((d) => (
+          <rect key={d} x={-11} y={-80 * lift} width={22} height={90 * lift + 10} rx={11} fill={color} transform={`translate(${d * 62} 40) rotate(${d * (14 + 30 * lift)} 0 ${60 * lift})`} />
+        ))}
+      <g transform={`rotate(${b * 7} 0 90)`}>
+        <path d="M -70 90 Q -70 -10 0 -10 Q 70 -10 70 90 Z" fill={color} />
+        <g transform={`translate(${b * 14} ${b * 18}) rotate(${b * 16} 0 -26)`}>
+          <circle cx={0} cy={-60} r={34} fill={color} />
+          <circle cx={-12} cy={-68} r={11} fill="#fff" opacity={0.18} />
+        </g>
+      </g>
+    </G>
+  );
+};
