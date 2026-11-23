@@ -1,5 +1,5 @@
 #!/bin/bash
-# Render S2E2Full (episode "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?", 2D flat penuh, 1080x1920, 30 fps, 2045 frame)
+# Render S2E2Full (episode "Kalau hasil tes HIV positif, apa yang terjadi selanjutnya?", 2D flat penuh, 1080x1920, 30 fps, 2220 frame)
 # dalam potongan berurutan, bisa dilanjut (potongan yang sudah ada dilewati), lalu gabung + audio loudnorm.
 # usage: bash scripts/render_s2e2.sh   (dari root repo; public/vo/S2E2.mp3 harus ada; suara disusun ulang ke out/S2E2/vo_synced.wav; BROWSER=path chrome jika perlu)
 cd "$(dirname "$0")/.."
@@ -11,7 +11,7 @@ node scripts/retime.mjs build S2E2 >> $LOG 2>&1 || { echo "retime build gagal"; 
 echo "start $(date)" >> $LOG
 [ -d out/bundle ] || npx remotion bundle src/index.ts --out-dir=out/bundle >> $LOG 2>&1
 i=0
-for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2044"; do
+for rng in "0 449" "450 899" "900 1349" "1350 1799" "1800 2219"; do
   set -- $rng
   f=out/S2E2/c$i.mp4
   if [ ! -s "$f" ]; then

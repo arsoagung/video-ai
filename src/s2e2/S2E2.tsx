@@ -306,7 +306,8 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <L.Blister cx={310} cy={880} s={1.5 * bl} op={bl} taken={taken} />
-      <L.BloodTube cx={780} cy={900} s={1.3 * tube} op={tube} level={0.12} />
+      <L.BloodTube cx={780} cy={900} s={1.3 * tube} op={tube} level={0.78} />
+      <Virus x={780} y={900} r={12 * tube} dim={0.9} t={t} />
       <L.CheckBadge cx={780} cy={1160} s={0.7 * ok} op={ok} />
       <L.Person cx={230} cy={960} s={2.0 * pA} op={pA} color={KAMU} />
       <Virus x={280} y={1020} r={26 * pA} t={t} />
@@ -318,34 +319,14 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 7 (kalimat 9): U sama dengan U. Kiri: viral load tidak terdeteksi (tabung darah hampir kosong); kanan: pasangan terlindung (tidak tertular)
+// ---- Adegan 7 (kalimat 9): "U sama dengan U" tampil sebagai teks sederhana (istilah resmi U=U)
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
   const s9 = T(9);
-  const u1 = pr(t, s9, s9 + 0.5, back);
-  const tube = pr(t, s9 + 0.3, s9 + 0.9, back);
-  const eq = pr(t, s9 + 0.7, s9 + 1.1, back);
-  const u2 = pr(t, s9 + 1.0, s9 + 1.5, back);
-  const pas = pr(t, s9 + 1.2, s9 + 1.8, back);
-  const sh = pr(t, s9 + 1.5, s9 + 2.1, back);
-  const g = (cx: number, k: number) => (
-    <g opacity={k} transform={`translate(${cx} 800) scale(${k})`}>
-      <circle r={140} fill="#72E3D3" />
-      <text textAnchor="middle" y={58} fontFamily={FONT} fontWeight={800} fontSize={180} fill="#173A5E">U</text>
-    </g>
-  );
+  const k = pr(t, s9 + 0.1, s9 + 0.8, back);
   return (
-    <>
-      {g(250, u1)}
-      <g opacity={eq} transform={`translate(540 800) scale(${eq})`}>
-        <rect x={-50} y={-34} width={100} height={20} rx={10} fill="#EAF2FB" />
-        <rect x={-50} y={14} width={100} height={20} rx={10} fill="#EAF2FB" />
-      </g>
-      {g(830, u2)}
-      <L.BloodTube cx={250} cy={1150} s={1.2 * tube} op={tube} level={0.12} />
-      <Virus x={330} y={1190} r={20 * tube} t={t} />
-      <L.Person cx={800} cy={1130} s={1.7 * pas} op={pas} color={PAS} />
-      <L.Shield cx={870} cy={1160} s={0.95 * sh} op={sh} />
-    </>
+    <text x={540} y={960} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={190} fill="#72E3D3" opacity={k} transform={`translate(0 ${(1 - k) * 24})`}>
+      U = U
+    </text>
   );
 };
 

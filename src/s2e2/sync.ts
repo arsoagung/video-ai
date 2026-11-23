@@ -25,13 +25,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Harus gimana?",
   "sa": 2.2,
   "sb": 3.02,
-  "a": 2.17,
-  "b": 2.99,
+  "a": 2.52,
+  "b": 3.34,
   "clauses": [
    {
     "text": "Harus gimana?",
-    "a": 2.17,
-    "b": 2.99,
+    "a": 2.52,
+    "b": 3.34,
     "anchored": true
    }
   ]
@@ -41,13 +41,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Ini yang biasanya terjadi.",
   "sa": 3.49,
   "sb": 5.02,
-  "a": 3.34,
-  "b": 4.87,
+  "a": 4.04,
+  "b": 5.57,
   "clauses": [
    {
     "text": "Ini yang biasanya terjadi.",
-    "a": 3.34,
-    "b": 4.87,
+    "a": 4.04,
+    "b": 5.57,
     "anchored": true
    }
   ]
@@ -57,13 +57,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Kamu akan diminta untuk minum ARV setiap hari.",
   "sa": 5.4,
   "sb": 8.37,
-  "a": 5.67,
-  "b": 8.64,
+  "a": 6.77,
+  "b": 9.74,
   "clauses": [
    {
     "text": "Kamu akan diminta untuk minum ARV setiap hari.",
-    "a": 5.67,
-    "b": 8.64,
+    "a": 6.77,
+    "b": 9.74,
     "anchored": true
    }
   ]
@@ -73,13 +73,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Jumlah virus di darahmu akan dipantau secara berkala.",
   "sa": 8.68,
   "sb": 11.73,
-  "a": 9.04,
-  "b": 12.09,
+  "a": 10.44,
+  "b": 13.49,
   "clauses": [
    {
     "text": "Jumlah virus di darahmu akan dipantau secara berkala.",
-    "a": 9.04,
-    "b": 12.09,
+    "a": 10.44,
+    "b": 13.49,
     "anchored": true
    }
   ]
@@ -89,19 +89,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "ARV akan menekan replikasi virus, bukan menghapusnya.",
   "sa": 12.06,
   "sb": 15.82,
-  "a": 12.44,
-  "b": 16.2,
+  "a": 14.19,
+  "b": 17.95,
   "clauses": [
    {
     "text": "ARV akan menekan replikasi virus,",
-    "a": 12.44,
-    "b": 14.94,
+    "a": 14.19,
+    "b": 16.69,
     "anchored": true
    },
    {
     "text": "bukan menghapusnya.",
-    "a": 15.08,
-    "b": 16.2,
+    "a": 16.83,
+    "b": 17.95,
     "anchored": true
    }
   ]
@@ -111,19 +111,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Umumnya dalam satu sampai enam bulan, virus turun sampai tidak terdeteksi.",
   "sa": 16.14,
   "sb": 21.15,
-  "a": 16.6,
-  "b": 21.61,
+  "a": 18.65,
+  "b": 23.66,
   "clauses": [
    {
     "text": "Umumnya dalam satu sampai enam bulan,",
-    "a": 16.6,
-    "b": 18.95,
+    "a": 18.65,
+    "b": 21,
     "anchored": true
    },
    {
     "text": "virus turun sampai tidak terdeteksi.",
-    "a": 19.29,
-    "b": 21.61,
+    "a": 21.34,
+    "b": 23.66,
     "anchored": true
    }
   ]
@@ -133,25 +133,25 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Setelah sekitar enam bulan minum ARV rutin dan hasil tes viral load tidak terdeteksi, kamu tidak menularkan virus ke pasanganmu, selama ARV tetap rutin diminum.",
   "sa": 21.55,
   "sb": 32.12,
-  "a": 22.41,
-  "b": 32.98,
+  "a": 24.86,
+  "b": 35.43,
   "clauses": [
    {
     "text": "Setelah sekitar enam bulan minum ARV rutin dan hasil tes viral load tidak terdeteksi,",
-    "a": 22.41,
-    "b": 27.6,
+    "a": 24.86,
+    "b": 30.05,
     "anchored": true
    },
    {
     "text": "kamu tidak menularkan virus ke pasanganmu,",
-    "a": 28.02,
-    "b": 30.28,
+    "a": 30.47,
+    "b": 32.73,
     "anchored": true
    },
    {
     "text": "selama ARV tetap rutin diminum.",
-    "a": 30.61,
-    "b": 32.98,
+    "a": 33.06,
+    "b": 35.43,
     "anchored": true
    }
   ]
@@ -161,13 +161,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Istilahnya U sama dengan U.",
   "sa": 32.44,
   "sb": 34.62,
-  "a": 33.78,
-  "b": 35.96,
+  "a": 36.63,
+  "b": 38.81,
   "clauses": [
    {
     "text": "Istilahnya U sama dengan U.",
-    "a": 33.78,
-    "b": 35.96,
+    "a": 36.63,
+    "b": 38.81,
     "anchored": true
    }
   ]
@@ -177,19 +177,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Di fasilitas pemerintah, ARV gratis lewat jalur program Kemenkes.",
   "sa": 34.91,
   "sb": 39.29,
-  "a": 36.31,
-  "b": 40.69,
+  "a": 39.91,
+  "b": 44.29,
   "clauses": [
    {
     "text": "Di fasilitas pemerintah,",
-    "a": 36.31,
-    "b": 37.7,
+    "a": 39.91,
+    "b": 41.3,
     "anchored": true
    },
    {
     "text": "ARV gratis lewat jalur program Kemenkes.",
-    "a": 37.87,
-    "b": 40.69,
+    "a": 41.47,
+    "b": 44.29,
     "anchored": true
    }
   ]
@@ -199,19 +199,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Statusmu dirahasiakan, itu prinsip layanan tes HIV.",
   "sa": 39.56,
   "sb": 43.39,
-  "a": 40.99,
-  "b": 44.82,
+  "a": 44.89,
+  "b": 48.72,
   "clauses": [
    {
     "text": "Statusmu dirahasiakan,",
-    "a": 40.99,
-    "b": 43.02,
+    "a": 44.89,
+    "b": 46.92,
     "anchored": true
    },
    {
     "text": "itu prinsip layanan tes HIV.",
-    "a": 43.15,
-    "b": 44.82,
+    "a": 47.05,
+    "b": 48.72,
     "anchored": true
    }
   ]
@@ -221,13 +221,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Aturan Kemenkes juga menargetkan penghapusan stigma dan diskriminasi.",
   "sa": 43.65,
   "sb": 47.84,
-  "a": 45.12,
-  "b": 49.31,
+  "a": 49.42,
+  "b": 53.61,
   "clauses": [
    {
     "text": "Aturan Kemenkes juga menargetkan penghapusan stigma dan diskriminasi.",
-    "a": 45.12,
-    "b": 49.31,
+    "a": 49.42,
+    "b": 53.61,
     "anchored": true
    }
   ]
@@ -237,19 +237,19 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Kalau minum ARV secara rutin, kamu masih bisa hidup normal.",
   "sa": 48.19,
   "sb": 51.88,
-  "a": 49.71,
-  "b": 53.4,
+  "a": 54.41,
+  "b": 58.1,
   "clauses": [
    {
     "text": "Kalau minum ARV secara rutin,",
-    "a": 49.71,
-    "b": 51.58,
+    "a": 54.41,
+    "b": 56.28,
     "anchored": true
    },
    {
     "text": "kamu masih bisa hidup normal.",
-    "a": 51.73,
-    "b": 53.4,
+    "a": 56.43,
+    "b": 58.1,
     "anchored": true
    }
   ]
@@ -259,13 +259,13 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Jadi hasil positif bukan akhir.",
   "sa": 52.17,
   "sb": 54.55,
-  "a": 53.85,
-  "b": 56.23,
+  "a": 58.9,
+  "b": 61.28,
   "clauses": [
    {
     "text": "Jadi hasil positif bukan akhir.",
-    "a": 53.85,
-    "b": 56.23,
+    "a": 58.9,
+    "b": 61.28,
     "anchored": true
    }
   ]
@@ -275,24 +275,24 @@ export const SYNC_SEGS: SyncSeg[] = [
   "text": "Itu awal perawatan, dan kamu tidak sendirian.",
   "sa": 54.88,
   "sb": 58.49,
-  "a": 56.53,
-  "b": 60.14,
+  "a": 62.38,
+  "b": 65.99,
   "clauses": [
    {
     "text": "Itu awal perawatan,",
-    "a": 56.53,
-    "b": 58.01,
+    "a": 62.38,
+    "b": 63.86,
     "anchored": true
    },
    {
     "text": "dan kamu tidak sendirian.",
-    "a": 58.32,
-    "b": 60.14,
+    "a": 64.17,
+    "b": 65.99,
     "anchored": true
    }
   ]
  }
 ];
-export const AUDIO_END = 60.14; // akhir ucapan terakhir (waktu video)
+export const AUDIO_END = 65.99; // akhir ucapan terakhir (waktu video)
 export const TAIL = 8; // ekor diam setelah ucapan terakhir
-export const SYNC_DUR = 68.14;
+export const SYNC_DUR = 73.99;
