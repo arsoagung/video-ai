@@ -5,6 +5,8 @@ import { ez, lerp, win, out3, sine, back, in3 } from '../motion';
 import * as L from '../shared/library';
 import { LIB_COL } from '../shared/library';
 import { FlatVirus, FlatCell, SHAPE_COL } from '../shared/shapes';
+import { Actor, ActorSide, Chair, POSES_FRONT, POSES_SIDE, NEUTRAL, NEUTRAL_SIDE } from '../shared/actor';
+import type { ActorRole, Pose, SidePose } from '../shared/actor';
 import { CUES, CLOSE, SCENE_T, T, CL, EP_DUR } from './timeline';
 
 export const S2E1ALT_FRAMES = Math.ceil(EP_DUR * FPS);
@@ -194,26 +196,89 @@ const BigText: React.FC<{ t: number; a: number; b: number; y: number; lines: str
   );
 };
 
-// ---- Adegan 1: ruang konsultasi. Tokoh utama (kiri, duduk) dan dokter (kanan, duduk); dokter menyerahkan hasil pemeriksaan, tokoh menerima dengan kedua tangan
+// =============== tokoh: HANYA karakter modular resmi (src/shared/actor.tsx). Gerak = interpolasi sudut sendi antar pose per frame. ===============
+type J3 = [number, number, number];
+const cl = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+const mj = (a: J3, b: J3, k: number): J3 => [lerp(a[0], b[0], k), lerp(a[1], b[1], k), lerp(a[2], b[2], k)];
+const mixS = (a: SidePose, b: SidePose, k: number): SidePose => {
+  const A = { ...NEUTRAL_SIDE, ...a }, B = { ...NEUTRAL_SIDE, ...b };
+  return { lean: lerp(A.lean, B.lean, k), head: lerp(A.head, B.head, k), armN: mj(A.armN, B.armN, k), armF: mj(A.armF, B.armF, k), legN: mj(A.legN, B.legN, k), legF: mj(A.legF, B.legF, k) };
+};
+const mixF = (a: Pose, b: Pose, k: number): Pose => {
+  const A = { ...NEUTRAL, ...a }, B = { ...NEUTRAL, ...b };
+  return { lean: lerp(A.lean, B.lean, k), head: lerp(A.head, B.head, k), armL: mj(A.armL, B.armL, k), armR: mj(A.armR, B.armR, k), legL: mj(A.legL, B.legL, k), legR: mj(A.legR, B.legR, k) };
+};
+// siklus jalan: dua ujung langkah (N dan F bertukar), diinterpolasi dengan sinus
+const JALAN_B: SidePose = { legN: POSES_SIDE.jalan.legF, legF: POSES_SIDE.jalan.legN, armN: POSES_SIDE.jalan.armF, armF: POSES_SIDE.jalan.armN, lean: 4 };
+const jalan = (ph: number) => mixS(POSES_SIDE.jalan, JALAN_B, (Math.sin(ph) + 1) / 2);
+
+const cyOf = (gy: number, s: number, seated = false) => gy - (seated ? 218 : 354) * s;
+type SideProps = { x: number; gy: number; s: number; role: ActorRole; pose?: SidePose; face?: 1 | -1; seated?: boolean; chair?: boolean; op?: number };
+// orang tampak samping; face = -1 mencerminkan (menghadap kiri). Kursi dan orang duduk berbagi titik pusat panggul.
+const Hum: React.FC<SideProps> = ({ x, gy, s, role, pose, face = 1, seated = false, chair = false, op = 1 }) => {
+  if (op < 0.005 || s < 0.01) return null;
+  const cy = cyOf(gy, s, seated);
+  return (
+    <g transform={face === -1 ? `translate(${2 * x} 0) scale(-1 1)` : undefined}>
+      {chair && <Chair cx={x} cy={cy} s={s} op={op} />}
+      <ActorSide cx={x} cy={cy} s={s} role={role} pose={pose} op={op} />
+    </g>
+  );
+};
+const Fr: React.FC<{ x: number; gy: number; s: number; role: ActorRole; pose?: Pose; op?: number }> = ({ x, gy, s, role, pose, op = 1 }) =>
+  op < 0.005 || s < 0.01 ? null : <Actor cx={x} cy={cyOf(gy, s)} s={s} role={role} pose={pose} op={op} />;
+
+// posisi dunia dari titik lokal tampak samping (memperhitungkan lean dan cermin)
+const sideW = (x: number, cy: number, s: number, face: number, lean: number, lx: number, ly: number) => {
+  const r = (cl(lean, -20, 40) * Math.PI) / 180, c = Math.cos(r), sn = Math.sin(r);
+  const dx = lx, dy = ly + 50;
+  return { x: x + face * s * (dx * c - dy * sn), y: cy + s * (dx * sn + dy * c - 50) };
+};
+const dirA = (deg: number) => [Math.sin((deg * Math.PI) / 180), Math.cos((deg * Math.PI) / 180)];
+// pusat telapak tangan (sendi sudah dibatasi seperti di actor.tsx)
+const handSide = (x: number, gy: number, s: number, pose: SidePose, face: 1 | -1, seated = false, which: 'armN' | 'armF' = 'armN') => {
+  const P = { ...NEUTRAL_SIDE, ...pose };
+  const a = P[which];
+  const a0 = cl(a[0], -60, 165), a1 = cl(a[1], 0, 135);
+  const u = dirA(a0), f = dirA(a0 + a1);
+  return sideW(x, cyOf(gy, s, seated), s, face, P.lean, 4 + 108 * u[0] + 120 * f[0], -196 + 108 * u[1] + 120 * f[1]);
+};
+// IK dua ruas: sudut [bahu, siku, 0] supaya telapak tangan mencapai target (batas sendi diterapkan sesudahnya oleh actor.tsx)
+const ikSide = (x: number, gy: number, s: number, pose: SidePose, face: 1 | -1, seated: boolean, target: { x: number; y: number }): J3 => {
+  const cy = cyOf(gy, s, seated);
+  const lean = cl(({ ...NEUTRAL_SIDE, ...pose }).lean, -20, 40);
+  const r = (-lean * Math.PI) / 180, c = Math.cos(r), sn = Math.sin(r);
+  const lx0 = ((target.x - x) * face) / s, ly0 = (target.y - cy) / s + 50;
+  const lx = lx0 * c - ly0 * sn, ly = lx0 * sn + ly0 * c - 50;
+  const vx = lx - 4, vy = ly + 196;
+  const L1 = 108, L2 = 120;
+  const d = cl(Math.hypot(vx, vy), Math.abs(L1 - L2) + 2, L1 + L2 - 0.5);
+  const phi = (Math.atan2(vx, vy) * 180) / Math.PI;
+  const al = (Math.acos(cl((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1)) * 180) / Math.PI;
+  const ga = (Math.acos(cl((L1 * L1 + L2 * L2 - d * d) / (2 * L1 * L2), -1, 1)) * 180) / Math.PI;
+  return [phi - al, 180 - ga, 0];
+};
+const GY = 1250; // garis tanah adegan dalam ruang
+const Floor: React.FC<{ y?: number; op?: number }> = ({ y = GY, op = 1 }) => <rect x={-120} y={y} width={1320} height={14} rx={7} fill="#fff" opacity={0.2 * op} />;
+
+// ---- Adegan 1: ruang konsultasi. Tokoh utama (kiri, duduk) dan dokter (kanan, duduk, menghadap kiri); dokter menyerahkan hasil pemeriksaan, tokoh menerima dengan tangan terulur
 const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const a = CL(2, 0) - 0.4, b = CL(2, 1) - 0.1;
   const enter = pr(t, 0.2, 1.0, back);
   const hand = pr(t, a, b, sine);
-  const dr = { x: 800, y: 1035 };
-  const dLen = lerp(110, 250, hand);
-  const dTip = tip(dr.x - 105, dr.y, dLen, 176);
-  const mLen = lerp(60, 175, hand);
-  const m1 = tip(290 + 105, 1035, mLen, 4);
+  const S = 0.9, bx = 345, dx = 735;
+  const rest = POSES_SIDE.duduk;
+  const mePose = mixS({ ...rest, head: 4 }, { ...rest, head: 10, armN: [78, 12, 0] }, hand);
+  const drPose = mixS(rest, { ...rest, armN: [82, 10, 0] }, hand);
+  const dH = handSide(dx, 1390, S * enter, drPose, -1, true);
+  const mH = handSide(bx, 1390, S * enter, mePose, 1, true);
+  const k = hand * 0.55;
   return (
     <>
-      <L.Chair cx={290} cy={960} s={2.0 * enter} op={enter} />
-      <L.Chair cx={800} cy={960} s={2.0 * enter} op={enter} />
-      <L.PersonPose cx={290} cy={985} s={2.1 * enter} op={enter} color={MAIN} bow={0.15} />
-      <L.Doctor cx={800} cy={985} s={2.1 * enter} op={enter} color={DOC} />
-      <L.ArmReach cx={dr.x - 105} cy={dr.y} rot={176} len={dLen} color="#F4F8FF" op={enter} />
-      <L.ArmReach cx={395} cy={1035} rot={4} len={mLen} color={MAIN} op={enter} />
-      <L.Document cx={lerp(dTip.x, (dTip.x + m1.x) / 2 + 20, hand * 0.8)} cy={dTip.y - 20} s={0.62 * enter} op={enter} rot={-8} />
-      <L.DeskFront cx={540} cy={1100} w={980} op={enter} />
+      <Floor y={1390} op={enter} />
+      <Hum x={bx} gy={1390} s={S * enter} role="blue" pose={mePose} seated chair op={enter} />
+      <Hum x={dx} gy={1390} s={S * enter} role="purple" pose={drPose} face={-1} seated chair op={enter} />
+      <L.Document cx={lerp(dH.x, mH.x, k) - 4} cy={lerp(dH.y, mH.y, k) - 26} s={0.5 * enter} op={enter} rot={-6} />
     </>
   );
 };
@@ -225,14 +290,20 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   const mv = pr(t, a + 1.0, a + 2.6, sine);
   const txt = (1 - pr(t, a + 1.4, a + 2.2)) * pr(t, a, a + 0.5);
   const dimK = 0.22 * k;
-  const sc = lerp(3.4, 1.15, mv);
+  const S = 0.85, X = 520, G2 = 1340;
+  const pose = mixS(
+    { lean: 6, head: 4, armN: [30, 75, 0], armF: [28, 72, 0] },
+    { lean: 30, head: 24, armN: [34, 82, 0], armF: [30, 78, 0] },
+    mv,
+  );
+  const actorOp = pr(t, a, a + 0.6);
+  const hh = handSide(X, G2, S, pose, 1);
+  const sc = lerp(3.4, 0.7, mv);
   return (
     <>
       <rect x={-200} y={-200} width={1500} height={2400} fill="#06122B" opacity={dimK} />
-      <L.PersonPose cx={540} cy={1010} s={2.4} color={MAIN} bow={lerp(0.2, 0.9, mv)} op={pr(t, a, a + 0.6)} />
-      <L.ArmReach cx={420} cy={1085} rot={lerp(40, 55, mv)} len={150} color={MAIN} />
-      <L.ArmReach cx={660} cy={1085} rot={lerp(140, 125, mv)} len={150} color={MAIN} />
-      <g transform={`translate(540 ${lerp(940, 1240, mv)}) scale(${sc})`}>
+      <Hum x={X} gy={G2} s={S} role="blue" pose={pose} op={actorOp} />
+      <g transform={`translate(${lerp(540, hh.x + 6, mv)} ${lerp(940, hh.y - 14, mv)}) scale(${sc})`}>
         <L.Document cx={0} cy={0} s={1} />
         <text x={0} y={-22} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={27} fill={LIB_COL.bad} opacity={txt}>POSITIF</text>
         <text x={0} y={12} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={34} fill={LIB_COL.bad} opacity={txt}>HIV</text>
@@ -250,9 +321,10 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const P = [[190, 740], [890, 740], [150, 1060], [930, 1060]];
   const pos = P.map(([x, y]) => [lerp(x, 540 + (x - 540) * 0.86, tight), lerp(y, 1010 + (y - 1010) * 0.88, tight)]);
   const bubble = pr(t, s3, s3 + 0.7, back) * (1 - pr(t, CL(4, 0), CL(4, 0) + 0.5));
+  const mePose = mixF(POSES_FRONT.berdiri, { ...POSES_FRONT.tanganDiDada, head: 16, lean: 5 }, tight);
   return (
     <>
-      <L.PersonPose cx={540} cy={1150} s={1.9 * enter} op={enter} color={MAIN} bow={lerp(0.3, 0.6, tight)} />
+      <Fr x={540} gy={1330} s={0.8 * enter} role="blue" pose={mePose} op={enter} />
       <circle cx={540} cy={640} r={86 * bubble} fill="#fff" opacity={0.18 * bubble} />
       <text x={540} y={668} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={90 * bubble} fill="#fff" opacity={0.7 * bubble}>?</text>
       {pos.map(([x, y], i) => (
@@ -261,17 +333,17 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
           {i === 0 && <L.Heart cx={0} cy={4} s={0.9} color={GREEN} />}
           {i === 1 && (
             <>
-              <L.Home cx={0} cy={-10} s={0.8} />
-              <L.PersonPose cx={-38} cy={44} s={0.45} color={FAM} />
-              <L.PersonPose cx={38} cy={44} s={0.45} color={FAM} />
+              <L.Home cx={0} cy={-22} s={0.7} />
+              <Fr x={-34} gy={84} s={0.16} role="yellow" />
+              <Fr x={34} gy={84} s={0.16} role="yellow" />
             </>
           )}
-          {i === 2 && <L.PersonPose cx={0} cy={0} s={0.9} color={COM} />}
+          {i === 2 && <Fr x={0} gy={88} s={0.25} role="teal" />}
           {i === 3 && (
             <>
-              <L.PersonPose cx={-52} cy={10} s={0.6} color={COM} />
-              <L.PersonPose cx={52} cy={10} s={0.6} color={COM} />
-              <L.PersonPose cx={0} cy={-6} s={0.72} color={FAM} />
+              <Fr x={-50} gy={84} s={0.17} role="teal" />
+              <Fr x={50} gy={84} s={0.17} role="teal" />
+              <Fr x={0} gy={90} s={0.2} role="yellow" />
             </>
           )}
         </g>
@@ -280,7 +352,7 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 4+5: tokoh di depan menatap kelompok di kejauhan (di dalam panel pikiran); kelompok perlahan menjauh (ketakutan, bukan kenyataan); pelukan penerimaan terlepas
+// ---- Adegan 4+5: tokoh di depan menatap kelompok di kejauhan (di dalam panel pikiran); kelompok perlahan berjalan menjauh (ketakutan, bukan kenyataan); pelukan penerimaan terlepas
 const Scene45: React.FC<{ t: number }> = ({ t }) => {
   const s5 = T(5), s6 = T(6), c2 = CL(7, 2);
   const enter = pr(t, s5 - 0.3, s5 + 0.5, back);
@@ -288,15 +360,29 @@ const Scene45: React.FC<{ t: number }> = ({ t }) => {
   const away = pr(t, s6 + 0.1, s6 + 2.2, sine);
   const hug = pr(t, c2 - 0.2, c2 + 0.6, back);
   const hugGo = pr(t, c2 + 1.4, c2 + 3.0, sine);
-  const people = [FAM, COM, COM, FAM];
+  const roles: ActorRole[] = ['yellow', 'teal', 'teal', 'yellow'];
+  const mePose = mixS({ head: 12, lean: 8 }, { head: 22, lean: 14 }, away);
+  // pelukan: dua tokoh depan, lengan melingkar; lepas = lengan membuka dan menjauh
+  const open = hugGo;
+  const hugPoseL = mixF({ lean: 8, head: 8, armL: [8, 0, 0], armR: [70, -75, 0] }, { lean: 0, head: 0, armL: [8, 0, 0], armR: [20, -10, 0] }, open);
+  const hugPoseR = mixF({ lean: -8, head: -8, armR: [8, 0, 0], armL: [70, -75, 0] }, { lean: 0, head: 0, armR: [8, 0, 0], armL: [20, -10, 0] }, open);
+  const hs = 0.5 * hug * (1 - 0.4 * hugGo);
+  const sep = lerp(92, 150, open) * hs / 0.5;
   return (
     <>
       <ellipse cx={690} cy={840} rx={300 * panel} ry={210 * panel} fill="#fff" opacity={0.12} />
-      {people.map((c, i) => (
-        <L.PersonPose key={i} cx={540 + i * 90 + away * (60 + i * 40)} cy={880 + (i % 2) * 14 - away * 10} s={0.8 - 0.25 * away} op={panel * (1 - 0.75 * away)} color={c} />
-      ))}
-      <L.Embrace cx={690} cy={880} s={1.35 * hug * (1 - 0.4 * hugGo)} op={hug * (1 - hugGo)} colorA={FAM} colorB={COM} heart />
-      <L.PersonPose cx={250} cy={1160} s={2.6 * enter} op={enter} color={MAIN} bow={lerp(0.45, 0.7, away)} />
+      {roles.map((r, i) => {
+        const x = 600 + i * 78 + away * (60 + i * 40);
+        const ph = t * 7 + i * 1.7;
+        const pose = away < 0.02 ? POSES_SIDE.berdiri : mixS(POSES_SIDE.berdiri, jalan(ph), Math.min(1, away * 6));
+        return <Hum key={i} x={x} gy={1000 + (i % 2) * 14 - away * 10} s={(0.4 - 0.15 * away) * panel} role={r} pose={pose} op={panel * (1 - 0.75 * away)} />;
+      })}
+      <g opacity={hug * (1 - hugGo)}>
+        <Fr x={690 - sep / 2} gy={1000} s={hs} role="yellow" pose={hugPoseL} op={hug * (1 - hugGo)} />
+        <Fr x={690 + sep / 2} gy={1000} s={hs} role="teal" pose={hugPoseR} op={hug * (1 - hugGo)} />
+        <L.Heart cx={690} cy={1000 - 354 * hs - 30} s={0.55 * hug} color={GREEN} />
+      </g>
+      <Hum x={250} gy={1330} s={0.95 * enter} role="blue" pose={mePose} op={enter} />
     </>
   );
 };
@@ -306,35 +392,50 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
   const a = SCENE_T[4], b = SCENE_T[5];
   const k = pr(t, a + 0.3, b - 0.2, sine);
   const sun = pr(t, a + 0.4, b, sine);
+  const pose = mixS(POSES_SIDE.membungkuk, { lean: 0, head: -10, armN: [14, 10, 0], armF: [10, 8, 0] }, k);
   return (
     <>
       <L.Sun cx={830} cy={lerp(1000, 760, sun)} s={1.6} op={0.85 * sun} />
       <BigText t={t} a={a + 0.2} b={b + 0.1} y={400} lines={['DIAGNOSIS BUKAN', 'AKHIR KEHIDUPAN']} size={62} />
-      <L.PersonPose cx={400} cy={1100} s={2.4} color={MAIN} bow={lerp(0.85, -0.8, k)} lift={0} />
+      <Floor y={1340} />
+      <Hum x={400} gy={1340} s={0.9} role="blue" pose={pose} />
     </>
   );
 };
 
-// ---- Adegan 7: pengobatan ARV sebagai rutinitas. Tangan mengambil obat dari strip, membawa ke arah kepala, kembali
+// ---- Adegan 7: pengobatan ARV sebagai rutinitas. Tangan mengambil obat dari strip di meja, membawa ke arah mulut, kembali
 const Scene7: React.FC<{ t: number }> = ({ t }) => {
   const a = SCENE_T[5], b = SCENE_T[6];
   const enter = pr(t, a, a + 0.6, back);
   const ph = pr(t, a + 0.6, b - 0.3, sine); // 0..1 sepanjang aksi
   const reach = ph < 0.35 ? ph / 0.35 : ph < 0.7 ? 1 : 1 - (ph - 0.7) / 0.3;
   const toHead = ph < 0.35 ? 0 : ph < 0.7 ? (ph - 0.35) / 0.35 : 1 - (ph - 0.7) / 0.3 * 1;
-  const ang = lerp(lerp(30, 12, reach), -70, toHead);
-  const len = lerp(110, 230, Math.max(reach * (1 - toHead), toHead * 0.45));
-  const sh = { x: 395, y: 1060 };
-  const tp = tip(sh.x, sh.y, len, ang);
+  const S = 0.8, X = 330, G7 = 1310;
+  const cy = cyOf(G7, S);
+  const table = 985;
+  const pill = { x: 500, y: table - 36 };
+  const mouth = sideW(X, cy, S, 1, 4, 78, -282);
+  const rest = { x: X + 70, y: cy + 10 };
+  // target tangan: diam di sisi badan -> strip obat -> mulut -> kembali
+  const tgt = toHead > 0 ? { x: lerp(pill.x, mouth.x, toHead), y: lerp(pill.y, mouth.y, toHead) } : { x: lerp(rest.x, pill.x, reach), y: lerp(rest.y, pill.y, reach) };
+  const base: SidePose = { lean: 4, head: -4 * toHead };
+  const arm = ikSide(X, G7, S, base, 1, false, tgt);
+  const pose: SidePose = { ...base, armN: arm };
+  const hp = handSide(X, G7, S, pose, 1);
   const taken = Math.min(5, Math.floor(ph * 6));
+  const hasPill = reach > 0.35 && toHead < 0.98 && ph < 0.95;
   return (
     <>
-      <rect x={560} y={1175} width={460} height={26} rx={13} fill="#D6E6F5" opacity={enter} />
-      <L.Blister cx={760} cy={1080} s={1.0 * enter} op={enter} taken={taken} />
-      <L.PillBottle cx={940} cy={1090} s={0.7 * enter} op={enter} />
-      <L.PersonPose cx={290} cy={1010} s={2.2 * enter} op={enter} color={MAIN} bow={lerp(0.1, -0.2, toHead)} />
-      <L.ArmReach cx={sh.x} cy={sh.y} rot={ang} len={len} color={MAIN} op={enter} />
-      <L.Tablet cx={tp.x + 10} cy={tp.y - 10} s={0.34} rot={ang} op={enter} />
+      <Floor y={G7} op={enter} />
+      <g opacity={enter}>
+        <rect x={430} y={table} width={620} height={26} rx={13} fill="#D6E6F5" />
+        <rect x={462} y={table + 26} width={22} height={G7 - table - 26} rx={10} fill={LIB_COL.track} />
+        <rect x={996} y={table + 26} width={22} height={G7 - table - 26} rx={10} fill={LIB_COL.track} />
+      </g>
+      <L.Blister cx={640} cy={table - 54} s={0.9 * enter} op={enter} taken={taken} />
+      <L.PillBottle cx={930} cy={table - 52} s={0.7 * enter} op={enter} />
+      <Hum x={X} gy={G7} s={S * enter} role="blue" pose={pose} op={enter} />
+      {hasPill && <L.Tablet cx={hp.x + 14} cy={hp.y - 6} s={0.26} rot={-30} op={enter} />}
       <BigText t={t} a={a + 0.2} b={b} y={430} lines={['ARV — ANTIRETROVIRAL']} size={52} color="#72E3D3" />
     </>
   );
@@ -362,7 +463,7 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---- Adegan 9: tidak lagi dapat ditularkan. Dua orang berdampingan; virus kecil tidak menyeberang
+// ---- Adegan 9: tidak lagi dapat ditularkan. Dua orang berhadapan; virus kecil tidak menyeberang
 const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const c1 = SCENE_T[7];
   const pA = pr(t, c1 - 0.2, c1 + 0.6, back);
@@ -370,11 +471,14 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const arrow = pr(t, c1 + 0.9, c1 + 1.7, sine);
   const cross = pr(t, c1 + 1.7, c1 + 2.3, back);
   const ok = pr(t, c1 + 2.0, c1 + 2.8);
+  const S = 0.78, G9 = 1330;
+  const chest = sideW(270, cyOf(G9, S), S, 1, 0, 20, -110);
   return (
     <>
-      <L.PersonPose cx={270} cy={1060} s={2.0 * pA} op={pA} color={MAIN} bow={0.1} />
-      <L.BodyLens cx={272} cy={1100} s={1.1 * pA} op={pA} />
-      <L.PersonPose cx={810} cy={1060} s={2.0 * pB} op={pB} color={COM} />
+      <Floor y={G9} op={pA} />
+      <Hum x={270} gy={G9} s={S * pA} role="blue" pose={{ head: 4 }} op={pA} />
+      <L.BodyLens cx={chest.x} cy={chest.y} s={1.0 * pA} op={pA} />
+      <Hum x={810} gy={G9} s={S * pB} role="teal" face={-1} pose={{ head: 2 }} op={pB} />
       <line x1={420} y1={920} x2={lerp(420, 650, arrow)} y2={920} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" strokeDasharray="6 22" opacity={0.85 * arrow} />
       <L.CrossBadge cx={540} cy={920} s={0.9 * cross} op={cross} />
       <L.CheckBadge cx={810} cy={780} s={0.8 * ok} op={ok} />
@@ -392,17 +496,22 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
   const carX = lerp(-120, 1200, pr(t, c1, c1 + 1.3, sine));
   const tab = pr(t, c2, c2 + 0.6, back);
   const hrt = pr(t, c2 + 0.8, c2 + 1.5, back);
+  const G10 = 1230;
+  const mePose = mixS({ lean: 2, head: 4 }, { lean: -2, head: -12, armN: [26, 14, 0], armF: [20, 10, 0] }, sun);
+  const mx = me > 0 ? lerp(320, 250, tab) : 320;
+  const ST = 0.45;
+  const fPose = { ...POSES_SIDE.duduk, armN: [40, 60, 0] as J3 };
   return (
     <>
       <L.Sun cx={760} cy={lerp(1040, 780, sun)} s={1.5} op={sun} />
-      <L.PersonPose cx={me > 0 ? lerp(320, 260, tab) : 320} cy={1010} s={2.0 * me} op={me} color={MAIN} bow={lerp(0.1, -0.4, sun)} />
-      <rect x={0} y={1150} width={1080} height={14} rx={7} fill="#fff" opacity={0.25 * car} />
-      <L.Car cx={carX} cy={1090} s={1.4} op={car} />
-      <L.PersonPose cx={620} cy={940} s={1.15 * tab} op={tab} color={FAM} />
-      <L.PersonPose cx={760} cy={940} s={1.15 * tab} op={tab} color={COM} />
-      <L.PersonPose cx={880} cy={950} s={0.9 * tab} op={tab} color={FAM} />
-      <L.DiningTable cx={760} cy={1040} w={560} op={tab} />
-      <L.Heart cx={760} cy={720} s={0.6 * hrt} op={hrt} color={GREEN} />
+      <Floor y={G10} />
+      <Hum x={mx} gy={G10} s={0.8 * me} role="blue" pose={mePose} op={me} />
+      <L.Car cx={carX} cy={1190} s={1.4} op={car} />
+      <Hum x={650} gy={1180} s={ST * tab} role="yellow" pose={fPose} seated chair op={tab} />
+      <Fr x={765} gy={1085} s={0.4 * tab} role="teal" op={tab} />
+      <Hum x={880} gy={1180} s={ST * tab} role="yellow" pose={fPose} face={-1} seated chair op={tab} />
+      <L.DiningTable cx={765} cy={1042} w={560} op={tab} />
+      <L.Heart cx={765} cy={720} s={0.6 * hrt} op={hrt} color={GREEN} />
     </>
   );
 };
@@ -418,13 +527,24 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const cross = pr(t, c1 + 0.9, c1 + 1.5, back);
   const back2 = pr(t, c1 + 1.5, c1 + 2.0, sine);
   const tAlpha = pr(t, s13 + 1.0, s13 + 1.3) * (1 - pr(t, c1 - 0.3, c1 + 0.2));
+  const S = 0.8, G11 = 1320, dx = 330, mx0 = 740;
+  const mx = mx0 + 40 * back2;
+  // dokter: lengan kanan terulur membawa tablet; tokoh: lengan menyambut
+  const dBase: SidePose = { head: 2, lean: 2 };
+  const drRest = { x: dx + 60, y: cyOf(G11, S) + 20 };
+  const mid = { x: (dx + mx0) / 2 + 10, y: cyOf(G11, S) - 40 };
+  const tabletPos = { x: lerp(drRest.x, mid.x, tb), y: lerp(drRest.y, mid.y, tb) };
+  const dArm = ikSide(dx, G11, S, dBase, 1, false, tabletPos);
+  const mBase: SidePose = { head: 6 * (1 - back2) + 12 * back2, lean: lerp(2, -8, back2) };
+  const mRest = { x: mx0 - 50, y: cyOf(G11, S) + 20 };
+  const mArm = ikSide(mx, G11, S, mBase, -1, false, { x: lerp(mRest.x, mid.x + 46, tb * (1 - back2)), y: lerp(mRest.y, mid.y, tb * (1 - back2)) });
   return (
     <>
-      <L.Doctor cx={250} cy={1040} s={2.0 * dr} op={dr} color={DOC} />
-      <L.ArmReach cx={355} cy={1090} rot={lerp(10, -5, tb)} len={lerp(80, 220, tb)} color="#F4F8FF" op={dr} />
-      <L.PersonPose cx={790} cy={1040} s={2.0 * me} op={me} color={MAIN} bow={0.1} />
-      <L.Tablet cx={lerp(430, 640, tb)} cy={lerp(1090, 1050, tb)} s={0.8} rot={0} op={tAlpha} />
-      <L.CheckBadge cx={790} cy={780} s={0.8 * ok} op={ok} />
+      <Floor y={G11} />
+      <Hum x={dx} gy={G11} s={S * dr} role="purple" pose={{ ...dBase, armN: dArm }} op={dr} />
+      <Hum x={mx} gy={G11} s={S * me} role="blue" face={-1} pose={{ ...mBase, armN: mArm }} op={me} />
+      <L.Tablet cx={tabletPos.x + 12} cy={tabletPos.y - 4} s={0.5} rot={0} op={tAlpha} />
+      <L.CheckBadge cx={mx} cy={640} s={0.8 * ok} op={ok} />
       <L.PointHand cx={lerp(120, 420, hands) - 40 * back2} cy={900} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
       <L.PointHand cx={lerp(120, 450, hands) - 40 * back2} cy={1040} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
       <L.CrossBadge cx={560} cy={970} s={1.0 * cross} op={cross} />
@@ -439,12 +559,19 @@ const Scene12: React.FC<{ t: number }> = ({ t }) => {
   const lens = pr(t, s14, s14 + 0.5, back) * (1 - pr(t, s14 + 0.7, s14 + 1.1));
   const lift = pr(t, s14 + 0.8, c1 - 0.2, sine);
   const hug = pr(t, c1 + 0.1, c1 + 0.9, back);
+  const S = 0.8, G12 = 1330;
+  const sx = lerp(0, 92, hug);
+  const mePose = mixF({ head: 0 }, { lean: 8, head: 10, armL: [8, 0, 0], armR: [72, -75, 0] }, hug);
+  const frPose = mixF({ armL: [20, -10, 0] }, { lean: -8, head: -10, armR: [8, 0, 0], armL: [72, -75, 0] }, hug);
+  const chestY = cyOf(G12, S) - 120 * S;
   return (
     <>
-      <L.PersonPose cx={540} cy={1020} s={2.1 * me * (1 - hug)} op={me * (1 - hug)} color={MAIN} bow={0.1} />
-      <L.BodyLens cx={542} cy={1060} s={1.2 * lens} op={lens} />
-      <Virus x={lerp(542, 880, lift)} y={lerp(1060, 700, lift)} r={lerp(20, 46, lift) * pr(t, s14 + 0.7, s14 + 1.0)} t={t} />
-      <L.Embrace cx={540} cy={1010} s={2.0 * hug} op={hug} colorA={MAIN} colorB={COM} />
+      <Floor y={G12} op={me} />
+      <Fr x={540 - sx} gy={G12} s={S * me} role="blue" pose={mePose} op={me} />
+      <L.BodyLens cx={540} cy={chestY} s={1.2 * lens} op={lens} />
+      <Virus x={lerp(540, 880, lift)} y={lerp(chestY, 700, lift)} r={lerp(20, 46, lift) * pr(t, s14 + 0.7, s14 + 1.0)} t={t} />
+      <Fr x={540 + sx + 40 * (1 - hug)} gy={G12} s={S * hug} role="teal" pose={frPose} op={hug} />
+      <L.Heart cx={540} cy={cyOf(G12, S) - 354 * S - 100} s={0.7 * hug} op={hug} color={GREEN} />
     </>
   );
 };
