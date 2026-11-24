@@ -1,7 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remotion';
 import { FONT } from '../Board';
-import { Actor } from '../shared/actor';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Actor } from '../shared/actor';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
