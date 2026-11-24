@@ -11,6 +11,7 @@ import { S2E1AltFull, S2E1ALT_FRAMES } from './s2e1alt/S2E1Alt';
 import { S2E2Full, S2E2_FRAMES } from './s2e2/S2E2';
 import { S2E2AltFull, S2E2ALT_FRAMES } from './s2e2alt/S2E2Alt';
 import { S2E3Full, S2E3_FRAMES } from './s2e3/S2E3';
+import { S2E3AltFull, S2E3ALT_FRAMES } from './s2e3alt/S2E3Alt';
 import { S2E4Full, S2E4_FRAMES } from './s2e4/S2E4';
 import { S2E4AltFull, S2E4ALT_FRAMES } from './s2e4alt/S2E4Alt';
 import { S2E5Full, S2E5_FRAMES } from './s2e5/S2E5';
@@ -40,7 +41,7 @@ import { Overlay2, Ep2Full } from './ep2/Overlay2';
 import { Ep3Full } from './ep3/Ep3';
 import { Ep5Full } from './ep5/Ep5';
 import { Ep3ArvFull } from './ep3arv/Ep3Arv';
-import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, ThumbApaCd4, ThumbS1E5, ThumbS1E7, ThumbS1E8, ThumbS1E9, ThumbS1E10, ThumbS1E11, ThumbS2E1, ThumbS2E2, ThumbS2E3, ThumbS2E4, ThumbS2E5, ThumbS2E6, ThumbS2E7, ThumbS2E8, ThumbS2E9, ThumbS2E9Alt, ThumbS2E10, THUMB_W, THUMB_H } from './thumb/Thumb';
+import { ThumbHivAids, ThumbCd4, ThumbReplikasi, ThumbViralLoad, ThumbArv, ThumbApaCd4, ThumbS1E5, ThumbS1E7, ThumbS1E8, ThumbS1E9, ThumbS1E10, ThumbS1E11, ThumbS2E1, ThumbS2E2, ThumbS2E3, ThumbS2E3Alt, ThumbS2E4, ThumbS2E5, ThumbS2E6, ThumbS2E7, ThumbS2E8, ThumbS2E9, ThumbS2E9Alt, ThumbS2E10, THUMB_W, THUMB_H } from './thumb/Thumb';
 
 const useFonts = () => {
   const [handle] = React.useState(() => delayRender('fonts'));
@@ -149,6 +150,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S2E2Full" component={S2E2Full} durationInFrames={S2E2_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbS2E2" component={ThumbS2E2} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="S2E3Full" component={S2E3Full} durationInFrames={S2E3_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="S2E3AltFull" component={S2E3AltFull} durationInFrames={S2E3ALT_FRAMES} fps={FPS} width={1080} height={1920} />
+    <Composition id="ThumbS2E3Alt" component={ThumbS2E3Alt} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="ThumbS2E3" component={ThumbS2E3} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="S2E4AltFull" component={S2E4AltFull} durationInFrames={S2E4ALT_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S2E4Full" component={S2E4Full} durationInFrames={S2E4_FRAMES} fps={FPS} width={1080} height={1920} />
