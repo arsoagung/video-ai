@@ -12,6 +12,7 @@ import { S2E2Full, S2E2_FRAMES } from './s2e2/S2E2';
 import { S2E2AltFull, S2E2ALT_FRAMES } from './s2e2alt/S2E2Alt';
 import { S2E3Full, S2E3_FRAMES } from './s2e3/S2E3';
 import { S2E4Full, S2E4_FRAMES } from './s2e4/S2E4';
+import { S2E4AltFull, S2E4ALT_FRAMES } from './s2e4alt/S2E4Alt';
 import { S2E5Full, S2E5_FRAMES } from './s2e5/S2E5';
 import { S2E6Full, S2E6_FRAMES } from './s2e6/S2E6';
 import { S2E6AltFull, S2E6ALT_FRAMES } from './s2e6alt/S2E6Alt';
@@ -147,6 +148,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="ThumbS2E2" component={ThumbS2E2} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="S2E3Full" component={S2E3Full} durationInFrames={S2E3_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbS2E3" component={ThumbS2E3} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
+    <Composition id="S2E4AltFull" component={S2E4AltFull} durationInFrames={S2E4ALT_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="S2E4Full" component={S2E4Full} durationInFrames={S2E4_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="ThumbS2E4" component={ThumbS2E4} durationInFrames={1} fps={FPS} width={THUMB_W} height={THUMB_H} />
     <Composition id="S2E5Full" component={S2E5Full} durationInFrames={S2E5_FRAMES} fps={FPS} width={1080} height={1920} />
