@@ -93,6 +93,7 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Uang (analogi) | `Coin` (koin polos; dengan `CrossBadge` = gratis) |
 | Manusia & tempat | `Person(color, kid)`, `Group(n)`, `Heart`, `Hug`, `MotherBaby`, `Home`, `Clinic`, `SpeechBubble(text, tail, w)`, `Lock(open)`, `Document(kind: paper/card, stamp)` |
 | Peran & pose (S2E1) | `Doctor(color)` (jas putih + stetoskop), `PointHand(flip)` (tangan menuding, menghakimi; menunjuk kiri, `flip` = menunjuk kanan), `Embrace(colorA, colorB, heart)` (dua orang saling merangkul), `BodyLens` (virus di dalam lensa bening di dada), `Tie(len, broken)` (ikatan manik, putus saat broken 0..1), `DiningTable(w)` (meja makan + piring + gelas), `Sun` (matahari pagi) |
+| Lengan & ruang (S2E1 alt) | `ArmReach(len, color)` (lengan menjangkau; `rot` = arah dari bahu), `Chair`, `DeskFront(w)` (meja konsultasi, digambar setelah orang agar terlihat duduk), `Vessel(w, h)` (pembuluh darah abstrak) |
 | Infeksi lain (S2E6) | `Microbe(color)` (kuman kapsul ungu muda dengan bintik dan bulu getar; untuk infeksi menular seksual lain/mikroba umum, BUKAN varian HIV) |
 | Serangga (S2E7) | `Mosquito(belly, wing, prob)` (nyamuk: perut bisa terisi darah 0..1, `wing` = fase kepakan, `prob` = panjang belalai; belalai ke kanan, putar lewat `rot`) |
 | Biji (S2E8) | `Seed(sprout)` (biji analogi virus yang tertidur di tanah; `sprout` 0..1 = tunas hijau; BUKAN varian HIV) |

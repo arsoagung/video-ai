@@ -972,3 +972,39 @@ export const PersonPose: React.FC<P & { color?: string; bow?: number; lift?: num
     </G>
   );
 };
+
+// ================= TAMBAHAN (S2E1 alternatif): lengan, kursi, meja konsultasi, pembuluh darah =================
+
+// Lengan menjangkau: pangkal bahu di (cx, cy), rot = arah (0 = ke kanan, 90 = ke bawah, 180 = ke kiri), len = panjang. Berakhir di tangan bulat. Warna sama dengan badan.
+export const ArmReach: React.FC<P & { len?: number; color?: string }> = ({ len = 160, color = '#8FBDF7', ...p }) => (
+  <G {...p}>
+    <rect x={0} y={-13} width={len} height={26} rx={13} fill={color} />
+    <circle cx={len} cy={0} r={17} fill={color} />
+  </G>
+);
+
+// Kursi: sandaran + dudukan, digambar SEBELUM orang (orang tampak duduk di depannya).
+export const Chair: React.FC<P> = (p) => (
+  <G {...p}>
+    <rect x={-96} y={-40} width={192} height={200} rx={38} fill={LIB_COL.track} opacity={0.75} />
+    <rect x={-110} y={120} width={220} height={36} rx={18} fill={LIB_COL.track} />
+  </G>
+);
+
+// Meja konsultasi (sisi depan), digambar SETELAH orang supaya badan bawah tertutup dan terlihat duduk di balik meja.
+export const DeskFront: React.FC<P & { w?: number }> = ({ w = 900, ...p }) => (
+  <G {...p}>
+    <rect x={-w / 2} y={0} width={w} height={26} rx={13} fill="#D6E6F5" />
+    <rect x={-w / 2 + 14} y={20} width={w - 28} height={170} rx={22} fill="#7FA3C6" />
+    <rect x={-w / 2 + 34} y={36} width={w - 68} height={10} rx={5} fill="#fff" opacity={0.18} />
+  </G>
+);
+
+// Pembuluh darah (visual biologis abstrak): pita horizontal berisi cairan koral transparan; partikel digambar di dalamnya oleh adegan.
+export const Vessel: React.FC<P & { w?: number; h?: number }> = ({ w = 1000, h = 260, ...p }) => (
+  <G {...p}>
+    <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={h / 2} fill="#FF8E70" opacity={0.2} />
+    <rect x={-w / 2 + 24} y={-h / 2 + 20} width={w - 48} height={h - 40} rx={(h - 40) / 2} fill="#FF6B5E" opacity={0.16} />
+    <rect x={-w / 2 + 70} y={-h / 2 + 34} width={w * 0.5} height={14} rx={7} fill="#fff" opacity={0.14} />
+  </G>
+);
