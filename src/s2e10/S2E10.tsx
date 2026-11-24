@@ -5,6 +5,8 @@ import { ez, lerp, win, out3, sine, back, in3 } from '../motion';
 import * as L from '../shared/library';
 import { LIB_COL } from '../shared/library';
 import { FlatVirus, FlatCell, SHAPE_COL, Star } from '../shared/shapes';
+import { Actor, POSES_FRONT } from '../shared/actor';
+import type { Pose, ActorRole } from '../shared/actor';
 import { CUES, CLOSE, SCENE_T, T, TE, CL, EP_DUR } from './timeline';
 
 export const S2E10_FRAMES = Math.ceil(EP_DUR * FPS);
@@ -189,15 +191,18 @@ const RNA_COL = '#FF8E70'; // materi genetik virus
 const AG_COL = '#9ADBF0'; // tes antigen dan antibodi
 const SKY = '#DCE8F5';
 
-// "kamu" dengan virus di dalam lensa di dada (vk 0..1 = ukuran virus di dalam tubuh)
-const Body: React.FC<{ x: number; y: number; s?: number; op?: number; vk?: number; t: number }> = ({ x, y, s = 1, op = 1, vk = 1, t }) =>
+// tokoh modular (actor.tsx) berdiri di tanah gy; virus di dalam lensa di dada (vk 0..1)
+const gyc = (gy: number, s: number) => gy - 354 * s;
+const Hero: React.FC<{ x: number; gy: number; s?: number; op?: number; vk?: number; t: number; role?: ActorRole; pose?: Pose; lens?: boolean }> = ({ x, gy, s = 1, op = 1, vk = 1, t, role = 'blue', pose, lens = true }) =>
   s < 0.02 || op < 0.01 ? null : (
     <>
-      <L.Person cx={x} cy={y} s={s} op={op} color={KAMU} />
-      <g opacity={op}>
-        <circle cx={x} cy={y + 34 * s} r={34 * s} fill="#fff" opacity={0.28} />
-        {vk > 0.02 && <FlatVirus cx={x} cy={y + 34 * s} r={15 * s * vk} rot={t * 14} />}
-      </g>
+      <Actor cx={x} cy={gyc(gy, s)} s={s} op={op} role={role} pose={pose} />
+      {lens && (
+        <g opacity={op}>
+          <circle cx={x} cy={gyc(gy, s) - 120 * s} r={52 * s} fill="#fff" opacity={0.38} />
+          {vk > 0.02 && <FlatVirus cx={x} cy={gyc(gy, s) - 120 * s} r={25 * s * vk} rot={t * 14} />}
+        </g>
+      )}
     </>
   );
 
@@ -216,14 +221,14 @@ const Camera: React.FC<{ x: number; y: number; s?: number; op?: number; flash?: 
     </g>
   );
 
-// foto hasil kamera: berisi orang dengan lensa (isi lensa = yang sudah muncul)
+// foto hasil kamera: berisi tokoh modular dengan lensa (isi lensa = yang sudah muncul)
 const Photo: React.FC<{ x: number; y: number; s?: number; op?: number }> = ({ x, y, s = 1, op = 1 }) =>
   op < 0.01 ? null : (
     <g transform={`translate(${x} ${y}) scale(${s})`} opacity={op}>
-      <rect x={-135} y={-170} width={270} height={340} rx={22} fill="#EAF2FB" />
-      <rect x={-112} y={-148} width={224} height={250} rx={14} fill="#CFE3F7" />
-      <L.Person cx={0} cy={0} s={0.9} color={KAMU} />
-      <circle cx={0} cy={31} r={30} fill="#fff" opacity={0.5} />
+      <rect x={-150} y={-190} width={300} height={380} rx={24} fill="#EAF2FB" />
+      <rect x={-126} y={-166} width={252} height={290} rx={16} fill="#CFE3F7" />
+      <Actor cx={0} cy={gyc(104, 0.3)} s={0.3} role="blue" />
+      <circle cx={0} cy={gyc(104, 0.3) - 36} r={15.6} fill="#fff" opacity={0.5} />
     </g>
   );
 
@@ -272,12 +277,15 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const clk = pop(t, T(2) + 0.1, 0.5);
   const k = pr(t, T(2) + 0.3, TE(2) + 0.4, sine);
   const wob = 1 + 0.05 * Math.sin(Math.max(0, t - 1.5) * 8) * (1 - pr(t, 2.0, 2.4));
+  // bingung: kepala miring + satu lengan menunjuk alat tes
+  const conf = pr(t, 1.5, 2.1);
+  const pose: Pose = { head: lerp(0, 18, conf), lean: lerp(0, 6, conf), armR: [lerp(7, 70, conf), lerp(0, -25, conf), 0] };
   return (
     <>
-      <Body x={330} y={900} s={1.7 * b} op={b} vk={vk} t={t} />
-      <L.TestKit cx={770} cy={900} s={1.3 * kit} op={kit} lines={1} />
-      <text x={770} y={640} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={150 * wob} fill="#F4D77E" opacity={q} transform={`scale(${q > 0 ? 1 : 0})`}>?</text>
-      <L.Clock cx={540} cy={560} s={1.25 * clk} op={clk} frac={0.04 + 0.7 * k} hour={9 * k} />
+      <Hero x={300} gy={1330} s={0.82 * b} op={b} vk={vk} t={t} pose={pose} />
+      <L.TestKit cx={790} cy={1010} s={1.45 * kit} op={kit} lines={1} />
+      <text x={790} y={680} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={170 * wob} fill="#F4D77E" opacity={q} transform={`scale(${q > 0 ? 1 : 0})`}>?</text>
+      <L.Clock cx={540} cy={560} s={1.4 * clk} op={clk} frac={0.04 + 0.7 * k} hour={9 * k} />
     </>
   );
 };
@@ -291,26 +299,26 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   const fl2 = pr(t, c1 + 0.9, c1 + 1.2) * (1 - pr(t, c1 + 1.2, c1 + 1.6));
   const ph = pr(t, c1 + 0.2, c1 + 1.0);
   const vk = pr(t, c1 + 1.6, c1 + 2.8, back); // virus tumbuh di tubuh setelah foto diambil
-  const cone = Math.max(fl, fl2);
+  const f = Math.max(fl, fl2);
   return (
     <>
-      <polygon points="360,610 700,700 700,980" fill="#fff" opacity={0.12 * Math.min(1, cone * 3 + 0.0)} />
-      <Camera x={290} y={640} s={1.6 * cam} op={cam} flash={Math.max(fl, fl2)} />
-      <Body x={800} y={820} s={1.5 * body} op={body} vk={vk} t={t} />
-      <Photo x={290} y={lerp(800, 1090, ph)} s={0.95 * ph} op={ph} />
+      <polygon points="380,640 560,760 560,1180" fill="#F4D77E" opacity={0.28 * f} />
+      <Camera x={300} y={620} s={1.85 * cam} op={cam} flash={f} />
+      <Hero x={810} gy={1330} s={0.82 * body} op={body} vk={vk} t={t} pose={POSES_FRONT.berdiri} />
+      <Photo x={300} y={lerp(760, 1090, ph)} s={1.0 * ph} op={ph} />
     </>
   );
 };
 
 // ---- adegan 3-5: tiga jenis tes, kaca pembesar membaca apa yang ada ----
-const BODY = { x: 290, y: 880, s: 1.45 };
-const LENS = { x: 760, y: 700, s: 1.5 };
+const BODY = { x: 280, gy: 1330, s: 0.84 };
+const LENS = { x: 735, y: 880, s: 1.55 };
 const Detector: React.FC<{ t: number; kind: 'ab' | 'agab' | 'nat'; a: number }> = ({ t, kind, a }) => {
   const body = pop(t, a + 0.05, 0.5);
   const mag = pop(t, a + 0.2, 0.5);
   const scan = Math.sin(Math.max(0, t - a - 0.7) * 3.2) * 18 * (1 - pr(t, a + 1.6, a + 2.2));
   const lx = LENS.x + scan, ly = LENS.y + scan * 0.4;
-  const bcx = BODY.x, bcy = BODY.y + 34 * BODY.s;
+  const bcx = BODY.x, bcy = gyc(BODY.gy, BODY.s) - 120 * BODY.s;
   const items: React.ReactNode[] = [];
   if (kind === 'ab' || kind === 'agab') {
     const starts = kind === 'ab' ? [CL(4, 1) + 0.15, CL(4, 1) + 0.7, CL(4, 1) + 1.25, CL(4, 1) + 1.8] : [a + 0.8, a + 1.4];
@@ -319,7 +327,7 @@ const Detector: React.FC<{ t: number; kind: 'ab' | 'agab' | 'nat'; a: number }> 
       const k = pr(t, starts[i], starts[i] + 1.0, sine);
       if (k <= 0.01) continue;
       const [fx, fy] = flyPt(k, bcx + 20, bcy - 20, lx + Y_AB[i][0], ly + Y_AB[i][1], 120);
-      items.push(<L.Antibody key={'ab' + i} cx={fx} cy={fy} s={0.8 - 0.1 * k} rot={lerp(-30, 0, k)} op={Math.min(1, k * 4)} color={AB_COL} />);
+      items.push(<L.Antibody key={'ab' + i} cx={fx} cy={fy} s={1.0 - 0.1 * k} rot={lerp(-30, 0, k)} op={Math.min(1, k * 4)} color={AB_COL} />);
     }
   }
   if (kind === 'agab') {
@@ -347,7 +355,7 @@ const Detector: React.FC<{ t: number; kind: 'ab' | 'agab' | 'nat'; a: number }> 
   const pulse = 1 + 0.05 * Math.sin(t * 4);
   return (
     <>
-      <Body x={BODY.x} y={BODY.y} s={BODY.s * body} op={body} vk={pulse} t={t} />
+      <Hero x={BODY.x} gy={BODY.gy} s={BODY.s * body} op={body} vk={pulse} t={t} pose={{ head: 8 * pr(t, a + 0.8, a + 1.6), armR: [lerp(7, 55, pr(t, a + 0.8, a + 1.6)), -20 * pr(t, a + 0.8, a + 1.6), 0] }} />
       <circle cx={lx} cy={ly} r={92 * LENS.s * mag} fill="#EAF2FB" opacity={0.14} />
       <L.Magnifier cx={lx} cy={ly} s={LENS.s * mag} op={mag} />
       {items}
@@ -386,8 +394,8 @@ const Scene6: React.FC<{ t: number }> = ({ t }) => {
 // ---- adegan 7 (kalimat 8): tiga tes dan lamanya jendela (angka dari narasi/CDC) ----
 const DX = (d: number) => 140 + d * 8.89;
 const BARS = [
-  { d0: 10, d1: 33, c: RNA_COL, y: 760, cl: 1, label: 'tes asam nukleat', dur: '10–33 hari' },
-  { d0: 18, d1: 45, c: AG_COL, y: 980, cl: 2, label: 'tes antigen dan antibodi', dur: '18–45 hari' },
+  { d0: 10, d1: 33, c: RNA_COL, y: 720, cl: 1, label: 'tes asam nukleat', dur: '10–33 hari' },
+  { d0: 18, d1: 45, c: AG_COL, y: 960, cl: 2, label: 'tes antigen dan antibodi', dur: '18–45 hari' },
   { d0: 23, d1: 90, c: AB_COL, y: 1200, cl: 3, label: 'tes antibodi', dur: '23–90 hari' },
 ];
 const barT = (i: number) => CL(8, BARS[i].cl) + 0.2;
@@ -405,8 +413,8 @@ const Scene7: React.FC<{ t: number }> = ({ t }) => {
         const w2 = (DX(b.d1) - DX(b.d0)) * Math.max(0, k * 2 - 1);
         return (
           <g key={i}>
-            <rect x={140} y={b.y - 24} width={Math.max(0.01, w1)} height={48} rx={24} fill="#fff" opacity={0.14} />
-            <rect x={DX(b.d0)} y={b.y - 30} width={Math.max(0.01, w2)} height={60} rx={30} fill={b.c} />
+            <rect x={140} y={b.y - 30} width={Math.max(0.01, w1)} height={60} rx={30} fill="#fff" opacity={0.14} />
+            <rect x={DX(b.d0)} y={b.y - 40} width={Math.max(0.01, w2)} height={80} rx={40} fill={b.c} />
           </g>
         );
       })}
@@ -424,8 +432,8 @@ const Scene8: React.FC<{ t: number }> = ({ t }) => {
   const pulse = 1 + 0.12 * Math.sin(Math.max(0, t - (a + 3.0)) * 6) * pr(t, a + 3.0, a + 3.3);
   return (
     <>
-      <Body x={310} y={780} s={1.45 * b} op={b} vk={pulse * 1.0} t={t} />
-      <L.TestKit cx={790} cy={760} s={1.15 * kit} op={kit} lines={1} />
+      <Hero x={290} gy={1010} s={0.7 * b} op={b} vk={pulse} t={t} pose={{ head: 14 * pr(t, a + 2.2, a + 2.8), lean: 5 * pr(t, a + 2.2, a + 2.8), armR: [lerp(7, 75, pr(t, a + 1.6, a + 2.3)), -20, 0] }} />
+      <L.TestKit cx={790} cy={720} s={1.3 * kit} op={kit} lines={1} />
       <line x1={WX0} y1={1170} x2={lerp(WX0, 940, tr)} y2={1170} stroke="#fff" strokeOpacity={0.3} strokeWidth={18} strokeLinecap="round" />
       <rect x={WX0 - 10} y={1095} width={(WX1 - WX0 + 20) * tr} height={150} rx={46} fill="#fff" opacity={0.16} />
       {tr > 0.05 && <circle cx={dx} cy={1170} r={26} fill="#F4D77E" />}
@@ -487,44 +495,48 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const pep = pop(t, a + 0.15, 0.5);
   const prep = pop(t, a + 1.2, 0.5);
   const doc = pop(t, c1 + 0.05, 0.55);
-  const bub = pop(t, c1 + 0.6, 0.45);
+  const hero = pop(t, a + 0.2, 0.5);
+  const bub = pop(t, c1 + 0.3, 0.45) * (1 - pr(t, c1 + 1.5, c1 + 1.9));
   const cal = pop(t, c1 + 1.2, 0.5);
   const marks = [3, 10, 17].filter((_, i) => t > c1 + 1.7 + i * 0.35);
+  const pt = pr(t, c1 + 1.0, c1 + 1.7, sine); // dokter menunjuk kalender
+  const ask = pr(t, c1 + 0.2, c1 + 0.8, sine); // kamu bertanya: lengan terangkat
   return (
     <>
-      <L.Tablet cx={320} cy={640} s={1.5 * pep} op={pep} />
-      <L.TabletPrEP cx={750} cy={640} s={1.25 * prep} op={prep} />
-      <L.Doctor cx={260} cy={1010} s={1.5 * doc} op={doc} />
-      <L.SpeechBubble cx={560} cy={940} s={0.8 * bub} op={bub} tail="l" w={220} />
-      <L.Calendar cx={800} cy={1090} s={1.15 * cal} op={cal} marks={marks} markColor="#72E3D3" />
+      <L.Tablet cx={310} cy={580} s={1.9 * pep} op={pep} />
+      <L.TabletPrEP cx={760} cy={580} s={1.55 * prep} op={prep} />
+      <Hero x={880} gy={1360} s={0.6 * hero} op={hero} lens={false} t={t} pose={{ head: -12 * ask, armL: [lerp(7, 60, ask), -20 * ask, 0] }} />
+      <Hero x={200} gy={1360} s={0.6 * doc} op={doc} lens={false} role="purple" t={t} pose={{ armR: [lerp(7, 105, pt), lerp(0, -15, pt), 0], head: 8 * pt }} />
+      <L.SpeechBubble cx={720} cy={950} s={0.8 * bub} op={bub} tail="r" w={220} />
+      <L.Calendar cx={540} cy={1060} s={1.3 * cal} op={cal} marks={marks} markColor="#72E3D3" />
     </>
   );
 };
 
 const PILLS: { a: number; b: number; text: string; k: KK; x: number; y: number; size?: number }[] = [
-  { a: CL(3, 1) + 2.1, b: T(4) - 0.1, text: 'sudah muncul', k: 'neutral', x: 290, y: 1340, size: 30 },
-  { a: T(4) + 0.4, b: T(5) - 0.1, text: 'tes antibodi', k: 'neutral', x: 540, y: 1250, size: 34 },
-  { a: T(5) + 0.4, b: T(6) - 0.1, text: 'tes antigen dan antibodi', k: 'neutral', x: 540, y: 1250, size: 32 },
-  { a: T(6) + 0.4, b: T(7) - 0.1, text: 'tes asam nukleat', k: 'neutral', x: 540, y: 1250, size: 34 },
-  { a: T(7) + 0.6, b: CL(7, 1) - 0.1, text: 'paparan', k: 'neutral', x: 150, y: 880, size: 30 },
-  { a: T(7) + 1.2, b: T(8) - 0.1, text: 'jendela waktu', k: 'neutral', x: 420, y: 880, size: 32 },
-  { a: T(8) + 0.1, b: CL(8, 1) + 4.5, text: 'CDC', k: 'neutral', x: 540, y: 560, size: 36 },
-  { a: T(8) + 0.5, b: T(9) - 0.1, text: 'paparan', k: 'neutral', x: 150, y: 1405, size: 26 },
+  { a: CL(3, 1) + 2.1, b: T(4) - 0.1, text: 'sudah muncul', k: 'neutral', x: 300, y: 1380, size: 38 },
+  { a: T(4) + 0.4, b: T(5) - 0.1, text: 'tes antibodi', k: 'neutral', x: 540, y: 520, size: 46 },
+  { a: T(5) + 0.4, b: T(6) - 0.1, text: 'tes antigen dan antibodi', k: 'neutral', x: 540, y: 520, size: 40 },
+  { a: T(6) + 0.4, b: T(7) - 0.1, text: 'tes asam nukleat', k: 'neutral', x: 540, y: 520, size: 46 },
+  { a: T(7) + 0.6, b: CL(7, 1) - 0.1, text: 'paparan', k: 'neutral', x: 160, y: 885, size: 36 },
+  { a: T(7) + 1.2, b: T(8) - 0.1, text: 'jendela waktu', k: 'neutral', x: 420, y: 885, size: 38 },
+  { a: T(8) + 0.1, b: CL(8, 1) + 4.5, text: 'CDC', k: 'neutral', x: 540, y: 500, size: 44 },
+  { a: T(8) + 0.5, b: T(9) - 0.1, text: 'paparan', k: 'neutral', x: 160, y: 1400, size: 32 },
   ...BARS.flatMap((b, i) => [
-    { a: barT(i), b: T(9) - 0.1, text: b.label, k: 'neutral' as KK, x: (DX(b.d0) + DX(b.d1)) / 2, y: b.y - 66, size: 28 },
-    { a: barT(i) + 1.4, b: T(9) - 0.1, text: b.dur, k: 'neutral' as KK, x: (DX(b.d0) + DX(b.d1)) / 2, y: b.y + 68, size: 28 },
+    { a: barT(i), b: T(9) - 0.1, text: b.label, k: 'neutral' as KK, x: Math.max(250, Math.min(830, (DX(b.d0) + DX(b.d1)) / 2)), y: b.y - 78, size: 34 },
+    { a: barT(i) + 1.4, b: T(9) - 0.1, text: b.dur, k: 'neutral' as KK, x: (DX(b.d0) + DX(b.d1)) / 2, y: b.y + 82, size: 34 },
   ]),
-  { a: T(9) + 2.0, b: T(10) - 0.1, text: 'tampak negatif', k: 'neutral', x: 790, y: 990, size: 30 },
-  { a: T(9) + 3.2, b: T(10) - 0.1, text: 'virus sudah ada', k: 'neutral', x: 310, y: 990, size: 30 },
-  { a: T(10) + 0.5, b: T(11) - 0.1, text: 'reaktif', k: 'neutral', x: 230, y: 920, size: 30 },
-  { a: T(10) + 2.0, b: T(11) - 0.1, text: 'tes lanjutan', k: 'neutral', x: 800, y: 920, size: 30 },
-  { a: CL(10, 1) + 1.6, b: T(11) - 0.1, text: 'diagnosis', k: 'neutral', x: 760, y: 1345, size: 30 },
-  { a: T(11) + 0.4, b: CL(11, 1) - 0.1, text: 'paparan', k: 'neutral', x: 150, y: 880, size: 30 },
-  { a: CL(11, 1) + 2.0, b: T(12) - 0.1, text: 'ulangi tes', k: 'neutral', x: 800, y: 928, size: 32 },
-  { a: T(12) + 0.6, b: T(12) + 99, text: 'PEP', k: 'neutral', x: 320, y: 740, size: 32 },
-  { a: T(12) + 1.6, b: T(12) + 99, text: 'PrEP', k: 'neutral', x: 750, y: 740, size: 32 },
-  { a: CL(12, 1) + 0.9, b: T(12) + 99, text: 'tenaga kesehatan', k: 'neutral', x: 260, y: 1190, size: 28 },
-  { a: CL(12, 1) + 2.3, b: T(12) + 99, text: 'jadwal tes', k: 'neutral', x: 800, y: 1270, size: 30 },
+  { a: T(9) + 2.0, b: T(10) - 0.1, text: 'tampak negatif', k: 'neutral', x: 790, y: 960, size: 36 },
+  { a: T(9) + 3.2, b: T(10) - 0.1, text: 'virus sudah ada', k: 'neutral', x: 290, y: 1060, size: 34 },
+  { a: T(10) + 0.5, b: T(11) - 0.1, text: 'reaktif', k: 'neutral', x: 230, y: 930, size: 36 },
+  { a: T(10) + 2.0, b: T(11) - 0.1, text: 'tes lanjutan', k: 'neutral', x: 800, y: 930, size: 36 },
+  { a: CL(10, 1) + 1.6, b: T(11) - 0.1, text: 'diagnosis', k: 'neutral', x: 760, y: 1360, size: 36 },
+  { a: T(11) + 0.4, b: CL(11, 1) - 0.1, text: 'paparan', k: 'neutral', x: 160, y: 885, size: 36 },
+  { a: CL(11, 1) + 2.0, b: T(12) - 0.1, text: 'ulangi tes', k: 'neutral', x: 800, y: 1110, size: 38 },
+  { a: T(12) + 0.6, b: T(12) + 99, text: 'PEP', k: 'neutral', x: 310, y: 700, size: 38 },
+  { a: T(12) + 1.6, b: T(12) + 99, text: 'PrEP', k: 'neutral', x: 760, y: 700, size: 38 },
+  { a: CL(12, 1) + 0.9, b: T(12) + 99, text: 'tenaga kesehatan', k: 'neutral', x: 270, y: 1405, size: 30 },
+  { a: CL(12, 1) + 2.3, b: T(12) + 99, text: 'jadwal tes', k: 'neutral', x: 540, y: 1250, size: 36 },
 ];
 const Pills: React.FC<{ t: number }> = ({ t }) => (
   <>

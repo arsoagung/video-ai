@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remotion';
 import { FONT } from '../Board';
+import { Actor } from '../shared/actor';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
 import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, PersonPose, Heart, Mosquito, Seed, Home } from '../shared/library';
@@ -747,10 +748,10 @@ export const ThumbS2E10: React.FC = () => (
     glowY={1400}
   >
     <Svg>
-      <Person cx={300} cy={1330} s={2.1} color="#B9A2F5" />
-      <circle cx={300} cy={1401} r={72} fill="#fff" opacity={0.28} />
-      <FlatVirus cx={300} cy={1401} r={32} />
-      <TestKit cx={770} cy={1330} s={1.7} lines={1} />
+      <Actor cx={300} cy={1650 - 354 * 0.66} s={0.66} role="blue" pose={{ head: 16, lean: 5, armR: [70, -25, 0] }} />
+      <circle cx={300} cy={1650 - 354 * 0.66 - 120 * 0.66} r={52 * 0.66} fill="#fff" opacity={0.38} />
+      <FlatVirus cx={300} cy={1650 - 354 * 0.66 - 120 * 0.66} r={25 * 0.66} />
+      <TestKit cx={770} cy={1400} s={1.7} lines={1} />
     </Svg>
     <Pill cx={540} cy={1790} text="bisa salah" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
