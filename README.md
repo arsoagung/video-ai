@@ -99,6 +99,33 @@ Selain `shapes.tsx`, semua objek di bawah ini WAJIB diimpor dari `src/shared/lib
 | Biji (S2E8) | `Seed(sprout)` (biji analogi virus yang tertidur di tanah; `sprout` 0..1 = tunas hijau; BUKAN varian HIV) |
 | Alat pribadi (S2E9) | `Razor(color)` (pisau cukur), `Toothbrush(color)` (sikat gigi); keduanya menghadap atas |
 
+### Karakter modular (`src/shared/actor.tsx`): untuk episode bercerita, bukan skala mikro
+
+Dipakai untuk adegan yang tokohnya manusia (S2 dan seterusnya: orang, dokter, keluarga, masyarakat). Adegan skala mikro (virus, sel CD4, darah) TETAP memakai `shapes.tsx`/`library.tsx`. File ini terpisah dan tidak mengubah `Person`, `PersonPose`, `Doctor`, dkk di `library.tsx`; episode lama (S2E1, S2E2, dst.) tidak berubah sampai diminta direvisi.
+
+Satu anatomi, empat identitas. Kepala besar (diameter 124), badan berisi, lengan dan kaki kapsul gemuk, tanpa wajah, flat, tanpa outline. Tinggi sekitar 5,8 kepala. Semua tokoh memakai bentuk, proporsi, dan rig yang sama; yang beda hanya warna dan atribut.
+
+| Peran (`role`) | Warna | Dipakai untuk |
+|---|---|---|
+| `blue` | biru | tokoh utama ("kamu") |
+| `purple` | ungu + jas putih + stetoskop (otomatis; matikan dengan `coat={false}`) | dokter |
+| `yellow` | kuning | keluarga / orang terdekat |
+| `teal` | teal | masyarakat / orang lain |
+
+Komponen (semua: `cx, cy, s, rot, op`, ditambah `role`, `pose`, `debug`):
+- `Actor` = tampak depan. `pose` = `{ head, lean, armL, armR, legL, legR }`; tiap lengan/kaki = `[sendi besar, siku/lutut, pergelangan]` dalam derajat.
+- `ActorSide` = tampak samping (menghadap kanan), fleksi nyata: duduk, jalan, membungkuk. `pose` = `{ head, lean, armN, armF, legN, legF }` (N = sisi dekat penonton, F = sisi jauh).
+- `Chair` = kursi (objek terpisah). Orang duduk memakai `POSES_SIDE.duduk`; geser orang+kursi bersama `translate(0 136)` supaya telapak kaki menapak.
+- Preset pose yang sudah diuji: `POSES_FRONT` (`berdiri`, `tanganDiDada`, `kepalaMiring`, `melangkah`, `lenganNaik`), `POSES_SIDE` (`berdiri`, `duduk`, `jalan`, `menunjukAtas`, `membungkuk`, `tanganDiDagu`). Pose bisa diinterpolasi per frame (angka-angka sendi), jadi gerak tinggal `interpolate` antar pose.
+- `PartPreview` = tiap bagian tubuh terpisah beserta pivotnya (untuk lembar anatomi/debug).
+
+Aturan:
+- Jangan mengubah bentuk dasar (kepala, torso, lengan, kaki, palet). Revisi pose cukup lewat sudut sendi.
+- Sudut sendi dibatasi otomatis supaya pose tetap terbaca (siku maks 135 derajat, lutut maks 125 derajat, dst.). Jangan memaksa pose ekstrem.
+- Tampak depan tidak bisa menoleh atau membungkuk ke depan; pakai `ActorSide` untuk itu. Kepala tanpa wajah hanya bisa miring, bukan menengok.
+- Warna "kamu" (biru) tidak dipakai untuk benda lain (aturan "Satu warna, satu peran" tetap berlaku).
+- Atribut baru (mis. perawat, seragam sekolah) = layer pakaian tambahan seperti jas dokter, bukan anatomi baru.
+
 ### Alur pembuatan video (tanpa storyboard)
 
 Video dibuat langsung dari `narasi_final` + `public/vo/<KODE>.mp3`. Kolom `storyboard` di sheet TIDAK dibaca dan tidak ada scene-spec JSON. Pembuat video merancang adegan sendiri lalu menuliskannya sebagai kode per episode di `src/<kode huruf kecil>/`.
