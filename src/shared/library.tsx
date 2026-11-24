@@ -1003,8 +1003,8 @@ export const DeskFront: React.FC<P & { w?: number }> = ({ w = 900, ...p }) => (
 // Pembuluh darah (visual biologis abstrak): pita horizontal berisi cairan koral transparan; partikel digambar di dalamnya oleh adegan.
 export const Vessel: React.FC<P & { w?: number; h?: number }> = ({ w = 1000, h = 260, ...p }) => (
   <G {...p}>
-    <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={h / 2} fill="#FF8E70" opacity={0.2} />
-    <rect x={-w / 2 + 24} y={-h / 2 + 20} width={w - 48} height={h - 40} rx={(h - 40) / 2} fill="#FF6B5E" opacity={0.16} />
+    <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={h / 2} fill="#E8A9B2" opacity={0.35} />
+    <rect x={-w / 2 + 24} y={-h / 2 + 20} width={w - 48} height={h - 40} rx={(h - 40) / 2} fill="#F0616A" opacity={0.38} />
     <rect x={-w / 2 + 70} y={-h / 2 + 34} width={w * 0.5} height={14} rx={7} fill="#fff" opacity={0.14} />
   </G>
 );
