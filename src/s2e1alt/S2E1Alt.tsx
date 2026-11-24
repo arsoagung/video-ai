@@ -270,14 +270,13 @@ const Scene1: React.FC<{ t: number }> = ({ t }) => {
   const rest = POSES_SIDE.duduk;
   const mePose = mixS({ ...rest, head: 4 }, { ...rest, head: 10, armN: [78, 12, 0] }, hand);
   const drPose = mixS(rest, { ...rest, armN: [82, 10, 0] }, hand);
-  const dH = handSide(dx, 1390, S * enter, drPose, -1, true);
-  const mH = handSide(bx, 1390, S * enter, mePose, 1, true);
+  const dH = handSide(dx, 1450, S * enter, drPose, -1, true);
+  const mH = handSide(bx, 1450, S * enter, mePose, 1, true);
   const k = hand * 0.55;
   return (
     <>
-      <Floor y={1390} op={enter} />
-      <Hum x={bx} gy={1390} s={S * enter} role="blue" pose={mePose} seated chair op={enter} />
-      <Hum x={dx} gy={1390} s={S * enter} role="purple" pose={drPose} face={-1} seated chair op={enter} />
+      <Hum x={bx} gy={1450} s={S * enter} role="blue" pose={mePose} seated chair op={enter} />
+      <Hum x={dx} gy={1450} s={S * enter} role="purple" pose={drPose} face={-1} seated chair op={enter} />
       <L.Document cx={lerp(dH.x, mH.x, k) - 4} cy={lerp(dH.y, mH.y, k) - 26} s={0.5 * enter} op={enter} rot={-6} />
     </>
   );
@@ -290,7 +289,7 @@ const Scene2: React.FC<{ t: number }> = ({ t }) => {
   const mv = pr(t, a + 1.0, a + 2.6, sine);
   const txt = (1 - pr(t, a + 1.4, a + 2.2)) * pr(t, a, a + 0.5);
   const dimK = 0.22 * k;
-  const S = 0.85, X = 520, G2 = 1340;
+  const S = 0.9, X = 520, G2 = 1450;
   const pose = mixS(
     { lean: 6, head: 4, armN: [30, 75, 0], armF: [28, 72, 0] },
     { lean: 30, head: 24, armN: [34, 82, 0], armF: [30, 78, 0] },
@@ -324,7 +323,7 @@ const Scene3: React.FC<{ t: number }> = ({ t }) => {
   const mePose = mixF(POSES_FRONT.berdiri, { ...POSES_FRONT.tanganDiDada, head: 16, lean: 5 }, tight);
   return (
     <>
-      <Fr x={540} gy={1330} s={0.8 * enter} role="blue" pose={mePose} op={enter} />
+      <Fr x={540} gy={1440} s={0.85 * enter} role="blue" pose={mePose} op={enter} />
       <circle cx={540} cy={640} r={86 * bubble} fill="#fff" opacity={0.18 * bubble} />
       <text x={540} y={668} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={90 * bubble} fill="#fff" opacity={0.7 * bubble}>?</text>
       {pos.map(([x, y], i) => (
@@ -370,19 +369,19 @@ const Scene45: React.FC<{ t: number }> = ({ t }) => {
   const sep = lerp(92, 150, open) * hs / 0.5;
   return (
     <>
-      <ellipse cx={690} cy={840} rx={300 * panel} ry={210 * panel} fill="#fff" opacity={0.12} />
+      <ellipse cx={690} cy={900} rx={300 * panel} ry={210 * panel} fill="#fff" opacity={0.12} />
       {roles.map((r, i) => {
         const x = 600 + i * 78 + away * (60 + i * 40);
         const ph = t * 7 + i * 1.7;
         const pose = away < 0.02 ? POSES_SIDE.berdiri : mixS(POSES_SIDE.berdiri, jalan(ph), Math.min(1, away * 6));
-        return <Hum key={i} x={x} gy={1000 + (i % 2) * 14 - away * 10} s={(0.4 - 0.15 * away) * panel} role={r} pose={pose} op={panel * (1 - 0.75 * away)} />;
+        return <Hum key={i} x={x} gy={1060 + (i % 2) * 14 - away * 10} s={(0.4 - 0.15 * away) * panel} role={r} pose={pose} op={panel * (1 - 0.75 * away)} />;
       })}
       <g opacity={hug * (1 - hugGo)}>
-        <Fr x={690 - sep / 2} gy={1000} s={hs} role="yellow" pose={hugPoseL} op={hug * (1 - hugGo)} />
-        <Fr x={690 + sep / 2} gy={1000} s={hs} role="teal" pose={hugPoseR} op={hug * (1 - hugGo)} />
-        <L.Heart cx={690} cy={1000 - 354 * hs - 30} s={0.55 * hug} color={GREEN} />
+        <Fr x={690 - sep / 2} gy={1060} s={hs} role="yellow" pose={hugPoseL} op={hug * (1 - hugGo)} />
+        <Fr x={690 + sep / 2} gy={1060} s={hs} role="teal" pose={hugPoseR} op={hug * (1 - hugGo)} />
+        <L.Heart cx={690} cy={1060 - 354 * hs - 30} s={0.55 * hug} color={GREEN} />
       </g>
-      <Hum x={250} gy={1330} s={0.95 * enter} role="blue" pose={mePose} op={enter} />
+      <Hum x={250} gy={1440} s={0.95 * enter} role="blue" pose={mePose} op={enter} />
     </>
   );
 };
@@ -471,12 +470,11 @@ const Scene9: React.FC<{ t: number }> = ({ t }) => {
   const arrow = pr(t, c1 + 0.9, c1 + 1.7, sine);
   const cross = pr(t, c1 + 1.7, c1 + 2.3, back);
   const ok = pr(t, c1 + 2.0, c1 + 2.8);
-  const S = 0.78, G9 = 1330;
+  const S = 0.8, G9 = 1440;
   const chest = sideW(270, cyOf(G9, S), S, 1, 0, 20, -110);
   return (
     <>
-      <Floor y={G9} op={pA} />
-      <Hum x={270} gy={G9} s={S * pA} role="blue" pose={{ head: 4 }} op={pA} />
+            <Hum x={270} gy={G9} s={S * pA} role="blue" pose={{ head: 4 }} op={pA} />
       <L.BodyLens cx={chest.x} cy={chest.y} s={1.0 * pA} op={pA} />
       <Hum x={810} gy={G9} s={S * pB} role="teal" face={-1} pose={{ head: 2 }} op={pB} />
       <line x1={420} y1={920} x2={lerp(420, 650, arrow)} y2={920} stroke="#EAF2FB" strokeWidth={14} strokeLinecap="round" strokeDasharray="6 22" opacity={0.85 * arrow} />
@@ -496,22 +494,21 @@ const Scene10: React.FC<{ t: number }> = ({ t }) => {
   const carX = lerp(-120, 1200, pr(t, c1, c1 + 1.3, sine));
   const tab = pr(t, c2, c2 + 0.6, back);
   const hrt = pr(t, c2 + 0.8, c2 + 1.5, back);
-  const G10 = 1230;
+  const G10 = 1440;
   const mePose = mixS({ lean: 2, head: 4 }, { lean: -2, head: -12, armN: [26, 14, 0], armF: [20, 10, 0] }, sun);
-  const mx = me > 0 ? lerp(320, 250, tab) : 320;
-  const ST = 0.45;
-  const fPose = { ...POSES_SIDE.duduk, armN: [40, 60, 0] as J3 };
+  const standOp = me * (1 - tab);
+  const ST = 0.7;
+  const eat = (k: number): SidePose => ({ ...POSES_SIDE.duduk, head: 4, armN: [lerp(30, 42, sine(k)), lerp(70, 55, sine(k)), 0] });
+  const lau = Math.sin(t * 5);
   return (
     <>
-      <L.Sun cx={760} cy={lerp(1040, 780, sun)} s={1.5} op={sun} />
-      <Floor y={G10} />
-      <Hum x={mx} gy={G10} s={0.8 * me} role="blue" pose={mePose} op={me} />
-      <L.Car cx={carX} cy={1190} s={1.4} op={car} />
-      <Hum x={650} gy={1180} s={ST * tab} role="yellow" pose={fPose} seated chair op={tab} />
-      <Fr x={765} gy={1085} s={0.4 * tab} role="teal" op={tab} />
-      <Hum x={880} gy={1180} s={ST * tab} role="yellow" pose={fPose} face={-1} seated chair op={tab} />
-      <L.DiningTable cx={765} cy={1042} w={560} op={tab} />
-      <L.Heart cx={765} cy={720} s={0.6 * hrt} op={hrt} color={GREEN} />
+      <L.Sun cx={880} cy={lerp(860, 560, sun)} s={0.7} op={sun} />
+      <Hum x={320} gy={G10} s={0.9 * me} role="blue" pose={mePose} op={standOp} />
+      <L.Car cx={carX} cy={1240} s={1.5} op={car} />
+      <Hum x={300} gy={G10} s={ST * tab} role="blue" pose={eat(0.5 + 0.5 * lau)} seated chair op={tab} />
+      <Hum x={600} gy={G10} s={ST * tab} role="teal" pose={eat(0.5 - 0.5 * lau)} seated chair op={tab} />
+      <Hum x={880} gy={G10} s={ST * tab} role="yellow" pose={eat(0.5 + 0.5 * Math.sin(t * 5 + 2))} face={-1} seated chair op={tab} />
+      <L.Heart cx={600} cy={880} s={0.6 * hrt} op={hrt} color={GREEN} />
     </>
   );
 };
@@ -527,7 +524,7 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const cross = pr(t, c1 + 0.9, c1 + 1.5, back);
   const back2 = pr(t, c1 + 1.5, c1 + 2.0, sine);
   const tAlpha = pr(t, s13 + 1.0, s13 + 1.3) * (1 - pr(t, c1 - 0.3, c1 + 0.2));
-  const S = 0.8, G11 = 1320, dx = 330, mx0 = 740;
+  const S = 0.85, G11 = 1440, dx = 330, mx0 = 740;
   const mx = mx0 + 40 * back2;
   // dokter: lengan kanan terulur membawa tablet; tokoh: lengan menyambut
   const dBase: SidePose = { head: 2, lean: 2 };
@@ -540,11 +537,10 @@ const Scene11: React.FC<{ t: number }> = ({ t }) => {
   const mArm = ikSide(mx, G11, S, mBase, -1, false, { x: lerp(mRest.x, mid.x + 46, tb * (1 - back2)), y: lerp(mRest.y, mid.y, tb * (1 - back2)) });
   return (
     <>
-      <Floor y={G11} />
       <Hum x={dx} gy={G11} s={S * dr} role="purple" pose={{ ...dBase, armN: dArm }} op={dr} />
       <Hum x={mx} gy={G11} s={S * me} role="blue" face={-1} pose={{ ...mBase, armN: mArm }} op={me} />
       <L.Tablet cx={tabletPos.x + 12} cy={tabletPos.y - 4} s={0.5} rot={0} op={tAlpha} />
-      <L.CheckBadge cx={mx} cy={640} s={0.8 * ok} op={ok} />
+      <L.CheckBadge cx={mx} cy={1040} s={0.8 * ok} op={ok} />
       <L.PointHand cx={lerp(120, 420, hands) - 40 * back2} cy={900} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
       <L.PointHand cx={lerp(120, 450, hands) - 40 * back2} cy={1040} s={1.3} flip op={hands * (1 - 0.85 * back2)} />
       <L.CrossBadge cx={560} cy={970} s={1.0 * cross} op={cross} />
@@ -721,6 +717,25 @@ const Closing: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ================= komposisi =================
+
+// ---- latar tempat (gambar 1080x1920 di public/bg), pindah dengan fade in/out; digambar di bawah adegan
+const BG_PLAN: { img: string; a: number; b: number }[] = [
+  { img: 'consultation_room', a: SCENE_T[0], b: SCENE_T[2] },
+  { img: 'bedroom', a: SCENE_T[2], b: SCENE_T[4] },
+  { img: 'office', a: SCENE_T[7], b: SCENE_T[8] },
+  { img: 'bedroom', a: SCENE_T[8], b: CL(12, 1) },
+  { img: 'dining_room', a: CL(12, 2) - 0.3, b: SCENE_T[9] },
+  { img: 'exam_room', a: SCENE_T[9], b: SCENE_T[10] },
+];
+const Backdrops: React.FC<{ t: number }> = ({ t }) => (
+  <>
+    {BG_PLAN.map((p, i) => {
+      const o = win(t, p.a - 0.2, p.b + 0.2, 0.4);
+      return o < 0.005 ? null : <image key={i} href={staticFile(`bg/${p.img}.png`)} x={-30} y={-53} width={1140} height={2026} preserveAspectRatio="xMidYMid slice" opacity={o} />;
+    })}
+  </>
+);
+
 export const S2E1AltFull: React.FC = () => {
   useFonts();
   const f = useCurrentFrame();
@@ -736,6 +751,7 @@ export const S2E1AltFull: React.FC = () => {
       {t < CLOSE + 0.3 && (
         <AbsoluteFill style={{ transform: `scale(${settle(t)})`, transformOrigin: '50% 45%', opacity: 1 - ez(t, CLOSE - 0.1, CLOSE + 0.4) }}>
           <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', left: 0, top: 0 }}>
+            <Backdrops t={t} />
             {SCENES.map(({ C, cam }, i) => (
               <SceneWrap key={i} i={i} t={t} cam={cam}>
                 <C t={t} />
