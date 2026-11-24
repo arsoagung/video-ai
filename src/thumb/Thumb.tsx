@@ -3,6 +3,7 @@ import { AbsoluteFill, Img, continueRender, delayRender, staticFile } from 'remo
 import { FONT } from '../Board';
 import { Actor } from '../shared/actor';
 import { FlatCell, FlatVirus, Figure, SHAPE_COL } from '../shared/shapes';
+import { Actor } from '../shared/actor';
 import { Glass, VDot, WATER_CLEAR } from '../ep5/shapes5';
 import { BodyLens, Calendar, Capsule, Clock, CrossBadge, Group, LineChart, Person, TestKit, Document, Clinic, Tablet, PersonPose, Heart, Mosquito, Seed, Home } from '../shared/library';
 
@@ -756,3 +757,36 @@ export const ThumbS2E10: React.FC = () => (
     <Pill cx={540} cy={1790} text="bisa salah" bg="#EAF2FB" fg="#12304F" size={52} />
   </ThumbFrame>
 );
+
+// ---- S2E9 alternatif (karakter modular): rumah + tiga orang dewasa dan satu anak (Actor), pill "serumah"
+export const ThumbS2E9Alt: React.FC = () => {
+  const gy = 1700, cy = (sc: number) => gy - 354 * sc;
+  return (
+    <ThumbFrame
+      theme="biru"
+      title={
+        <>
+          Hidup serumah
+          <br />
+          dengan <span style={{ color: CORAL }}>ODHIV</span>,
+          <br />
+          perlu takut
+          <br />
+          tertular?
+        </>
+      }
+      glowY={1450}
+    >
+      <Svg>
+        <Home cx={540} cy={1330} s={1.8} />
+        <Actor cx={250} cy={cy(0.42)} s={0.42} role="teal" />
+        <circle cx={250} cy={cy(0.42) - 112 * 0.42} r={44 * 0.42} fill="#fff" opacity={0.3} />
+        <FlatVirus cx={250} cy={cy(0.42) - 112 * 0.42} r={19 * 0.42} />
+        <Actor cx={450} cy={cy(0.42)} s={0.42} role="blue" />
+        <Actor cx={650} cy={cy(0.42)} s={0.42} role="yellow" />
+        <Actor cx={810} cy={cy(0.27)} s={0.27} role="yellow" />
+      </Svg>
+      <Pill cx={540} cy={1790} text="serumah" bg="#EAF2FB" fg="#12304F" size={52} />
+    </ThumbFrame>
+  );
+};
