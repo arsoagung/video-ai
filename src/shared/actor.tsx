@@ -37,13 +37,16 @@ export type SidePose = {
   legF?: [number, number, number];
 };
 
-export type ActorRole = 'blue' | 'purple' | 'yellow' | 'teal';
+export type ActorRole = 'blue' | 'purple' | 'yellow' | 'teal' | 'pink';
+// Gaya rambut = penanda gender (layer di kepala; anatomi tidak berubah). Default: pink = ikat kuda, peran lain = tanpa rambut.
+export type ActorHair = 'none' | 'ponytail' | 'bun' | 'bob';
 
 export const ACTOR_COL: Record<ActorRole, { main: string; dark: string; trousers: string }> = {
   blue: { main: '#7FB3FF', dark: '#3F7FCB', trousers: '#3F7FCB' },
   purple: { main: '#C8A6FF', dark: '#9A7DE8', trousers: '#9A7DE8' },
   yellow: { main: '#FFE082', dark: '#E0A84E', trousers: '#E0A84E' },
   teal: { main: '#7FE3C6', dark: '#2E9E7D', trousers: '#2E9E7D' },
+  pink: { main: '#FF9EC4', dark: '#D9648F', trousers: '#D9648F' },
 };
 
 export const mix = (a: string, b: string, k: number) => {
@@ -135,18 +138,48 @@ const limitArmSide = (a: J3): J3 => [cl(a[0], -60, 165), cl(a[1], 0, 135), cl(a[
 const limitLegSide = (a: J3): J3 => [cl(a[0], -40, 100), cl(a[1], 0, 125), cl(a[2], -25, 25)];
 const limitArmFront = (a: J3): J3 => [cl(a[0], -25, 165), cl(a[1], -135, 0), cl(a[2], -30, 30)];
 const PivotDot: React.FC<{ on?: boolean }> = ({ on }) => (on ? <circle r={7} fill="#fff" opacity={0.95} /> : null);
-const Head: React.FC<{ skin: string; dx?: number }> = ({ skin, dx = 0 }) => (
-  <>
-    <circle cx={dx} cy={-56} r={SZ.head} fill={skin} />
-    <circle cx={dx - 22} cy={-84} r={22} fill="#fff" opacity={0.18} />
-  </>
-);
+const HAIR_TIE = '#FFFFFF';
+const Head: React.FC<{ skin: string; dx?: number; hair?: ActorHair; hairCol?: string; side?: boolean }> = ({ skin, dx = 0, hair = 'none', hairCol = '#5A2E4A', side = false }) => {
+  const x = (n: number) => dx + n;
+  const back = (() => {
+    if (hair === 'ponytail') return side
+      ? <><path d={`M ${x(-46)} -100 C ${x(-100)} -98 ${x(-108)} -40 ${x(-86)} 0 C ${x(-78)} 14 ${x(-58)} 6 ${x(-62)} -10 C ${x(-60)} -40 ${x(-52)} -70 ${x(-34)} -86 Z`} fill={hairCol} /></>
+      : <><path d={`M ${x(-40)} -104 C ${x(-88)} -112 ${x(-98)} -56 ${x(-80)} -12 C ${x(-72)} 8 ${x(-52)} 4 ${x(-54)} -14 C ${x(-52)} -44 ${x(-52)} -78 ${x(-30)} -96 Z`} fill={hairCol} /></>;
+    if (hair === 'bun') return <circle cx={x(side ? -16 : 0)} cy={-136} r={28} fill={hairCol} />;
+    if (hair === 'bob') return side
+      ? <path d={`M ${x(-66)} -70 C ${x(-86)} -30 ${x(-78)} 0 ${x(-56)} 8 L ${x(-8)} 8 L ${x(-8)} -60 Z`} fill={hairCol} />
+      : <path d={`M ${x(-70)} -70 C ${x(-84)} -30 ${x(-76)} 0 ${x(-58)} 8 L ${x(58)} 8 C ${x(76)} 0 ${x(84)} -30 ${x(70)} -70 Z`} fill={hairCol} />;
+    return null;
+  })();
+  const cap = (() => {
+    if (hair === 'none') return null;
+    const d = side
+      ? `M ${x(-66)} -40 A 66 66 0 0 1 ${x(52)} -93 C ${x(30)} -92 ${x(6)} -76 ${x(-6)} -38 C ${x(-30)} -30 ${x(-52)} -28 ${x(-66)} -40 Z`
+      : `M ${x(-65)} -52 A 65 65 0 0 1 ${x(65)} -52 C ${x(44)} -70 ${x(-6)} -90 ${x(-65)} -52 Z`;
+    return <path d={d} fill={hairCol} />;
+  })();
+  const tie = hair === 'ponytail'
+    ? <circle cx={x(side ? -50 : -48)} cy={-96} r={10} fill={HAIR_TIE} />
+    : hair === 'bun'
+      ? <ellipse cx={x(side ? -16 : 0)} cy={-114} rx={22} ry={8} fill={HAIR_TIE} />
+      : null;
+  return (
+    <>
+      {back}
+      <circle cx={dx} cy={-56} r={SZ.head} fill={skin} />
+      {cap}
+      {tie}
+      <circle cx={dx - 22} cy={-84} r={22} fill="#fff" opacity={0.18} />
+    </>
+  );
+};
 
 type P = { cx: number; cy: number; s?: number; rot?: number; op?: number };
 
 // ================= TAMPAK DEPAN =================
-export const Actor: React.FC<P & { role?: ActorRole; pose?: Pose; debug?: boolean; coat?: boolean }> = ({
+export const Actor: React.FC<P & { role?: ActorRole; pose?: Pose; debug?: boolean; coat?: boolean; hair?: ActorHair; hairColor?: string }> = ({
   cx, cy, s = 1, rot = 0, op = 1, role = 'blue', pose = {}, debug = false, coat = role === 'purple',
+  hair = role === 'pink' ? 'ponytail' : 'none', hairColor,
 }) => {
   const c = ACTOR_COL[role];
   const p0 = { ...NEUTRAL, ...pose };
@@ -220,7 +253,7 @@ export const Actor: React.FC<P & { role?: ActorRole; pose?: Pose; debug?: boolea
         {arm(-1, p.armR)}
         {arm(1, p.armL)}
         <g transform={`translate(0 ${SZ.headPivotY}) rotate(${p.head})`}>
-          <Head skin={skin} />
+          <Head skin={skin} hair={hair} hairCol={hairColor ?? mix(c.main, '#3B1238', 0.5)} />
           <PivotDot on={debug} />
         </g>
         <PivotDot on={debug} />
@@ -230,8 +263,9 @@ export const Actor: React.FC<P & { role?: ActorRole; pose?: Pose; debug?: boolea
 };
 
 // ================= TAMPAK SAMPING =================
-export const ActorSide: React.FC<P & { role?: ActorRole; pose?: SidePose; debug?: boolean; coat?: boolean }> = ({
+export const ActorSide: React.FC<P & { role?: ActorRole; pose?: SidePose; debug?: boolean; coat?: boolean; hair?: ActorHair; hairColor?: string }> = ({
   cx, cy, s = 1, rot = 0, op = 1, role = 'blue', pose = {}, debug = false, coat = role === 'purple',
+  hair = role === 'pink' ? 'ponytail' : 'none', hairColor,
 }) => {
   const c = ACTOR_COL[role];
   const p0 = { ...NEUTRAL_SIDE, ...pose };
@@ -299,7 +333,7 @@ export const ActorSide: React.FC<P & { role?: ActorRole; pose?: SidePose; debug?
         )}
         {arm(p.armN, limb, skin)}
         <g transform={`translate(2 ${SZ.headPivotY}) rotate(${p.head})`}>
-          <Head skin={skin} dx={6} />
+          <Head skin={skin} dx={6} side hair={hair} hairCol={hairColor ?? mix(c.main, '#3B1238', 0.5)} />
           <PivotDot on={debug} />
         </g>
         <PivotDot on={debug} />
