@@ -111,6 +111,9 @@ Satu anatomi, empat identitas. Kepala besar (diameter 124), badan berisi, lengan
 | `purple` | ungu + jas putih + stetoskop (otomatis; matikan dengan `coat={false}`) | dokter |
 | `yellow` | kuning | keluarga / orang terdekat |
 | `teal` | teal | masyarakat / orang lain |
+| `pink` | pink + ikat kuda (default) | tokoh perempuan, mis. pasangan tokoh utama |
+
+**Gender = rambut, bukan warna.** Prop `hair` (`'ponytail'` ikat kuda dengan ikat rambut putih, `'bun'` cepol, `'bob'` pendek, `'none'` tanpa rambut = cowok) bisa dipasang di role warna mana pun, mis. `<Actor role="teal" hair="bob" />` untuk perempuan di masyarakat. Default: `pink` = `ponytail`, role lain = `none`. Warna rambut otomatis versi gelap dari warna role; ganti lewat `hairColor`. Rambut hanya layer di kepala (ikut miring), anatomi tidak berubah. Pasangan cowok-cewek: tokoh cowok `blue`/warna biasa tanpa rambut, tokoh cewek `pink` (atau role lain + `hair`).
 
 Komponen (semua: `cx, cy, s, rot, op`, ditambah `role`, `pose`, `debug`):
 - `Actor` = tampak depan. `pose` = `{ head, lean, armL, armR, legL, legR }`; tiap lengan/kaki = `[sendi besar, siku/lutut, pergelangan]` dalam derajat.
